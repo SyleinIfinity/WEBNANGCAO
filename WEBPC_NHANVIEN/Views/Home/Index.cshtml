@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+    // Lấy thông tin từ Session
+    string tenNhanVien = Session["UserName"] as string;
+    string vaiTro = Session["RoleName"] as string;
+    bool isLogged = Session["UserToken"] != null;
+}
+
+<link href="@Url.Content("~/Content/css/home.css")" rel="stylesheet" />
+
+<div class="home-container">
+    @if (isLogged)
+    {
+        <div class="welcome-box success">
+            <h1>Đăng nhập thành công!</h1>
+            <h2 class="user-greeting">
+                Chào <span class="role-highlight">@vaiTro</span> - <span class="name-highlight">@tenNhanVien</span>
+            </h2>
+
+            <div class="home-actions">
+                <p>Bạn đã có thể bắt đầu làm việc.</p>
+                <a href="@Url.Action("Logout", "Account")" class="btn-logout">Đăng xuất</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="welcome-box">
+            <p>Bạn chưa đăng nhập.</p>
+            <a href="@Url.Action("Login", "Account")" class="btn-login-link">Đi tới trang đăng nhập</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,77 @@
+﻿/* --- Style riêng cho trang Home/Index --- */
+
+.home-container {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f8f9fa; /* Màu nền nhẹ cho toàn vùng */
+    min-height: 80vh; /* Chiều cao tối thiểu */
+}
+
+.welcome-box {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+    .welcome-box h1 {
+        color: #28a745; /* Màu xanh thành công */
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+
+/* Phần hiển thị lời chào */
+.user-greeting {
+    font-size: 20px;
+    color: #333;
+    margin: 25px 0;
+    line-height: 1.5;
+}
+
+.role-highlight {
+    color: #007bff; /* Màu xanh dương cho vai trò */
+    font-weight: bold;
+    padding: 2px 5px;
+    background: #e7f1ff;
+    border-radius: 4px;
+}
+
+.name-highlight {
+    color: #d63384; /* Màu hồng đậm cho tên */
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* Khu vực nút bấm hành động */
+.home-actions {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.btn-logout {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #dc3545; /* Màu đỏ */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+    .btn-logout:hover {
+        background-color: #c82333;
+    }
+
+.btn-login-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
