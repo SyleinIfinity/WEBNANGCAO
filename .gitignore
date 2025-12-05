@@ -1,0 +1,19 @@
+# Bỏ qua thư mục kết quả build (Rác)
+[Bb]in/
+[Oo]bj/
+
+# Bỏ qua file cấu hình người dùng (Chứa ổ C:/D: của bạn)
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Bỏ qua thư mục ẩn của Visual Studio
+.vs/
+
+# Bỏ qua các file tạm
+*.log
+*.tmp
+
+# Bỏ qua thư mục packages (Nếu dùng NuGet Restore)
+packages/
