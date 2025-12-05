@@ -1,33 +1,225 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
-
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-lg-8">
+                <h1 class="hero-title mb-4">GPU Thế Hệ Mới Đã Có Mặt</h1>
+                <p class="hero-subtitle mb-4">Trải nghiệm hiệu năng gaming và đồ họa thế hệ tiếp theo.</p>
+                <a href="sp.html" class="btn btn-primary btn-lg px-5">Mua Ngay</a>
+            </div>
+        </div>
     </div>
-</main>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title mb-4">Danh Mục Nổi Bật</h2>
+        <div class="row g-4">
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-motherboard category-icon"></i>
+                    <h6 class="category-name">Bo Mạch Chủ</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-memory category-icon"></i>
+                    <h6 class="category-name">RAM</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-device-hdd category-icon"></i>
+                    <h6 class="category-name">Lưu Trữ</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-gpu-card category-icon"></i>
+                    <h6 class="category-name">GPU</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-lightbulb category-icon"></i>
+                    <h6 class="category-name">Nguồn</h6>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="category-card">
+                    <i class="bi bi-fan category-icon"></i>
+                    <h6 class="category-name">Tản Nhiệt</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title mb-4">Sản Phẩm Mới Nhất</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <a href="detailsp.html" class="text-decoration-none">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400" alt="QuantumCore i9-14900K">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">QuantumCore i9-14900K</h5>
+                            <div class="product-rating mb-2">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="ms-1">(124)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">13.990.000₫</span>
+                                <button class="btn-add-cart"><i class="bi bi-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="detailsp.html" class="text-decoration-none">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400" alt="HyperDrive NVMe 4TB">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">HyperDrive NVMe 4TB</h5>
+                            <div class="product-rating mb-2">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1">(190)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">5.990.000₫</span>
+                                <button class="btn-add-cart"><i class="bi bi-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="detailsp.html" class="text-decoration-none">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400" alt="Aura DDR5 64GB Kit">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">Aura DDR5 64GB Kit</h5>
+                            <div class="product-rating mb-2">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <span class="ms-1">(98)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">4.790.000₫</span>
+                                <button class="btn-add-cart"><i class="bi bi-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <a href="detailsp.html" class="text-decoration-none">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400" alt="GeoForce RTX 5080">
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">GeoForce RTX 5080</h5>
+                            <div class="product-rating mb-2">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1">(267)</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="product-price">28.990.000₫</span>
+                                <button class="btn-add-cart"><i class="bi bi-cart-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="promo-banner promo-banner-1">
+                    <h3 class="promo-title">Miễn Phí Vận Chuyển</h3>
+                    <p class="promo-text">Cho đơn hàng trên 2.400.000₫</p>
+                    <a href="promotions.html" class="promo-link">Tìm Hiểu Thêm</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="promo-banner promo-banner-2">
+                    <h3 class="promo-title">Giảm Giá 15% Quạt Tản Nhiệt</h3>
+                    <p class="promo-text">Giữ máy tính luôn mát mẻ mùa hè này.</p>
+                    <a href="promotions.html" class="promo-link">Mua Quạt</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title mb-4">Tin Tức & Blog Công Nghệ</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Blog">
+                    <div class="blog-content">
+                        <h5 class="blog-title">Hướng Dẫn Chọn Bo Mạch Chủ Phù Hợp</h5>
+                        <p class="blog-excerpt">Từ form factor đến chipset, chúng tôi hướng dẫn mọi thứ bạn cần biết để đưa ra lựa chọn đúng đắn.</p>
+                        <a href="#" class="blog-link">Đọc Thêm →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1555617981-dac3880eac6e?w=600" alt="Blog">
+                    <div class="blog-content">
+                        <h5 class="blog-title">So Sánh Hiệu Năng: SSD Thế Hệ Mới</h5>
+                        <p class="blog-excerpt">Chúng tôi thử nghiệm các ổ cứng PCIe 5.0 mới nhất. Chúng có đáng để nâng cấp không?</p>
+                        <a href="#" class="blog-link">Đọc Thêm →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600" alt="Blog">
+                    <div class="blog-content">
+                        <h5 class="blog-title">Tin Ngành: Đổi Mới Công Nghệ Chip</h5>
+                        <p class="blog-excerpt">Khám phá tương lai của công nghệ máy tính với những đột phá trong quy trình sản xuất 2nm.</p>
+                        <a href="#" class="blog-link">Đọc Thêm →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
