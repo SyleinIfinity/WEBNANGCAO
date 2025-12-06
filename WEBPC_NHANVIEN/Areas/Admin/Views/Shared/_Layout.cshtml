@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Quản trị hệ thống</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="~/Areas/Admin/Data/css/admin-theme.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt" style="margin-right: 10px;"></i> PC ADMIN
+        </div>
+        <ul class="menu">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dashboard" ? "active" : "")">
+                    <i class="fas fa-chart-pie"></i> Tổng quan
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "PhieuNhap", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "PhieuNhap" ? "active" : "")">
+                    <i class="fas fa-truck-loading"></i> Nhập hàng
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Luong", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "Luong" ? "active" : "")">
+                    <i class="fas fa-hand-holding-usd"></i> Lương & KPI
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "NhanVien", new { area = "Admin" })">
+                    <i class="fas fa-user-tie"></i> Nhân viên
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="top-header">
+            <h3 style="margin:0;">@ViewBag.Title</h3>
+            <div class="user-info">
+                <span>Xin chào, <strong id="current-user-name">Đang tải...</strong></span>
+                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="btn btn-warning" style="font-size: 0.8rem; padding: 5px 15px; margin-left: 10px;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-body">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://webapi-1-qldr.onrender.com';
+
+        // Hàm lấy tên nhân viên (Chạy ở mọi trang Admin)
+        document.addEventListener("DOMContentLoaded", async () => {
+            const nameDisplay = document.getElementById('current-user-name');
+            // Cần cơ chế lấy ID thật từ Session/Cookie, tạm thời để cứng 1
+            const userId = 1;
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/NhanVien/${userId}`);
+                if(res.ok) {
+                    const data = await res.json();
+                    nameDisplay.innerText = data.hoTen || data.HoTen || "Admin";
+                }
+            } catch(e) { console.error(e); }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
