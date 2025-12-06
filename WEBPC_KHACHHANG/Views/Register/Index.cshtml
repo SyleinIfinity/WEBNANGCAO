@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="login-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100 py-5">
+            <div class="col-lg-10">
+                <div class="row bg-white rounded-4 shadow-lg overflow-hidden">
+                    <div class="col-lg-6 p-5">
+                        <h2 class="fw-bold mb-4">Tạo Tài Khoản Mới</h2>
+                        <p class="text-secondary mb-4">Chào mừng đến với TechParts! Vui lòng điền thông tin bên dưới để đăng ký.</p>
+
+                        <form id="registerForm" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Họ Và Tên <span class="text-danger">*</span></label>
+                                <input type="text" name="hoTen" class="form-control form-control-lg" placeholder="Nhập họ và tên của bạn" required>
+                                <div class="invalid-feedback">Vui lòng nhập họ và tên</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Số Điện Thoại <span class="text-danger">*</span></label>
+                                <input type="tel" name="soDienThoai" class="form-control form-control-lg" placeholder="Nhập số điện thoại của bạn" pattern="[0-9]{10,11}" required>
+                                <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ (10-11 chữ số)</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control form-control-lg" placeholder="Nhập email của bạn" required>
+                                <div class="invalid-feedback">Vui lòng nhập email hợp lệ</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Tên Đăng Nhập <span class="text-danger">*</span></label>
+                                <input type="text" name="tenDangNhap" class="form-control form-control-lg" placeholder="Chọn tên đăng nhập" minlength="4" required>
+                                <div class="invalid-feedback">Tên đăng nhập phải có ít nhất 4 ký tự</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Mật Khẩu <span class="text-danger">*</span></label>
+                                <div class="password-input">
+                                    <input type="password" name="matKhau" id="matKhau" class="form-control form-control-lg" placeholder="Tạo mật khẩu" minlength="6" required>
+                                    <i class="bi bi-eye password-toggle"></i>
+                                </div>
+                                <div class="invalid-feedback">Mật khẩu phải có ít nhất 6 ký tự</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Xác Nhận Mật Khẩu <span class="text-danger">*</span></label>
+                                <div class="password-input">
+                                    <input type="password" name="xacNhanMatKhau" id="xacNhanMatKhau" class="form-control form-control-lg" placeholder="Nhập lại mật khẩu" required>
+                                    <i class="bi bi-eye password-toggle"></i>
+                                </div>
+                                <div class="invalid-feedback">Mật khẩu xác nhận không khớp</div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    Tôi đồng ý với <a href="#" class="text-primary">Điều khoản dịch vụ</a> và <a href="#" class="text-primary">Chính sách bảo mật</a>
+                                </label>
+                                <div class="invalid-feedback">Bạn phải đồng ý với điều khoản để tiếp tục</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-4">Tạo Tài Khoản</button>
+                        </form>
+
+                        <div class="text-center">
+                            <span class="text-secondary">Đã có tài khoản? </span>
+                            <a href="#" class="text-primary fw-bold text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal">Đăng nhập</a>
+                        </div>
+
+                        <div class="divider mb-4">
+                            <span>Hoặc đăng ký với</span>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <button class="btn btn-outline-secondary btn-lg w-100">
+                                    <i class="bi bi-google me-2"></i>Google
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-outline-secondary btn-lg w-100">
+                                    <i class="bi bi-facebook me-2"></i>Facebook
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 p-0 d-none d-lg-block">
+                        <div class="login-image-section">
+                            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800" alt="Circuit Board">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
