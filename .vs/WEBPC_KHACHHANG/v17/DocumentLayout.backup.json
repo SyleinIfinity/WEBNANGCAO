@@ -3,24 +3,44 @@
   "WorkspaceRootPath": "D:\\Code\\C#\\CK\\WEBNANGCAO\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\models\\khachhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\models\\khachhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\models\\sanphamviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\models\\sanphamviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\models\\nhanvienviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\models\\nhanvienviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\nhanvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\nhanvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\khachhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\khachhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\ck\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\nhanvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\nhanvien\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\Code\\C#\\CK\\WEBNANGCAO\\webpc_nhanvien\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -34,11 +54,76 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SanPhamViewModel.cs",
+              "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAACYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T05:29:26.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NhanVienViewModel.cs",
+              "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\NhanVienViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\NhanVienViewModel.cs",
+              "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\NhanVienViewModel.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\NhanVienViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T05:28:50.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KhachHangViewModel.cs",
+              "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\KhachHangViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\KhachHangViewModel.cs",
+              "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\KhachHangViewModel.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\KhachHangViewModel.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T05:25:16.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Web.config",
+              "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Web.config",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Web.config",
+              "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Web.config",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswAsAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-12-06T05:13:55.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\KhachHang\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\KhachHang\\Index.cshtml",
+              "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\KhachHang\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\KhachHang\\Index.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-06T04:29:53.192Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
@@ -51,7 +136,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\NhanVien\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\NhanVien\\Index.cshtml",
@@ -64,46 +149,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "SanPhamController.cs",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwBEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T04:23:25.12Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "KhachHangController.cs",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
               "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAiwCgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T04:23:01.718Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "NhanVienController.cs",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
               "ToolTip": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-06T04:22:44.07Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "style.css",
               "DocumentMoniker": "D:\\Code\\C#\\CK\\WEBNANGCAO\\WEBPC_NHANVIEN\\Content\\css\\style.css",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Content\\css\\style.css",

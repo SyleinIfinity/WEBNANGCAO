@@ -1,37 +1,42 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using WEBPC_NHANVIEN.Areas.Admin.Models;
+using Newtonsoft.Json;
+using WEBPC_NHANVIEN.Areas.Admin.Models; // Namespace chứa ViewModel
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
     public class NhanVienController : Controller
     {
-        private readonly string _baseUrl = "https://webapi-1-qldr.onrender.com/api/";
+        private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
         // GET: Admin/NhanVien
         public async Task<ActionResult> Index()
         {
             var danhSach = new List<NhanVienViewModel>();
+
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(_baseUrl);
-                var response = await client.GetAsync("NhanVien"); // Gọi API GET All Nhân viên
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                // Gọi API: GET api/NhanVien
+                HttpResponseMessage response = await client.GetAsync("NhanVien");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
+                    // Deserialize dữ liệu JSON từ API thành List ViewModel
                     danhSach = JsonConvert.DeserializeObject<List<NhanVienViewModel>>(data);
                 }
+                else
+                {
+                    ViewBag.Error = "Lỗi tải dữ liệu: " + response.ReasonPhrase;
+                }
             }
+
             return View(danhSach);
         }
-
-        // Bạn có thể thêm Action Create/Edit/Delete ở đây để gọi API tương ứng
     }
 }
