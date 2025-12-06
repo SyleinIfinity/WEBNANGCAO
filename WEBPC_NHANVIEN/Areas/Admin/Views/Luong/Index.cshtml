@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Bảng Lương & Hiệu Suất";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="display: flex; align-items: center; gap: 15px;">
+    <strong>Kỳ Lương:</strong>
+    <select style="padding: 10px; border-radius: 6px; border: 1px solid #ddd;">
+        <option>Tháng 12 / 2025</option>
+    </select>
+    <button class="btn btn-primary"><i class="fas fa-calculator"></i> Tính Lương Ngay</button>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Mã NV</th>
+                <th>Họ Tên</th>
+                <th>KPI (Đơn/Phiếu)</th>
+                <th>Lương Cứng</th>
+                <th>Thưởng</th>
+                <th>Thực Lĩnh</th>
+                <th>Trạng Thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>NV002</td>
+                <td><strong>Lê Nhân Viên</strong></td>
+                <td>25 Đơn</td>
+                <td>5.000.000</td>
+                <td style="color:var(--success);">+1.250.000</td>
+                <td style="font-weight:bold; color:var(--primary-color);">6.250.000 đ</td>
+                <td><span style="background:#fef3c7; color:#d97706; padding:5px 10px; border-radius:15px; font-size:0.8rem;">Chờ duyệt</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
