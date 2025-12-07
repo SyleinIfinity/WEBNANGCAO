@@ -1,0 +1,154 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.UpdateProductViewModel
+
+@{
+    ViewBag.Title = "Cập Nhật Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold text-primary m-0"><i class="fas fa-edit me-2"></i>Cập Nhật Sản Phẩm</h4>
+    <a href="@Url.Action("Index")" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+        @using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.MaSanPham)
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4" })
+
+            <div class="row g-4">
+
+                <div class="col-lg-8">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control", placeholder = "Nhập tên sản phẩm..." })
+                            @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Danh mục <span class="text-danger">*</span></label>
+                            @Html.DropDownListFor(m => m.MaDanhMuc,
+                                new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                                "-- Chọn Danh Mục --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Trạng thái kinh doanh</label>
+                            <div class="form-check form-switch mt-2">
+                                @Html.CheckBoxFor(m => m.TrangThai, new { @class = "form-check-input", role = "switch" })
+                                <label class="form-check-label" for="TrangThai">Đang bật (Hiển thị bán)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Mô tả chi tiết</label>
+                            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = "6", placeholder = "Mô tả cấu hình, thông số..." })
+                            @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card bg-light border-0 mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold text-muted mb-3">Thiết lập giá & Kho</h6>
+
+                            <div class="mb-3">
+                                <label class="form-label">Giá bán gốc (VNĐ) <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control fw-bold", type = "number" })
+                                @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Giá khuyến mãi (VNĐ)</label>
+                                @Html.TextBoxFor(m => m.GiaKhuyenMai, new { @class = "form-control text-danger", type = "number", placeholder = "Để trống nếu không giảm" })
+                            </div>
+
+                            <div class="mb-0">
+                                <label class="form-label">Số lượng tồn kho <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number" })
+                                @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-secondary border-opacity-25">
+                        <div class="card-header bg-white fw-bold">Quản Lý Hình Ảnh</div>
+                        <div class="card-body">
+
+                            <div class="mb-4">
+                                <label class="form-label small text-muted">Tải thêm ảnh mới:</label>
+                                <input type="file" name="HinhAnhs" multiple class="form-control" accept="image/*" />
+                            </div>
+
+                            <label class="form-label small text-muted mb-2">Ảnh hiện tại (Chọn <i class="fas fa-trash text-danger"></i> để xóa):</label>
+
+                            @if (Model.AnhHienTai != null && Model.AnhHienTai.Any())
+                            {
+                                <div class="row g-2">
+                                    @for (int i = 0; i < Model.AnhHienTai.Count; i++)
+                                    {
+                                        <div class="col-4 position-relative text-center">
+                                            <div class="border rounded p-1 bg-white h-100 position-relative group-img">
+                                                <img src="@Model.AnhHienTai[i].Url" class="img-fluid rounded"
+                                                     style="width: 100%; height: 70px; object-fit: cover;"
+                                                     title="Ảnh sản phẩm @i" />
+
+                                                <div class="mt-1">
+                                                    <div class="form-check form-check-inline m-0">
+                                                        <input class="form-check-input border-danger" type="checkbox"
+                                                               name="PublicIdsToDelete"
+                                                               value="@Model.AnhHienTai[i].PublicId"
+                                                               id="del_img_@i" />
+                                                        <label class="form-check-label text-danger small cursor-pointer" for="del_img_@i" style="font-size: 0.75rem;">
+                                                            Xóa
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].Id)
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].Url)
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].LaAnhDaiDien)
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning small text-center m-0">
+                                    Chưa có hình ảnh nào.
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                <a href="@Url.Action("Index")" class="btn btn-light border">Hủy bỏ</a>
+                <button type="submit" class="btn btn-warning px-4 fw-bold text-white">
+                    <i class="fas fa-save me-1"></i> Lưu Thay Đổi
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Có thể thêm JS preview ảnh ở đây nếu cần
+    </script>
+}

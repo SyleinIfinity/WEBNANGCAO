@@ -1,0 +1,54 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.CreateProductViewModel
+@{
+    ViewBag.Title = "Thêm Sản Phẩm Mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <h3>Thêm Sản Phẩm</h3>
+    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label>Tên sản phẩm</label>
+                @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control" })
+            </div>
+            <div class="col-md-6 form-group">
+                <label>Danh mục</label>
+                @Html.DropDownListFor(m => m.MaDanhMuc, new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"), "-- Chọn --", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label>Giá bán</label>
+                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control", type = "number" })
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Giá khuyến mãi</label>
+                @Html.TextBoxFor(m => m.GiaKhuyenMai, new { @class = "form-control", type = "number" })
+            </div>
+            <div class="col-md-4 form-group">
+                <label>Số lượng tồn</label>
+                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Mô tả</label>
+            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 4 })
+        </div>
+
+        <div class="form-group">
+            <label>Hình ảnh (Chọn nhiều)</label>
+            <input type="file" name="HinhAnhs" multiple class="form-control" />
+        </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-success">Lưu lại</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+        </div>
+    }
+</div>
