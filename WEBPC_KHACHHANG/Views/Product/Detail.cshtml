@@ -1,0 +1,107 @@
+﻿@model WEBPC_KHACHHANG.Models.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = Model.TenSanPham;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")" class="text-decoration-none">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Product")" class="text-decoration-none">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TenSanPham</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-3">
+                <img id="mainImage" src="@Model.HinhAnhDaiDien" alt="@Model.TenSanPham" class="img-fluid rounded mb-3" style="max-height: 400px; object-fit: contain; width: 100%;">
+
+                @if (Model.DanhSachAnh != null && Model.DanhSachAnh.Count > 1)
+                {
+                    <div class="d-flex gap-2 overflow-auto pb-2">
+                        @foreach (var img in Model.DanhSachAnh)
+                        {
+                            <img src="@img.Url" onclick="changeImage(this.src)"
+                                 class="rounded border"
+                                 style="width: 70px; height: 70px; object-fit: cover; cursor: pointer; transition: transform 0.2s;"
+                                 onmouseover="this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.transform='scale(1)'">
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h2 class="fw-bold text-dark mb-2">@Model.TenSanPham</h2>
+            <div class="mb-3">
+                <span class="badge bg-light text-dark border me-2">Mã SP: #@Model.MaSanPham</span>
+                <span class="badge bg-light text-dark border">Danh mục: @Model.TenDanhMuc</span>
+            </div>
+
+            <div class="price-section bg-light p-3 rounded mb-4">
+                @if (Model.GiaKhuyenMai.HasValue && Model.GiaKhuyenMai > 0)
+                {
+                    <div class="d-flex align-items-end gap-3">
+                        <span class="text-danger fw-bold fs-2">@Model.GiaKhuyenMai.Value.ToString("N0") đ</span>
+                        <span class="text-muted text-decoration-line-through fs-5">@Model.GiaBan.ToString("N0") đ</span>
+                        <span class="badge bg-danger mb-2">-@((int)((1 - Model.GiaKhuyenMai.Value / Model.GiaBan) * 100))%</span>
+                    </div>
+                }
+                else
+                {
+                    <span class="text-primary fw-bold fs-2">@Model.GiaBan.ToString("N0") đ</span>
+                }
+            </div>
+
+            <div class="status mb-4">
+                @if (Model.SoLuongTon > 0)
+                {
+                    <div class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Còn hàng (Sẵn sàng giao)</div>
+                }
+                else
+                {
+                    <div class="text-danger fw-bold"><i class="bi bi-x-circle-fill me-1"></i> Tạm hết hàng</div>
+                }
+            </div>
+
+            <div class="description mb-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">Mô tả sản phẩm</h5>
+                <div class="text-secondary">
+                    @Html.Raw(Model.MoTa != null ? Model.MoTa.Replace("\n", "<br>") : "Đang cập nhật mô tả chi tiết cho sản phẩm này...")
+                </div>
+            </div>
+
+            @if (Model.SoLuongTon > 0)
+            {
+                <form action="@Url.Action("AddToCart", "Cart")" method="post" class="d-flex gap-3 align-items-center">
+                    <input type="hidden" name="productId" value="@Model.MaSanPham" />
+
+                    <div class="input-group" style="width: 130px;">
+                        <span class="input-group-text">SL</span>
+                        <input type="number" name="quantity" value="1" min="1" max="@Model.SoLuongTon" class="form-control text-center fw-bold">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg flex-grow-1 fw-bold shadow-sm">
+                        <i class="bi bi-cart-plus me-2"></i> THÊM VÀO GIỎ
+                    </button>
+                </form>
+            }
+            else
+            {
+                <button class="btn btn-secondary btn-lg w-100" disabled>Liên hệ khi có hàng</button>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+    </script>
+}
