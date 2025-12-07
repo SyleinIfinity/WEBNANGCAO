@@ -27,7 +27,7 @@ namespace WEBPC_KHACHHANG.Controllers
 
                 // A. Gọi API lấy danh mục (để hiển thị sidebar lọc)
                 var catTask = client.GetAsync("DanhMuc");
-
+                
                 // B. Gọi API lấy sản phẩm
                 // Nếu có lọc danh mục -> Gọi endpoint lọc theo danh mục
                 string endpoint = categoryId.HasValue ? $"SanPham/danhmuc/{categoryId}" : "SanPham";
