@@ -1,65 +1,109 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\",
+  "WorkspaceRootPath": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\projectcsharpecommerce\\new folder\\webnangcao\\webpc_khachhang\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\projectcsharpecommerce\\new folder\\webnangcao\\webpc_khachhang\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\projectcsharpecommerce\\new folder\\webnangcao\\webpc_khachhang\\views\\register\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\register\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_khachhang\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\projectcsharpecommerce\\new folder\\webnangcao\\webpc_khachhang\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\content\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\content\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\projectcsharpecommerce\\new folder\\webnangcao\\webpc_khachhang\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\scripts\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\scripts\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\models\\viewmodels\\productviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\models\\viewmodels\\productviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\controllers\\registercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\register\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\register\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\content\\css\\style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\models\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\models\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\models\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\models\\responses\\taikhoanresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\models\\responses\\taikhoanresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\models\\responses\\taikhoanresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\webpc_nhanvien\\content\\css\\home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|E:\\125\\TT\\Cu\u1ED1i k\u00EC\\webpc_nhanvien\\content\\css\\home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\content\\css\\home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
@@ -79,49 +123,214 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "RegisterController.cs",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T14:48:07.94Z",
+              "Title": "styles.css",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\styles.css",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Content\\css\\styles.css",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\styles.css",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Content\\css\\styles.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-07T08:29:18.595Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Title": "style.css",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\style.css",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Content\\css\\style.css",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\style.css",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Content\\css\\style.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-07T08:29:17.828Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "style.css",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Scripts\\style.css",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Scripts\\style.css",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Scripts\\style.css",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Scripts\\style.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-07T08:29:11.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ProductViewModel.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-06T14:05:26.475Z",
+              "WhenOpened": "2025-12-07T08:26:35.95Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Detail.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
+              "ViewState": "AgIAADMAAAAAAAAAAAAgwGoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-07T08:20:29.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
+              "ViewState": "AgIAADEAAAAAAAAAAAAgwFgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-07T08:19:32.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAF8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T08:18:06.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Web.config",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Web.config",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Web.config",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Web.config",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-12-07T08:14:47.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T03:53:53.84Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_LoginModal.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-06T14:41:11.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Web.config",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Web.config",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Web.config",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Web.config",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-12-07T03:54:25.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAADAAAAAAAAAAAAArwEwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-05T13:55:42.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T03:54:11.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "RegisterController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T14:48:07.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T14:05:26.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHoAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAACUAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-05T13:44:55.669Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 22,
               "Title": "TaiKhoanResponse.cs",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -129,50 +338,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 17,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-05T13:55:42.558Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_LoginModal.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAYwCYAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-06T14:41:11.333Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-06T14:50:17.821Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T14:50:17.821Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "Login.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADMAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -180,11 +362,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 19,
               "Title": "style.css",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Content\\css\\style.css",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\style.css",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Content\\css\\style.css",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Content\\css\\style.css",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\style.css",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Content\\css\\style.css",
               "ViewState": "AgIAALwAAAAAAAAAAAAcwN8AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
@@ -192,11 +374,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 21,
               "Title": "LoginViewModel.cs",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -204,11 +386,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 18,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAoAAAAAAAAAAAAQwCAAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -216,11 +398,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 20,
               "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -228,11 +410,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 23,
               "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -240,11 +422,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 24,
               "Title": "_ViewStart.cshtml",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -252,11 +434,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 25,
               "Title": "home.css",
-              "DocumentMoniker": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Content\\css\\home.css",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\home.css",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Content\\css\\home.css",
-              "ToolTip": "D:\\ProjectCSharpEcommerce\\New folder\\WEBNANGCAO\\WEBPC_NHANVIEN\\Content\\css\\home.css",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\home.css",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Content\\css\\home.css",
               "ViewState": "AgIAACkAAAAAAAAAAAAcwE0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
