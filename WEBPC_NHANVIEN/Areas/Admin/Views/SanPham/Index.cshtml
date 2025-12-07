@@ -15,7 +15,7 @@
                     <div class="input-group" style="width: 300px;">
                         <span class="input-group-text bg-white text-muted"><i class="fas fa-search"></i></span>
                         <input type="text" name="search" value="@ViewBag.CurrentSearch"
-                               class="form-control border-start-0 ps-0" placeholder="Nhập tên sản phẩm...">
+                               class="form-control border-start-0 ps-0" placeholder="Tên sản phẩm...">
                     </div>
 
                     <select name="categoryId" class="form-select" style="width: 200px;" onchange="this.form.submit()">
@@ -24,6 +24,7 @@
                         {
                             foreach (var cat in ViewBag.Categories)
                             {
+                                // Giữ trạng thái selected sau khi reload
                                 var isSelected = (ViewBag.CurrentCategory != null && (int)ViewBag.CurrentCategory == cat.MaDanhMuc) ? "selected" : "";
                                 <option value="@cat.MaDanhMuc" @isSelected>@cat.TenDanhMuc</option>
                             }
@@ -33,7 +34,7 @@
                     @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch) || ViewBag.CurrentCategory != null)
                     {
                         <a href="@Url.Action("Index")" class="btn btn-outline-danger" title="Xóa bộ lọc">
-                            <i class="fas fa-undo"></i>
+                            <i class="fas fa-undo"></i> Làm mới
                         </a>
                     }
                 </form>
@@ -41,7 +42,7 @@
 
             <div class="col-md-4 text-md-end">
                 <a href="@Url.Action("Create")" class="btn btn-primary px-4 fw-bold shadow-sm">
-                    <i class="fas fa-plus-circle me-2"></i> Thêm Sản Phẩm
+                    <i class="fas fa-plus-circle me-1"></i> Thêm Sản Phẩm
                 </a>
             </div>
         </div>
@@ -135,6 +136,7 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
+
                                 <form id="form-delete-@item.MaSanPham" action="@Url.Action("Delete", new { id = item.MaSanPham })" method="post" style="display:none;">
                                     @Html.AntiForgeryToken()
                                 </form>

@@ -13,60 +13,68 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
     public class SanPhamController : Controller
     {
+        // Đọc URL từ Web.config (Đã cấu hình: https://webapi-1-qldr.onrender.com/api/)
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
-        // --- 1. TRANG DANH SÁCH (Hỗ trợ Tìm kiếm & Lọc) ---
+        // --- 1. TRANG DANH SÁCH (INDEX) ---
         public async Task<ActionResult> Index(string search = "", int? categoryId = null)
         {
             var danhSach = new List<SanPhamViewModel>();
+            var categories = new List<CategoryViewModel>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // A. Lấy danh sách sản phẩm
-                // Nếu có lọc danh mục -> Gọi API lọc danh mục
+                // A. Gọi song song 2 tác vụ: Lấy sản phẩm & Lấy danh mục
+                // Nếu có lọc danh mục -> Gọi endpoint lọc
                 string endpoint = categoryId.HasValue ? $"SanPham/danhmuc/{categoryId}" : "SanPham";
 
-                var response = await client.GetAsync(endpoint);
-                if (response.IsSuccessStatusCode)
+                var taskProducts = client.GetAsync(endpoint);
+                var taskCategories = client.GetAsync("DanhMuc");
+
+                // Chờ cả 2 xong mới chạy tiếp (Tối ưu tốc độ load)
+                await Task.WhenAll(taskProducts, taskCategories);
+
+                // B. Xử lý dữ liệu Sản Phẩm
+                var resProd = taskProducts.Result;
+                if (resProd.IsSuccessStatusCode)
                 {
-                    var data = await response.Content.ReadAsStringAsync();
+                    var data = await resProd.Content.ReadAsStringAsync();
                     danhSach = JsonConvert.DeserializeObject<List<SanPhamViewModel>>(data);
                 }
 
-                // B. Lọc theo tên (Client-side filtering vì API chưa có search param)
-                if (!string.IsNullOrEmpty(search))
+                // C. Xử lý dữ liệu Danh Mục (để đổ vào Dropdown)
+                var resCat = taskCategories.Result;
+                if (resCat.IsSuccessStatusCode)
                 {
-                    search = search.ToLower();
-                    danhSach = danhSach.Where(p => p.TenSanPham.ToLower().Contains(search)).ToList();
-                }
-
-                // C. Lấy danh sách Danh Mục để đổ vào Dropdown lọc
-                var catResponse = await client.GetAsync("DanhMuc");
-                if (catResponse.IsSuccessStatusCode)
-                {
-                    var catData = await catResponse.Content.ReadAsStringAsync();
-                    var categories = JsonConvert.DeserializeObject<List<CategoryViewModel>>(catData);
-                    ViewBag.Categories = categories; // Truyền qua View để vẽ Dropdown
+                    var data = await resCat.Content.ReadAsStringAsync();
+                    categories = JsonConvert.DeserializeObject<List<CategoryViewModel>>(data);
                 }
             }
 
-            // Giữ lại giá trị filter để hiển thị trên giao diện
+            // D. Lọc tìm kiếm theo tên (Client-side filtering vì API chưa hỗ trợ search param)
+            if (!string.IsNullOrEmpty(search))
+            {
+                danhSach = danhSach.Where(p => p.TenSanPham.ToLower().Contains(search.ToLower())).ToList();
+            }
+
+            // E. Truyền dữ liệu qua View
+            ViewBag.Categories = categories;
             ViewBag.CurrentSearch = search;
             ViewBag.CurrentCategory = categoryId;
 
             return View(danhSach);
         }
 
-        // --- 2. TẠO MỚI (GET: Hiển thị form) ---
+        // --- 2. TẠO MỚI (GET) ---
         public async Task<ActionResult> Create()
         {
             await LoadCategoriesToViewBag();
             return View();
         }
 
-        // --- 3. TẠO MỚI (POST: Gửi dữ liệu lên API) ---
+        // --- 3. TẠO MỚI (POST) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateProductViewModel model)
@@ -77,7 +85,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
 
-                    // Tạo Multipart Form Data để gửi file
+                    // Tạo Multipart Form Data để gửi file và dữ liệu
                     using (var content = new MultipartFormDataContent())
                     {
                         content.Add(new StringContent(model.TenSanPham), "TenSanPham");
@@ -85,12 +93,14 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         content.Add(new StringContent(model.SoLuongTon.ToString()), "SoLuongTon");
                         content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
                         content.Add(new StringContent(model.TrangThai.ToString()), "TrangThai");
+
                         if (!string.IsNullOrEmpty(model.MoTa))
                             content.Add(new StringContent(model.MoTa), "MoTa");
+
                         if (model.GiaKhuyenMai.HasValue)
                             content.Add(new StringContent(model.GiaKhuyenMai.ToString()), "GiaKhuyenMai");
 
-                        // Xử lý file ảnh
+                        // Xử lý file ảnh upload
                         if (model.HinhAnhs != null)
                         {
                             foreach (var file in model.HinhAnhs)
@@ -121,17 +131,14 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
         }
 
         // --- 4. CẬP NHẬT (GET) ---
-        // GET: Admin/SanPham/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // 1. Lấy thông tin sản phẩm
+                // Gọi song song lấy SP và Danh mục
                 var productTask = client.GetAsync($"SanPham/{id}");
-
-                // 2. Lấy luôn danh sách danh mục để chuẩn bị cho Dropdown
                 var categoryTask = client.GetAsync("DanhMuc");
 
                 await Task.WhenAll(productTask, categoryTask);
@@ -141,16 +148,16 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 
                 if (response.IsSuccessStatusCode && catResponse.IsSuccessStatusCode)
                 {
-                    // A. Xử lý sản phẩm
+                    // 1. Xử lý sản phẩm
                     var data = await response.Content.ReadAsStringAsync();
                     var productAPI = JsonConvert.DeserializeObject<SanPhamViewModel>(data);
 
-                    // B. Xử lý danh mục (Để đổ vào Dropdown + Tìm ID)
+                    // 2. Xử lý danh mục
                     var catData = await catResponse.Content.ReadAsStringAsync();
                     var listDanhMuc = JsonConvert.DeserializeObject<List<CategoryViewModel>>(catData);
-                    ViewBag.Categories = listDanhMuc; // Gán vào ViewBag để View dùng
+                    ViewBag.Categories = listDanhMuc;
 
-                    // [LOGIC MỚI] Tìm ID danh mục dựa trên Tên danh mục API trả về
+                    // 3. Logic tìm ID danh mục từ tên (Do API ProductResponse thiếu MaDanhMuc)
                     int foundCategoryId = 0;
                     if (!string.IsNullOrEmpty(productAPI.TenDanhMuc))
                     {
@@ -158,7 +165,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         if (matchCat != null) foundCategoryId = matchCat.MaDanhMuc;
                     }
 
-                    // C. Map sang UpdateProductViewModel
+                    // 4. Map sang ViewModel cho trang Edit
                     var editModel = new UpdateProductViewModel
                     {
                         MaSanPham = productAPI.MaSanPham,
@@ -166,10 +173,8 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         GiaBan = productAPI.GiaBan,
                         GiaKhuyenMai = productAPI.GiaKhuyenMai,
                         SoLuongTon = productAPI.SoLuongTon,
-
-                        // Gán ID vừa tìm được vào đây -> Dropdown sẽ tự chọn đúng
-                        MaDanhMuc = foundCategoryId,
-
+                        MaDanhMuc = foundCategoryId, // Gán ID tìm được
+                        MoTa = "", // API hiện tại chưa trả về Mô tả, tạm để trống
                         TrangThai = productAPI.TrangThai,
                         AnhHienTai = productAPI.DanhSachAnh ?? new List<ImageDTO>()
                     };
@@ -180,45 +185,64 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- 5. CẬP NHẬT (POST - PATCH) ---
+        // --- 5. CẬP NHẬT (POST) ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(UpdateProductViewModel model)
         {
-            // Logic tương tự Create nhưng dùng method PATCH
-            // .NET 4.7.2 HttpClient không có PatchAsync trực tiếp, dùng SendAsync
-            using (var client = new HttpClient())
+            if (ModelState.IsValid)
             {
-                client.BaseAddress = new Uri(_apiBaseUrl);
-                using (var content = new MultipartFormDataContent())
+                using (var client = new HttpClient())
                 {
-                    // Add các field cần update (cho phép null nếu không đổi)
-                    content.Add(new StringContent(model.TenSanPham), "TenSanPham");
-                    content.Add(new StringContent(model.GiaBan.ToString()), "GiaBan");
-                    content.Add(new StringContent(model.SoLuongTon.ToString()), "SoLuongTon");
-                    content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
-                    content.Add(new StringContent(model.TrangThai.ToString()), "TrangThai");
-                    // ... Thêm các field khác
-
-                    // Xử lý ảnh mới
-                    if (model.HinhAnhs != null) { /* Logic add file stream như Create */ }
-
-                    // Xử lý ảnh xóa (PublicIdsToDelete)
-                    if (model.PublicIdsToDelete != null)
+                    client.BaseAddress = new Uri(_apiBaseUrl);
+                    using (var content = new MultipartFormDataContent())
                     {
-                        foreach (var pubId in model.PublicIdsToDelete)
+                        // Add dữ liệu cơ bản
+                        content.Add(new StringContent(model.TenSanPham), "TenSanPham");
+                        content.Add(new StringContent(model.GiaBan.ToString()), "GiaBan");
+                        content.Add(new StringContent(model.SoLuongTon.ToString()), "SoLuongTon");
+                        content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
+                        content.Add(new StringContent(model.TrangThai.ToString()), "TrangThai");
+
+                        if (model.GiaKhuyenMai.HasValue)
+                            content.Add(new StringContent(model.GiaKhuyenMai.ToString()), "GiaKhuyenMai");
+
+                        if (!string.IsNullOrEmpty(model.MoTa))
+                            content.Add(new StringContent(model.MoTa), "MoTa");
+
+                        // Xử lý ảnh mới
+                        if (model.HinhAnhs != null)
                         {
-                            content.Add(new StringContent(pubId), "PublicIdsToDelete");
+                            foreach (var file in model.HinhAnhs)
+                            {
+                                if (file != null && file.ContentLength > 0)
+                                {
+                                    var fileContent = new StreamContent(file.InputStream);
+                                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                                    content.Add(fileContent, "HinhAnhs", file.FileName);
+                                }
+                            }
                         }
+
+                        // Xử lý ảnh cần xóa
+                        if (model.PublicIdsToDelete != null)
+                        {
+                            foreach (var pubId in model.PublicIdsToDelete)
+                            {
+                                content.Add(new StringContent(pubId), "PublicIdsToDelete");
+                            }
+                        }
+
+                        // Gửi PATCH request
+                        var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"SanPham/{model.MaSanPham}")
+                        {
+                            Content = content
+                        };
+
+                        var response = await client.SendAsync(request);
+                        if (response.IsSuccessStatusCode) return RedirectToAction("Index");
+                        else ModelState.AddModelError("", "Lỗi cập nhật: " + response.ReasonPhrase);
                     }
-
-                    var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"SanPham/{model.MaSanPham}")
-                    {
-                        Content = content
-                    };
-
-                    var response = await client.SendAsync(request);
-                    if (response.IsSuccessStatusCode) return RedirectToAction("Index");
                 }
             }
             await LoadCategoriesToViewBag();
@@ -237,7 +261,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // Helper lấy danh mục
+        // --- HELPER: Load Danh Mục ---
         private async Task LoadCategoriesToViewBag()
         {
             using (var client = new HttpClient())
