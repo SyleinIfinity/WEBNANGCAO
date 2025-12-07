@@ -59,4 +59,46 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
         // Danh sách ID ảnh muốn xóa
         public List<string> PublicIdsToDelete { get; set; }
     }
+    public class ThongSoViewModel
+    {
+        public int MaThongSo { get; set; }
+        public int MaSanPham { get; set; }
+
+        [Required(ErrorMessage = "Tên thông số là bắt buộc")]
+        [StringLength(100, ErrorMessage = "Tên thông số không được quá 100 ký tự")]
+        public string TenThongSo { get; set; }
+
+        [Required(ErrorMessage = "Giá trị là bắt buộc")]
+        [StringLength(500, ErrorMessage = "Giá trị không được quá 500 ký tự")]
+        public string GiaTri { get; set; }
+    }
+    public class CreateThongSoViewModel
+    {
+        [Required(ErrorMessage = "Mã sản phẩm là bắt buộc")]
+        public int MaSanPham { get; set; }
+
+        [Required(ErrorMessage = "Tên thông số là bắt buộc")]
+        [StringLength(100, ErrorMessage = "Tên thông số không được quá 100 ký tự")]
+        public string TenThongSo { get; set; }
+
+        [Required(ErrorMessage = "Giá trị là bắt buộc")]
+        [StringLength(500, ErrorMessage = "Giá trị không được quá 500 ký tự")]
+        public string GiaTri { get; set; }
+    }
+    public class UpdateThongSoViewModel
+    {
+        [Required]
+        public int MaThongSo { get; set; }
+
+        [Required]
+        public int MaSanPham { get; set; }
+
+        [Required(ErrorMessage = "Tên thông số là bắt buộc")]
+        [StringLength(100, ErrorMessage = "Tên thông số không được quá 100 ký tự")]
+        public string TenThongSo { get; set; }
+
+        [Required(ErrorMessage = "Giá trị là bắt buộc")]
+        [StringLength(500, ErrorMessage = "Giá trị không được quá 500 ký tự")]
+        public string GiaTri { get; set; }
+    }
 }

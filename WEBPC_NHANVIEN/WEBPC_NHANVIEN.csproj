@@ -149,6 +149,7 @@
     <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongSoController.cs" />
     <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
     <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
@@ -198,7 +199,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Scripts\" />
+    <Folder Include="Areas\Admin\Views\ThongSo\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Sale\Views\web.config" />
