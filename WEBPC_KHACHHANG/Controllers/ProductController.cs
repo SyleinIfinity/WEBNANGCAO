@@ -15,7 +15,7 @@ namespace WEBPC_KHACHHANG.Controllers
         // Đọc URL API từ Web.config
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
-        // 1. TRANG DANH SÁCH SẢN PHẨM (Có tìm kiếm & lọc)
+        // 1. TRANG DANH SÁCH SẢN PHẨM
         public async Task<ActionResult> Index(string search = "", int? categoryId = null)
         {
             var products = new List<ProductViewModel>();
@@ -25,24 +25,18 @@ namespace WEBPC_KHACHHANG.Controllers
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // A. Gọi API lấy danh mục (để hiển thị sidebar lọc)
                 var catTask = client.GetAsync("DanhMuc");
-                
-                // B. Gọi API lấy sản phẩm
-                // Nếu có lọc danh mục -> Gọi endpoint lọc theo danh mục
                 string endpoint = categoryId.HasValue ? $"SanPham/danhmuc/{categoryId}" : "SanPham";
                 var prodTask = client.GetAsync(endpoint);
 
                 await Task.WhenAll(catTask, prodTask);
 
-                // Xử lý kết quả Danh mục
                 if (catTask.Result.IsSuccessStatusCode)
                 {
                     var catData = await catTask.Result.Content.ReadAsStringAsync();
                     categories = JsonConvert.DeserializeObject<List<CategoryViewModel>>(catData);
                 }
 
-                // Xử lý kết quả Sản phẩm
                 if (prodTask.Result.IsSuccessStatusCode)
                 {
                     var prodData = await prodTask.Result.Content.ReadAsStringAsync();
@@ -50,17 +44,11 @@ namespace WEBPC_KHACHHANG.Controllers
                 }
             }
 
-            // C. Lọc tìm kiếm theo tên (Client-side)
             if (!string.IsNullOrEmpty(search))
             {
                 products = products.Where(p => p.TenSanPham.ToLower().Contains(search.ToLower())).ToList();
             }
 
-            // D. Chỉ lấy sản phẩm ĐANG KINH DOANH (Tồn > 0 và chưa bị ẩn)
-            // Tùy logic của bạn, có thể ẩn sản phẩm hết hàng hoặc vẫn hiện nhưng disable nút mua
-            // products = products.Where(p => p.SoLuongTon > 0).ToList();
-
-            // Truyền dữ liệu qua View
             ViewBag.Categories = categories;
             ViewBag.CurrentSearch = search;
             ViewBag.CurrentCategory = categoryId;
@@ -72,23 +60,40 @@ namespace WEBPC_KHACHHANG.Controllers
         public async Task<ActionResult> Detail(int id)
         {
             ProductViewModel product = null;
+            List<ThongSoKyThuatViewModel> thongSoKyThuat = new List<ThongSoKyThuatViewModel>();
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
-                var response = await client.GetAsync($"SanPham/{id}");
 
-                if (response.IsSuccessStatusCode)
+                // Gọi song song 2 API
+                var productTask = client.GetAsync($"SanPham/{id}");
+                var thongSoTask = client.GetAsync($"ThongSoKyThuat/sanpham/{id}");
+
+                await Task.WhenAll(productTask, thongSoTask);
+
+                // Xử lý kết quả Sản phẩm
+                if (productTask.Result.IsSuccessStatusCode)
                 {
-                    var data = await response.Content.ReadAsStringAsync();
+                    var data = await productTask.Result.Content.ReadAsStringAsync();
                     product = JsonConvert.DeserializeObject<ProductViewModel>(data);
+                }
+
+                // Xử lý kết quả Thông số kỹ thuật
+                if (thongSoTask.Result.IsSuccessStatusCode)
+                {
+                    var data = await thongSoTask.Result.Content.ReadAsStringAsync();
+                    thongSoKyThuat = JsonConvert.DeserializeObject<List<ThongSoKyThuatViewModel>>(data);
                 }
             }
 
             if (product == null)
             {
-                return HttpNotFound(); // Hoặc chuyển hướng về trang chủ
+                return HttpNotFound();
             }
+
+            // Gán thông số kỹ thuật vào product
+            product.ThongSoKyThuat = thongSoKyThuat;
 
             return View(product);
         }

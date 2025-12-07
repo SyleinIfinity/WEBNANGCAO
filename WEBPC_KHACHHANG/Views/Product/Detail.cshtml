@@ -102,6 +102,66 @@
                     @Html.Raw(Model.MoTa != null ? Model.MoTa.Replace("\n", "<br>") : "Đang cập nhật mô tả chi tiết cho sản phẩm này...")
                 </div>
             </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <ul class="nav nav-tabs" id="productTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="spec-tab" data-bs-toggle="tab" data-bs-target="#spec" type="button" role="tab" aria-controls="spec" aria-selected="true">
+                                <i class="bi bi-cpu me-2"></i>Thông Số Kỹ Thuật
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">
+                                <i class="bi bi-star me-2"></i>Đánh Giá (0)
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content border border-top-0 rounded-bottom bg-white" id="productTabContent">
+                        @* Tab Thông số kỹ thuật *@
+                        <div class="tab-pane fade show active p-4" id="spec" role="tabpanel" aria-labelledby="spec-tab">
+                            @if (Model.ThongSoKyThuat != null && Model.ThongSoKyThuat.Any())
+                            {
+                                <table class="table table-striped table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" class="fw-bold text-primary" style="width: 35%;">Thông số</th>
+                                            <th scope="col" class="fw-bold text-primary">Giá trị</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var spec in Model.ThongSoKyThuat)
+                                        {
+                                            <tr>
+                                                <th scope="row" class="text-secondary">
+                                                    <i class="bi bi-check-lg text-success me-2"></i>@spec.TenThongSo
+                                                </th>
+                                                <td class="fw-semibold">@spec.GiaTri</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info mb-0" role="alert">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Thông tin thông số kỹ thuật đang được cập nhật...
+                                </div>
+                            }
+                        </div>
+
+                        @* Tab Đánh giá *@
+                        <div class="tab-pane fade p-4" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="text-center py-5">
+                                <i class="bi bi-chat-left-quote text-muted" style="font-size: 3rem;"></i>
+                                <p class="text-muted mt-3">Chưa có đánh giá nào cho sản phẩm này.</p>
+                                <p class="text-muted">Hãy là người đầu tiên đánh giá sản phẩm!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

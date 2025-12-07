@@ -11,9 +11,9 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         public decimal? GiaKhuyenMai { get; set; }
         public int SoLuongTon { get; set; }
         public string TenDanhMuc { get; set; }
-        public string MoTa { get; set; } // Mô tả chi tiết sản phẩm
+        public string MoTa { get; set; }
+        public List<ThongSoKyThuatViewModel> ThongSoKyThuat { get; set; }
 
-        // Danh sách ảnh từ API
         public List<ImageDTO> DanhSachAnh { get; set; }
 
         // Logic lấy ảnh đại diện để hiển thị ngoài danh sách
@@ -25,12 +25,21 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
                 {
                     // Lấy ảnh được đánh dấu là đại diện hoặc ảnh đầu tiên
                     var img = DanhSachAnh.FirstOrDefault(x => x.LaAnhDaiDien) ?? DanhSachAnh.First();
-                    return img.Url;
+                    return img.Url; 
                 }
-                return "https://via.placeholder.com/300x300?text=No+Image"; // Ảnh mặc định
+                return "https://via.placeholder.com/300x300?text=No+Image";
             }
         }
+        
     }
+    public class ThongSoKyThuatViewModel
+    {
+        public int MaThongSo { get; set; }
+        public int MaSanPham { get; set; }
+        public string TenThongSo { get; set; }
+        public string GiaTri { get; set; }
+    }
+
 
     // Class con để hứng dữ liệu ảnh
     public class ImageDTO
@@ -39,7 +48,7 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         public string Url { get; set; }
         public bool LaAnhDaiDien { get; set; }
     }
-
+    
     // Class dùng cho Dropdown lọc danh mục (Optional)
     public class CategoryViewModel
     {

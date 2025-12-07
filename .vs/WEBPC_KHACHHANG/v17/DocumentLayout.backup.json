@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\models\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\models\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|e:\\125\\tt\\cu\u1ED1i k\u00EC\\webpc_khachhang\\views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\product\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -114,7 +118,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -122,7 +126,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\LoginViewModel.cs",
+              "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\LoginViewModel.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-07T12:55:32.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "styles.css",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\styles.css",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Content\\css\\styles.css",
@@ -135,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "style.css",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Content\\css\\style.css",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Content\\css\\style.css",
@@ -148,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "style.css",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Scripts\\style.css",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Scripts\\style.css",
@@ -161,33 +178,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ProductViewModel.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
               "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\ProductViewModel.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAuwDAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAkwB8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-07T08:26:35.95Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Detail.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
               "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Product\\Detail.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAwwG0AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAswHIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-07T08:20:29.298Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Product\\Index.cshtml",
@@ -200,20 +217,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ProductController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
               "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAkwE0AAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAmwGgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-07T08:18:06.302Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Web.config",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Web.config",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Web.config",
@@ -226,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "HomeController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\HomeController.cs",
@@ -238,7 +255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "_LoginModal.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_LoginModal.cshtml",
@@ -251,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Web.config",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Web.config",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Web.config",
@@ -264,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Home\\Index.cshtml",
@@ -277,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AccountController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
@@ -289,7 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "RegisterController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\RegisterController.cs",
@@ -301,7 +318,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "LoginController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\LoginController.cs",
@@ -313,7 +330,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_Layout.cshtml",
@@ -326,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "TaiKhoanResponse.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Models\\Responses\\TaiKhoanResponse.cs",
@@ -338,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Register\\Index.cshtml",
@@ -350,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Login.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Account\\Login.cshtml",
@@ -362,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "style.css",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\style.css",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Content\\css\\style.css",
@@ -374,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Models\\ViewModels\\LoginViewModel.cs",
@@ -386,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Home\\Index.cshtml",
@@ -398,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "HomeController.cs",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\HomeController.cs",
@@ -410,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\Shared\\_Layout.cshtml",
@@ -422,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Views\\_ViewStart.cshtml",
@@ -434,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "home.css",
               "DocumentMoniker": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_NHANVIEN\\Content\\css\\home.css",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Content\\css\\home.css",
