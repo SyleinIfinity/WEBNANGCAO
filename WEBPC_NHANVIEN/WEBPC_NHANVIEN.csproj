@@ -144,6 +144,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LuongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
+    <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -197,6 +205,11 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Luong\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.SanPhamViewModel>
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="display: flex; justify-content: space-between;">
+    <div style="display: flex; gap: 10px;">
+        <input type="text" placeholder="Tìm tên sản phẩm..." class="form-control" style="width: 250px;">
+        <select class="form-control" style="width: 150px;">
+            <option>Danh mục</option>
+        </select>
+    </div>
+    <button class="btn btn-primary">+ Thêm Sản Phẩm</button>
+</div>
+
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Danh Mục</th>
+                <th>Giá Bán</th>
+                <th>Tồn Kho</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>#@item.MaSanPham</td>
+                        <td><strong>@item.TenSanPham</strong></td>
+                        <td><span class="badge bg-secondary">@item.TenDanhMuc</span></td>
+                        <td style="color: var(--primary-color); font-weight: bold;">
+                            @item.GiaBan.ToString("N0") đ
+                        </td>
+                        <td>
+                            @if (item.SoLuongTon < 10)
+                            {<span style="color:red; font-weight:bold;">@item.SoLuongTon (Thấp)</span> }
+                        else
+                        { <span>@item.SoLuongTon</span>}
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
