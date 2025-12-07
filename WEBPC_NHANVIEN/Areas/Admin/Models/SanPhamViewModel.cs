@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Models
@@ -14,26 +13,30 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
         public string TenDanhMuc { get; set; }
         public bool TrangThai { get; set; }
 
-        // [SỬA] Thêm property để hứng danh sách ảnh từ API
+        // Hứng danh sách ảnh từ API (Tên class con phải khớp cấu trúc JSON)
         public List<ImageDTO> DanhSachAnh { get; set; }
 
-        // [SỬA] Logic lấy ảnh đại diện (ảnh đầu tiên) để hiển thị trên bảng
         public string HinhAnh
         {
             get
             {
-                if (DanhSachAnh != null && DanhSachAnh.Count > 0)
-                    return DanhSachAnh[0].UrlHinhAnh;
-                return "https://via.placeholder.com/150"; // Ảnh mặc định nếu ko có
+                if (DanhSachAnh != null && DanhSachAnh.Any())
+                {
+                    // Ưu tiên ảnh đại diện, nếu ko có lấy ảnh đầu
+                    var img = DanhSachAnh.FirstOrDefault(x => x.LaAnhDaiDien) ?? DanhSachAnh.First();
+                    return img.Url; // [SỬA] Dùng .Url thay vì .UrlHinhAnh
+                }
+                return "";
             }
         }
     }
 
-    // Class phụ để hứng object ảnh bên trong SanPham
+    // [QUAN TRỌNG] Class này phải khớp y hệt ImageResponse của API
     public class ImageDTO
     {
-        public int MaHinhAnh { get; set; }
-        public string UrlHinhAnh { get; set; }
+        public int Id { get; set; }          // [SỬA] API trả về Id
+        public string Url { get; set; }      // [SỬA] API trả về Url
+        public string PublicId { get; set; }
         public bool LaAnhDaiDien { get; set; }
     }
 }

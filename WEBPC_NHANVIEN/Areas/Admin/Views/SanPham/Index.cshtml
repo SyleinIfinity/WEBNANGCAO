@@ -1,56 +1,182 @@
 ﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.SanPhamViewModel>
+
 @{
     ViewBag.Title = "Quản Lý Sản Phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card" style="display: flex; justify-content: space-between;">
-    <div style="display: flex; gap: 10px;">
-        <input type="text" placeholder="Tìm tên sản phẩm..." class="form-control" style="width: 250px;">
-        <select class="form-control" style="width: 150px;">
-            <option>Danh mục</option>
-        </select>
+<div class="card shadow-sm border-0 mb-3">
+    <div class="card-body">
+        <div class="row g-3 align-items-center">
+
+            <div class="col-md-8">
+                <form method="get" action="@Url.Action("Index")" class="d-flex flex-wrap gap-2">
+
+                    <div class="input-group" style="width: 300px;">
+                        <span class="input-group-text bg-white text-muted"><i class="fas fa-search"></i></span>
+                        <input type="text" name="search" value="@ViewBag.CurrentSearch"
+                               class="form-control border-start-0 ps-0" placeholder="Nhập tên sản phẩm...">
+                    </div>
+
+                    <select name="categoryId" class="form-select" style="width: 200px;" onchange="this.form.submit()">
+                        <option value="">-- Tất cả danh mục --</option>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var cat in ViewBag.Categories)
+                            {
+                                var isSelected = (ViewBag.CurrentCategory != null && (int)ViewBag.CurrentCategory == cat.MaDanhMuc) ? "selected" : "";
+                                <option value="@cat.MaDanhMuc" @isSelected>@cat.TenDanhMuc</option>
+                            }
+                        }
+                    </select>
+
+                    @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch) || ViewBag.CurrentCategory != null)
+                    {
+                        <a href="@Url.Action("Index")" class="btn btn-outline-danger" title="Xóa bộ lọc">
+                            <i class="fas fa-undo"></i>
+                        </a>
+                    }
+                </form>
+            </div>
+
+            <div class="col-md-4 text-md-end">
+                <a href="@Url.Action("Create")" class="btn btn-primary px-4 fw-bold shadow-sm">
+                    <i class="fas fa-plus-circle me-2"></i> Thêm Sản Phẩm
+                </a>
+            </div>
+        </div>
     </div>
-    <button class="btn btn-primary">+ Thêm Sản Phẩm</button>
 </div>
 
-<div class="card">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên Sản Phẩm</th>
-                <th>Danh Mục</th>
-                <th>Giá Bán</th>
-                <th>Tồn Kho</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null)
-            {
-                foreach (var item in Model)
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <table id="tblSanPham" class="table table-hover table-striped align-middle mb-0">
+            <thead class="bg-light text-secondary">
+                <tr>
+                    <th class="text-center" width="50">ID</th>
+                    <th class="text-center" width="80">Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th width="150">Danh Mục</th>
+                    <th class="text-end" width="150">Giá Bán</th>
+                    <th class="text-center" width="100">Kho</th>
+                    <th class="text-center" width="120">Trạng Thái</th>
+                    <th class="text-center" width="120">Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
                 {
-                    <tr>
-                        <td>#@item.MaSanPham</td>
-                        <td><strong>@item.TenSanPham</strong></td>
-                        <td><span class="badge bg-secondary">@item.TenDanhMuc</span></td>
-                        <td style="color: var(--primary-color); font-weight: bold;">
-                            @item.GiaBan.ToString("N0") đ
-                        </td>
-                        <td>
-                            @if (item.SoLuongTon < 10)
-                            {<span style="color:red; font-weight:bold;">@item.SoLuongTon (Thấp)</span> }
-                        else
-                        { <span>@item.SoLuongTon</span>}
-                        </td>
-                        <td>
-                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center fw-bold text-muted">#@item.MaSanPham</td>
+
+                            <td class="text-center">
+                                <img src="@(string.IsNullOrEmpty(item.HinhAnh) ? "https://via.placeholder.com/150?text=No+Img" : item.HinhAnh)"
+                                     alt="Thumb" class="rounded border"
+                                     style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
+
+                            <td>
+                                <strong class="text-dark">@item.TenSanPham</strong>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-white text-dark border shadow-sm">@item.TenDanhMuc</span>
+                            </td>
+
+                            <td class="text-end">
+                                @if (item.GiaKhuyenMai.HasValue && item.GiaKhuyenMai.Value > 0)
+                                {
+                                    <div class="text-danger fw-bold">
+                                        @item.GiaKhuyenMai.Value.ToString("N0") đ
+                                    </div>
+                                    <div class="text-muted text-decoration-line-through small">
+                                        @item.GiaBan.ToString("N0") đ
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="fw-bold text-primary">
+                                        @item.GiaBan.ToString("N0") đ
+                                    </div>
+                                }
+                            </td>
+
+                            <td class="text-center">
+                                @if (item.SoLuongTon <= 5)
+                                {
+                                    <span class="text-danger fw-bold" title="Sắp hết hàng">@item.SoLuongTon</span>
+                                }
+                                else
+                                {
+                                    <span class="text-success fw-bold">@item.SoLuongTon</span>
+                                }
+                            </td>
+
+                            <td class="text-center">
+                                @if (item.TrangThai)
+                                {
+                                    <span class="badge bg-success bg-opacity-75">Đang bán</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Ngừng bán</span>
+                                }
+                            </td>
+
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm shadow-sm">
+                                    <a href="@Url.Action("Edit", new { id = item.MaSanPham })" class="btn btn-warning text-white" title="Sửa">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger" title="Xóa"
+                                            onclick="confirmDelete('@item.MaSanPham', '@item.TenSanPham')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <form id="form-delete-@item.MaSanPham" action="@Url.Action("Delete", new { id = item.MaSanPham })" method="post" style="display:none;">
+                                    @Html.AntiForgeryToken()
+                                </form>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Khởi tạo DataTables
+            $('#tblSanPham').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json"
+                },
+                "pageLength": 10,
+                "lengthChange": false, // Ẩn chọn số dòng
+                "searching": false,    // Tắt tìm kiếm DataTable (vì đã có form riêng)
+                "ordering": false,     // Tắt sắp xếp (tránh lỗi xung đột)
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": [1, 7] } // Không sort cột Ảnh và Hành động
+                ]
+            });
+        });
+
+        // Hàm xác nhận xóa
+        function confirmDelete(id, name) {
+            if (confirm("Bạn có chắc chắn muốn xóa sản phẩm: " + name + " không?")) {
+                document.getElementById('form-delete-' + id).submit();
+            }
+        }
+    </script>
+}
