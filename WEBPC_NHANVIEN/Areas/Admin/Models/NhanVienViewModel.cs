@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json; // Cần dùng thư viện này nếu tên không khớp
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Models
 {
@@ -9,7 +10,11 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
         public string HoTen { get; set; }
         public string Email { get; set; }
         public string SoDienThoai { get; set; }
-        public string TenVaiTro { get; set; } // Ví dụ: "Admin", "Staff"
-        public string TrangThai { get; set; }  // Ví dụ: "Active", "Locked"
+        public string TenVaiTro { get; set; }
+
+        // [SỬA] Đổi tên cho khớp với API (TrangThaiTaiKhoan)
+        // Hoặc dùng [JsonProperty("TrangThaiTaiKhoan")] nếu muốn giữ tên ngắn gọn
+        [JsonProperty("TrangThaiTaiKhoan")]
+        public string TrangThai { get; set; }
     }
 }
