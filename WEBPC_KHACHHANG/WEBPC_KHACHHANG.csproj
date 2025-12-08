@@ -143,6 +143,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfoAddressController.cs" />
+    <Compile Include="Controllers\InfoUserController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\PromotionsController.cs" />
@@ -156,6 +158,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\infoaddress.css" />
+    <Content Include="Content\css\infouser.css" />
     <Content Include="Content\css\promotions.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\styles.css" />
@@ -188,6 +192,8 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Promotions\Index.cshtml" />
+    <Content Include="Views\InfoUser\Index.cshtml" />
+    <Content Include="Views\InfoAddress\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
