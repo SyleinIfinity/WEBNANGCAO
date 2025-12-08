@@ -170,6 +170,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
+    <Content Include="Areas\Admin\scripts\nhanvien-index.js" />
     <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
@@ -219,6 +220,8 @@
     <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SanPham\Create.cshtml" />
     <Content Include="Areas\Admin\Views\SanPham\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>

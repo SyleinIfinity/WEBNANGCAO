@@ -1,42 +1,88 @@
-﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.NhanVienViewModel>
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.NhanVienListItemViewModel>
+@using System.Linq
+
 @{
-    ViewBag.Title = "Quản Lý Nhân Viên";
+    ViewBag.Title = "Quản lý nhân viên";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card" style="display: flex; justify-content: flex-end;">
-    <button class="btn btn-primary" onclick="alert('Chức năng thêm đang hoàn thiện')">+ Thêm Nhân Viên</button>
+<h2>Quản lý nhân viên</h2>
+<p class="text-muted">
+    Xem, tìm kiếm và quản lý danh sách nhân viên trong hệ thống.
+</p>
+
+<div class="d-flex flex-wrap align-items-center mb-3" style="gap: 10px;">
+    <div style="flex: 1 1 240px; max-width: 320px;">
+        <input type="text"
+               id="nv-search"
+               class="form-control"
+               placeholder="Tìm theo họ tên, tên đăng nhập hoặc số điện thoại..." />
+    </div>
+
+    <a href="@Url.Action("Create", "NhanVien", new { area = "Admin" })"
+       class="btn btn-primary">
+        + Thêm nhân viên
+    </a>
 </div>
 
-<div class="card">
-    <table class="table">
+<div id="nv-message" class="text-muted mb-2">
+    @if (TempData["Message"] != null)
+    {
+        <span>@TempData["Message"]</span>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-sm" id="nv-table">
         <thead>
             <tr>
-                <th>Mã NV</th>
-                <th>Họ Tên</th>
+                <th style="width: 80px;">Mã NV</th>
+                <th>Họ tên</th>
+                <th style="width: 120px;">Số điện thoại</th>
+                <th style="width: 140px;">Vai trò</th>
+                <th style="width: 140px;">Tên đăng nhập</th>
                 <th>Email</th>
-                <th>Vai Trò</th>
-                <th>Thao tác</th>
+                <th style="width: 140px;">Trạng thái</th>
+                <th style="width: 130px;" class="text-center">Hành động</th>
             </tr>
         </thead>
-        <tbody>
-            @if (Model != null)
+        <tbody id="nv-table-body">
+            @if (Model != null && Model.Any())
             {
                 foreach (var item in Model)
                 {
+                    var id = item.MaNhanVien;
+                    var code = item.MaCodeNhanVien ?? ("NV-" + id);
+                    var hoTen = item.HoTen;
+                    var sdt = item.SoDienThoai;
+                    var tenVaiTro = item.TenVaiTro;
+                    var tenDangNhap = item.TenDangNhap;
+                    var email = item.Email;
+                    var trangThai = item.TrangThaiTaiKhoan;
+
                     <tr>
-                        <td>@item.MaCodeNhanVien</td>
-                        <td><strong>@item.HoTen</strong></td>
-                        <td>@item.Email</td>
-                        <td>
-                            @if (item.TenVaiTro == "Admin")
-                            {<span class="badge bg-danger">Admin</span> }
-                            else
-                            { <span class="badge bg-info">Staff</span>}
-                        </td>
-                        <td>
-                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        <td>@code</td>
+                        <td>@hoTen</td>
+                        <td>@sdt</td>
+                        <td>@tenVaiTro</td>
+                        <td>@tenDangNhap</td>
+                        <td>@email</td>
+                        <td>@trangThai</td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Edit", "NhanVien", new { area = "Admin", id = id })"
+                               class="btn btn-sm btn-outline-primary">
+                                Sửa
+                            </a>
+
+                            @using (Html.BeginForm("Delete", "NhanVien", FormMethod.Post, new { area = "Admin", @class = "d-inline-block nv-delete-form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", id)
+                                <button type="submit"
+                                        class="btn btn-sm btn-outline-danger nv-btn-delete">
+                                    Xóa
+                                </button>
+                            }
                         </td>
                     </tr>
                 }
@@ -44,3 +90,12 @@
         </tbody>
     </table>
 </div>
+
+@if (Model == null || !Model.Any())
+{
+    <p class="text-muted mt-2 mb-0">Chưa có nhân viên nào.</p>
+}
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/nhanvien-index.js"></script>
+}
