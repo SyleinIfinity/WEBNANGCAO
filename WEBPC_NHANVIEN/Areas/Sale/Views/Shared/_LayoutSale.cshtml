@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sale Admin</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <style>
+        body {
+            overflow-x: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        /* === 1. SIDEBAR (MENU TRÁI) === */
+        #sidebar-wrapper {
+            min-width: 260px;
+            max-width: 260px;
+            background-color: #6f42c1; /* Màu Tím */
+            color: #fff;
+            transition: all 0.3s;
+            min-height: 100vh;
+        }
+
+        .sidebar-heading {
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Style chung cho các mục menu */
+        #sidebar-wrapper .list-group-item {
+            display: block;
+            width: 100%;
+            text-align: left; /* QUAN TRỌNG: Canh trái thẳng hàng */
+            background-color: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 15px 25px; /* Khoảng cách đều */
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            display: flex; /* Dùng flex để icon và chữ thẳng hàng ngang */
+            align-items: center;
+        }
+
+            #sidebar-wrapper .list-group-item:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                color: #fff;
+                padding-left: 30px; /* Hiệu ứng đẩy sang phải nhẹ */
+                transition: all 0.3s;
+            }
+
+            #sidebar-wrapper .list-group-item i {
+                width: 30px; /* Cố định chiều rộng icon để chữ thẳng hàng */
+                text-align: center;
+                margin-right: 10px;
+            }
+
+        /* === 2. BÊN PHẢI (HEADER + CONTENT) === */
+        #page-content-wrapper {
+            width: 100%;
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .navbar-custom {
+            background-color: #AFEEEE;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-right-group {
+            display: flex !important;
+            align-items: center !important;
+            flex-direction: row !important;
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        /* Nút Chấm Công (Giữ nguyên hiệu ứng bạn thích) */
+        .btn-cham-cong {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #6f42c1;
+            border-radius: 50px;
+            padding: 0;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            height: 40px;
+            width: 40px;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+            .btn-cham-cong:hover {
+                background-color: #6f42c1;
+                color: #fff;
+                width: 170px;
+                padding: 0 15px;
+                justify-content: flex-start;
+            }
+
+            .btn-cham-cong i {
+                font-size: 1.2rem;
+                min-width: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .text-cham-cong {
+            max-width: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
+
+        .btn-cham-cong:hover .text-cham-cong {
+            max-width: 150px;
+            opacity: 1;
+            margin-left: 5px;
+        }
+
+        /* Dấu gạch đứng */
+        .separator-line {
+            font-size: 1.5rem;
+            color: #555;
+            margin: 0 15px;
+            font-weight: 300;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        /* Link Tên User */
+        .user-name-text {
+            font-weight: bold;
+            color: #333;
+            font-size: 1rem;
+            white-space: nowrap;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+            .user-name-text:hover {
+                color: #6f42c1;
+                cursor: pointer;
+            }
+
+        .main-content-container {
+            flex: 1;
+            padding: 30px;
+            margin: 30px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <i class="fas fa-user-shield me-2"></i> NHÂN VIÊN
+            </div>
+
+            <div class="list-group list-group-flush mt-3 d-flex flex-column">
+
+                <a href="@Url.Action("Index", "KhuyenMai", new { area = "Sale" })" class="list-group-item list-group-item-action">
+                    <i class="fas fa-gift"></i> <span>Khuyến Mãi</span>
+                </a>
+
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Đơn Hàng</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+
+            <nav class="navbar-custom">
+                <h2 class="page-title">Hệ thống quản lý</h2>
+
+                <div class="header-right-group">
+                    <a href="#" class="btn-cham-cong" title="Chấm công">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="text-cham-cong">Chấm công ngay</span>
+                    </a>
+
+                    <span class="separator-line">|</span>
+
+                    <a href="#" class="user-name-text">Xin chào, Khánh Ngọc</a>
+                </div>
+            </nav>
+
+            <div class="main-content-container">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
