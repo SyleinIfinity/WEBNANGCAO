@@ -143,6 +143,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LuongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongSoController.cs" />
+    <Compile Include="Areas\Admin\Models\AnhSanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ThongSoViewModel.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -155,9 +168,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Controllers\style.css" />
-    <Content Include="Areas\Admin\Data\css\style.css" />
+    <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
+    <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
     <Content Include="Areas\Sale\Data\css\style.css" />
@@ -170,6 +183,7 @@
     <Content Include="Content\css\home.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\images\monkey.jpg" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Requests\style.css" />
@@ -188,11 +202,23 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\ThongSo\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Sale\Views\web.config" />
     <Content Include="Areas\Tech\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Luong\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
