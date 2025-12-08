@@ -1,0 +1,676 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Models.KhuyenMai>
+
+@{
+    ViewBag.Title = "Quản lý Khuyến Mãi";
+    Layout = "~/Areas/Sale/Views/Shared/_LayoutSale.cshtml";
+}
+
+<style>
+    /* ================================================================= */
+    /* 1. XỬ LÝ MODAL - ĐỔ BÓNG ĐÈ LÊN TOÀN BỘ MÀN HÌNH (KỂ CẢ SIDEBAR/HEADER) */
+    /* ================================================================= */
+
+    /* Backdrop (lớp nền đen mờ) - Phủ toàn bộ màn hình */
+    .modal-backdrop {
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 9998 !important;
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    /* Modal container - Đè lên backdrop, phủ toàn màn hình */
+    .modal {
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 9999 !important;
+        overflow-y: auto !important;
+        display: none;
+        position: fixed;
+    }
+
+    .modal.show {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .modal-dialog {
+        margin: 1rem auto !important;
+        position: relative;
+        z-index: 10000;
+    }
+
+    /* ================= 2. GRID VOUCHER ================= */
+    .voucher-grid {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+
+    .grid-col {
+        padding: 0 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    @@media (min-width: 576px) {
+        .grid-col {
+            width: 50%;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .grid-col {
+            width: 33.33%;
+        }
+    }
+
+    @@media (min-width: 1200px) {
+        .grid-col {
+            width: 25%;
+        }
+    }
+
+    /* Thẻ Voucher */
+    .ticket-card {
+        background: #fff;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: 0.2s;
+        min-height: 220px;
+    }
+
+    .ticket-card:hover {
+        transform: translateY(-3px);
+        border-color: #6f42c1;
+        box-shadow: 0 5px 15px rgba(111,66,193,0.15);
+    }
+
+    .ticket-header-strip {
+        height: 4px;
+        background: #6f42c1;
+        width: 100%;
+    }
+
+    .ticket-body {
+        padding: 12px;
+        text-align: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .ticket-value {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #6f42c1;
+        margin-bottom: 4px;
+    }
+
+    .ticket-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .ticket-qty {
+        font-size: 0.7rem;
+        background: #f8f9fa;
+        padding: 2px 8px;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+        color: #666;
+    }
+
+    .ticket-divider {
+        border-top: 1px dashed #e9ecef;
+        margin-top: auto;
+    }
+
+    .ticket-footer {
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .btn-icon {
+        border: none;
+        background: none;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        color: #666;
+    }
+
+    .btn-icon:hover {
+        transform: scale(1.2);
+        color: #6f42c1;
+    }
+
+    /* ================= 3. MODAL CHI TIẾT VOUCHER ================= */
+    .premium-box {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        overflow: hidden;
+        max-width: 500px;
+        margin: auto;
+        animation: modalSlideIn 0.3s ease-out;
+        background: #fff;
+    }
+
+    @@keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .premium-header {
+        background: linear-gradient(135deg, #6f42c1, #5a32a3);
+        padding: 20px;
+        text-align: center;
+        color: white;
+        position: relative;
+    }
+
+    .premium-header h5 {
+        margin: 0;
+        padding-right: 40px;
+    }
+
+    .premium-header #box-name {
+        font-size: 0.85rem;
+        opacity: 0.95;
+        margin-top: 8px;
+        font-weight: 500;
+    }
+
+    /* Nút đóng */
+    .btn-close-white-custom {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 1rem;
+    }
+
+    .btn-close-white-custom:hover {
+        background: rgba(255,255,255,0.4);
+        transform: rotate(90deg);
+    }
+
+    /* Phần hiển thị giá trị voucher */
+    .hero-section {
+        background: #fff;
+        text-align: center;
+        padding: 30px 20px 20px;
+        border-bottom: 2px dashed #e9ecef;
+        position: relative;
+    }
+
+    /* Hai lỗ tròn giả lập voucher */
+    .hero-section::before,
+    .hero-section::after {
+        content: "";
+        position: absolute;
+        bottom: -11px;
+        width: 22px;
+        height: 22px;
+        background: rgba(0, 0, 0, 0.65);
+        border-radius: 50%;
+        z-index: 5;
+    }
+
+    .hero-section::before {
+        left: -11px;
+    }
+
+    .hero-section::after {
+        right: -11px;
+    }
+
+    .hero-val {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #6f42c1;
+        line-height: 1;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .hero-lbl {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #999;
+        letter-spacing: 1.5px;
+        margin-top: 8px;
+    }
+
+    .hero-section .badge {
+        margin-top: 15px;
+        padding: 8px 20px;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    /* Thông tin chi tiết */
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 25px 30px;
+        background: #fff;
+    }
+
+    .d-item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .d-lbl {
+        font-size: 0.75rem;
+        color: #888;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .d-val {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 700;
+    }
+
+    .d-item:last-child {
+        grid-column: 1 / -1;
+        text-align: center;
+        border-top: 2px solid #f0f0f0;
+        padding-top: 15px;
+        margin-top: 5px;
+    }
+
+    .d-item:last-child .d-val {
+        font-size: 1.4rem;
+    }
+
+    /* ================= 4. MODAL CẬP NHẬT (THIẾT KẾ HIỆN ĐẠI) ================= */
+    #updateModal .modal-content {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        animation: modalSlideIn 0.3s ease-out;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    #updateModal .modal-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border: none;
+        padding: 18px 20px;
+        color: white;
+        position: relative;
+    }
+
+    #updateModal .modal-header .modal-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    #updateModal .modal-header .modal-title::before {
+        content: "📅";
+        font-size: 1.2rem;
+    }
+
+    #updateModal .modal-header .btn-close {
+        filter: brightness(0) invert(1);
+        opacity: 0.8;
+        transition: all 0.2s;
+    }
+
+    #updateModal .modal-header .btn-close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+    }
+
+    #updateModal .modal-body {
+        padding: 25px;
+        background: #fff;
+    }
+
+    #updateModal .form-group {
+        margin-bottom: 20px;
+    }
+
+    #updateModal .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    #updateModal label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #updateModal .form-control {
+        border-radius: 8px;
+        border: 2px solid #e9ecef;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+
+    #updateModal .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+        outline: none;
+    }
+
+    #updateModal .form-control:hover {
+        border-color: #b8c5f2;
+    }
+
+    #updateModal .modal-footer {
+        border: none;
+        padding: 15px 25px 20px;
+        background: #f8f9fa;
+        gap: 10px;
+    }
+
+    #updateModal .btn {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #updateModal .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    #updateModal .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    }
+
+    #updateModal .btn-primary {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+
+    #updateModal .btn-primary:hover {
+        background: linear-gradient(135deg, #5568d3, #63408a);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Icon cho input date */
+    #updateModal input[type="date"] {
+        position: relative;
+        cursor: pointer;
+    }
+
+    #updateModal input[type="date"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.2s;
+    }
+
+    #updateModal input[type="date"]::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-bold text-dark m-0">
+        <i class="fas fa-ticket-alt text-primary me-2"></i> DANH SÁCH KHUYẾN MÃI
+    </h5>
+    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">
+        <i class="fas fa-plus"></i> Tạo mới
+    </button>
+</div>
+
+<div class="voucher-grid">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="grid-col">
+                <div class="ticket-card">
+                    <div class="ticket-header-strip"></div>
+                    <div class="ticket-body">
+                        <div class="ticket-value">
+                            @if (item.loaiGiam == "PERCENT")
+                            {<span>-@((int)item.giaTriGiam)%</span>}
+                            else
+                            {<span>-@((item.giaTriGiam >= 1000) ? (item.giaTriGiam / 1000).ToString("#,##0") + "K" : item.giaTriGiam.ToString())</span>}
+                        </div>
+                        <div class="ticket-title" title="@item.tenChuongTrinh">@item.tenChuongTrinh</div>
+                        <div><span class="ticket-qty">Còn: <b>@item.soLuongConLai</b></span></div>
+                    </div>
+                    <div class="ticket-divider"></div>
+                    <div class="ticket-footer">
+                        <button class="btn-icon btn-view" title="Xem chi tiết"
+                                data-code="@item.maCodeKM"
+                                data-name="@item.tenChuongTrinh"
+                                data-val="@item.giaTriGiam"
+                                data-type="@item.loaiGiam"
+                                data-min="@(item.donHangToiThieu ?? 0)"
+                                data-max="@(item.giamToiDa ?? 0)"
+                                data-start="@item.ngayBatDau.ToString("dd/MM/yyyy")"
+                                data-end="@item.ngayKetThuc.ToString("dd/MM/yyyy")"
+                                data-qty="@item.soLuongConLai">
+                            <i class="fas fa-eye text-info"></i>
+                        </button>
+                        <button class="btn-icon btn-update" title="Cập nhật"
+                                data-id="@item.maKhuyenMai"
+                                data-start="@item.ngayBatDau.ToString("yyyy-MM-dd")"
+                                data-end="@item.ngayKetThuc.ToString("yyyy-MM-dd")">
+                            <i class="fas fa-edit text-warning"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center py-5 w-100 text-muted">Không có dữ liệu.</div>
+    }
+</div>
+
+<!-- Modal: Chi tiết Voucher -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content premium-box">
+
+            <div class="premium-header">
+                <button type="button" class="btn-close-white-custom" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h5 class="fw-bold">CHI TIẾT VOUCHER</h5>
+                <div id="box-name">Tên chương trình</div>
+            </div>
+
+            <div class="hero-section">
+                <div class="hero-val" id="box-val">0</div>
+                <div class="hero-lbl" id="box-type">LOẠI GIẢM</div>
+                <div>
+                    <span class="badge bg-dark font-monospace" id="box-code">CODE</span>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="d-item">
+                    <span class="d-lbl">Đơn tối thiểu</span>
+                    <span class="d-val" id="box-min">0 đ</span>
+                </div>
+                <div class="d-item">
+                    <span class="d-lbl">Giảm tối đa</span>
+                    <span class="d-val text-danger" id="box-max">0 đ</span>
+                </div>
+                <div class="d-item">
+                    <span class="d-lbl">Bắt đầu</span>
+                    <span class="d-val text-success" id="box-start">--/--</span>
+                </div>
+                <div class="d-item">
+                    <span class="d-lbl">Kết thúc</span>
+                    <span class="d-val text-secondary" id="box-end">--/--</span>
+                </div>
+                <div class="d-item">
+                    <span class="d-lbl">Số lượng còn lại</span>
+                    <span class="d-val text-primary" id="box-qty">0</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Cập nhật thời gian -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Cập nhật thời gian</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="modal-update-id" />
+                <div class="form-group">
+                    <label>Ngày bắt đầu</label>
+                    <input type="date" class="form-control" id="modal-update-start">
+                </div>
+                <div class="form-group">
+                    <label>Ngày kết thúc</label>
+                    <input type="date" class="form-control" id="modal-update-end">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i> Hủy
+                </button>
+                <button type="button" class="btn btn-primary" id="btn-save-update">
+                    <i class="fas fa-save me-1"></i> Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const formatVND = (num) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+
+            // Xem chi tiết voucher
+            $('body').on('click', '.btn-view', function () {
+                var d = $(this).data();
+
+                $('#box-name').text(d.name);
+                $('#box-code').text(d.code);
+
+                if (d.type === "PERCENT") {
+                    $('#box-val').text("-" + parseInt(d.val) + "%");
+                    $('#box-type').text("Giảm theo phần trăm");
+                } else {
+                    $('#box-val').text("-" + formatVND(d.val));
+                    $('#box-type').text("Giảm tiền mặt");
+                }
+
+                $('#box-min').text(formatVND(d.min));
+                $('#box-max').text(d.max > 0 ? formatVND(d.max) : "Không giới hạn");
+                $('#box-start').text(d.start);
+                $('#box-end').text(d.end);
+                $('#box-qty').text(d.qty);
+
+                var myModal = new bootstrap.Modal(document.getElementById('detailModal'));
+                myModal.show();
+            });
+
+            // Cập nhật thời gian
+            $('body').on('click', '.btn-update', function () {
+                $('#modal-update-id').val($(this).data('id'));
+                $('#modal-update-start').val($(this).data('start').split(' ')[0]);
+                $('#modal-update-end').val($(this).data('end').split(' ')[0]);
+
+                var myModal = new bootstrap.Modal(document.getElementById('updateModal'));
+                myModal.show();
+            });
+
+            // Lưu thay đổi
+            $('#btn-save-update').click(function () {
+                var id = $('#modal-update-id').val();
+                var start = $('#modal-update-start').val();
+                var end = $('#modal-update-end').val();
+
+                $.ajax({
+                    url: '/Sale/KhuyenMai/CapNhatThoiGian',
+                    type: 'POST',
+                    data: { id: id, ngayBatDau: start, ngayKetThuc: end },
+                    success: function (rs) {
+                        if (rs.success) {
+                            alert("Cập nhật thành công!");
+                            location.reload();
+                        } else {
+                            alert(rs.msg);
+                        }
+                    },
+                    error: function () {
+                        alert("Lỗi kết nối!");
+                    }
+                });
+            });
+        });
+    </script>
+}

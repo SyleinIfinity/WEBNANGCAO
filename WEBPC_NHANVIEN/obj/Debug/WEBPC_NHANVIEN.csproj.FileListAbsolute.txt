@@ -130,6 +130,8 @@ D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\roslyn\vbc.rsp
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\roslyn\VBCSCompiler.exe
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\roslyn\VBCSCompiler.exe.config
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Antlr3.Runtime.dll
+D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\EntityFramework.dll
+D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\EntityFramework.SqlServer.dll
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Microsoft.Web.Infrastructure.dll
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Newtonsoft.Json.Bson.dll
@@ -148,6 +150,8 @@ D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\System.Web.WebPages.Deployment
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\System.Web.WebPages.dll
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\System.Web.WebPages.Razor.dll
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\WebGrease.dll
+D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\EntityFramework.xml
+D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\EntityFramework.SqlServer.xml
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Newtonsoft.Json.Bson.pdb
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\Newtonsoft.Json.Bson.xml
 D:\CNTT-SPKT\CNTT-SPKT\wnc_cki\WEBPC_NHANVIEN\bin\System.Buffers.xml

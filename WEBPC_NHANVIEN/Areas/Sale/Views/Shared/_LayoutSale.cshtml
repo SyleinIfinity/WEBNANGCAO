@@ -21,7 +21,7 @@
             align-items: stretch;
         }
 
-        /* === MENU TRÁI (SIDEBAR) === */
+        /* === 1. SIDEBAR (MENU TRÁI) === */
         #sidebar-wrapper {
             min-width: 260px;
             max-width: 260px;
@@ -41,27 +41,36 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Style chung cho các mục menu */
         #sidebar-wrapper .list-group-item {
             display: block;
             width: 100%;
-            text-align: left;
+            text-align: left; /* QUAN TRỌNG: Canh trái thẳng hàng */
             background-color: transparent;
             color: rgba(255, 255, 255, 0.8);
             border: none;
-            padding: 15px 25px;
+            padding: 15px 25px; /* Khoảng cách đều */
             font-size: 1.1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             text-decoration: none;
+            display: flex; /* Dùng flex để icon và chữ thẳng hàng ngang */
+            align-items: center;
         }
 
             #sidebar-wrapper .list-group-item:hover {
                 background-color: rgba(255, 255, 255, 0.2);
                 color: #fff;
-                transform: scale(1.05);
-                transition: all 0.2s;
+                padding-left: 30px; /* Hiệu ứng đẩy sang phải nhẹ */
+                transition: all 0.3s;
             }
 
-        /* === BÊN PHẢI === */
+            #sidebar-wrapper .list-group-item i {
+                width: 30px; /* Cố định chiều rộng icon để chữ thẳng hàng */
+                text-align: center;
+                margin-right: 10px;
+            }
+
+        /* === 2. BÊN PHẢI (HEADER + CONTENT) === */
         #page-content-wrapper {
             width: 100%;
             background-color: #f4f6f9;
@@ -69,6 +78,7 @@
             flex-direction: column;
         }
 
+        /* Header */
         .navbar-custom {
             background-color: #AFEEEE;
             box-shadow: 0 1px 4px rgba(0,0,0,0.08);
@@ -91,11 +101,11 @@
             margin: 0;
         }
 
-        /* === NÚT CHẤM CÔNG (ĐÃ FIX LỖI) === */
+        /* Nút Chấm Công (Giữ nguyên hiệu ứng bạn thích) */
         .btn-cham-cong {
             display: inline-flex;
             align-items: center;
-            justify-content: center; /* Canh giữa icon */
+            justify-content: center;
             background: #fff;
             color: #6f42c1;
             border-radius: 50px;
@@ -104,7 +114,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: all 0.4s ease;
             height: 40px;
-            width: 40px; /* Hình tròn 40x40 */
+            width: 40px;
             overflow: hidden;
             white-space: nowrap;
             vertical-align: middle;
@@ -113,21 +123,20 @@
             .btn-cham-cong:hover {
                 background-color: #6f42c1;
                 color: #fff;
-                width: 170px; /* Dài ra khi hover */
+                width: 170px;
                 padding: 0 15px;
-                justify-content: flex-start; /* Khi dài ra thì canh trái cho đẹp */
+                justify-content: flex-start;
             }
 
             .btn-cham-cong i {
                 font-size: 1.2rem;
-                min-width: 40px; /* Đảm bảo icon luôn có chỗ đứng ở giữa */
+                min-width: 40px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
 
         .text-cham-cong {
-            /* QUAN TRỌNG: Thêm max-width: 0 để nó không chiếm chỗ khi chưa hover */
             max-width: 0;
             opacity: 0;
             transition: all 0.4s ease;
@@ -136,13 +145,13 @@
             overflow: hidden;
         }
 
-        /* Khi hover thì hiện chữ ra */
         .btn-cham-cong:hover .text-cham-cong {
             max-width: 150px;
             opacity: 1;
             margin-left: 5px;
         }
 
+        /* Dấu gạch đứng */
         .separator-line {
             font-size: 1.5rem;
             color: #555;
@@ -152,6 +161,7 @@
             display: inline-block;
         }
 
+        /* Link Tên User */
         .user-name-text {
             font-weight: bold;
             color: #333;
@@ -183,13 +193,18 @@
             <div class="sidebar-heading">
                 <i class="fas fa-user-shield me-2"></i> NHÂN VIÊN
             </div>
+
             <div class="list-group list-group-flush mt-3 d-flex flex-column">
-                <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-gift me-2"></i> Khuyến Mãi
+
+                <a href="@Url.Action("Index", "KhuyenMai", new { area = "Sale" })" class="list-group-item list-group-item-action">
+                    <i class="fas fa-gift"></i> <span>Khuyến Mãi</span>
                 </a>
+
                 <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-shopping-bag me-2"></i> Đơn Hàng
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Đơn Hàng</span>
                 </a>
+
             </div>
         </div>
 
@@ -199,7 +214,6 @@
                 <h2 class="page-title">Hệ thống quản lý</h2>
 
                 <div class="header-right-group">
-
                     <a href="#" class="btn-cham-cong" title="Chấm công">
                         <i class="fas fa-calendar-alt"></i>
                         <span class="text-cham-cong">Chấm công ngay</span>
@@ -208,7 +222,6 @@
                     <span class="separator-line">|</span>
 
                     <a href="#" class="user-name-text">Xin chào, Khánh Ngọc</a>
-
                 </div>
             </nav>
 
