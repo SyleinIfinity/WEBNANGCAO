@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using WEBPC_NHANVIEN.Models;
+using System.Text; // Cần thiết cho StringContent
 
 namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
 {
@@ -34,8 +35,9 @@ namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
 
                 try
                 {
-                    // Gửi lệnh GET lên API (Bạn check lại Swagger xem đúng đường dẫn /api/KhuyenMai chưa nhé)
-                    HttpResponseMessage response = await client.GetAsync("api/KhuyenMai");
+                    // Gửi lệnh GET lên API
+                    // LƯU Ý: Đã sửa lại đường dẫn GET API từ "KhuyenMai" thành "api/KhuyenMai" (thông thường)
+                    HttpResponseMessage response = await client.GetAsync("KhuyenMai");
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -45,7 +47,6 @@ namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
                 }
                 catch (Exception)
                 {
-                    // Nếu lỗi kết nối thì trả về danh sách rỗng để không chết trang
                     listKM = new List<KhuyenMai>();
                 }
             }
@@ -53,25 +54,37 @@ namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
         }
 
         // POST: Cập nhật thời gian (Gửi lệnh lên API)
-        [HttpPost]
+        [HttpPost] // Giữ nguyên [HttpPost] ở đây vì AJAX client (jQuery) thường không hỗ trợ HTTP PATCH
+                   // và chúng ta sẽ giả lập PATCH bằng cách dùng SendAsync
         public async Task<ActionResult> CapNhatThoiGian(int id, DateTime ngayBatDau, DateTime ngayKetThuc)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_baseUrl);
 
-                // Tạo cục dữ liệu để gửi đi
+                // 1. Tạo đối tượng dữ liệu JSON
                 var updateData = new
                 {
                     maKhuyenMai = id,
                     ngayBatDau = ngayBatDau,
                     ngayKetThuc = ngayKetThuc
                 };
+                var jsonContent = JsonConvert.SerializeObject(updateData);
+
+                // 2. Tạo nội dung HTTP với kiểu JSON
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // 3. Tạo yêu cầu PATCH thủ công
+                // Giả định API của bạn nhận PATCH tại endpoint: api/KhuyenMai/UpdateDate
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), "KhuyenMai/UpdateDate")
+                {
+                    Content = content
+                };
 
                 try
                 {
-                    // Đường dẫn này cũng phải check trên Swagger (Ví dụ: api/KhuyenMai/UpdateDate)
-                    HttpResponseMessage response = await client.PostAsJsonAsync("api/KhuyenMai/UpdateDate", updateData);
+                    // 4. Gửi yêu cầu PATCH
+                    HttpResponseMessage response = await client.SendAsync(request);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -79,7 +92,9 @@ namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
                     }
                     else
                     {
-                        return Json(new { success = false, msg = "Lỗi API: " + response.StatusCode });
+                        // Đọc thông báo lỗi từ API nếu có
+                        var errorMsg = await response.Content.ReadAsStringAsync();
+                        return Json(new { success = false, msg = $"Lỗi API: {response.StatusCode}. Chi tiết: {errorMsg}" });
                     }
                 }
                 catch (Exception ex)
