@@ -12,7 +12,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="@Url.Content("~/Content/css/styles.css")" />
-
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <!-- Header -->
@@ -29,12 +29,12 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-4">
                         <li class="nav-item"><a class="nav-link active" href="#">Trang Chủ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Sản phẩm</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Product")">Sản phẩm</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Giới thiệu</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Cấu hình</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Hỗ trợ</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Khuyến Mãi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Promotions")">Khuyến Mãi</a></li>
                     </ul>
                     <div class="d-flex align-items-center">
                         <div class="search-box me-3">
