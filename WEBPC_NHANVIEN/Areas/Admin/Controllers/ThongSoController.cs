@@ -10,81 +10,57 @@ using WEBPC_NHANVIEN.Areas.Admin.Models;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
-    /// <summary>
-    /// Controller for managing Product Specifications (Thông số kỹ thuật)
-    /// CREATE NEW FILE: Areas/Admin/Controllers/ThongSoController.cs
-    /// API Endpoint: ThongSoKyThuat
-    /// </summary>
     public class ThongSoController : Controller
     {
+        // Lấy URL API gốc từ Web.config
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+        // Giả sử config là: https://webapi-1-qldr.onrender.com/api/
 
-        /// <summary>
-        /// GET: Load all specifications for a product
-        /// MVC Route: /Admin/ThongSo/GetByProduct?productId=123
-        /// API Call: GET /ThongSoKyThuat/sanpham/{productId}
-        /// </summary>
+        // 1. LẤY DANH SÁCH THÔNG SỐ THEO ID SẢN PHẨM
         [HttpGet]
-        public async Task<JsonResult> GetByProduct(int productId)
+        public async Task<ActionResult> GetByProduct(int productId)
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (var client = new HttpClient())
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                // Giả định API endpoint là: api/ThongSoKyThuat/sanpham/{id}
+                var response = await client.GetAsync($"ThongSoKyThuat/sanpham/{productId}");
+
+                if (response.IsSuccessStatusCode)
                 {
-                    client.BaseAddress = new Uri(_apiBaseUrl);
-
-                    // GET request to API
-                    var response = await client.GetAsync($"ThongSoKyThuat/sanpham/{productId}");
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var data = await response.Content.ReadAsStringAsync();
-                        var specifications = JsonConvert.DeserializeObject<List<ThongSoViewModel>>(data);
-                        return Json(specifications, JsonRequestBehavior.AllowGet);
-                    }
-
-                    return Json(new { error = "Failed to load specifications", status = response.StatusCode }, JsonRequestBehavior.AllowGet);
+                    var data = await response.Content.ReadAsStringAsync();
+                    // Trả về JSON nguyên bản cho View xử lý
+                    return Content(data, "application/json");
                 }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+
+                // Nếu API chưa có dữ liệu hoặc lỗi, trả về mảng rỗng
+                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
             }
         }
 
-        /// <summary>
-        /// POST: Create a new specification
-        /// MVC Route: /Admin/ThongSo/Create (POST)
-        /// API Call: POST /ThongSoKyThuat
-        /// </summary>
+        // 2. THÊM MỚI THÔNG SỐ
         [HttpPost]
-        public async Task<JsonResult> Create(CreateThongSoViewModel model)
+        public async Task<ActionResult> Create(ThongSoViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { success = false, error = "Dữ liệu không hợp lệ" });
-            }
-
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
-
                     var json = JsonConvert.SerializeObject(model);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    // POST request to API
+                    // Gọi API POST: api/ThongSoKyThuat
                     var response = await client.PostAsync("ThongSoKyThuat", content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        var data = await response.Content.ReadAsStringAsync();
-                        var result = JsonConvert.DeserializeObject<ThongSoViewModel>(data);
-                        return Json(new { success = true, data = result, message = "Thêm thông số thành công" });
+                        return Json(new { success = true, message = "Thêm thông số thành công!" });
                     }
-
-                    return Json(new { success = false, error = "Không thể thêm thông số", status = response.StatusCode });
+                    else
+                    {
+                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
+                    }
                 }
             }
             catch (Exception ex)
@@ -93,37 +69,29 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             }
         }
 
-        /// <summary>
-        /// POST: Update an existing specification
-        /// MVC Route: /Admin/ThongSo/Update (POST)
-        /// API Call: PUT /ThongSoKyThuat/{id}
-        /// </summary>
+        // 3. CẬP NHẬT THÔNG SỐ
         [HttpPost]
-        public async Task<JsonResult> Update(UpdateThongSoViewModel model)
+        public async Task<ActionResult> Update(ThongSoViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { success = false, error = "Dữ liệu không hợp lệ" });
-            }
-
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
-
                     var json = JsonConvert.SerializeObject(model);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    // PUT request to API (standard REST update)
+                    // Gọi API PUT: api/ThongSoKyThuat/{id}
                     var response = await client.PutAsync($"ThongSoKyThuat/{model.MaThongSo}", content);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return Json(new { success = true, message = "Cập nhật thông số thành công" });
+                        return Json(new { success = true, message = "Cập nhật thành công!" });
                     }
-
-                    return Json(new { success = false, error = "Không thể cập nhật thông số", status = response.StatusCode });
+                    else
+                    {
+                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
+                    }
                 }
             }
             catch (Exception ex)
@@ -132,13 +100,9 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             }
         }
 
-        /// <summary>
-        /// POST: Delete a specification
-        /// MVC Route: /Admin/ThongSo/Delete (POST)
-        /// API Call: DELETE /ThongSoKyThuat/{id}
-        /// </summary>
+        // 4. XÓA THÔNG SỐ
         [HttpPost]
-        public async Task<JsonResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
@@ -146,15 +110,17 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
 
-                    // DELETE request to API (standard REST delete)
+                    // Gọi API DELETE: api/ThongSoKyThuat/{id}
                     var response = await client.DeleteAsync($"ThongSoKyThuat/{id}");
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return Json(new { success = true, message = "Xóa thông số thành công" });
+                        return Json(new { success = true, message = "Xóa thành công!" });
                     }
-
-                    return Json(new { success = false, error = "Không thể xóa thông số", status = response.StatusCode });
+                    else
+                    {
+                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
+                    }
                 }
             }
             catch (Exception ex)

@@ -56,10 +56,12 @@
 
         <div class="row g-4">
             <div class="col-lg-8">
+
                 <div class="card border-0 shadow-sm mb-4 rounded-3">
                     <div class="card-header bg-white py-3 border-bottom-0">
                         <h6 class="card-title fw-bold text-primary m-0"><i class="fas fa-info-circle me-2"></i>Thông tin chung</h6>
                     </div>
+
                     <div class="card-body pt-0">
                         <div class="mb-3">
                             <label class="form-label fw-bold text-secondary">Tên sản phẩm <span class="text-danger">*</span></label>
@@ -99,6 +101,7 @@
                                 <span class="visually-hidden">Đang tải...</span>
                             </div>
                         </div>
+
                         <div id="specsContainer" class="p-3">
                             <div class="text-center text-muted py-5 bg-light rounded-3" id="emptySpecsMessage">
                                 <i class="fas fa-clipboard-list fa-2x mb-3 text-secondary"></i>
@@ -110,7 +113,6 @@
             </div>
 
             <div class="col-lg-4">
-
                 <div class="card border-0 shadow-sm mb-4 rounded-3 bg-primary bg-opacity-10">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -179,7 +181,6 @@
                                     <div class="col-6">
                                         <div class="product-image-card p-2 rounded position-relative h-100 bg-white">
                                             <img src="@Model.AnhHienTai[i].Url" class="img-preview mb-2" />
-
                                             <div class="form-check m-0 d-flex align-items-center justify-content-center">
                                                 <input class="form-check-input border-danger me-2" type="checkbox"
                                                        name="PublicIdsToDelete"
@@ -189,7 +190,6 @@
                                                     Xóa ảnh
                                                 </label>
                                             </div>
-
                                             @Html.HiddenFor(m => m.AnhHienTai[i].Id)
                                             @Html.HiddenFor(m => m.AnhHienTai[i].Url)
                                             @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
@@ -297,7 +297,7 @@
             if (specifications.length === 0) {
                 emptyMessage.style.display = 'block';
                 container.innerHTML = '';
-                container.appendChild(emptyMessage); // Append lại message vì dòng trên clear innerHTML
+                container.appendChild(emptyMessage);
                 return;
             }
 
@@ -382,28 +382,27 @@
             try {
                 let response;
 
+                // Chuẩn bị dữ liệu gửi đi (JSON)
+                const payload = {
+                    MaSanPham: productId,
+                    TenThongSo: key,
+                    GiaTri: value
+                };
+
                 if (editingIndex === -1) {
-                    // Create: POST request
+                    // Create
                     response = await fetch('@Url.Action("Create", "ThongSo", new { area = "Admin" })', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            MaSanPham: productId,
-                            TenThongSo: key,
-                            GiaTri: value
-                        })
+                        body: JSON.stringify(payload)
                     });
                 } else {
-                    // Update: POST request
+                    // Update
+                    payload.MaThongSo = editingSpecId;
                     response = await fetch('@Url.Action("Update", "ThongSo", new { area = "Admin" })', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            MaThongSo: editingSpecId,
-                            MaSanPham: productId,
-                            TenThongSo: key,
-                            GiaTri: value
-                        })
+                        body: JSON.stringify(payload)
                     });
                 }
 
@@ -430,10 +429,9 @@
             if (!confirm('Bạn có chắc chắn muốn xóa thông số này?')) return;
 
             try {
-                const response = await fetch('@Url.Action("Delete", "ThongSo", new { area = "Admin" })', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: specId })
+                // SỬA ĐỔI: Gửi ID qua Query String thay vì JSON Body để Controller dễ nhận
+                const response = await fetch('@Url.Action("Delete", "ThongSo", new { area = "Admin" })' + '?id=' + specId, {
+                    method: 'POST'
                 });
 
                 const result = await response.json();
@@ -481,6 +479,7 @@
             const toast = document.createElement('div');
             toast.className = `alert ${alertClass} alert-dismissible fade show position-fixed shadow`;
             toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; border-left: 5px solid ' + (type === 'success' ? '#198754' : '#dc3545');
+
             toast.innerHTML = `
                 <div class="d-flex align-items-center">
                     <i class="fas fa-${icon} me-2 fa-lg"></i>

@@ -154,6 +154,7 @@
     <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
     <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ThongSoViewModel.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
