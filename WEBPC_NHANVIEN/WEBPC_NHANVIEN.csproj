@@ -170,6 +170,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
+    <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
     <Content Include="Areas\Sale\Data\css\style.css" />
@@ -202,7 +203,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Scripts\" />
     <Folder Include="Areas\Admin\Views\ThongSo\" />
   </ItemGroup>
   <ItemGroup>
