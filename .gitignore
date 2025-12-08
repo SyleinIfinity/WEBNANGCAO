@@ -1,19 +1,50 @@
-# Bỏ qua thư mục kết quả build (Rác)
+## --- Visual Studio & .NET Core ---
+# Thư mục build (Rác)
 [Bb]in/
 [Oo]bj/
 
-# Bỏ qua file cấu hình người dùng (Chứa ổ C:/D: của bạn)
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Bỏ qua thư mục ẩn của Visual Studio
+# Thư mục ẩn chứa cấu hình riêng của Visual Studio (Rất quan trọng)
 .vs/
 
-# Bỏ qua các file tạm
+# File cấu hình người dùng (Chứa đường dẫn ổ cứng cá nhân)
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# File tạm & Log
 *.log
 *.tmp
+*.cache
+*.swp
 
-# Bỏ qua thư mục packages (Nếu dùng NuGet Restore)
+# Các file sinh ra khi chạy Test
+TestResult.xml
+*.VisualState.xml
+
+## --- Visual Studio Code (Nếu em dùng) ---
+.vscode/
+
+## --- Môi trường & Bảo mật (QUAN TRỌNG) ---
+# Chặn file chứa biến môi trường (Secrets)
+.env
+
+# Chặn file appsettings chứa mật khẩu thật (Tùy chọn, thường chặn Development)
+# appsettings.Development.json
+
+## --- Hệ điều hành ---
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Mac OS (Nếu đồng đội dùng Mac)
+.DS_Store
+
+## --- Khác ---
+# Thư mục packages (Nếu dùng NuGet cũ)
 packages/
+# Các file ReSharper (Nếu dùng)
+_ReSharper.*/
+*.ReSharper.user
