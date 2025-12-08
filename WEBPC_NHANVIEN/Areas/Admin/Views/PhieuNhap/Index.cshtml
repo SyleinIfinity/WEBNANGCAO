@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Quản Lý Nhập Kho";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="display: flex; justify-content: space-between;">
+    <div style="display: flex; gap: 10px;">
+        <input type="text" placeholder="Tìm mã phiếu..." style="padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+    </div>
+    <button class="btn btn-primary" onclick="openImportModal()">+ Tạo Phiếu Nhập</button>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr><th>Mã Phiếu</th><th>Ngày Nhập</th><th>Tổng Tiền</th><th>Ghi Chú</th><th>Hành động</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="font-weight: bold; color: var(--primary-color);">PN20251201</td>
+                <td>01/12/2025</td>
+                <td>120.000.000 đ</td>
+                <td>Nhập lô CPU</td>
+                <td>
+                    <button class="btn btn-warning" style="padding: 5px 10px;"><i class="fas fa-eye"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="modalImport" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:white; width: 800px; max-width:90%; padding: 30px; border-radius: 12px; max-height: 90vh; overflow-y: auto;">
+        <h3 style="margin-bottom: 20px;">Tạo Phiếu Nhập Mới</h3>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display:block; font-weight:600; margin-bottom:5px;">Ghi chú nhập hàng</label>
+            <textarea id="importNote" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;"></textarea>
+        </div>
+
+        <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <strong>Danh sách sản phẩm</strong>
+                <button type="button" class="btn btn-success" onclick="addRow()">+ Thêm SP</button>
+            </div>
+            <table id="tblImportDetails">
+                <thead>
+                    <tr><th>Sản Phẩm</th><th width="100">SL</th><th width="150">Giá Nhập</th><th>Thành Tiền</th><th></th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div style="text-align:right; margin-top:15px; font-size:1.2rem; font-weight:bold;">
+                Tổng cộng: <span id="grandTotal" style="color:var(--primary-color);">0 đ</span>
+            </div>
+        </div>
+
+        <div style="text-align: right; gap: 10px; display: flex; justify-content: flex-end;">
+            <button class="btn btn-danger" onclick="closeImportModal()">Hủy</button>
+            <button class="btn btn-primary" onclick="submitImport()">Lưu Phiếu</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Logic Modal
+        const modal = document.getElementById('modalImport');
+        function openImportModal() {
+            modal.style.display = 'flex';
+            if(document.querySelector('#tblImportDetails tbody').children.length === 0) addRow(); // Thêm sẵn 1 dòng
+        }
+        function closeImportModal() { modal.style.display = 'none'; }
+
+        // Logic Dynamic Rows
+        function addRow() {
+            const tbody = document.querySelector('#tblImportDetails tbody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <select class="form-control" style="width:100%; padding:8px;">
+                        <option value="1">CPU Intel Core i9</option>
+                        <option value="2">VGA RTX 4090</option>
+                    </select>
+                </td>
+                <td><input type="number" value="1" min="1" style="width:100%; padding:8px;" onchange="calcTotal(this)"></td>
+                <td><input type="number" value="0" min="0" style="width:100%; padding:8px;" onchange="calcTotal(this)"></td>
+                <td style="font-weight:bold;">0</td>
+                <td><i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="this.closest('tr').remove(); updateGrandTotal();"></i></td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        function calcTotal(input) {
+            const row = input.closest('tr');
+            const qty = row.querySelector('td:nth-child(2) input').value;
+            const price = row.querySelector('td:nth-child(3) input').value;
+            const total = qty * price;
+            row.querySelector('td:nth-child(4)').innerText = total.toLocaleString() + ' đ';
+            updateGrandTotal();
+        }
+
+        function updateGrandTotal() {
+            let total = 0;
+            document.querySelectorAll('#tblImportDetails tbody tr').forEach(row => {
+                const qty = row.querySelector('td:nth-child(2) input').value;
+                const price = row.querySelector('td:nth-child(3) input').value;
+                total += (qty * price);
+            });
+            document.getElementById('grandTotal').innerText = total.toLocaleString() + ' đ';
+        }
+
+        function submitImport() {
+            alert("Đang gọi API tạo phiếu nhập...");
+            // Tại đây bạn sẽ dùng fetch POST lên API C#
+        }
+    </script>
+}
