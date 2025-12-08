@@ -4,51 +4,179 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card">
-    <h3>Thêm Sản Phẩm</h3>
-    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label>Tên sản phẩm</label>
-                @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control" })
-            </div>
-            <div class="col-md-6 form-group">
-                <label>Danh mục</label>
-                @Html.DropDownListFor(m => m.MaDanhMuc, new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"), "-- Chọn --", new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 form-group">
-                <label>Giá bán</label>
-                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control", type = "number" })
-            </div>
-            <div class="col-md-4 form-group">
-                <label>Giá khuyến mãi</label>
-                @Html.TextBoxFor(m => m.GiaKhuyenMai, new { @class = "form-control", type = "number" })
-            </div>
-            <div class="col-md-4 form-group">
-                <label>Số lượng tồn</label>
-                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Mô tả</label>
-            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = 4 })
-        </div>
-
-        <div class="form-group">
-            <label>Hình ảnh (Chọn nhiều)</label>
-            <input type="file" name="HinhAnhs" multiple class="form-control" />
-        </div>
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-success">Lưu lại</button>
-            <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
-        </div>
-    }
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold text-primary m-0"><i class="fas fa-plus-circle me-2"></i>Thêm Sản Phẩm Mới</h4>
+    <a href="@Url.Action("Index")" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Quay lại danh sách
+    </a>
 </div>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+
+        @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4" })
+
+            <div class="row g-4">
+
+                <!-- LEFT COLUMN: Main Product Information -->
+                <div class="col-lg-8">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Tên sản phẩm <span class="text-danger">*</span></label>
+                            @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control", placeholder = "Nhập tên sản phẩm..." })
+                            @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Danh mục <span class="text-danger">*</span></label>
+                            @Html.DropDownListFor(m => m.MaDanhMuc,
+                                new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                                "-- Chọn Danh Mục --",
+                                new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Trạng thái kinh doanh</label>
+                            <div class="form-check form-switch mt-2">
+                                @Html.CheckBoxFor(m => m.TrangThai, new { @class = "form-check-input", role = "switch", @checked = "checked" })
+                                <label class="form-check-label" for="TrangThai">Đang bật (Hiển thị bán)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Mô tả chi tiết</label>
+                            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = "6", placeholder = "Mô tả cấu hình, thông số kỹ thuật..." })
+                            @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Pricing & Images -->
+                <div class="col-lg-4">
+
+                    <!-- Price & Inventory Card -->
+                    <div class="card bg-light border-0 mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title fw-bold text-muted mb-3">Thiết lập giá & Kho</h6>
+
+                            <div class="mb-3">
+                                <label class="form-label">Giá bán gốc (VNĐ) <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control fw-bold", type = "number", step = "1000", placeholder = "0" })
+                                @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Giá khuyến mãi (VNĐ)</label>
+                                @Html.TextBoxFor(m => m.GiaKhuyenMai, new { @class = "form-control text-danger", type = "number", step = "1000", placeholder = "Để trống nếu không giảm" })
+                            </div>
+
+                            <div class="mb-0">
+                                <label class="form-label">Số lượng tồn kho <span class="text-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number", placeholder = "0" })
+                                @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload Card -->
+                    <div class="card border-secondary border-opacity-25">
+                        <div class="card-header bg-white fw-bold">
+                            <i class="fas fa-images me-2"></i>Hình Ảnh Sản Phẩm
+                        </div>
+                        <div class="card-body">
+                            <label class="form-label small text-muted">
+                                Chọn một hoặc nhiều ảnh:
+                            </label>
+                            <input type="file"
+                                   name="HinhAnhs"
+                                   multiple
+                                   class="form-control"
+                                   accept="image/*"
+                                   id="imageUpload" />
+
+                            <div class="alert alert-info small mt-3 mb-0">
+                                <i class="fas fa-info-circle me-1"></i>
+                                <strong>Lưu ý:</strong> Ảnh đầu tiên sẽ là ảnh đại diện. Định dạng: JPG, PNG.
+                            </div>
+
+                            <!-- Preview Area -->
+                            <div id="imagePreview" class="mt-3" style="display: none;">
+                                <label class="form-label small text-muted mb-2">Xem trước:</label>
+                                <div id="previewContainer" class="row g-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                <a href="@Url.Action("Index")" class="btn btn-light border">Hủy bỏ</a>
+                <button type="submit" class="btn btn-success px-4 fw-bold">
+                    <i class="fas fa-save me-1"></i> Lưu Sản Phẩm
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Image Preview Functionality
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const previewSection = document.getElementById('imagePreview');
+            const previewContainer = document.getElementById('previewContainer');
+            const files = e.target.files;
+
+            if (files.length > 0) {
+                previewSection.style.display = 'block';
+                previewContainer.innerHTML = '';
+
+                Array.from(files).forEach((file, index) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(event) {
+                            const col = document.createElement('div');
+                            col.className = 'col-4';
+
+                            col.innerHTML = `
+                                <div class="border rounded p-1 bg-white position-relative">
+                                    <img src="${event.target.result}"
+                                         class="img-fluid rounded"
+                                         style="width: 100%; height: 70px; object-fit: cover;"
+                                         alt="Preview ${index + 1}">
+                                    ${index === 0 ? '<div class="badge bg-primary position-absolute top-0 start-0 m-1" style="font-size: 0.65rem;">Ảnh đại diện</div>' : ''}
+                                </div>
+                            `;
+
+                            previewContainer.appendChild(col);
+                        };
+
+                        reader.readAsDataURL(file);
+                    }
+                });
+            } else {
+                previewSection.style.display = 'none';
+            }
+        });
+
+        // Auto-format price inputs
+        const priceInputs = document.querySelectorAll('input[type="number"][step="1000"]');
+        priceInputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value) {
+                    const value = parseInt(this.value);
+                    if (!isNaN(value)) {
+                        this.value = Math.round(value / 1000) * 1000;
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -54,12 +54,19 @@
         <div class="top-header">
             <h3 style="margin:0;">@ViewBag.Title</h3>
             <div class="user-info">
-                <span>Xin chào, <strong id="current-user-name">Đang tải...</strong></span>
-                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="btn btn-warning" style="font-size: 0.8rem; padding: 5px 15px; margin-left: 10px;">
+                <span>
+                    Xin chào,
+                    <strong id="current-user-name" data-user-id="@Session["NhanVienId"]">
+                        Đang tải...
+                    </strong>
+                </span>
+                <a href="@Url.Action("Logout", "Account", new { area = "Admin" })"
+                   style="font-size: 0.8rem; padding: 5px 15px; margin-left: 10px;">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </div>
         </div>
+
 
         <div class="content-body">
             @RenderBody()
@@ -69,20 +76,45 @@
     <script>
         const API_BASE_URL = 'https://webapi-1-qldr.onrender.com';
 
-        // Hàm lấy tên nhân viên (Chạy ở mọi trang Admin)
         document.addEventListener("DOMContentLoaded", async () => {
             const nameDisplay = document.getElementById('current-user-name');
-            // Cần cơ chế lấy ID thật từ Session/Cookie, tạm thời để cứng 1
-            const userId = 1;
+            if (!nameDisplay) return;
+
+            // Lấy ID nhân viên từ data-user-id (gán bằng Session trong Razor)
+            const userId = nameDisplay.dataset.userId;
+            if (!userId) {
+                // Nếu chưa có ID (chưa đăng nhập / quên set Session), fallback
+                nameDisplay.innerText = "Admin";
+                return;
+            }
+
             try {
-                const res = await fetch(`${API_BASE_URL}/api/NhanVien/${userId}`);
-                if(res.ok) {
-                    const data = await res.json();
-                    nameDisplay.innerText = data.hoTen || data.HoTen || "Admin";
+                const res = await fetch(`${API_BASE_URL}/api/NhanVien/${encodeURIComponent(userId)}`);
+
+                if (!res.ok) {
+                    console.error("Không lấy được thông tin nhân viên. Status:", res.status);
+                    nameDisplay.innerText = "Admin";
+                    return;
                 }
-            } catch(e) { console.error(e); }
+
+                const data = await res.json();
+
+                // Thử nhiều key để tránh lệch casing:
+                const name =
+                    data.hoTen ||
+                    data.HoTen ||
+                    data.tenNhanVien ||
+                    data.TenNhanVien ||
+                    "";
+
+                nameDisplay.innerText = name || "Admin";
+            } catch (e) {
+                console.error("Lỗi khi gọi API NhanVien:", e);
+                nameDisplay.innerText = "Admin";
+            }
         });
     </script>
+
 
     @RenderSection("Scripts", required: false)
 </body>
