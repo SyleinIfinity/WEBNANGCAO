@@ -5,191 +5,201 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .product-image-card {
-        transition: all 0.2s;
-        border: 1px dashed #dee2e6;
-    }
+<h2 class="mb-2">Cập Nhật Sản Phẩm</h2>
+<p class="text-muted mb-3">
+    Quản lý thông tin chi tiết sản phẩm <strong>@Model.TenSanPham</strong>
+</p>
 
-        .product-image-card:hover {
-            border-color: #0d6efd;
-            background-color: #f8f9fa;
-        }
+<p>
+    <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-link p-0">
+        &laquo; Quay lại danh sách
+    </a>
+</p>
 
-    .img-preview {
-        height: 100px;
-        object-fit: cover;
-        width: 100%;
-        border-radius: 6px;
-    }
+@using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaSanPham)
 
-    .spec-row:hover {
-        background-color: #f8f9fa;
-    }
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4 shadow-sm border-0" })
 
-    .form-floating-custom > label {
-        left: 0;
-        top: -10px;
-        background: #fff;
-        padding: 0 5px;
-        font-size: 0.85rem;
-        color: #6c757d;
-    }
-</style>
-
-<div class="container-fluid px-4 py-3">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h4 class="fw-bold text-dark m-0">Cập Nhật Sản Phẩm</h4>
-            <span class="text-muted small">Quản lý thông tin chi tiết sản phẩm @Model.TenSanPham</span>
-        </div>
-        <a href="@Url.Action("Index")" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách
-        </a>
-    </div>
-
-    @using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.MaSanPham)
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4 shadow-sm border-0" })
-
-        <div class="row g-4">
-            <div class="col-lg-8">
-
-                <div class="card border-0 shadow-sm mb-4 rounded-3">
-                    <div class="card-header bg-white py-3 border-bottom-0">
-                        <h6 class="card-title fw-bold text-primary m-0"><i class="fas fa-info-circle me-2"></i>Thông tin chung</h6>
-                    </div>
-
-                    <div class="card-body pt-0">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold text-secondary">Tên sản phẩm <span class="text-danger">*</span></label>
-                            @Html.TextBoxFor(m => m.TenSanPham, new { @class = "form-control form-control-lg", placeholder = "Nhập tên sản phẩm..." })
-                            @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label fw-bold text-secondary">Danh mục <span class="text-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.MaDanhMuc,
-                                    new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
-                                    "-- Chọn Danh Mục --",
-                                    new { @class = "form-select" })
-                                @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
-                            </div>
-                        </div>
-
-                        <div class="mb-0">
-                            <label class="form-label fw-bold text-secondary">Mô tả chi tiết</label>
-                            @Html.TextAreaFor(m => m.MoTa, new { @class = "form-control", rows = "8", placeholder = "Mô tả cấu hình, tính năng nổi bật..." })
-                            @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- THÔNG TIN CHUNG -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Thông tin chung</h5>
                 </div>
-
-                <div class="card border-0 shadow-sm rounded-3">
-                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom-0">
-                        <h6 class="fw-bold text-primary m-0"><i class="fas fa-microchip me-2"></i>Thông Số Kỹ Thuật</h6>
-                        <button type="button" class="btn btn-sm btn-primary rounded-pill px-3" id="btnAddSpec">
-                            <i class="fas fa-plus me-1"></i> Thêm mới
-                        </button>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.TenSanPham,
+                            new { @class = "form-control form-control-lg", placeholder = "Nhập tên sản phẩm..." })
+                        @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
                     </div>
-                    <div class="card-body p-0">
-                        <div id="loadingSpecs" class="text-center py-4" style="display: none;">
-                            <div class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Đang tải...</span>
-                            </div>
-                        </div>
 
-                        <div id="specsContainer" class="p-3">
-                            <div class="text-center text-muted py-5 bg-light rounded-3" id="emptySpecsMessage">
-                                <i class="fas fa-clipboard-list fa-2x mb-3 text-secondary"></i>
-                                <p class="m-0">Chưa có thông số kỹ thuật nào.</p>
-                            </div>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(
+                            m => m.MaDanhMuc,
+                            new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                            "-- Chọn Danh Mục --",
+                            new { @class = "form-select" }
+                        )
+                        @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Mô tả chi tiết</label>
+                        @Html.TextAreaFor(
+                            m => m.MoTa,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "8",
+                                placeholder = "Mô tả cấu hình, tính năng nổi bật..."
+                            })
+                        @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="card border-0 shadow-sm mb-4 rounded-3 bg-primary bg-opacity-10">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <label class="fw-bold text-dark">Trạng thái:</label>
-                            <div class="form-check form-switch">
-                                @Html.CheckBoxFor(m => m.TrangThai, new { @class = "form-check-input", role = "switch", style = "cursor: pointer; transform: scale(1.2);" })
-                            </div>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning fw-bold text-dark py-2">
-                                <i class="fas fa-save me-2"></i>Lưu Thay Đổi
-                            </button>
-                            <a href="@Url.Action("Index")" class="btn btn-light text-muted border">Hủy bỏ</a>
-                        </div>
+            <!-- THÔNG SỐ KỸ THUẬT -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Thông Số Kỹ Thuật</h5>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnAddSpec">
+                        + Thêm mới
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="spec-loading" class="text-muted mb-2">
+                        Đang tải...
+                    </div>
+                    <div id="spec-empty" class="text-muted mb-2" style="display:none;">
+                        Chưa có thông số kỹ thuật nào.
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%;">Tên thông số</th>
+                                    <th>Giá trị</th>
+                                    <th style="width: 120px;" class="text-end">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="specTableBody">
+                                @* JS sẽ đổ nội dung *@
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
 
-                <div class="card border-0 shadow-sm mb-4 rounded-3">
-                    <div class="card-header bg-white py-3 border-bottom-0">
-                        <h6 class="fw-bold text-primary m-0"><i class="fas fa-tags me-2"></i>Giá & Kho hàng</h6>
+            <!-- TRẠNG THÁI + NÚT LƯU -->
+            <div class="mb-4">
+                <label class="form-label d-block">Trạng thái:</label>
+                <div class="form-check form-switch">
+                    @Html.CheckBoxFor(
+                        m => m.TrangThai,
+                        new
+                        {
+                            @class = "form-check-input",
+                            role = "switch",
+                            style = "cursor: pointer; transform: scale(1.2);"
+                        })
+                    <label class="form-check-label ms-2">
+                        Đang bật (Hiển thị bán)
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-4 d-flex gap-2">
+                <button type="submit" class="btn btn-success">
+                    Lưu Thay Đổi
+                </button>
+                <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-outline-secondary">
+                    Hủy bỏ
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- GIÁ & KHO -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Giá & Kho hàng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Giá bán gốc (VNĐ)</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(
+                                m => m.GiaBan,
+                                new { @class = "form-control fw-bold text-dark", type = "number" })
+                            <span class="input-group-text">₫</span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
                     </div>
-                    <div class="card-body pt-0">
-                        <div class="mb-3">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Giá bán gốc (VNĐ)</label>
-                            <div class="input-group">
-                                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control fw-bold text-dark", type = "number" })
-                                <span class="input-group-text">₫</span>
-                            </div>
-                            @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
-                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Giá khuyến mãi (VNĐ)</label>
-                            <div class="input-group">
-                                @Html.TextBoxFor(m => m.GiaKhuyenMai, new { @class = "form-control text-danger fw-bold", type = "number" })
-                                <span class="input-group-text">₫</span>
-                            </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giá khuyến mãi (VNĐ)</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(
+                                m => m.GiaKhuyenMai,
+                                new { @class = "form-control text-danger fw-bold", type = "number" })
+                            <span class="input-group-text">₫</span>
                         </div>
+                    </div>
 
-                        <div class="mb-0">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Tồn kho</label>
-                            @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number" })
-                            @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
-                        </div>
+                    <div class="mb-0">
+                        <label class="form-label">Tồn kho</label>
+                        @Html.TextBoxFor(
+                            m => m.SoLuongTon,
+                            new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
                     </div>
                 </div>
+            </div>
 
-                <div class="card border-0 shadow-sm rounded-3">
-                    <div class="card-header bg-white py-3 border-bottom-0">
-                        <h6 class="fw-bold text-primary m-0"><i class="fas fa-images me-2"></i>Hình ảnh sản phẩm</h6>
+            <!-- HÌNH ẢNH -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Hình ảnh sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tải thêm ảnh mới</label>
+                        <input type="file"
+                               name="HinhAnhs"
+                               multiple
+                               class="form-control" />
+                        <small class="text-muted d-block">
+                            Ảnh đầu tiên sẽ là ảnh đại diện. Hỗ trợ JPG, PNG.
+                        </small>
                     </div>
-                    <div class="card-body pt-0">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Tải thêm ảnh mới</label>
-                            <input type="file" name="HinhAnhs" multiple class="form-control form-control-sm" accept="image/*" />
-                        </div>
 
-                        <hr class="text-muted opacity-25" />
+                    <hr />
 
-                        <label class="form-label small fw-bold text-dark mb-2">Ảnh hiện tại:</label>
+                    <div>
+                        <strong>Ảnh hiện tại:</strong>
                         @if (Model.AnhHienTai != null && Model.AnhHienTai.Any())
                         {
-                            <div class="row g-2">
+                            <div class="row mt-2 g-2">
                                 @for (int i = 0; i < Model.AnhHienTai.Count; i++)
                                 {
-                                    <div class="col-6">
-                                        <div class="product-image-card p-2 rounded position-relative h-100 bg-white">
-                                            <img src="@Model.AnhHienTai[i].Url" class="img-preview mb-2" />
-                                            <div class="form-check m-0 d-flex align-items-center justify-content-center">
-                                                <input class="form-check-input border-danger me-2" type="checkbox"
-                                                       name="PublicIdsToDelete"
-                                                       value="@Model.AnhHienTai[i].PublicId"
-                                                       id="del_img_@i" />
-                                                <label class="form-check-label text-danger small cursor-pointer fw-bold" for="del_img_@i">
-                                                    Xóa ảnh
-                                                </label>
-                                            </div>
+                                    <div class="col-6 position-relative">
+                                        <div class="border rounded p-1 h-100">
+                                            <img src="@Model.AnhHienTai[i].Url"
+                                                 class="img-fluid mb-1"
+                                                 alt="Ảnh sản phẩm" />
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger w-100 btn-mark-delete-image"
+                                                    data-public-id="@Model.AnhHienTai[i].PublicId">
+                                                Xóa ảnh
+                                            </button>
+
                                             @Html.HiddenFor(m => m.AnhHienTai[i].Id)
                                             @Html.HiddenFor(m => m.AnhHienTai[i].Url)
                                             @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
@@ -201,42 +211,49 @@
                         }
                         else
                         {
-                            <div class="alert alert-light text-center small text-muted border-0">
+                            <p class="text-muted mt-2 mb-0">
                                 Chưa có hình ảnh nào.
-                            </div>
+                            </p>
                         }
                     </div>
                 </div>
             </div>
         </div>
-    }
-</div>
+    </div>
+}
 
-<div class="modal fade" id="specModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fs-6 text-uppercase fw-bold">
-                    <i class="fas fa-sliders-h me-2"></i><span id="modalTitle">Thêm Thông Số</span>
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- "Modal" thêm/sửa thông số (dùng JS thuần, không cần Bootstrap JS) -->
+<div class="modal fade" id="specModal" tabindex="-1" aria-labelledby="specModalLabel" aria-hidden="true" style="display:none; background: rgba(0,0,0,0.35);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="specModalLabel">Thêm Thông Số</h5>
+                <button type="button" class="btn-close" data-close-spec-modal="true" aria-label="Đóng"></button>
             </div>
-            <div class="modal-body p-4">
+            <div class="modal-body">
+                <input type="hidden" id="specId" />
+
                 <div class="mb-3">
-                    <label class="form-label fw-bold small text-muted text-uppercase">Tên thông số <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="specKey" placeholder="VD: CPU, RAM, Màn hình...">
-                    <div class="invalid-feedback" id="specKeyError"></div>
+                    <label class="form-label">Tên thông số <span class="text-danger">*</span></label>
+                    <input type="text" id="specName" class="form-control" placeholder="Ví dụ: CPU, RAM, Màn hình..." />
                 </div>
+
                 <div class="mb-0">
-                    <label class="form-label fw-bold small text-muted text-uppercase">Giá trị <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="specValue" placeholder="VD: Intel Core i9, 32GB...">
-                    <div class="invalid-feedback" id="specValueError"></div>
+                    <label class="form-label">Giá trị <span class="text-danger">*</span></label>
+                    <textarea id="specValue"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Ví dụ: Intel Core i5, 16GB DDR4, 15.6 inch..."></textarea>
                 </div>
             </div>
-            <div class="modal-footer bg-light border-0">
-                <button type="button" class="btn btn-link text-secondary text-decoration-none" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary px-4" id="btnSaveSpec">
-                    <i class="fas fa-check me-1"></i> Lưu thông số
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        data-close-spec-modal="true">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSaveSpec">
+                    Lưu thông số
                 </button>
             </div>
         </div>
@@ -245,250 +262,269 @@
 
 @section Scripts {
     <script>
-        const productId = @Model.MaSanPham;
-        let specifications = [];
-        let editingIndex = -1;
-        let editingSpecId = null;
+        document.addEventListener("DOMContentLoaded", function () {
+            var productId = @Model.MaSanPham;
 
-        const specModalElement = document.getElementById('specModal');
-        const specModal = new bootstrap.Modal(specModalElement);
+            var getUrl = '@Url.Action("GetByProduct", "ThongSo", new { area = "Admin" })';
+            var createUrl = '@Url.Action("Create", "ThongSo", new { area = "Admin" })';
+            var updateUrl = '@Url.Action("Update", "ThongSo", new { area = "Admin" })';
+            var deleteUrl = '@Url.Action("Delete", "ThongSo", new { area = "Admin" })';
 
-        // Load specifications on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadSpecifications();
-        });
+            var specLoading = document.getElementById("spec-loading");
+            var specEmpty = document.getElementById("spec-empty");
+            var specTableBody = document.getElementById("specTableBody");
 
-        // Load specifications using GET method
-        async function loadSpecifications() {
-            const container = document.getElementById('specsContainer');
-            const loading = document.getElementById('loadingSpecs');
-            const emptyMessage = document.getElementById('emptySpecsMessage');
+            var specModal = document.getElementById("specModal");
+            var specIdInput = document.getElementById("specId");
+            var specNameInput = document.getElementById("specName");
+            var specValueInput = document.getElementById("specValue");
+            var btnAddSpec = document.getElementById("btnAddSpec");
+            var btnSaveSpec = document.getElementById("btnSaveSpec");
 
-            try {
-                loading.style.display = 'block';
-                emptyMessage.style.display = 'none';
+            function parseList(data) {
+                if (!data) return [];
+                if (Array.isArray(data)) return data;
+                return [];
+            }
 
-                // AJAX GET request
-                const response = await fetch('@Url.Action("GetByProduct", "ThongSo", new { area = "Admin" })' + '?productId=' + productId, {
-                    method: 'GET'
+            function renderSpecs(list) {
+                specTableBody.innerHTML = "";
+
+                if (!list || list.length === 0) {
+                    specEmpty.style.display = "block";
+                    return;
+                }
+
+                specEmpty.style.display = "none";
+
+                list.forEach(function (item) {
+                    var id = item.maThongSo || item.MaThongSo;
+                    var name = item.tenThongSo || item.TenThongSo;
+                    var value = item.giaTri || item.GiaTri;
+
+                    var tr = document.createElement("tr");
+                    tr.setAttribute("data-id", id);
+                    tr.setAttribute("data-name", name);
+                    tr.setAttribute("data-value", value);
+
+                    var tdName = document.createElement("td");
+                    tdName.textContent = name || "";
+
+                    var tdValue = document.createElement("td");
+                    tdValue.textContent = value || "";
+
+                    var tdAction = document.createElement("td");
+                    tdAction.className = "text-end";
+
+                    var btnEdit = document.createElement("button");
+                    btnEdit.type = "button";
+                    btnEdit.className = "btn btn-sm btn-outline-primary me-2 btn-edit-spec";
+                    btnEdit.textContent = "Sửa";
+
+                    var btnDelete = document.createElement("button");
+                    btnDelete.type = "button";
+                    btnDelete.className = "btn btn-sm btn-outline-danger btn-delete-spec";
+                    btnDelete.textContent = "Xóa";
+
+                    tdAction.appendChild(btnEdit);
+                    tdAction.appendChild(btnDelete);
+
+                    tr.appendChild(tdName);
+                    tr.appendChild(tdValue);
+                    tr.appendChild(tdAction);
+
+                    specTableBody.appendChild(tr);
                 });
-
-                if (!response.ok) throw new Error('Failed to load');
-
-                const data = await response.json();
-
-                if (data.error) throw new Error(data.error);
-
-                specifications = data;
-                renderSpecifications();
-            } catch (error) {
-                console.error('Error loading specifications:', error);
-                container.innerHTML = '<div class="alert alert-danger m-3"><i class="fas fa-exclamation-circle me-2"></i>Không thể tải thông số kỹ thuật.</div>';
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        // Render specifications table
-        function renderSpecifications() {
-            const container = document.getElementById('specsContainer');
-            const emptyMessage = document.getElementById('emptySpecsMessage');
-
-            if (specifications.length === 0) {
-                emptyMessage.style.display = 'block';
-                container.innerHTML = '';
-                container.appendChild(emptyMessage);
-                return;
             }
 
-            emptyMessage.style.display = 'none';
-            let html = '<div class="table-responsive"><table class="table table-hover align-middle mb-0" style="font-size: 0.95rem;">';
-            html += '<thead class="bg-light text-secondary text-uppercase small"><tr>';
-            html += '<th width="50" class="text-center">#</th>';
-            html += '<th width="30%">Tên Thông Số</th>';
-            html += '<th>Giá Trị</th>';
-            html += '<th width="100" class="text-center">Tác vụ</th>';
-            html += '</tr></thead><tbody>';
+            function loadSpecs() {
+                specLoading.style.display = "block";
+                specEmpty.style.display = "none";
+                specTableBody.innerHTML = "";
 
-            specifications.forEach((spec, index) => {
-                const tenThongSo = spec.tenThongSo || spec.TenThongSo || '';
-                const giaTri = spec.giaTri || spec.GiaTri || '';
-                const maThongSo = spec.maThongSo || spec.MaThongSo;
+                fetch(getUrl + "?productId=" + encodeURIComponent(productId))
+                    .then(function (res) {
+                        if (!res.ok) {
+                            throw new Error("Network error");
+                        }
+                        return res.json();
+                    })
+                    .then(function (data) {
+                        var list = parseList(data);
+                        renderSpecs(list);
+                    })
+                    .catch(function () {
+                        specEmpty.textContent = "Không thể tải thông số kỹ thuật.";
+                        specEmpty.style.display = "block";
+                    })
+                    .then(function () {
+                        specLoading.style.display = "none";
+                    });
+            }
 
-                html += `<tr class="spec-row">
-                    <td class="text-muted text-center">${index + 1}</td>
-                    <td class="fw-bold text-dark">${escapeHtml(tenThongSo)}</td>
-                    <td class="text-secondary">${escapeHtml(giaTri)}</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-link text-warning p-0 me-2" onclick="editSpec(${index})" title="Sửa">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-link text-danger p-0" onclick="deleteSpec(${maThongSo})" title="Xóa">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>`;
+            function openModal(mode, spec) {
+                specModal.style.display = "block";
+                specModal.setAttribute("data-mode", mode || "create");
+
+                var title = (mode === "edit") ? "Cập Nhật Thông Số" : "Thêm Thông Số";
+                var titleEl = document.getElementById("specModalLabel");
+                if (titleEl) titleEl.textContent = title;
+
+                if (spec && mode === "edit") {
+                    specIdInput.value = spec.id || "";
+                    specNameInput.value = spec.name || "";
+                    specValueInput.value = spec.value || "";
+                } else {
+                    specIdInput.value = "";
+                    specNameInput.value = "";
+                    specValueInput.value = "";
+                }
+            }
+
+            function closeModal() {
+                specModal.style.display = "none";
+            }
+
+            // Nút đóng modal
+            Array.prototype.forEach.call(
+                document.querySelectorAll("[data-close-spec-modal]"),
+                function (btn) {
+                    btn.addEventListener("click", closeModal);
+                }
+            );
+
+            // Đóng khi click ra ngoài
+            window.addEventListener("click", function (e) {
+                if (e.target === specModal) {
+                    closeModal();
+                }
             });
 
-            html += '</tbody></table></div>';
-            container.innerHTML = html;
-        }
-
-        // Open modal for adding
-        document.getElementById('btnAddSpec').addEventListener('click', () => {
-            editingIndex = -1;
-            editingSpecId = null;
-            document.getElementById('modalTitle').textContent = 'Thêm Thông Số';
-            document.getElementById('specKey').value = '';
-            document.getElementById('specValue').value = '';
-            clearValidation();
-            specModal.show();
-        });
-
-        // Edit specification
-        function editSpec(index) {
-            editingIndex = index;
-            const spec = specifications[index];
-            editingSpecId = spec.maThongSo || spec.MaThongSo;
-
-            document.getElementById('modalTitle').textContent = 'Sửa Thông Số';
-            document.getElementById('specKey').value = spec.tenThongSo || spec.TenThongSo;
-            document.getElementById('specValue').value = spec.giaTri || spec.GiaTri;
-            clearValidation();
-            specModal.show();
-        }
-
-        // Save specification (Add or Update)
-        document.getElementById('btnSaveSpec').addEventListener('click', async () => {
-            const key = document.getElementById('specKey').value.trim();
-            const value = document.getElementById('specValue').value.trim();
-
-            clearValidation();
-
-            if (!key) {
-                showFieldError('specKey', 'Vui lòng nhập tên thông số');
-                return;
-            }
-
-            if (!value) {
-                showFieldError('specValue', 'Vui lòng nhập giá trị');
-                return;
-            }
-
-            const btn = document.getElementById('btnSaveSpec');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Đang lưu...';
-
-            try {
-                let response;
-
-                // Chuẩn bị dữ liệu gửi đi (JSON)
-                const payload = {
-                    MaSanPham: productId,
-                    TenThongSo: key,
-                    GiaTri: value
-                };
-
-                if (editingIndex === -1) {
-                    // Create
-                    response = await fetch('@Url.Action("Create", "ThongSo", new { area = "Admin" })', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                } else {
-                    // Update
-                    payload.MaThongSo = editingSpecId;
-                    response = await fetch('@Url.Action("Update", "ThongSo", new { area = "Admin" })', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                }
-
-                const result = await response.json();
-
-                if (result.success) {
-                    specModal.hide();
-                    await loadSpecifications();
-                    showToast('success', result.message || (editingIndex === -1 ? 'Đã thêm thành công!' : 'Đã cập nhật thành công!'));
-                } else {
-                    throw new Error(result.error || 'Failed to save');
-                }
-            } catch (error) {
-                console.error('Error saving specification:', error);
-                showToast('error', 'Có lỗi xảy ra!');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-check me-1"></i> Lưu thông số';
-            }
-        });
-
-        // Delete specification
-        async function deleteSpec(specId) {
-            if (!confirm('Bạn có chắc chắn muốn xóa thông số này?')) return;
-
-            try {
-                // SỬA ĐỔI: Gửi ID qua Query String thay vì JSON Body để Controller dễ nhận
-                const response = await fetch('@Url.Action("Delete", "ThongSo", new { area = "Admin" })' + '?id=' + specId, {
-                    method: 'POST'
+            // Thêm mới
+            if (btnAddSpec) {
+                btnAddSpec.addEventListener("click", function () {
+                    openModal("create", null);
                 });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    await loadSpecifications();
-                    showToast('success', result.message || 'Đã xóa thành công!');
-                } else {
-                    throw new Error(result.error || 'Failed to delete');
-                }
-            } catch (error) {
-                console.error('Error deleting specification:', error);
-                showToast('error', 'Có lỗi xảy ra!');
             }
-        }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+            // Lưu (thêm / sửa)
+            if (btnSaveSpec) {
+                btnSaveSpec.addEventListener("click", function () {
+                    var id = (specIdInput.value || "").trim();
+                    var name = (specNameInput.value || "").trim();
+                    var value = (specValueInput.value || "").trim();
 
-        function showFieldError(fieldId, message) {
-            const field = document.getElementById(fieldId);
-            const errorDiv = document.getElementById(fieldId + 'Error');
-            field.classList.add('is-invalid');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-        }
+                    if (!name || !value) {
+                        alert("Vui lòng nhập đầy đủ Tên thông số và Giá trị.");
+                        return;
+                    }
 
-        function clearValidation() {
-            ['specKey', 'specValue'].forEach(id => {
-                const field = document.getElementById(id);
-                const errorDiv = document.getElementById(id + 'Error');
-                field.classList.remove('is-invalid');
-                errorDiv.textContent = '';
-                errorDiv.style.display = 'none';
+                    var formData = new FormData();
+                    formData.append("TenThongSo", name);
+                    formData.append("GiaTri", value);
+
+                    var url;
+                    if (id) {
+                        formData.append("MaThongSo", id);
+                        url = updateUrl;
+                    } else {
+                        formData.append("MaSanPham", productId);
+                        url = createUrl;
+                    }
+
+                    fetch(url, {
+                        method: "POST",
+                        body: formData
+                    })
+                        .then(function (res) { return res.json(); })
+                        .then(function (res) {
+                            if (res && res.success) {
+                                closeModal();
+                                loadSpecs();
+                            } else {
+                                alert((res && res.error) || "Lưu thông số thất bại.");
+                            }
+                        })
+                        .catch(function () {
+                            alert("Không thể gọi API lưu thông số.");
+                        });
+                });
+            }
+
+            // Sửa / Xóa (event delegation trên tbody)
+            specTableBody.addEventListener("click", function (e) {
+                var target = e.target;
+
+                if (target.classList.contains("btn-edit-spec")) {
+                    var tr = target.closest("tr");
+                    if (!tr) return;
+
+                    var spec = {
+                        id: tr.getAttribute("data-id"),
+                        name: tr.getAttribute("data-name"),
+                        value: tr.getAttribute("data-value")
+                    };
+
+                    openModal("edit", spec);
+                }
+
+                if (target.classList.contains("btn-delete-spec")) {
+                    var trDel = target.closest("tr");
+                    if (!trDel) return;
+
+                    var id = trDel.getAttribute("data-id");
+                    if (!id) return;
+
+                    if (!confirm("Bạn chắc chắn muốn xóa thông số này?")) {
+                        return;
+                    }
+
+                    var fd = new FormData();
+                    fd.append("id", id);
+
+                    fetch(deleteUrl, {
+                        method: "POST",
+                        body: fd
+                    })
+                        .then(function (res) { return res.json(); })
+                        .then(function (res) {
+                            if (res && res.success) {
+                                loadSpecs();
+                            } else {
+                                alert((res && res.error) || "Xóa thông số thất bại.");
+                            }
+                        })
+                        .catch(function () {
+                            alert("Không thể gọi API xóa thông số.");
+                        });
+                }
             });
-        }
 
-        function showToast(type, message) {
-            const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
-            const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+            // Đánh dấu xóa ảnh hiện tại -> thêm PublicIdsToDelete vào form
+            var form = document.querySelector("form");
+            var deleteButtons = document.querySelectorAll(".btn-mark-delete-image");
 
-            const toast = document.createElement('div');
-            toast.className = `alert ${alertClass} alert-dismissible fade show position-fixed shadow`;
-            toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px; border-left: 5px solid ' + (type === 'success' ? '#198754' : '#dc3545');
+            Array.prototype.forEach.call(deleteButtons, function (btn) {
+                btn.addEventListener("click", function () {
+                    var publicId = btn.getAttribute("data-public-id");
+                    if (!publicId || !form) return;
 
-            toast.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-${icon} me-2 fa-lg"></i>
-                    <div>${message}</div>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
+                    var input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "PublicIdsToDelete";
+                    input.value = publicId;
+                    form.appendChild(input);
+
+                    var col = btn.closest(".col-6");
+                    if (col) {
+                        col.style.opacity = "0.4";
+                        col.style.pointerEvents = "none";
+                    }
+                });
+            });
+
+            // Load thông số lần đầu
+            loadSpecs();
+        });
     </script>
 }

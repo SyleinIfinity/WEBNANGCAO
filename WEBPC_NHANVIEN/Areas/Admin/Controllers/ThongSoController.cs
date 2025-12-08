@@ -12,55 +12,73 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
     public class ThongSoController : Controller
     {
-        // Lấy URL API gốc từ Web.config
+        // Trong Web.config: <add key="ApiBaseUrl" value="https://webapi-1-qldr.onrender.com/api/" />
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
-        // Giả sử config là: https://webapi-1-qldr.onrender.com/api/
 
-        // 1. LẤY DANH SÁCH THÔNG SỐ THEO ID SẢN PHẨM
+        // 1. LẤY DANH SÁCH THÔNG SỐ THEO SẢN PHẨM
         [HttpGet]
         public async Task<ActionResult> GetByProduct(int productId)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
-                // Giả định API endpoint là: api/ThongSoKyThuat/sanpham/{id}
+
+                // Gọi API: GET api/ThongSoKyThuat/sanpham/{maSanPham}
                 var response = await client.GetAsync($"ThongSoKyThuat/sanpham/{productId}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-                    // Trả về JSON nguyên bản cho View xử lý
+                    // Trả nguyên JSON cho JS xử lý
                     return Content(data, "application/json");
                 }
 
-                // Nếu API chưa có dữ liệu hoặc lỗi, trả về mảng rỗng
-                return Json(new List<object>(), JsonRequestBehavior.AllowGet);
+                // Trả về danh sách rỗng nếu lỗi
+                return Json(new List<ThongSoViewModel>(), JsonRequestBehavior.AllowGet);
             }
         }
 
-        // 2. THÊM MỚI THÔNG SỐ
+        // 2. THÊM THÔNG SỐ
         [HttpPost]
         public async Task<ActionResult> Create(ThongSoViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Dữ liệu thông số không hợp lệ."
+                });
+            }
+
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
-                    var json = JsonConvert.SerializeObject(model);
+
+                    // CreateThongSoRequest (API): MaSanPham, TenThongSo, GiaTri
+                    var json = JsonConvert.SerializeObject(new
+                    {
+                        maSanPham = model.MaSanPham,
+                        tenThongSo = model.TenThongSo,
+                        giaTri = model.GiaTri
+                    });
+
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    // Gọi API POST: api/ThongSoKyThuat
                     var response = await client.PostAsync("ThongSoKyThuat", content);
 
                     if (response.IsSuccessStatusCode)
                     {
                         return Json(new { success = true, message = "Thêm thông số thành công!" });
                     }
-                    else
+
+                    return Json(new
                     {
-                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
-                    }
+                        success = false,
+                        error = "Lỗi API: " + response.ReasonPhrase
+                    });
                 }
             }
             catch (Exception ex)
@@ -73,25 +91,55 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Update(ThongSoViewModel model)
         {
+            if (model.MaThongSo <= 0)
+            {
+                return Json(new { success = false, error = "Thiếu mã thông số cần cập nhật." });
+            }
+
+            if (string.IsNullOrWhiteSpace(model.TenThongSo) ||
+                string.IsNullOrWhiteSpace(model.GiaTri))
+            {
+                return Json(new
+                {
+                    success = false,
+                    error = "Tên thông số và Giá trị là bắt buộc."
+                });
+            }
+
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
-                    var json = JsonConvert.SerializeObject(model);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    // Gọi API PUT: api/ThongSoKyThuat/{id}
-                    var response = await client.PutAsync($"ThongSoKyThuat/{model.MaThongSo}", content);
+                    // UpdateThongSoRequest (API): TenThongSo, GiaTri
+                    var jsonBody = JsonConvert.SerializeObject(new
+                    {
+                        tenThongSo = model.TenThongSo,
+                        giaTri = model.GiaTri
+                    });
+
+                    var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    var request = new HttpRequestMessage(
+                        new HttpMethod("PATCH"),
+                        $"ThongSoKyThuat/{model.MaThongSo}")
+                    {
+                        Content = content
+                    };
+
+                    var response = await client.SendAsync(request);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return Json(new { success = true, message = "Cập nhật thành công!" });
+                        return Json(new { success = true, message = "Cập nhật thông số thành công!" });
                     }
-                    else
+
+                    return Json(new
                     {
-                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
-                    }
+                        success = false,
+                        error = "Lỗi API: " + response.ReasonPhrase
+                    });
                 }
             }
             catch (Exception ex)
@@ -104,23 +152,29 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
+            if (id <= 0)
+            {
+                return Json(new { success = false, error = "Thiếu mã thông số cần xóa." });
+            }
+
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
 
-                    // Gọi API DELETE: api/ThongSoKyThuat/{id}
                     var response = await client.DeleteAsync($"ThongSoKyThuat/{id}");
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return Json(new { success = true, message = "Xóa thành công!" });
+                        return Json(new { success = true, message = "Xóa thông số thành công!" });
                     }
-                    else
+
+                    return Json(new
                     {
-                        return Json(new { success = false, error = "Lỗi API: " + response.ReasonPhrase });
-                    }
+                        success = false,
+                        error = "Lỗi API: " + response.ReasonPhrase
+                    });
                 }
             }
             catch (Exception ex)

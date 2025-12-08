@@ -150,6 +150,7 @@
     <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThongSoController.cs" />
+    <Compile Include="Areas\Admin\Models\AnhSanPhamViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
     <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
