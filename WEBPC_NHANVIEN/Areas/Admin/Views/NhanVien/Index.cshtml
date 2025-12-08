@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.NhanVienViewModel>
+@{
+    ViewBag.Title = "Quản Lý Nhân Viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card" style="display: flex; justify-content: flex-end;">
+    <button class="btn btn-primary" onclick="alert('Chức năng thêm đang hoàn thiện')">+ Thêm Nhân Viên</button>
+</div>
+
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã NV</th>
+                <th>Họ Tên</th>
+                <th>Email</th>
+                <th>Vai Trò</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaCodeNhanVien</td>
+                        <td><strong>@item.HoTen</strong></td>
+                        <td>@item.Email</td>
+                        <td>
+                            @if (item.TenVaiTro == "Admin")
+                            {<span class="badge bg-danger">Admin</span> }
+                            else
+                            { <span class="badge bg-info">Staff</span>}
+                        </td>
+                        <td>
+                            <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,43 @@
+﻿.user-dashboard-nav .nav-link {
+    color: var(--secondary-color);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+    .user-dashboard-nav .nav-link:hover {
+        background-color: var(--light-bg);
+        color: var(--primary-color);
+    }
+
+    .user-dashboard-nav .nav-link.active-info {
+        background-color: var(--primary-color);
+        color: white !important;
+    }
+
+        .user-dashboard-nav .nav-link.active-info i {
+            color: white !important;
+        }
+
+.header-main .nav-link.active-user-icon {
+    color: var(--primary-color) !important;
+}
+
+.address-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.address-default-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.address-actions button {
+    white-space: nowrap; /* Giữ các nút không bị xuống dòng */
+}

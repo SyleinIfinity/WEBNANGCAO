@@ -59,7 +59,7 @@ namespace WEBPC_NHANVIEN.Controllers
                 try
                 {
                     // Gọi API Login (Đảm bảo API path đúng với backend của bạn)
-                    HttpResponseMessage response = await client.PostAsync("api/TaiKhoan/login", content);
+                    HttpResponseMessage response = await client.PostAsync("TaiKhoan/login", content);
                     string responseBody = await response.Content.ReadAsStringAsync();
 
                     if (response.IsSuccessStatusCode)

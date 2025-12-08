@@ -7,21 +7,33 @@
             </div>
 
             <div class="modal-body p-4">
-                <form id="formLogin">
+
+                <!-- FORM LOGIN -->
+                <form method="post" action="@Url.Action("Index", "Login")">
+                    @Html.AntiForgeryToken()
+
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Email hoặc SĐT</label>
-                        <input name="username" type="text" class="form-control form-control-lg" placeholder="Nhập email/SĐT">
+                        <input name="TenDangNhap" type="text" class="form-control form-control-lg" placeholder="Nhập email/SĐT">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Mật Khẩu</label>
-                        <div class="password-input">
-                            <input name="password" type="password" class="form-control form-control-lg" placeholder="Nhập mật khẩu">
-                            <i class="bi bi-eye password-toggle"></i>
-                        </div>
+                        <input name="MatKhau" type="password" class="form-control form-control-lg" placeholder="Nhập mật khẩu">
                     </div>
 
-                    <button class="btn btn-primary btn-lg w-100 mb-4">Đăng Nhập</button>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 mb-4">Đăng Nhập</button>
+
+                    <!-- Hiển thị lỗi ModelState -->
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <div>@error.ErrorMessage</div>
+                            }
+                        </div>
+                    }
                 </form>
 
                 <div class="divider mb-4"><span>Hoặc tiếp tục với</span></div>
@@ -33,14 +45,13 @@
                 <div class="text-center">
                     <p class="mb-0 text-secondary">
                         Chưa có tài khoản?
-                        <a href="@Url.Action("Index", "Register")"
-                           class="text-primary fw-bold text-decoration-none">
+                        <a href="@Url.Action("Index", "Register")" class="text-primary fw-bold text-decoration-none">
                             Đăng ký ngay
                         </a>
                     </p>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
-
