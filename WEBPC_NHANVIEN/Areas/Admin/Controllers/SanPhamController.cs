@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -6,11 +7,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using WEBPC_NHANVIEN.Areas.Admin.Filters;
 using WEBPC_NHANVIEN.Areas.Admin.Models;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
+    [AdminAuthorize]
     public class SanPhamController : Controller
     {
         // Đọc URL từ Web.config (Đã cấu hình: https://webapi-1-qldr.onrender.com/api/)
@@ -174,7 +176,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         GiaKhuyenMai = productAPI.GiaKhuyenMai,
                         SoLuongTon = productAPI.SoLuongTon,
                         MaDanhMuc = foundCategoryId, // Gán ID tìm được
-                        MoTa = "", // API hiện tại chưa trả về Mô tả, tạm để trống
+                        MoTa = productAPI.MoTa, // API hiện tại chưa trả về Mô tả, tạm để trống
                         TrangThai = productAPI.TrangThai,
                         AnhHienTai = productAPI.DanhSachAnh ?? new List<ImageDTO>()
                     };

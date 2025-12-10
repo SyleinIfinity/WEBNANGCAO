@@ -150,6 +150,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LuongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongSoController.cs" />
+    <Compile Include="Areas\Admin\Filters\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Areas\Admin\Models\AnhSanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ThongSoViewModel.cs" />
     <Compile Include="Areas\Sale\Controllers\KhuyenMaiController.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
@@ -183,7 +197,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Requests\style.css" />
     <Content Include="Scripts\style.css" />
     <Content Include="Services\style.css" />
     <Content Include="Web.config" />
@@ -201,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Sale\Views\Home\" />
+    <Folder Include="Models\Requests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />

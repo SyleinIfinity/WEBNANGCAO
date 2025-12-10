@@ -76,7 +76,22 @@ namespace WEBPC_NHANVIEN.Controllers
                         Session["RoleName"] = userInfo.TenVaiTro;    // Vai trò
 
                         // Chuyển hướng về trang chủ để hiện thông báo
+                        // Admin: MaVaiTro == 1
+                        // ✅ LƯU RoleId để AdminAuthorize sử dụng
+                        Session["RoleId"] = userInfo.MaVaiTro;
+
+                        // ✅ Điều hướng theo vai trò
+                        if (userInfo.MaVaiTro == 1)
+                        {
+                            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                        }
+
+                        // Nhân viên / người dùng thường
                         return RedirectToAction("Index", "Home");
+
+                        // Nhân viên / người dùng thường
+                        return RedirectToAction("Index", "Home");
+
                     }
                     else
                     {
