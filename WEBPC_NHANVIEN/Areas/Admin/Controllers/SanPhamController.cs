@@ -174,7 +174,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         GiaKhuyenMai = productAPI.GiaKhuyenMai,
                         SoLuongTon = productAPI.SoLuongTon,
                         MaDanhMuc = foundCategoryId, // Gán ID tìm được
-                        MoTa = "", // API hiện tại chưa trả về Mô tả, tạm để trống
+                        MoTa = productAPI.MoTa, // API hiện tại chưa trả về Mô tả, tạm để trống
                         TrangThai = productAPI.TrangThai,
                         AnhHienTai = productAPI.DanhSachAnh ?? new List<ImageDTO>()
                     };
