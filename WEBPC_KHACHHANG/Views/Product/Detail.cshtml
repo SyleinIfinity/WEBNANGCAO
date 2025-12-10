@@ -73,21 +73,21 @@
                 <form action="@Url.Action("AddToCart", "Cart")" method="post">
                     <input type="hidden" name="productId" value="@Model.MaSanPham" />
 
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Số lượng:</label>
-                        <div class="input-group" style="width: 150px;">
-                            <span class="input-group-text">SL</span>
-                            <input type="number" name="quantity" value="1" min="1" max="@Model.SoLuongTon" class="form-control text-center fw-bold">
+                    <div class="product-action mt-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <label class="me-3 fw-bold">Số lượng:</label>
+                            <input type="number" id="inputQty" class="form-control text-center" value="1" min="1" max="99" style="width: 80px;">
                         </div>
-                    </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-danger btn-lg fw-bold shadow-sm">
-                            <i class="bi bi-lightning-fill me-2"></i> MUA NGAY
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
-                            <i class="bi bi-cart-plus me-2"></i> THÊM VÀO GIỎ
-                        </button>
+                        <div class="d-flex gap-3">
+                            <button type="button" class="btn btn-outline-primary btn-action flex-grow-1" onclick="addToCartDetail(@Model.MaSanPham)">
+                                <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-action flex-grow-1" onclick="addToCartDetail(@Model.MaSanPham)">
+                                <i class="fas fa-money-check-alt me-2"></i> Mua ngay
+                            </button>
+                        </div>
                     </div>
                 </form>
             }
@@ -165,11 +165,30 @@
         </div>
     </div>
 </div>
-
 @section Scripts {
     <script>
-        function changeImage(src) {
-            document.getElementById('mainImage').src = src;
+        function addToCartDetail(id) {
+            $.ajax({
+                url: '/Cart/AddItem',
+                type: 'POST',
+                data: {
+                    productId: id,
+                    quantity: 1
+                },
+                success: function (rs) {
+                    // Kiểm tra kết quả trả về từ server
+                    if (rs.success) {
+                        alert(rs.message); // Hiện thông báo: "Thêm thành công!"
+                        // Cập nhật số lượng trên icon giỏ hàng (nếu có id="CartCount")
+                        $('#CartCount').text(rs.totalItems);
+                    } else {
+                        alert(rs.message);
+                    }
+                },
+                error: function () {
+                    alert("Lỗi kết nối server");
+                }
+            });
         }
     </script>
 }

@@ -1,0 +1,271 @@
+﻿@model List<WEBPC_KHACHHANG.Models.ViewModels.CartItemViewModel>
+@{
+    ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // --- XỬ LÝ HIỂN THỊ (LOGIC TẠM) ---
+    var cartItems = Model;
+    if (cartItems == null || !cartItems.Any())
+    {
+        cartItems = new List<WEBPC_KHACHHANG.Models.ViewModels.CartItemViewModel>();
+    }
+
+    decimal total = cartItems.Sum(x => x.ThanhTien);
+    decimal shippingFee = 25000;
+    decimal finalTotal = total + shippingFee;
+
+    // --- GIẢ LẬP DỮ LIỆU ĐỊA CHỈ KHÁCH HÀNG ĐÃ LƯU ---
+    // Sau này bạn sẽ lấy list này từ Database dựa vào ID khách hàng đang đăng nhập
+    var savedAddresses = new List<dynamic>
+{
+        new { Id="addr1", Name="Nguyễn Văn A", Phone="0905123456", Address="48 Cao Thắng, Phường Thanh Bình, Quận Hải Châu, Đà Nẵng", Label="Nhà riêng" },
+        new { Id="addr2", Name="Nguyễn Văn A", Phone="0905123456", Address="Tòa nhà FPT, KCN An Đồn, Quận Sơn Trà, Đà Nẵng", Label="Công ty" }
+    };
+}
+
+<style>
+    .checkout-container {
+        background-color: #f5f5fa;
+        min-height: 100vh;
+    }
+
+    .checkout-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    /* Style cho ô chọn địa chỉ */
+    .address-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.2s;
+        display: flex;
+        align-items: flex-start;
+    }
+
+        .address-card:hover {
+            border-color: #0d6efd;
+            background-color: #f8faff;
+        }
+        /* Khi được chọn */
+        .address-card.active {
+            border: 2px solid #0d6efd;
+            background-color: #f0f7ff;
+        }
+
+        .address-card input[type="radio"] {
+            margin-top: 5px;
+            margin-right: 15px;
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+
+    .address-label {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #fff;
+        background-color: #999;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-left: 10px;
+    }
+
+    .address-card.active .address-label {
+        background-color: #0d6efd;
+    }
+
+    .product-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .payment-option {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+        .payment-option:hover {
+            border-color: #0d6efd;
+            background-color: #f8faff;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+    .total-row {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d70018;
+    }
+</style>
+
+<div class="checkout-container py-4">
+    <div class="container">
+        <form action="/Cart/ConfirmOrder" method="post" id="checkoutForm">
+
+            <input type="hidden" name="HoTen" id="inputHoTen" value="">
+            <input type="hidden" name="SoDienThoai" id="inputSDT" value="">
+            <input type="hidden" name="DiaChi" id="inputDiaChi" value="">
+
+            <div class="row">
+                <div class="col-md-7">
+
+                    <div class="checkout-box">
+                        <h5 class="section-title">Địa chỉ nhận hàng</h5>
+
+                        @foreach (var addr in savedAddresses)
+                        {
+                            <label class="address-card" onclick="selectAddress('@addr.Name', '@addr.Phone', '@addr.Address', this)">
+                                <input type="radio" name="SelectedAddress" value="@addr.Id">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="fw-bold text-dark">@addr.Name</span>
+                                        <span class="mx-2 text-muted">|</span>
+                                        <span class="text-muted">@addr.Phone</span>
+                                        <span class="address-label">@addr.Label</span>
+                                    </div>
+                                    <div class="text-secondary small">
+                                        @addr.Address
+                                    </div>
+                                </div>
+                            </label>
+                        }
+                    </div>
+
+                    <div class="checkout-box">
+                        <h5 class="section-title">Phương thức thanh toán</h5>
+                        <p class="text-muted small mb-3">Thông tin thanh toán của bạn sẽ luôn được bảo mật</p>
+
+                        <label class="payment-option d-flex align-items-center w-100">
+                            <input type="radio" name="Payment" value="VNPAY">
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold">Thanh toán VNPAY-QR</span>
+                                <span class="small text-muted">Quét mã QR qua ứng dụng ngân hàng</span>
+                            </div>
+                            <img src="https://vnpay.vn/assets/images/logo-icon/logo-primary.svg" alt="VNPAY" style="height: 24px; margin-left: auto;">
+                        </label>
+
+                        <label class="payment-option d-flex align-items-center w-100">
+                            <input type="radio" name="Payment" value="COD" checked>
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold">Thanh toán khi nhận hàng (COD)</span>
+                                <span class="small text-muted">Thanh toán tiền mặt khi giao hàng</span>
+                            </div>
+                            <i class="fas fa-money-bill-wave text-success fs-4" style="margin-left: auto;"></i>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="col-md-5">
+                    <div class="checkout-box">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="section-title mb-0">Đơn hàng của bạn</h5>
+                            <a href="/Cart/Index" class="text-decoration-none small">Chỉnh sửa</a>
+                        </div>
+                        <hr class="my-2">
+
+                        <div class="checkout-product-list mb-4">
+                            @if (cartItems.Any())
+                            {
+                                foreach (var item in cartItems)
+                                {
+                                    <div class="product-item d-flex align-items-center mb-3 pt-2">
+                                        <div class="position-relative">
+                                            <img src="@item.HinhAnh" alt="@item.TenSanPham">
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="font-size: 0.7rem;">
+                                                @item.SoLuong
+                                            </span>
+                                        </div>
+                                        <div class="ms-3 flex-grow-1">
+                                            <h6 class="mb-0 text-truncate" style="max-width: 200px;">@item.TenSanPham</h6>
+                                            <div class="text-muted small">@item.DonGia.ToString("N0")₫ x @item.SoLuong</div>
+                                        </div>
+                                        <div class="fw-bold text-end">@item.ThanhTien.ToString("N0")₫</div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="text-center py-3 text-muted">
+                                    <small>Giỏ hàng chưa có sản phẩm nào.</small>
+                                </div>
+                            }
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Tạm tính</span>
+                            <span>@total.ToString("N0")₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Phí vận chuyển</span>
+                            <span>@shippingFee.ToString("N0")₫</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fs-5 fw-bold">Tổng tiền</span>
+                            <span class="total-row">@finalTotal.ToString("N0")₫</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 mt-4 text-uppercase fw-bold fs-6">
+                            Thanh toán
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Hàm xử lý khi click chọn địa chỉ
+    function selectAddress(name, phone, address, element) {
+        // 1. Cập nhật giá trị vào các input ẩn (để gửi về server)
+        document.getElementById('inputHoTen').value = name;
+        document.getElementById('inputSDT').value = phone;
+        document.getElementById('inputDiaChi').value = address;
+
+        // 2. Xử lý giao diện (Active class)
+        var cards = document.querySelectorAll('.address-card');
+        cards.forEach(c => c.classList.remove('active'));
+
+        if (element) {
+            element.classList.add('active');
+            var radio = element.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+        }
+    }
+
+    // Tự động chọn địa chỉ đầu tiên khi trang tải xong
+    document.addEventListener("DOMContentLoaded", function () {
+        var firstAddress = document.querySelector('.address-card');
+        if (firstAddress) {
+            firstAddress.click();
+        }
+    });
+</script>

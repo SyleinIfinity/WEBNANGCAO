@@ -78,8 +78,9 @@
                                                 <span class="text-primary fw-bold fs-5">@item.GiaBan.ToString("N0") đ</span>
                                             }
                                         </div>
-                                        <div class="d-grid gap-2 d-flex">
+                                        <div class="d-grid gap-2 d-flex mt-auto">
                                             <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="btn btn-outline-primary btn-sm flex-grow-1">Chi tiết</a>
+
                                             <button class="btn btn-primary btn-sm" onclick="addToCart(@item.MaSanPham)">
                                                 <i class="bi bi-cart-plus"></i>
                                             </button>
@@ -103,3 +104,49 @@
         </div>
     </div>
 </div>
+
+<!-- Modal thông báo thêm vào giỏ thành công -->
+<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addToCartModalLabel">
+                    <i class="bi bi-check-circle me-2"></i>Thành công!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-cart-check text-success" style="font-size: 3rem;"></i>
+                <p class="mt-3 mb-0">Sản phẩm đã được thêm vào giỏ hàng!</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tiếp tục mua sắm</button>
+                <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">Xem giỏ hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addToCart(id) {
+            $.ajax({
+                url: '/Cart/AddToCart',
+                type: 'POST',
+                data: { productId: id, quantity: 1 },
+                success: function (res) {
+                    if (res.success) {
+                        // Hiện Modal thông báo thành công
+                        var myModal = new bootstrap.Modal(document.getElementById('addToCartModal'));
+                        myModal.show();
+                    } else {
+                        alert(res.message || "Có lỗi xảy ra!");
+                    }
+                },
+                error: function () {
+                    alert("Lỗi kết nối server!");
+                }
+            });
+        }
+    </script>
+}
