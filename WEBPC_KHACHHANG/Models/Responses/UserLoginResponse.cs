@@ -5,5 +5,6 @@
         public int MaKhachHang { get; set; }
         public string HoTen { get; set; }
         public string Token { get; set; }
+        public string TenVaiTro { get; set; }
     }
 }

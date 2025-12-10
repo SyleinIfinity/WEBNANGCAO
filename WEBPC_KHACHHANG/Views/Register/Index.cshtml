@@ -100,3 +100,35 @@
         </div>
     </div>
 </section>
+<script>
+    $("#registerForm").on("submit", function (e) {
+        e.preventDefault();
+
+        let form = $(this);
+
+        let data = {
+            hoTen: form.find("[name='hoTen']").val(),
+            soDienThoai: form.find("[name='soDienThoai']").val(),
+            email: form.find("[name='email']").val(),
+            tenDangNhap: form.find("[name='tenDangNhap']").val(),
+            matKhau: form.find("[name='matKhau']").val()
+        };
+
+        $.ajax({
+            url: "/Register/Submit",
+            type: "POST",
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    alert("Đăng ký thành công!");
+                    window.location.href = "/Login/Index";
+                } else {
+                    alert("Lỗi: " + res.message);
+                }
+            },
+            error: function () {
+                alert("Không thể kết nối server!");
+            }
+        });
+    });
+</script>
