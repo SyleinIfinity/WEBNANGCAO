@@ -1,0 +1,96 @@
+﻿@*@model WEBPC_KHACHHANG.Models.ViewModels.CheckoutViewModel*@
+@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/styles.css" rel="stylesheet" />
+
+<section class="section-b-space">
+    <div class="container">
+        <div class="checkout-page">
+            <div class="checkout-form">
+                <form action="/ThanhToan/Checkout" method="post">
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-title">
+                                <h3>Thông tin nhận hàng</h3>
+                            </div>
+                            <div class="row check-out">
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                    <label class="field-label">Chọn địa chỉ nhận hàng</label>
+                                    @if (ViewBag.ListAddress != null)
+                                    {
+                                        <select name="DiaChiGiaoHang" class="form-control">
+                                            @foreach (var item in ViewBag.ListAddress)
+                                            {
+                                                <option value="@item.Id">@item.AddressDetail - @item.Phone (@item.ReceiverName)</option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-danger">Bạn chưa có địa chỉ nào. Vui lòng cập nhật trong trang cá nhân.</p>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-details">
+                                <div class="order-box">
+                                    <div class="title-box">
+                                        <div>Sản phẩm <span>Tổng</span></div>
+                                    </div>
+                                    <ul class="qty">
+                                        @if (Model.CartItems != null)
+                                        {
+                                            foreach (var item in Model.CartItems)
+                                            {
+                                                <li>@item.ProductName × @item.Quantity <span>@((item.Price * item.Quantity).ToString("N0"))₫</span></li>
+                                            }
+                                        }
+                                    </ul>
+                                    <ul class="sub-total">
+                                        <li>Tổng phụ <span class="count">@Model.TotalAmount.ToString("N0")₫</span></li>
+                                    </ul>
+                                    <ul class="total">
+                                        <li>Tổng cộng <span class="count">@Model.TotalAmount.ToString("N0")₫</span></li>
+                                    </ul>
+                                </div>
+
+                                <div class="payment-box">
+                                    <div class="upper-box">
+                                        <div class="payment-options">
+                                            <div class="payment-group">
+                                                <div class="radio-option">
+                                                    <input type="radio" name="PaymentMethod" id="payment-vnpay" value="VNPAY" checked>
+                                                    <label for="payment-vnpay">Thanh toán VNPAY-QR</label>
+                                                </div>
+                                                <div class="radio-option">
+                                                    <input type="radio" name="PaymentMethod" id="payment-cod" value="COD">
+                                                    <label for="payment-cod">Thanh toán khi nhận hàng (COD)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        @if (ViewBag.ListAddress != null)
+                                        {
+                                            <button type="submit" class="btn-solid btn">Đặt hàng</button>
+                                        }
+                                        else
+                                        {
+                                            <a href="/User/Profile" class="btn-solid btn">Cập nhật địa chỉ để đặt hàng</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

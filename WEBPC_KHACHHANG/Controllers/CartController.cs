@@ -1,196 +1,161 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 using WEBPC_KHACHHANG.Models.ViewModels;
+// using WEBPC_KHACHHANG.Models; // Bỏ comment dòng này nếu bạn cần dùng DB Context
 
 namespace WEBPC_KHACHHANG.Controllers
 {
     public class CartController : Controller
     {
-        // Đọc URL API từ Web.config
-        private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+        private const string CartSessionKey = "CartSession";
 
-        // Helper: Lấy giỏ hàng từ Session, nếu chưa có thì tạo mới
-        private List<CartItemViewModel> GetCart()
+        // GET: Cart/Index
+        public ActionResult Index()
         {
-            var cart = Session["GioHang"] as List<CartItemViewModel>;
+            var cart = GetCartService();
+            return View(cart);
+        }
+        //// GET: Cart/Index
+        //public ActionResult Index()
+        //{
+        //    var cart = GetCartService();
+
+        //    // --- ĐOẠN CODE TEST: Tự động thêm 1 sản phẩm nếu giỏ hàng trống ---
+        //    if (cart.Items.Count == 0)
+        //    {
+        //        cart.Items.Add(new WEBPC_KHACHHANG.Models.ViewModels.CartItemViewModel
+        //        {
+        //            ProductId = 999, // ID giả
+        //            ProductName = "Sản phẩm Test (Intel Core i9)",
+        //            ProductImage = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100",
+        //            Price = 2500000,
+        //            Quantity = 1
+        //        });
+
+        //        // Lưu tạm vào Session để các nút Tăng/Giảm/Xóa hoạt động được luôn
+        //        Session["CartSession"] = cart;
+        //    }
+        //    // ------------------------------------------------------------------
+
+        //    return View(cart);
+        //}
+
+        // Action: Thêm vào giỏ hàng
+        public ActionResult AddToCart(int productId, int quantity = 1)
+        {
+            var cart = GetCartService();
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                // Nếu sản phẩm đã có -> Tăng số lượng
+                item.Quantity += quantity;
+            }
+            else
+            {
+                // Nếu chưa có -> Lấy thông tin từ DB và thêm mới
+                var product = GetProductFromDatabase(productId);
+                if (product != null)
+                {
+                    cart.Items.Add(new CartItemViewModel
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.ProductName,
+                        ProductImage = product.ProductImage, // Đường dẫn ảnh
+                        Price = product.Price,
+                        Quantity = quantity
+                    });
+                }
+            }
+
+            // Lưu lại Session
+            SaveCartSession(cart);
+
+            // Redirect lại trang hiện tại hoặc về trang giỏ hàng
+            return RedirectToAction("Index");
+        }
+
+        // Action: Xóa sản phẩm
+        public ActionResult Remove(int id)
+        {
+            var cart = GetCartService();
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == id);
+
+            if (item != null)
+            {
+                cart.Items.Remove(item);
+                SaveCartSession(cart);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // Action: Cập nhật số lượng (Dùng cho Javascript Ajax hoặc Redirect)
+        // Đây là hàm sẽ xử lý khi bạn bỏ comment dòng window.location.href trong file View
+        public ActionResult Update(int productId, int quantity)
+        {
+            var cart = GetCartService();
+            var item = cart.Items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                if (quantity > 0)
+                {
+                    item.Quantity = quantity;
+                }
+                else
+                {
+                    // Nếu số lượng <= 0 thì xóa luôn
+                    cart.Items.Remove(item);
+                }
+                SaveCartSession(cart);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // Action: Xóa hết giỏ hàng
+        public ActionResult Clear()
+        {
+            Session[CartSessionKey] = null;
+            return RedirectToAction("Index");
+        }
+
+        // --- CÁC HÀM BỔ TRỢ (HELPER) ---
+
+        // Lấy giỏ hàng từ Session
+        private CartViewModel GetCartService()
+        {
+            var cart = Session[CartSessionKey] as CartViewModel;
             if (cart == null)
             {
-                cart = new List<CartItemViewModel>();
-                Session["GioHang"] = cart;
+                cart = new CartViewModel();
+                Session[CartSessionKey] = cart;
             }
             return cart;
         }
 
-        // 1. HIỂN THỊ GIỎ HÀNG (Cart/Index)
-        public ActionResult Index()
+        // Lưu giỏ hàng vào Session
+        private void SaveCartSession(CartViewModel cart)
         {
-            var cart = GetCart();
-            return View(cart);
+            Session[CartSessionKey] = cart;
         }
 
-        // 2. THÊM VÀO GIỎ HÀNG (AJAX POST)
-        [HttpPost]
-        public async Task<ActionResult> AddToCart(int productId, int quantity = 1)
+        // Giả lập lấy sản phẩm từ DB (BẠN CẦN SỬA LẠI HÀM NÀY)
+        private CartItemViewModel GetProductFromDatabase(int id)
         {
-            var cart = GetCart();
-            var item = cart.FirstOrDefault(x => x.MaSanPham == productId);
+            // TODO: Kết nối Entity Framework hoặc DAO của bạn ở đây
+            // Ví dụ: var product = db.SanPhams.Find(id);
+            // return new CartItemViewModel { ... };
 
-            if (item != null)
-            {
-                // Nếu đã có -> Cộng dồn số lượng
-                item.SoLuong += quantity;
-            }
-            else
-            {
-                // Nếu chưa có -> Gọi API lấy thông tin sản phẩm
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(_apiBaseUrl);
-                    var response = await client.GetAsync($"SanPham/{productId}");
+            // Code demo giả lập (Xóa đi khi ghép DB thật):
+            if (id == 1) return new CartItemViewModel { ProductId = 1, ProductName = "Intel Core i9-14900K", Price = 2400000, ProductImage = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100" };
+            if (id == 2) return new CartItemViewModel { ProductId = 2, ProductName = "GeoForce RTX 5080", Price = 28990000, ProductImage = "https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=100" };
 
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var json = await response.Content.ReadAsStringAsync();
-                        var product = JsonConvert.DeserializeObject<ProductViewModel>(json);
-
-                        if (product != null)
-                        {
-                            item = new CartItemViewModel
-                            {
-                                MaSanPham = productId,
-                                TenSanPham = product.TenSanPham,
-                                DonGia = product.GiaKhuyenMai ?? product.GiaBan,
-                                HinhAnh = product.HinhAnhDaiDien,
-                                SoLuong = quantity
-                            };
-                            cart.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        return Json(new { success = false, message = "Không tìm thấy sản phẩm hoặc lỗi kết nối API." });
-                    }
-                }
-            }
-
-            Session["GioHang"] = cart;
-            return Json(new { success = true, message = "Thêm thành công!", totalItems = cart.Sum(x => x.SoLuong) });
-        }
-
-        // 3. CẬP NHẬT SỐ LƯỢNG (AJAX POST)
-        [HttpPost]
-        public ActionResult UpdateQuantity(int productId, int quantity)
-        {
-            var cart = GetCart();
-            var item = cart.FirstOrDefault(x => x.MaSanPham == productId);
-            if (item != null)
-            {
-                item.SoLuong = quantity;
-                if (item.SoLuong <= 0) cart.Remove(item);
-            }
-            Session["GioHang"] = cart;
-            return Json(new { success = true });
-        }
-
-        // 4. XÓA SẢN PHẨM (AJAX POST)
-        [HttpPost]
-        public ActionResult Remove(int productId)
-        {
-            var cart = GetCart();
-            var item = cart.FirstOrDefault(x => x.MaSanPham == productId);
-            if (item != null)
-            {
-                cart.Remove(item);
-            }
-            Session["GioHang"] = cart;
-            return Json(new { success = true });
-        }
-
-        // 5. TRANG THANH TOÁN (Checkout)
-        public ActionResult Checkout(string selectedIds)
-        {
-            var cart = GetCart();
-            var checkoutList = new List<CartItemViewModel>();
-
-            if (!string.IsNullOrEmpty(selectedIds))
-            {
-                try
-                {
-                    // Tách chuỗi ID (ví dụ: "1,5,8")
-                    var ids = selectedIds.Split(',').Select(int.Parse).ToList();
-                    checkoutList = cart.Where(x => ids.Contains(x.MaSanPham)).ToList();
-                }
-                catch
-                {
-                    // Nếu lỗi parse ID, chuyển về trang Index
-                    return RedirectToAction("Index");
-                }
-            }
-
-            // Nếu không có sản phẩm nào hợp lệ, quay về giỏ hàng (Index)
-            if (checkoutList.Count == 0)
-            {
-                return RedirectToAction("Index");
-            }
-
-            // Trả về View Checkout
-            return View(checkoutList);
-        }
-
-        // 6. XÁC NHẬN ĐẶT HÀNG (Sau khi nhập form)
-        [HttpPost]
-        public ActionResult ConfirmOrder(string HoTen, string SoDienThoai, string DiaChi, string selectedIds)
-        {
-            var cart = GetCart();
-            List<CartItemViewModel> orderItems;
-
-            // Nếu có selectedIds, chỉ xử lý các sản phẩm đã chọn
-            if (!string.IsNullOrEmpty(selectedIds))
-            {
-                try
-                {
-                    var ids = selectedIds.Split(',').Select(int.Parse).ToList();
-                    orderItems = cart.Where(x => ids.Contains(x.MaSanPham)).ToList();
-                }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                orderItems = cart;
-            }
-
-            if (orderItems == null || !orderItems.Any())
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            // === BƯỚC 1: XỬ LÝ DỮ LIỆU VÀ GỌI API LƯU ĐƠN HÀNG ===
-            var totalAmount = orderItems.Sum(item => item.ThanhTien);
-
-            // [MÔ PHỎNG] Ghi lại log đơn hàng
-            System.Diagnostics.Debug.WriteLine($"[ORDER PLACED] Customer: {HoTen}, Total: {totalAmount:N0} VND");
-
-            // === BƯỚC 2: XÓA CÁC SẢN PHẨM ĐÃ ĐẶT KHỎI GIỎ HÀNG ===
-            foreach (var item in orderItems)
-            {
-                cart.Remove(item);
-            }
-            Session["GioHang"] = cart;
-
-            // === BƯỚC 3: TRẢ VỀ TRANG THÔNG BÁO THÀNH CÔNG ===
-            ViewBag.CustomerName = HoTen;
-            ViewBag.TotalAmount = totalAmount;
-
-            return View("OrderSuccess");
+            return null; // Không tìm thấy
         }
     }
 }
