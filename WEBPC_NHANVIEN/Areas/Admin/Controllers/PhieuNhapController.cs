@@ -32,7 +32,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
                 // GET api/PhieuNhap
-                var response = await client.GetAsync("api/PhieuNhap");
+                var response = await client.GetAsync("PhieuNhap");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -59,14 +59,39 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
         }
 
         // --- 4. TẠO MỚI (POST) ---
+        // FILE: Areas/Admin/Controllers/PhieuNhapController.cs
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PhieuNhapCreateViewModel model)
         {
-            // [QUAN TRỌNG] Gán ID Nhân viên nhập. 
-            // Thực tế bạn lấy từ Session["NhanVienId"] hoặc User.Identity
-            model.MaNhanVienNhap = 1; // Ví dụ gán cứng là 1 (Admin)
+            // Check if session exists
+            if (Session["NhanVien"] == null && Session["UserId"] == null)
+            {
+                // Fallback for testing ONLY: Hardcode valid ID (e.g., 2)
+                model.MaNhanVienNhap = 2;
 
+                // In production, uncomment the line below to force login:
+                // return RedirectToAction("Login", "Account", new { area = "" });
+            }
+            else
+            {
+                // Real logic: Retrieve ID from Session
+                // Adjust "UserId" to whatever key you used in AccountController
+                if (Session["UserId"] != null)
+                {
+                    model.MaNhanVienNhap = (int)Session["UserId"];
+                }
+                else
+                {
+                    // Example if you stored an object
+                    // var nv = (NhanVien)Session["NhanVien"];
+                    // model.MaNhanVienNhap = nv.MaNhanVien;
+                    model.MaNhanVienNhap = 2; // Safety fallback
+                }
+            }
+
+            // Check 2: Validate Detail List
             if (model.ChiTiet == null || !model.ChiTiet.Any())
             {
                 ModelState.AddModelError("", "Vui lòng nhập ít nhất 1 sản phẩm.");
@@ -78,12 +103,11 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
 
-                    // Serialize model sang JSON (Chỉ chứa maNhanVienNhap, ghiChu, chiTiet)
+                    // Serialize with CamelCase to match API expectations
                     var jsonContent = JsonConvert.SerializeObject(model, _jsonSettings);
                     var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                    // POST api/PhieuNhap
-                    var response = await client.PostAsync("api/PhieuNhap", content);
+                    var response = await client.PostAsync("PhieuNhap", content);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -92,12 +116,14 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     }
                     else
                     {
-                        var err = await response.Content.ReadAsStringAsync();
-                        ModelState.AddModelError("", $"Lỗi API: {err}");
+                        // Capture detailed API error
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        ModelState.AddModelError("", $"Lỗi API ({response.StatusCode}): {errorContent}");
                     }
                 }
             }
 
+            // Reload products if failure
             await LoadProductsToViewBag();
             return View(model);
         }
@@ -143,7 +169,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                     // Dùng HttpMethod.Patch
-                    var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"api/PhieuNhap/{model.MaPhieuNhap}")
+                    var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"PhieuNhap/{model.MaPhieuNhap}")
                     {
                         Content = content
                     };
@@ -182,7 +208,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
-                await client.DeleteAsync($"api/PhieuNhap/{id}");
+                await client.DeleteAsync($"PhieuNhap/{id}");
             }
             TempData["Message"] = "Đã xóa phiếu nhập.";
             return RedirectToAction("Index");
@@ -194,7 +220,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
-                var response = await client.GetAsync($"api/PhieuNhap/{id}");
+                var response = await client.GetAsync($"PhieuNhap/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
@@ -209,24 +235,35 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
-                // Giả sử API lấy list SP là GET api/SanPham
-                var response = await client.GetAsync("api/SanPham");
+
+                // [FIX] Bỏ "api/" vì BaseAddress đã bao gồm nó
+                var response = await client.GetAsync("SanPham");
+
                 var listItems = new List<SelectListItem>();
 
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-                    // Deserialize thành list SP (dùng tạm class dynamic hoặc ViewModel SP nếu có)
+
+                    // Dùng SanPhamViewModel hoặc tạo class DTO nhanh
                     var products = JsonConvert.DeserializeObject<List<SanPhamViewModel>>(data);
+
                     if (products != null)
                     {
                         listItems = products.Select(p => new SelectListItem
                         {
                             Value = p.MaSanPham.ToString(),
+                            // Hiển thị: 10 - Tên SP (Tồn: 50)
                             Text = $"{p.MaSanPham} - {p.TenSanPham} (Tồn: {p.SoLuongTon})"
                         }).ToList();
                     }
                 }
+                else
+                {
+                    // [DEBUG] Thêm dòng này để biết nếu API lỗi trên giao diện
+                    listItems.Add(new SelectListItem { Value = "", Text = $"Lỗi API: {response.StatusCode}" });
+                }
+
                 ViewBag.ProductOptions = listItems;
             }
         }

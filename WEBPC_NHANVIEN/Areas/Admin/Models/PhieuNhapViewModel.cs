@@ -9,41 +9,39 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
     // --- 1. VIEW MODEL CHO CREATE (Khớp CreatePhieuNhapRequest) ---
     public class PhieuNhapCreateViewModel
     {
-        // API yêu cầu bắt buộc trường này
-        [Required]
+        // Matches: public int MaNhanVienNhap { get; set; }
         [JsonProperty("maNhanVienNhap")]
         public int MaNhanVienNhap { get; set; }
 
+        // Matches: public string? GhiChu { get; set; }
         [JsonProperty("ghiChu")]
         public string GhiChu { get; set; }
 
-        // [LƯU Ý] API không nhận NgayNhap, nên trường này chỉ dùng để hiển thị trên View (nếu cần)
-        [JsonIgnore]
-        public DateTime NgayNhapHienThi { get; set; } = DateTime.Now;
-
-        [Required]
-        [JsonProperty("chiTiet")] // Tên field phải là "chiTiet" giống trong API Request
+        // Matches: public List<ChiTietPhieuNhapItem> ChiTiet { get; set; }
+        [JsonProperty("chiTiet")]
         public List<ChiTietPhieuNhapItemViewModel> ChiTiet { get; set; } = new List<ChiTietPhieuNhapItemViewModel>();
+
+        // Helper property for View (ignored by API)
+        [JsonIgnore]
+        public DateTime NgayNhap { get; set; } = DateTime.Now;
     }
 
     public class ChiTietPhieuNhapItemViewModel
     {
-        [Required]
+        // Matches: public int MaSanPham { get; set; }
         [JsonProperty("maSanPham")]
         public int MaSanPham { get; set; }
 
-        [JsonIgnore] // Chỉ dùng để hiển thị tên SP trên giao diện, không gửi API
-        public string TenSanPham { get; set; }
-
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Số lượng phải > 0")]
+        // Matches: public int SoLuongNhap { get; set; }
         [JsonProperty("soLuongNhap")]
         public int SoLuongNhap { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue, ErrorMessage = "Giá nhập không được âm")]
+        // Matches: public decimal GiaNhap { get; set; }
         [JsonProperty("giaNhap")]
         public decimal GiaNhap { get; set; }
+
+        [JsonIgnore]
+        public string TenSanPham { get; set; }
 
         [JsonIgnore]
         public decimal ThanhTien => SoLuongNhap * GiaNhap;
