@@ -13,35 +13,35 @@ namespace WEBPC_KHACHHANG.Controllers
         private const string CartSessionKey = "CartSession";
 
         // GET: Cart/Index
-        public ActionResult Index()
-        {
-            var cart = GetCartService();
-            return View(cart);
-        }
-        //// GET: Cart/Index
         //public ActionResult Index()
         //{
         //    var cart = GetCartService();
-
-        //    // --- ĐOẠN CODE TEST: Tự động thêm 1 sản phẩm nếu giỏ hàng trống ---
-        //    if (cart.Items.Count == 0)
-        //    {
-        //        cart.Items.Add(new WEBPC_KHACHHANG.Models.ViewModels.CartItemViewModel
-        //        {
-        //            ProductId = 999, // ID giả
-        //            ProductName = "Sản phẩm Test (Intel Core i9)",
-        //            ProductImage = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100",
-        //            Price = 2500000,
-        //            Quantity = 1
-        //        });
-
-        //        // Lưu tạm vào Session để các nút Tăng/Giảm/Xóa hoạt động được luôn
-        //        Session["CartSession"] = cart;
-        //    }
-        //    // ------------------------------------------------------------------
-
         //    return View(cart);
         //}
+        // GET: Cart/Index
+        public ActionResult Index()
+        {
+            var cart = GetCartService();
+
+            // --- ĐOẠN CODE TEST: Tự động thêm 1 sản phẩm nếu giỏ hàng trống ---
+            if (cart.Items.Count == 0)
+            {
+                cart.Items.Add(new WEBPC_KHACHHANG.Models.ViewModels.CartItemViewModel
+                {
+                    ProductId = 999, // ID giả
+                    ProductName = "Sản phẩm Test (Intel Core i9)",
+                    ProductImage = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=100",
+                    Price = 2500000,
+                    Quantity = 1
+                });
+
+                // Lưu tạm vào Session để các nút Tăng/Giảm/Xóa hoạt động được luôn
+                Session["CartSession"] = cart;
+            }
+            // ------------------------------------------------------------------
+
+            return View(cart);
+        }
 
         // Action: Thêm vào giỏ hàng
         public ActionResult AddToCart(int productId, int quantity = 1)
