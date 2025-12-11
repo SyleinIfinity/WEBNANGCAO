@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using WEBPC_KHACHHANG.Models.ViewModels;
 using WEBPC_KHACHHANG.Models.Responses;
+using System.Net.Http.Headers;
 
 namespace WEBPC_KHACHHANG.Controllers
 {
@@ -24,7 +25,7 @@ namespace WEBPC_KHACHHANG.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(LoginViewModel model)
+        public async Task<ActionResult> Index(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -32,52 +33,78 @@ namespace WEBPC_KHACHHANG.Controllers
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // API TaiKhoanController nhận LoginRequest { tenDangNhap, matKhau }
-                var payload = new
+                // --- 1. GỌI API ĐĂNG NHẬP ---
+                // SỬA LẠI ĐOẠN NÀY: Dùng model.TenDangNhap và model.MatKhau
+                var loginRequest = new
                 {
-                    tenDangNhap = model.TenDangNhap,
-                    matKhau = model.MatKhau
+                    tenDangNhap = model.TenDangNhap, // Thay model.Username -> model.TenDangNhap
+                    matKhau = model.MatKhau          // Thay model.Password -> model.MatKhau
                 };
 
-                var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
 
-                try
+                // POST api/TaiKhoan/login
+                var response = await client.PostAsync("TaiKhoan/login", content);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    // Gọi đúng endpoint trong TaiKhoanController
-                    var response = await client.PostAsync("TaiKhoan/login", content);
-                    var responseBody = await response.Content.ReadAsStringAsync();
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    // UserLoginResponse hứng Token + MaKhachHang
+                    var user = JsonConvert.DeserializeObject<UserLoginResponse>(responseContent);
 
-                    if (response.IsSuccessStatusCode)
+                    // --- 2. GỌI TIẾP API LẤY THÔNG TIN CHI TIẾT (ĐỂ LẤY SĐT) ---
+                    if (user != null && !string.IsNullOrEmpty(user.Token) && user.MaKhachHang > 0)
                     {
-                        var userInfo = JsonConvert.DeserializeObject<UserLoginResponse>(responseBody);
-
-                        if (userInfo != null)
+                        try
                         {
-                            // --- THÊM DÒNG NÀY (BẮT BUỘC) ---
-                            // Để CartController có thể lấy toàn bộ thông tin User (Token, ID, Tên...)
-                            Session["User"] = userInfo;
-                            // --------------------------------
+                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                            Session["UserToken"] = userInfo.Token; // Code cũ của bạn
-                            Session["UserID"] = userInfo.MaKhachHang; // Code cũ của bạn
-                            Session["UserName"] = userInfo.HoTen; // Code cũ của bạn
+                            // GET api/KhachHang/{id}
+                            var infoResponse = await client.GetAsync($"KhachHang/{user.MaKhachHang}");
 
-                            TempData["LoginSuccess"] = "Đăng nhập thành công!";
-                            return RedirectToAction("Index", "Home");
+                            if (infoResponse.IsSuccessStatusCode)
+                            {
+                                var infoContent = await infoResponse.Content.ReadAsStringAsync();
+                                var fullInfo = JsonConvert.DeserializeObject<KhachHangResponse>(infoContent);
+
+                                if (fullInfo != null)
+                                {
+                                    user.SoDienThoai = fullInfo.SoDienThoai; // Lấy SĐT gán vào
+                                    user.HoTen = fullInfo.HoTen;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            // Bỏ qua lỗi nếu không lấy được info, vẫn cho login
                         }
                     }
 
-                    // Xử lý lỗi từ API (trả về { message = "..." })
-                    dynamic error = JsonConvert.DeserializeObject<dynamic>(responseBody);
-                    ModelState.AddModelError("", error?.message ?? "Đăng nhập thất bại.");
+                    // --- 3. LƯU SESSION ---
+                    Session["User"] = user;
+
+                    // [THAY THẾ HOẶC BỔ SUNG ĐOẠN CODE DƯỚI ĐÂY]
+                    if (user != null)
+                    {
+                        // 1. Lưu UserID để khắc phục lỗi NullReferenceException tại InfoUserController
+                        Session["UserID"] = user.MaKhachHang;
+
+                        // 2. Lưu Token để xác thực (dòng 20 InfoUserController cần cái này)
+                        Session["UserToken"] = user.Token;
+
+                        // 3. Lưu Tên để hiển thị trên Header (_Layout.cshtml cần cái này)
+                        Session["UserName"] = !string.IsNullOrEmpty(user.HoTen) ? user.HoTen : model.TenDangNhap;
+                    }
+
+                    if (!string.IsNullOrEmpty(returnUrl)) return Redirect(returnUrl);
+                    return RedirectToAction("Index", "Home");
                 }
-                catch (Exception ex)
+                else
                 {
-                    ModelState.AddModelError("", "Lỗi kết nối: " + ex.Message);
+                    ViewBag.Error = "Tên đăng nhập hoặc mật khẩu không đúng!";
+                    return View(model);
                 }
             }
-
-            return View(model);
         }
 
         public ActionResult Logout()

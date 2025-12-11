@@ -233,6 +233,35 @@
                 });
             }
 
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', function () {
+
+                    // --- SỬA THÀNH CODE DƯỚI ĐÂY ---
+
+                    // 1. Lấy danh sách ID các sản phẩm được check
+                    const selectedIds = [];
+                    const rows = document.querySelectorAll('.cart-item');
+
+                    rows.forEach(row => {
+                        const checkbox = row.querySelector('.item-checkbox');
+                        if (checkbox && checkbox.checked) {
+                            // Lấy data-id từ thẻ tr
+                            const id = row.getAttribute('data-id');
+                            if(id) selectedIds.push(id);
+                        }
+                    });
+
+                    if (selectedIds.length === 0) {
+                        alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+                        return;
+                    }
+
+                    // 2. Chuyển hướng kèm theo tham số selectedIds trên URL
+                    // Ví dụ: /ThanhToan/Checkout?selectedIds=101,102
+                    window.location.href = '@Url.Action("Checkout", "ThanhToan")?selectedIds=' + selectedIds.join(',');
+                });
+            }
+
             // Gọi lần đầu
             updateCartSummary();
         });

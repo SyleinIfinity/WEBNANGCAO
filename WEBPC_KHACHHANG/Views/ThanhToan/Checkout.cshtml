@@ -1,10 +1,11 @@
-﻿@{
-    ViewBag.Title = "Thanh toán (Demo Giao diện)";
+﻿@model WEBPC_KHACHHANG.Models.ViewModels.CheckoutViewModel
+@{
+    ViewBag.Title = "Thanh toán";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-    /* --- STYLE CŨ GIỮ NGUYÊN --- */
+    /* --- CORE STYLE --- */
     .checkout-container { background-color: #f5f5fa; min-height: 100vh; }
     .checkout-box { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .section-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; color: #333; }
@@ -15,132 +16,68 @@
     .total-row { font-size: 1.2rem; font-weight: bold; color: #d70018; }
     .address-select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; background-color: #fff; font-size: 1rem; }
 
-    /* --- STYLE MỚI CHO MODAL (POPUP) --- */
+    /* --- MODAL STYLE --- */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
+    .modal-box { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; flex-direction: column; max-height: 90vh; animation: slideDown 0.3s ease-out; }
 
-    /* Màn hình nền tối */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); /* Màu đen mờ 50% */
-        z-index: 9999; /* Luôn nằm trên cùng */
-        display: none; /* Mặc định ẩn */
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(2px); /* Hiệu ứng làm mờ nền phía sau */
-    }
+    @@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-    /* Hộp nội dung chính */
-    .modal-box {
-        background: white;
-        width: 90%;
-        max-width: 500px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        display: flex;
-        flex-direction: column;
-        max-height: 90vh; /* Không cao quá màn hình */
-        animation: slideDown 0.3s ease-out;
-    }
-
-    @@keyframes slideDown {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-header {
-        padding: 15px 20px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
+    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
     .modal-title { font-weight: 700; font-size: 1.1rem; color: #333; }
+    .btn-close-modal { background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; }
+    .modal-body { padding: 20px; overflow-y: auto; background-color: #f8f9fa; }
+    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; background: white; border-radius: 0 0 12px 12px; }
 
-    .btn-close-modal {
-        background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer;
-    }
-
-    .modal-body {
-        padding: 20px;
-        overflow-y: auto; /* Cho phép cuộn nếu danh sách dài */
-        background-color: #f8f9fa;
-    }
-
-    .modal-footer {
-        padding: 15px 20px;
-        border-top: 1px solid #eee;
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        background: white;
-        border-radius: 0 0 12px 12px;
-    }
-
-    /* Style cho từng Voucher trong Modal */
-    .voucher-card {
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        transition: all 0.2s;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
+    /* VOUCHER CARD STYLE */
+    .voucher-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
     .voucher-card:hover { border-color: #0d6efd; box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1); }
-
-    /* Chấm tròn trang trí giống vé */
-    .voucher-card::before, .voucher-card::after {
-        content: ""; position: absolute; height: 16px; width: 16px; background-color: #f8f9fa; border-radius: 50%; top: 50%; transform: translateY(-50%);
-    }
+    .voucher-card::before, .voucher-card::after { content: ""; position: absolute; height: 16px; width: 16px; background-color: #f8f9fa; border-radius: 50%; top: 50%; transform: translateY(-50%); }
     .voucher-card::before { left: -8px; border-right: 1px solid #ddd; }
     .voucher-card::after { right: -8px; border-left: 1px solid #ddd; }
-
-    .voucher-img {
-        width: 60px; height: 60px; background-color: #e6f0ff; color: #0d6efd;
-        display: flex; align-items: center; justify-content: center;
-        border-radius: 6px; font-size: 1.5rem; margin-right: 15px;
-        flex-shrink: 0;
-    }
-
+    .voucher-img { width: 60px; height: 60px; background-color: #e6f0ff; color: #0d6efd; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 1.5rem; margin-right: 15px; flex-shrink: 0; }
     .voucher-info { flex-grow: 1; }
     .voucher-code-tag { font-weight: bold; color: #d70018; font-size: 0.9rem; }
     .voucher-desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
-
-    .voucher-radio {
-        width: 20px; height: 20px; accent-color: #0d6efd;
-    }
-
+    .voucher-radio { width: 20px; height: 20px; accent-color: #0d6efd; }
 </style>
 
 <div class="checkout-container py-4">
     <div class="container">
-        <form action="#" method="post">
+        <form action="@Url.Action("PlaceOrder", "ThanhToan")" method="post" id="form-checkout">
             <div class="row">
                 <div class="col-md-7">
                     <div class="checkout-box">
                         <h5 class="section-title">Thông tin nhận hàng</h5>
                         <div class="mb-3">
                             <label class="form-label text-muted">Chọn địa chỉ nhận hàng:</label>
-                            <select class="address-select form-select">
-                                <option value="1" selected>Nguyễn Văn A - 0905123456 (123 Điện Biên Phủ, Thanh Khê, Đà Nẵng)</option>
-                                <option value="2">Nguyễn Văn A - 0905123456 (45 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng)</option>
-                            </select>
+
+                            @if (Model.Addresses != null && Model.Addresses.Count > 0)
+                            {
+                                <select class="address-select form-select" name="MaSoDiaChi">
+                                    @foreach (var addr in Model.Addresses)
+                                    {
+                                        <option value="@addr.MaSoDiaChi" @(addr.MacDinh ? "selected" : "")>
+                                            @addr.TenNguoiNhan - @(string.IsNullOrEmpty(addr.SoDienThoai) ? "Chưa có SĐT" : addr.SoDienThoai) (@addr.DiaChiDayDu)
+                                        </option>
+                                    }
+                                </select>
+                                <div class="mt-2 text-end">
+                                    <a href="@Url.Action("Index", "InfoAddress")" class="small text-decoration-none"><i class="bi bi-plus-circle"></i> Quản lý sổ địa chỉ</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-warning mb-0">
+                                    Bạn chưa có địa chỉ nhận hàng. <a href="@Url.Action("Index", "InfoAddress")" class="fw-bold">Thêm ngay</a>
+                                </div>
+                            }
                         </div>
                     </div>
 
                     <div class="checkout-box">
                         <h5 class="section-title">Phương thức thanh toán</h5>
                         <label class="payment-option">
-                            <input type="radio" name="PaymentMethod" value="VNPAY">
+                            <input type="radio" name="PhuongThucThanhToan" value="BANKING">
                             <div class="d-flex flex-column">
                                 <span class="fw-bold">Thanh toán VNPAY-QR</span>
                                 <span class="small text-muted">Quét mã QR qua ứng dụng ngân hàng</span>
@@ -148,12 +85,12 @@
                             <img src="https://vnpay.vn/assets/images/logo-icon/logo-primary.svg" alt="VNPAY" style="height: 24px; margin-left: auto;">
                         </label>
                         <label class="payment-option">
-                            <input type="radio" name="PaymentMethod" value="COD" checked>
+                            <input type="radio" name="PhuongThucThanhToan" value="COD" checked>
                             <div class="d-flex flex-column">
                                 <span class="fw-bold">Thanh toán khi nhận hàng (COD)</span>
                                 <span class="small text-muted">Thanh toán tiền mặt khi giao hàng</span>
                             </div>
-                            <i class="fas fa-money-bill-wave text-success fs-4" style="margin-left: auto;"></i>
+                            <i class="bi bi-cash-coin text-success fs-3" style="margin-left: auto;"></i>
                         </label>
                     </div>
                 </div>
@@ -164,31 +101,34 @@
                             <h5 class="section-title mb-0">Đơn hàng của bạn</h5>
                         </div>
                         <hr class="my-2">
-                        <div class="checkout-product-list mb-4">
-                            <div class="product-item d-flex align-items-center mb-3 pt-2">
-                                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca4?w=100" class="me-3">
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-0 text-truncate" style="max-width: 200px;">Laptop MacBook Pro 2023</h6>
-                                    <div class="text-muted small">30.000.000₫ x 1</div>
+                        <div class="checkout-product-list mb-4" style="max-height: 300px; overflow-y: auto;">
+                            @foreach (var item in Model.Cart.Items)
+                            {
+                                <div class="product-item d-flex align-items-center mb-3 pt-2">
+                                    <img src="@(string.IsNullOrEmpty(item.ProductImage) ? "https://via.placeholder.com/60?text=NoImage" : item.ProductImage)"
+                                         class="me-3"
+                                         alt="@item.ProductName"
+                                         onerror="this.src='https://via.placeholder.com/60?text=Error'">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-0 text-truncate" style="max-width: 200px;" title="@item.ProductName">@item.ProductName</h6>
+                                        <div class="text-muted small">x @item.Quantity</div>
+                                    </div>
+                                    <div class="fw-bold">@item.Total.ToString("N0")₫</div>
                                 </div>
-                                <div class="fw-bold">30.000.000₫</div>
-                            </div>
+                            }
                         </div>
 
                         <hr>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold"><i class="fas fa-ticket-alt text-warning me-1"></i> WebPC Voucher</label>
-
+                            <label class="form-label fw-bold"><i class="bi bi-ticket-perforated text-warning me-1"></i> WebPC Voucher</label>
                             <div class="d-flex gap-2">
-                                <input type="text" class="form-control" placeholder="Nhập mã" id="displayVoucherInput">
+                                <input type="text" class="form-control" placeholder="Nhập mã" id="displayVoucherInput" readonly>
                                 <button type="button" class="btn btn-outline-primary" onclick="openVoucherModal()">
-                                    <i class="fas fa-list"></i> Chọn mã
+                                    <i class="bi bi-list-ul"></i> Chọn mã
                                 </button>
                             </div>
-
                             <div id="appliedVoucherInfo" class="mt-2 p-2 bg-light border border-success rounded text-success small" style="display:none;">
-                                <i class="fas fa-check-circle"></i> Đã áp dụng: <b>GIAM500K</b> (-500.000₫)
                             </div>
                         </div>
 
@@ -196,7 +136,7 @@
 
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Tạm tính</span>
-                            <span>30.000.000₫</span>
+                            <span id="subTotal">@Model.Cart.TotalAmount.ToString("N0")₫</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-success">Giảm giá</span>
@@ -205,10 +145,11 @@
 
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fs-5 fw-bold">Tổng thanh toán</span>
-                            <span class="total-row" id="finalTotal">30.000.000₫</span>
+                            <span class="total-row" id="finalTotal">@Model.Cart.TotalAmount.ToString("N0")₫</span>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 py-3 mt-4 text-uppercase fw-bold fs-6">
+                        <button type="submit" class="btn btn-primary w-100 py-3 mt-4 text-uppercase fw-bold fs-6"
+                                @(Model.Addresses == null || Model.Addresses.Count == 0 ? "disabled" : "")>
                             Đặt hàng ngay
                         </button>
                     </div>
@@ -224,17 +165,15 @@
             <div class="modal-title">Chọn WebPC Voucher</div>
             <button class="btn-close-modal" onclick="closeVoucherModal()">&times;</button>
         </div>
-
         <div class="modal-body">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Tìm mã voucher...">
                 <button class="btn btn-primary">Tìm</button>
             </div>
-
             <div class="text-muted small mb-2">Mã giảm giá dành cho bạn:</div>
 
             <label class="voucher-card">
-                <div class="voucher-img"><i class="fas fa-gift"></i></div>
+                <div class="voucher-img"><i class="bi bi-gift"></i></div>
                 <div class="voucher-info">
                     <div class="voucher-code-tag">GIAM500K</div>
                     <div class="fw-bold">Giảm 500k cho đơn từ 20tr</div>
@@ -244,7 +183,7 @@
             </label>
 
             <label class="voucher-card">
-                <div class="voucher-img"><i class="fas fa-truck"></i></div>
+                <div class="voucher-img"><i class="bi bi-truck"></i></div>
                 <div class="voucher-info">
                     <div class="voucher-code-tag">FREESHIP</div>
                     <div class="fw-bold">Miễn phí vận chuyển</div>
@@ -252,18 +191,7 @@
                 </div>
                 <input type="radio" name="modalVoucherSelect" class="voucher-radio" value="FREESHIP">
             </label>
-
-            <label class="voucher-card" style="opacity: 0.6; cursor: not-allowed; background: #f0f0f0;">
-                <div class="voucher-img text-muted"><i class="fas fa-clock"></i></div>
-                <div class="voucher-info">
-                    <div class="voucher-code-tag text-muted">TET2025</div>
-                    <div class="fw-bold text-muted">Giảm 1 triệu (Chưa bắt đầu)</div>
-                    <div class="voucher-desc">Hiệu lực từ: 01/01/2025</div>
-                </div>
-                <input type="radio" name="modalVoucherSelect" class="voucher-radio" disabled>
-            </label>
         </div>
-
         <div class="modal-footer">
             <button class="btn btn-secondary" onclick="closeVoucherModal()">Trở lại</button>
             <button class="btn btn-primary px-4" onclick="applyVoucher()">Áp dụng</button>
@@ -272,22 +200,24 @@
 </div>
 
 <script>
-    // Hàm mở Modal
+    // Lấy giá trị tổng tiền gốc từ Server (để tính toán JS)
+    var originalTotal = @Model.Cart.TotalAmount;
+
     function openVoucherModal() {
         document.getElementById('voucherModal').style.display = 'flex';
-        // Thêm hiệu ứng khóa cuộn trang chính khi mở modal
         document.body.style.overflow = 'hidden';
     }
 
-    // Hàm đóng Modal
     function closeVoucherModal() {
         document.getElementById('voucherModal').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
 
-    // Hàm giả lập "Áp dụng" (Chỉ làm đẹp UI)
+    function formatCurrency(amount) {
+        return amount.toLocaleString('vi-VN') + '₫';
+    }
+
     function applyVoucher() {
-        // Lấy radio đang chọn
         var radios = document.getElementsByName('modalVoucherSelect');
         var selectedValue = "";
 
@@ -299,34 +229,38 @@
         }
 
         if (selectedValue) {
-            // 1. Điền mã vào ô input ở ngoài
             document.getElementById('displayVoucherInput').value = selectedValue;
-
-            // 2. Hiển thị thông báo xanh lá
             document.getElementById('appliedVoucherInfo').style.display = 'block';
 
-            // 3. Cập nhật số tiền demo
+            var discount = 0;
+            var finalTotal = originalTotal;
+            var infoHtml = "";
+
             if(selectedValue === "GIAM500K") {
-                document.getElementById('discountAmount').innerText = "-500.000₫";
-                document.getElementById('finalTotal').innerText = "29.500.000₫";
+                discount = 500000;
+                infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>GIAM500K</b> (-500.000₫)';
             } else if (selectedValue === "FREESHIP") {
-                document.getElementById('discountAmount').innerText = "-30.000₫";
-                document.getElementById('appliedVoucherInfo').innerHTML = '<i class="fas fa-check-circle"></i> Đã áp dụng: <b>FREESHIP</b> (Miễn phí vận chuyển)';
-                document.getElementById('finalTotal').innerText = "30.000.000₫"; // Giả sử phí ship đã free
+                discount = 30000; // Giả lập phí ship
+                infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>FREESHIP</b> (Miễn phí vận chuyển)';
             }
 
-            // Đóng modal
+            // Tính lại tổng
+            if(finalTotal - discount < 0) finalTotal = 0;
+            else finalTotal = finalTotal - discount;
+
+            // Cập nhật UI
+            document.getElementById('discountAmount').innerText = "-" + formatCurrency(discount);
+            document.getElementById('finalTotal').innerText = formatCurrency(finalTotal);
+            document.getElementById('appliedVoucherInfo').innerHTML = infoHtml;
+
             closeVoucherModal();
         } else {
             alert("Vui lòng chọn một mã giảm giá!");
         }
     }
 
-    // Đóng modal khi click ra vùng đen bên ngoài
     window.onclick = function(event) {
         var modal = document.getElementById('voucherModal');
-        if (event.target == modal) {
-            closeVoucherModal();
-        }
+        if (event.target == modal) closeVoucherModal();
     }
 </script>

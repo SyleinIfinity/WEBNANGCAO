@@ -4,7 +4,6 @@ namespace WEBPC_KHACHHANG.Models.Responses
 {
     public class UserLoginResponse
     {
-        // Map trường "maKhachHang" từ JSON vào biến MaKhachHang của C#
         [JsonProperty("maKhachHang")]
         public int MaKhachHang { get; set; }
 
@@ -17,7 +16,10 @@ namespace WEBPC_KHACHHANG.Models.Responses
         [JsonProperty("tenVaiTro")]
         public string TenVaiTro { get; set; }
 
-        // Thêm trường này để bắt lỗi nếu API trả về message lỗi
+        // [QUAN TRỌNG] Thêm dòng này. 
+        // API Login không trả về, nhưng ta sẽ gán thủ công ở Controller.
+        public string SoDienThoai { get; set; }
+
         [JsonProperty("message")]
         public string Message { get; set; }
     }

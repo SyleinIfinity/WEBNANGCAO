@@ -50,7 +50,8 @@ namespace WEBPC_KHACHHANG.Controllers
 
         // POST: Cart/AddToCart
         [HttpPost]
-        public async Task<ActionResult> AddToCart(int productId, int quantity)
+        // Thêm tham số string type = "" vào hàm
+        public async Task<ActionResult> AddToCart(int productId, int quantity, string type = "")
         {
             var user = Session["User"] as UserLoginResponse;
             if (user == null) return RedirectToAction("Index", "Login");
@@ -60,21 +61,26 @@ namespace WEBPC_KHACHHANG.Controllers
                 client.BaseAddress = new Uri(_apiBaseUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                // Tạo dữ liệu đúng chuẩn API yêu cầu
                 var requestData = new AddToCartRequest
                 {
-                    MaKhachHang = user.MaKhachHang, // Lấy từ Session người dùng
+                    MaKhachHang = user.MaKhachHang,
                     MaSanPham = productId,
                     SoLuong = quantity
                 };
 
                 var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
-                // SỬA LẠI ĐÚNG API: POST api/GioHang/add
                 var response = await client.PostAsync("GioHang/add", content);
 
                 if (response.IsSuccessStatusCode)
                 {
+                    if (type == "buy_now")
+                    {
+                        // Chuyển hướng sang Checkout và truyền luôn ID sản phẩm vừa mua
+                        return RedirectToAction("Checkout", "ThanhToan", new { selectedIds = productId });
+                    }
+
+                    // Mặc định thì về lại trang giỏ hàng
                     return RedirectToAction("Index");
                 }
                 else
