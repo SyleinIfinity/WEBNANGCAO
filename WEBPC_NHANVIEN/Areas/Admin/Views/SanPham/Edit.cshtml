@@ -1,0 +1,274 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.UpdateProductViewModel
+
+@{
+    ViewBag.Title = "Cập Nhật Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-2">Cập Nhật Sản Phẩm</h2>
+<p class="text-muted mb-3">
+    Quản lý thông tin chi tiết sản phẩm <strong>@Model.TenSanPham</strong>
+</p>
+
+<p>
+    <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-link p-0">
+        &laquo; Quay lại danh sách
+    </a>
+</p>
+
+@using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.MaSanPham)
+
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4 shadow-sm border-0" })
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- THÔNG TIN CHUNG -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Thông tin chung</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.TenSanPham,
+                            new { @class = "form-control form-control-lg", placeholder = "Nhập tên sản phẩm..." })
+                        @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(
+                            m => m.MaDanhMuc,
+                            new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                            "-- Chọn Danh Mục --",
+                            new { @class = "form-select" }
+                        )
+                        @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Mô tả chi tiết</label>
+                        @Html.TextAreaFor(
+                            m => m.MoTa,
+                            new
+                            {
+                                @class = "form-control",
+                                rows = "8",
+                                placeholder = "Mô tả cấu hình, tính năng nổi bật..."
+                            })
+                        @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- THÔNG SỐ KỸ THUẬT -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Thông Số Kỹ Thuật</h5>
+                    <button type="button" class="btn btn-sm btn-primary" id="btnAddSpec">
+                        + Thêm mới
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="spec-loading" class="text-muted mb-2">
+                        Đang tải...
+                    </div>
+                    <div id="spec-empty" class="text-muted mb-2" style="display:none;">
+                        Chưa có thông số kỹ thuật nào.
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 35%;">Tên thông số</th>
+                                    <th>Giá trị</th>
+                                    <th style="width: 120px;" class="text-end">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="specTableBody">
+                                @* JS sẽ đổ nội dung *@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRẠNG THÁI + NÚT LƯU -->
+            <div class="mb-4">
+                <label class="form-label d-block">Trạng thái:</label>
+                <div class="form-check form-switch">
+                    @Html.CheckBoxFor(
+                        m => m.TrangThai,
+                        new
+                        {
+                            @class = "form-check-input",
+                            role = "switch",
+                            style = "cursor: pointer; transform: scale(1.2);"
+                        })
+                    <label class="form-check-label ms-2">
+                        Đang bật (Hiển thị bán)
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-4 d-flex gap-2">
+                <button type="submit" class="btn btn-success">
+                    Lưu Thay Đổi
+                </button>
+                <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-outline-secondary">
+                    Hủy bỏ
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- GIÁ & KHO -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Giá & Kho hàng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Giá bán gốc (VNĐ)</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(
+                                m => m.GiaBan,
+                                new { @class = "form-control fw-bold text-dark", type = "number" })
+                            <span class="input-group-text">₫</span>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Giá khuyến mãi (VNĐ)</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(
+                                m => m.GiaKhuyenMai,
+                                new { @class = "form-control text-danger fw-bold", type = "number" })
+                            <span class="input-group-text">₫</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Tồn kho</label>
+                        @Html.TextBoxFor(
+                            m => m.SoLuongTon,
+                            new { @class = "form-control", type = "number" })
+                        @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+            </div>
+
+            <!-- HÌNH ẢNH -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Hình ảnh sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tải thêm ảnh mới</label>
+                        <input type="file"
+                               name="HinhAnhs"
+                               multiple
+                               class="form-control" />
+                        <small class="text-muted d-block">
+                            Ảnh đầu tiên sẽ là ảnh đại diện. Hỗ trợ JPG, PNG.
+                        </small>
+                    </div>
+
+                    <hr />
+
+                    <div>
+                        <strong>Ảnh hiện tại:</strong>
+                        @if (Model.AnhHienTai != null && Model.AnhHienTai.Any())
+                        {
+                            <div class="row mt-2 g-2">
+                                @for (int i = 0; i < Model.AnhHienTai.Count; i++)
+                                {
+                                    <div class="col-6 position-relative">
+                                        <div class="border rounded p-1 h-100">
+                                            <img src="@Model.AnhHienTai[i].Url"
+                                                 class="img-fluid mb-1"
+                                                 alt="Ảnh sản phẩm" />
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger w-100 btn-mark-delete-image"
+                                                    data-public-id="@Model.AnhHienTai[i].PublicId">
+                                                Xóa ảnh
+                                            </button>
+
+                                            @Html.HiddenFor(m => m.AnhHienTai[i].Id)
+                                            @Html.HiddenFor(m => m.AnhHienTai[i].Url)
+                                            @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
+                                            @Html.HiddenFor(m => m.AnhHienTai[i].LaAnhDaiDien)
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted mt-2 mb-0">
+                                Chưa có hình ảnh nào.
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- "Modal" thêm/sửa thông số (dùng JS thuần, không cần Bootstrap JS) -->
+<div class="modal fade" id="specModal" tabindex="-1" aria-labelledby="specModalLabel" aria-hidden="true" style="display:none; background: rgba(0,0,0,0.35);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="specModalLabel">Thêm Thông Số</h5>
+                <button type="button" class="btn-close" data-close-spec-modal="true" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="specId" />
+
+                <div class="mb-3">
+                    <label class="form-label">Tên thông số <span class="text-danger">*</span></label>
+                    <input type="text" id="specName" class="form-control" placeholder="Ví dụ: CPU, RAM, Màn hình..." />
+                </div>
+
+                <div class="mb-0">
+                    <label class="form-label">Giá trị <span class="text-danger">*</span></label>
+                    <textarea id="specValue"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Ví dụ: Intel Core i5, 16GB DDR4, 15.6 inch..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        data-close-spec-modal="true">
+                    Đóng
+                </button>
+                <button type="button" class="btn btn-primary" id="btnSaveSpec">
+                    Lưu thông số
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        window.PRODUCT_ID = @Model.MaSanPham;
+        window.SPEC_GET_URL = '@Url.Action("GetByProduct", "ThongSo", new { area = "Admin" })';
+        window.SPEC_CREATE_URL = '@Url.Action("Create", "ThongSo", new { area = "Admin" })';
+        window.SPEC_UPDATE_URL = '@Url.Action("Update", "ThongSo", new { area = "Admin" })';
+        window.SPEC_DELETE_URL = '@Url.Action("Delete", "ThongSo", new { area = "Admin" })';
+    </script>
+
+    <script src="~/Areas/Admin/Scripts/sanpham-edit.js"></script>
+}
+

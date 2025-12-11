@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Đăng nhập";
+}
+
+@section Scripts {
+    @if (ViewBag.ShowLoginModal == true)
+    {
+        <script>
+            var loginModalEl = document.getElementById('loginModal');
+            if (loginModalEl) {
+                var modal = new bootstrap.Modal(loginModalEl);
+                modal.show();
+            }
+        </script>
+    }
+}

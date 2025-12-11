@@ -1,0 +1,355 @@
+﻿@model IEnumerable<WEBPC_KHACHHANG.Models.ViewModels.AddressViewModel>
+@{
+    ViewBag.Title = "Sổ Địa Chỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/css/infoaddress.css" rel="stylesheet" />
+}
+
+<section class="py-5 bg-light min-vh-100">
+    <div class="container">
+        <h2 class="mb-4 fw-bold">Tài Khoản Của Tôi</h2>
+        <div class="row g-4">
+
+            <div class="col-lg-3">
+                <div class="card p-3 shadow-sm">
+                    <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+                        <img src="https://via.placeholder.com/60" class="rounded-circle me-3 border" alt="Avatar" style="width:60px; height:60px; object-fit:cover;">
+                        <div class="overflow-hidden">
+                            <p class="mb-0 fw-bold">Xin chào,</p>
+                            <p class="mb-0 text-primary fw-semibold text-truncate">
+                                @(Session["UserName"] != null ? Session["UserName"].ToString() : "Khách hàng")
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="nav nav-pills flex-column user-dashboard-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "InfoUser")">
+                                <i class="bi bi-person-circle me-2"></i>Thông tin cá nhân
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-card-checklist me-2"></i>Lịch sử đơn hàng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active-info" href="@Url.Action("Index", "InfoAddress")">
+                                <i class="bi bi-geo-alt me-2"></i>Sổ địa chỉ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-lock me-2"></i>Đổi mật khẩu
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-danger" href="@Url.Action("Logout", "Login")">
+                                <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="card p-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+                        <h4 class="fw-bold mb-0">Sổ Địa Chỉ Của Tôi</h4>
+                        <button class="btn btn-primary" onclick="openModalAdd()">
+                            <i class="bi bi-plus-lg me-1"></i> Thêm Địa Chỉ Mới
+                        </button>
+                    </div>
+
+                    <div class="row g-3" id="addressList">
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-12">
+                                    <div class="p-4 address-card bg-white position-relative border rounded">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="fw-bold mb-0">
+                                                @item.TenNguoiNhan
+                                                @if (item.IsDefault)
+                                                {
+                                                    <span class="badge bg-success ms-2" style="font-size: 0.7em;">MẶC ĐỊNH</span>
+                                                }
+                                            </h5>
+                                            <div class="address-actions">
+                                                <button class="btn btn-sm btn-outline-secondary me-2" onclick="openModalEdit(@item.MaSoDiaChi)">
+                                                    <i class="bi bi-pencil"></i> Sửa
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" onclick="deleteAddress(@item.MaSoDiaChi)">
+                                                    <i class="bi bi-trash"></i> Xóa
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p class="mb-1 text-secondary">SĐT: <strong>@item.SoDienThoai</strong></p>
+                                        <p class="mb-0 text-muted">
+                                            <i class="bi bi-geo-alt-fill text-danger me-1"></i> @item.FullAddress
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-5">
+                                <i class="bi bi-geo-alt fs-1 text-muted"></i>
+                                <p class="mt-2">Bạn chưa lưu địa chỉ nào.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="addressModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalTitle">Thêm Địa Chỉ Mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addressForm">
+                    <input type="hidden" id="maSoDiaChi" name="MaSoDiaChi" value="0">
+                    <input type="hidden" id="maTinhHidden" name="MaTinh">
+                    <input type="hidden" id="maHuyenHidden" name="MaHuyen">
+                    <input type="hidden" id="maXaHidden" name="MaXa">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Tên người nhận</label>
+                            <input type="text" class="form-control" name="TenNguoiNhan" id="tenNguoiNhan" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Số điện thoại</label>
+                            <input type="tel" class="form-control" name="SoDienThoai" id="soDienThoai" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Tỉnh/Thành phố</label>
+                            <select class="form-select" id="ddlProvince" required>
+                                <option value="">Chọn Tỉnh/Thành</option>
+                            </select>
+                            <input type="hidden" name="TinhThanh" id="textProvince">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Quận/Huyện</label>
+                            <select class="form-select" id="ddlDistrict" required disabled>
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                            <input type="hidden" name="QuanHuyen" id="textDistrict">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Phường/Xã</label>
+                            <select class="form-select" id="ddlWard" required disabled>
+                                <option value="">Chọn Phường/Xã</option>
+                            </select>
+                            <input type="hidden" name="PhuongXa" id="textWard">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Địa chỉ cụ thể</label>
+                            <input type="text" class="form-control" name="DiaChiCuThe" id="diaChiCuThe" placeholder="Số nhà, tên đường..." required>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="IsDefault" id="isDefault">
+                                <label class="form-check-label" for="isDefault">Đặt làm địa chỉ mặc định</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddress()">Lưu Địa Chỉ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var myModal;
+
+        $(document).ready(function () {
+            myModal = new bootstrap.Modal(document.getElementById('addressModal'));
+            loadProvinces();
+
+            // 1. Chọn Tỉnh
+            $('#ddlProvince').change(function () {
+                var pid = $(this).val();
+                var pname = $("#ddlProvince option:selected").text();
+                $('#textProvince').val(pname);
+                $('#maTinhHidden').val(pid);
+
+                $('#ddlDistrict').empty().append('<option value="">Chọn Quận/Huyện</option>').prop('disabled', true);
+                $('#ddlWard').empty().append('<option value="">Chọn Phường/Xã</option>').prop('disabled', true);
+
+                if (pid) loadDistricts(pid);
+            });
+
+            // 2. Chọn Huyện
+            $('#ddlDistrict').change(function () {
+                var did = $(this).val();
+                var dname = $("#ddlDistrict option:selected").text();
+                $('#textDistrict').val(dname);
+                $('#maHuyenHidden').val(did);
+
+                $('#ddlWard').empty().append('<option value="">Chọn Phường/Xã</option>').prop('disabled', true);
+
+                if (did) loadWards(did);
+            });
+
+            // 3. Chọn Xã
+            $('#ddlWard').change(function () {
+                var wname = $("#ddlWard option:selected").text();
+                $('#textWard').val(wname);
+                $('#maXaHidden').val($(this).val());
+            });
+        });
+
+        // --- AJAX HELPERS ---
+        function loadProvinces() {
+            return $.get('/InfoAddress/GetProvinces', function (data) {
+                var html = '<option value="">Chọn Tỉnh/Thành</option>';
+                $.each(data, function (key, item) {
+                    html += `<option value="${item.Id}">${item.Name}</option>`;
+                });
+                $('#ddlProvince').html(html);
+            });
+        }
+
+        function loadDistricts(pid, selectedId = null) {
+            return $.get('/InfoAddress/GetDistricts?provinceId=' + pid, function (data) {
+                var html = '<option value="">Chọn Quận/Huyện</option>';
+                $.each(data, function (key, item) {
+                    html += `<option value="${item.Id}">${item.Name}</option>`;
+                });
+                $('#ddlDistrict').html(html).prop('disabled', false);
+                if (selectedId) $('#ddlDistrict').val(selectedId);
+            });
+        }
+
+        function loadWards(did, selectedId = null) {
+            return $.get('/InfoAddress/GetWards?districtId=' + did, function (data) {
+                var html = '<option value="">Chọn Phường/Xã</option>';
+                $.each(data, function (key, item) {
+                    html += `<option value="${item.Id}">${item.Name}</option>`;
+                });
+                $('#ddlWard').html(html).prop('disabled', false);
+                if (selectedId) $('#ddlWard').val(selectedId);
+            });
+        }
+
+        // --- UI HANDLERS ---
+        function openModalAdd() {
+            $('#modalTitle').text('Thêm Địa Chỉ Mới');
+            $('#addressForm')[0].reset();
+            $('#maSoDiaChi').val(0);
+            $('#ddlProvince').val('').trigger('change');
+            $('#ddlDistrict').prop('disabled', true);
+            $('#ddlWard').prop('disabled', true);
+            myModal.show();
+        }
+
+        function openModalEdit(id) {
+            $('#modalTitle').text('Cập Nhật Địa Chỉ');
+            $.get('/InfoAddress/GetDetail?id=' + id, function (res) {
+                if (res.success) {
+                    var d = res.data;
+                    $('#maSoDiaChi').val(d.MaSoDiaChi);
+                    $('#tenNguoiNhan').val(d.TenNguoiNhan);
+                    $('#soDienThoai').val(d.SoDienThoai);
+                    $('#diaChiCuThe').val(d.DiaChiCuThe);
+                    $('#isDefault').prop('checked', d.IsDefault);
+
+                    $('#maTinhHidden').val(d.MaTinh);
+                    $('#maHuyenHidden').val(d.MaHuyen);
+                    $('#maXaHidden').val(d.MaXa);
+                    $('#textProvince').val(d.TinhThanh);
+                    $('#textDistrict').val(d.QuanHuyen);
+                    $('#textWard').val(d.PhuongXa);
+
+                    $('#ddlProvince').val(d.MaTinh);
+
+                    loadDistricts(d.MaTinh, d.MaHuyen).done(function () {
+                        loadWards(d.MaHuyen, d.MaXa).done(function () {
+                            myModal.show();
+                        });
+                    });
+                } else {
+                    alert('Không thể tải thông tin địa chỉ.');
+                }
+            });
+        }
+
+        function submitAddress() {
+            // 1. Chặn nút bấm
+            var btn = $('button[onclick="submitAddress()"]');
+            btn.prop('disabled', true).text('Đang lưu...');
+
+            // 2. Tự tạo Object dữ liệu (SỬA LẠI TÊN KEY CHO KHỚP C#)
+            var data = {
+                MaSoDiaChi: $('#maSoDiaChi').val(),
+                MaKhachHang: 0,
+
+                TenNguoiNhan: $('#tenNguoiNhan').val(),
+                SoDienThoai: $('#soDienThoai').val(),
+
+                // --- SỬA TẠI ĐÂY: Đổi tên key thành MaTinh, MaHuyen, MaXa ---
+                MaTinh: $('#maTinhHidden').val(),   // Khớp với public string MaTinh { get; set; }
+                MaHuyen: $('#maHuyenHidden').val(), // Khớp với public string MaHuyen { get; set; }
+                MaXa: $('#maXaHidden').val(),       // Khớp với public string MaXa { get; set; }
+
+                DiaChiCuThe: $('#diaChiCuThe').val(),
+
+                // Đảm bảo lấy true/false
+                IsDefault: $('#isDefault').is(':checked')
+            };
+
+            // 3. Gửi Ajax
+            $.ajax({
+                url: '/InfoAddress/SaveAddress',
+                type: 'POST',
+                data: data,
+                success: function (res) {
+                    if (res.success) {
+                        alert('Lưu địa chỉ thành công!');
+                        location.reload();
+                    } else {
+                        alert(res.message);
+                        btn.prop('disabled', false).text('Lưu Địa Chỉ');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('Lỗi kết nối server: ' + error);
+                    btn.prop('disabled', false).text('Lưu Địa Chỉ');
+                }
+            });
+        }
+
+        function deleteAddress(id) {
+            if (confirm('Bạn có chắc muốn xóa địa chỉ này?')) {
+                $.post('/InfoAddress/Delete?id=' + id, function (res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert('Xóa thất bại.');
+                    }
+                });
+            }
+        }
+    </script>
+}
