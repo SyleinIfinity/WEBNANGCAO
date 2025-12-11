@@ -13,5 +13,13 @@ namespace WEBPC_KHACHHANG.Controllers
         {
             return View();
         }
+
+        // --- BỔ SUNG ĐOẠN NÀY ---
+        // GET: ThanhToan/Checkout
+        public ActionResult Checkout()
+        {
+            // Hàm này sẽ tìm file View Checkout.cshtml để hiển thị
+            return View();
+        }
     }
 }

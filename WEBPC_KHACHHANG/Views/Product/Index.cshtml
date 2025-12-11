@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var isLoggedIn = Session["User"] != null ? "true" : "false";
 }
 
 <div class="container">
@@ -130,23 +131,57 @@
 @section Scripts {
     <script>
         function addToCart(id) {
-            $.ajax({
-                url: '/Cart/AddToCart',
-                type: 'POST',
-                data: { productId: id, quantity: 1 },
-                success: function (res) {
-                    if (res.success) {
-                        // Hiện Modal thông báo thành công
-                        var myModal = new bootstrap.Modal(document.getElementById('addToCartModal'));
-                        myModal.show();
-                    } else {
-                        alert(res.message || "Có lỗi xảy ra!");
+            // 1. Kiểm tra trạng thái đăng nhập
+            // Biến này lấy từ Razor ở đầu file
+            var isUserLoggedIn = '@isLoggedIn';
+
+            if (isUserLoggedIn === "false") {
+                // 2. Nếu chưa đăng nhập: Xử lý hiển thị Modal hoặc chuyển trang
+                var loginModalElement = document.getElementById('loginModal');
+
+                // Kiểm tra xem Modal có tồn tại không và Bootstrap đã load chưa
+                if (loginModalElement && typeof bootstrap !== 'undefined') {
+                    var myModal = new bootstrap.Modal(loginModalElement);
+                    myModal.show();
+                } else {
+                    // Fallback: Nếu không có modal thì confirm chuyển trang
+                    if(confirm('Bạn cần đăng nhập để thêm sản phẩm. Chuyển đến trang đăng nhập?')) {
+                        window.location.href = '@Url.Action("Index", "Login")';
                     }
-                },
-                error: function () {
-                    alert("Lỗi kết nối server!");
                 }
-            });
+                return; // Dừng lại, không chạy code thêm giỏ hàng phía dưới
+            }
+
+            // 3. Nếu đã đăng nhập: Thực hiện Submit form
+            // KHẮC PHỤC LỖI: Ở trang Index không có ô nhập số lượng, nên ta gán cứng là 1
+            var qty = 1;
+
+            // Tạo form ẩn dynamic để submit POST
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/Cart/AddToCart";
+
+            // Input ID Sản phẩm
+            var inputId = document.createElement("input");
+            inputId.type = "hidden";
+
+            // LƯU Ý QUAN TRỌNG:
+            // Nếu bên Controller bạn viết: public IActionResult AddToCart(int id, ...) -> thì để name="id"
+            // Nếu bên Controller bạn viết: public IActionResult AddToCart(int productId, ...) -> thì đổi thành name="productId"
+            inputId.name = "productId";
+            inputId.value = id;
+            form.appendChild(inputId);
+
+            // Input Số lượng
+            var inputQty = document.createElement("input");
+            inputQty.type = "hidden";
+            inputQty.name = "quantity";
+            inputQty.value = qty;
+            form.appendChild(inputQty);
+
+            // Gắn form vào body và submit
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 }

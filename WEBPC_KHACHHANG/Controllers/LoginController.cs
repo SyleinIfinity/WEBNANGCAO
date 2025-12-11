@@ -49,14 +49,18 @@ namespace WEBPC_KHACHHANG.Controllers
 
                     if (response.IsSuccessStatusCode)
                     {
-                        // Giả định API trả về UserLoginResponse { Token, MaKhachHang, HoTen... }
                         var userInfo = JsonConvert.DeserializeObject<UserLoginResponse>(responseBody);
 
                         if (userInfo != null)
                         {
-                            Session["UserToken"] = userInfo.Token;
-                            Session["UserID"] = userInfo.MaKhachHang;
-                            Session["UserName"] = userInfo.HoTen;
+                            // --- THÊM DÒNG NÀY (BẮT BUỘC) ---
+                            // Để CartController có thể lấy toàn bộ thông tin User (Token, ID, Tên...)
+                            Session["User"] = userInfo;
+                            // --------------------------------
+
+                            Session["UserToken"] = userInfo.Token; // Code cũ của bạn
+                            Session["UserID"] = userInfo.MaKhachHang; // Code cũ của bạn
+                            Session["UserName"] = userInfo.HoTen; // Code cũ của bạn
 
                             TempData["LoginSuccess"] = "Đăng nhập thành công!";
                             return RedirectToAction("Index", "Home");

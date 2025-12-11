@@ -15,32 +15,27 @@
         border-radius: 8px;
     }
 
-    .cart-table th, .cart-table td {
-        vertical-align: middle;
-    }
-
     .cart-summary-card {
-        background: #f8f9fa; /* var(--light-bg) */
+        background: #f8f9fa;
         border-radius: 15px;
         padding: 1.5rem;
     }
 
         .cart-summary-card h4 {
-            font-weight: 700;
             border-bottom: 2px solid #dee2e6;
             padding-bottom: 1rem;
             margin-bottom: 1.5rem;
         }
-
-    /* Ẩn các style xung đột nếu cần */
-    .quantity-input {
-        max-width: 70px;
-    }
 </style>
 
 <section class="py-5">
     <div class="container">
         <h1 class="section-title mb-5 text-center">Giỏ Hàng Của Bạn</h1>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-warning text-center">@TempData["Message"]</div>
+        }
 
         <div class="row">
             <div class="col-lg-8 mb-4 mb-lg-0">
@@ -55,12 +50,12 @@
                                     <th scope="col">Sản Phẩm</th>
                                     <th scope="col" class="text-center">Giá</th>
                                     <th scope="col" class="text-center">Số Lượng</th>
-                                    <th scope="col" class="text-center">Tổng Cộng</th>
+                                    <th scope="col" class="text-center">Tổng</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody id="cart-body">
-                                @if (Model.Items != null && Model.Items.Count > 0)
+                                @if (Model != null && Model.Items != null && Model.Items.Count > 0)
                                 {
                                     foreach (var item in Model.Items)
                                     {
@@ -77,7 +72,6 @@
                                                         <a href="/Product/Detail/@item.ProductId" class="text-decoration-none text-dark">
                                                             <h6 class="mb-0 fw-bold">@item.ProductName</h6>
                                                         </a>
-                                                        @* <small class="text-muted">Danh mục/Loại</small> *@
                                                     </div>
                                                 </div>
                                             </td>
@@ -89,15 +83,16 @@
                                                        class="form-control form-control-sm text-center mx-auto quantity-input"
                                                        value="@item.Quantity"
                                                        min="1"
+                                                       style="width: 70px;"
                                                        onchange="handleQuantityChange(this, @item.ProductId)">
                                             </td>
                                             <td class="text-center text-primary fw-bold total-line-price">
-                                                @((item.Price * item.Quantity).ToString("N0"))₫
+                                                @item.Total.ToString("N0")₫
                                             </td>
                                             <td>
-                                                <a href="/Cart/Remove/@item.ProductId" class="btn btn-outline-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+                                                <button class="btn btn-outline-danger btn-sm" onclick="removeItem(@item.ProductId)">
                                                     <i class="bi bi-x-lg"></i>
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
                                     }
@@ -105,10 +100,10 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="6" class="text-center py-4">
-                                            <i class="bi bi-cart-x fs-1 text-muted"></i>
-                                            <p class="mt-2">Giỏ hàng của bạn đang trống.</p>
-                                            <a href="/" class="btn btn-primary mt-2">Mua sắm ngay</a>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="bi bi-cart-x display-4 text-muted"></i>
+                                            <p class="mt-3">Giỏ hàng trống</p>
+                                            <a href="/" class="btn btn-primary">Mua sắm ngay</a>
                                         </td>
                                     </tr>
                                 }
@@ -120,7 +115,7 @@
 
             <div class="col-lg-4">
                 <div class="cart-summary-card">
-                    <h4 class="mb-4">Tổng Kết Đơn Hàng</h4>
+                    <h4 class="fw-bold">Tổng Kết</h4>
 
                     <div class="d-flex justify-content-between mb-3">
                         <span>Đã chọn:</span>
@@ -132,21 +127,16 @@
                         <span class="fw-semibold" id="summary-subtotal">0₫</span>
                     </div>
 
-                    <div class="d-flex justify-content-between mb-3">
-                        <span>Phí Vận Chuyển</span>
-                        <span class="text-success fw-semibold">Miễn Phí</span>
-                    </div>
-
                     <div class="d-flex justify-content-between mb-4 pt-3 border-top">
-                        <h5 class="fw-bold">Tổng Thanh Toán</h5>
+                        <h5 class="fw-bold">Thành tiền:</h5>
                         <h5 class="fw-bold text-primary" id="summary-total">0₫</h5>
                     </div>
 
-                    <button id="btn-checkout" class="btn btn-primary btn-lg w-100 fw-bold" onclick="proceedToCheckout()" disabled>
+                    <button id="btn-checkout" class="btn btn-primary btn-lg w-100 fw-bold" disabled>
                         TIẾN HÀNH THANH TOÁN
                     </button>
 
-                    <a href="/" class="btn btn-outline-secondary btn-lg w-100 mt-3 fw-bold">
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary btn-lg w-100 mt-3 fw-bold">
                         TIẾP TỤC MUA SẮM
                     </a>
                 </div>
@@ -155,25 +145,26 @@
     </div>
 </section>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<form id="removeForm" action="/Cart/Remove" method="post" style="display:none;">
+    <input type="hidden" name="id" id="removeId" />
+</form>
 
+@section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- 1. KHAI BÁO BIẾN ---
             const selectAllCheckbox = document.getElementById('selectAll');
-            const itemCheckboxes = document.querySelectorAll('.item-checkbox');
             const summaryCount = document.getElementById('summary-count');
             const summarySubtotal = document.getElementById('summary-subtotal');
             const summaryTotal = document.getElementById('summary-total');
             const checkoutBtn = document.getElementById('btn-checkout');
 
-            // --- 2. HÀM ĐỊNH DẠNG TIỀN TỆ (VNĐ) ---
+            // Hàm định dạng tiền VNĐ
             const formatCurrency = (amount) => {
                 return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
             };
 
-            // --- 3. HÀM TÍNH TOÁN TỔNG TIỀN (LOGIC FRONTEND) ---
+            // --- 2. HÀM TÍNH TOÁN TỔNG TIỀN (FRONTEND) ---
             window.updateCartSummary = function () {
                 let totalAmount = 0;
                 let totalCount = 0;
@@ -181,7 +172,6 @@
                 let hasItem = false;
 
                 const rows = document.querySelectorAll('.cart-item');
-
                 if (rows.length === 0) allChecked = false;
 
                 rows.forEach(row => {
@@ -191,7 +181,7 @@
                     const priceRaw = parseFloat(row.getAttribute('data-price'));
                     const quantity = parseInt(quantityInput.value) || 0;
 
-                    // Tính thành tiền từng dòng (Hiển thị UI)
+                    // Tính tiền từng dòng
                     const lineTotal = priceRaw * quantity;
                     row.querySelector('.total-line-price').textContent = formatCurrency(lineTotal);
 
@@ -204,15 +194,15 @@
                     }
                 });
 
-                // Cập nhật hiển thị Summary
+                // Cập nhật giao diện Summary
                 summarySubtotal.textContent = formatCurrency(totalAmount);
                 summaryTotal.textContent = formatCurrency(totalAmount);
                 summaryCount.textContent = totalCount + ' sản phẩm';
 
-                // Cập nhật trạng thái checkbox "Select All"
+                // Checkbox selectAll
                 if (selectAllCheckbox) selectAllCheckbox.checked = allChecked && hasItem;
 
-                // Ẩn/Hiện nút thanh toán
+                // Nút thanh toán
                 if (totalCount > 0) {
                     checkoutBtn.removeAttribute('disabled');
                 } else {
@@ -220,9 +210,9 @@
                 }
             };
 
-            // --- 4. SỰ KIỆN (EVENT LISTENERS) ---
+            // --- 3. SỰ KIỆN ---
 
-            // Xử lý nút "Chọn tất cả"
+            // Nút chọn tất cả
             if (selectAllCheckbox) {
                 selectAllCheckbox.addEventListener('change', function () {
                     const isChecked = this.checked;
@@ -233,7 +223,7 @@
                 });
             }
 
-            // Xử lý khi chọn từng checkbox
+            // Sự kiện check từng món
             const cartBody = document.getElementById('cart-body');
             if (cartBody) {
                 cartBody.addEventListener('change', function (e) {
@@ -243,50 +233,30 @@
                 });
             }
 
-            // Gọi lần đầu để reset trạng thái
+            // Gọi lần đầu
             updateCartSummary();
         });
 
-        // --- 5. HÀM XỬ LÝ KHI ĐỔI SỐ LƯỢNG ---
-        // Hàm này được gọi từ onchange của input
+        // --- 4. HÀM XỬ LÝ KHI ĐỔI SỐ LƯỢNG ---
         function handleQuantityChange(inputElement, productId) {
             let quantity = parseInt(inputElement.value);
             if (quantity < 1) {
                 inputElement.value = 1;
                 quantity = 1;
             }
-
-            // Cập nhật tính toán Frontend ngay lập tức cho mượt
+            // Cập nhật UI ngay
             window.updateCartSummary();
 
-            // TODO: Kết nối Logic Server sau
-            // Ở bước sau, bạn có thể bỏ comment dòng dưới để cập nhật Database
+            // TODO: Bạn có thể thêm gọi Ajax cập nhật Database ở đây nếu cần
             // window.location.href = '/Cart/Update?productId=' + productId + '&quantity=' + quantity;
-            console.log("Đã đổi số lượng SP " + productId + " thành " + quantity + ". Cần gọi Ajax/Redirect để lưu DB.");
         }
 
-        // --- 6. HÀM XỬ LÝ THANH TOÁN ---
-        function proceedToCheckout() {
-            // Lấy danh sách ID các sản phẩm được chọn
-            const selectedIds = [];
-            document.querySelectorAll('.cart-item').forEach(row => {
-                const checkbox = row.querySelector('.item-checkbox');
-                if (checkbox.checked) {
-                    selectedIds.push(row.getAttribute('data-id'));
-                }
-            });
-
-            if (selectedIds.length === 0) {
-                alert('Vui lòng chọn ít nhất 1 sản phẩm để thanh toán.');
-                return;
+        // --- 5. HÀM XÓA SẢN PHẨM ---
+        function removeItem(id) {
+            if (confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
+                // Gọi đến Action Remove trong CartController
+                window.location.href = '/Cart/Remove/' + id;
             }
-
-            console.log("Thanh toán các ID:", selectedIds);
-            // TODO: Chuyển hướng sang trang Checkout với danh sách ID
-            // window.location.href = '/ThanhToan/Checkout?ids=' + selectedIds.join(',');
-
-            // Tạm thời chuyển hướng như cũ (thanh toán hết hoặc xử lý ở Controller)
-            window.location.href = '/ThanhToan/Checkout';
         }
     </script>
 }

@@ -28,7 +28,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-4">
-                        <li class="nav-item"><a class="nav-link" href="#">Trang Chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Product")">Sản phẩm</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Giới thiệu</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Cấu hình</a></li>
@@ -65,9 +65,9 @@
                                 <i class="bi bi-person fs-5"></i>
                             </a>
                         }
-                        <a href="#" class="text-dark position-relative">
+                        <a href="@Url.Action("Index", "Cart")" class="text-dark position-relative">
                             <i class="bi bi-cart3 fs-5"></i>
-                            <span class="cart-badge">2</span>
+                            <span class="cart-badge"></span>
                         </a>
                     </div>
                 </div>

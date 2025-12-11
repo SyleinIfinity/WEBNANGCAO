@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = Model.TenSanPham;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Biến kiểm tra đăng nhập cho JS
+    var isLoggedIn = Session["User"] != null ? "true" : "false";
 }
 
 <div class="container">
@@ -70,20 +73,21 @@
 
             @if (Model.SoLuongTon > 0)
             {
-                <form action="@Url.Action("AddToCart", "Cart")" method="post">
+                <form action="@Url.Action("AddToCart", "Cart")" method="post" id="frmAddToCart">
                     <input type="hidden" name="productId" value="@Model.MaSanPham" />
 
                     <div class="product-action mt-4">
                         <div class="d-flex align-items-center mb-4">
                             <label class="me-3 fw-bold">Số lượng:</label>
-                            <input type="number" id="inputQty" class="form-control text-center" value="1" min="1" max="99" style="width: 80px;">
+                            <input type="number" id="inputQty" class="form-control text-center"
+                                   value="1" min="1" max="99" style="width: 80px;">
                         </div>
 
                         <div class="d-flex gap-3">
                             <button type="button" class="btn btn-outline-primary btn-action flex-grow-1" onclick="addToCartDetail(@Model.MaSanPham)">
                                 <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
                             </button>
-                            
+
                             <button type="button" class="btn btn-primary btn-action flex-grow-1" onclick="">
                                 <i class="fas fa-money-check-alt me-2"></i> Mua ngay
                             </button>
@@ -165,30 +169,60 @@
         </div>
     </div>
 </div>
+
 @section Scripts {
     <script>
+        // Hàm thay đổi ảnh sản phẩm
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+
+        // HÀM XỬ LÝ SỰ KIỆN NÚT "THÊM VÀO GIỎ"
         function addToCartDetail(id) {
-            $.ajax({
-                url: '/Cart/AddItem',
-                type: 'POST',
-                data: {
-                    productId: id,
-                    quantity: 1
-                },
-                success: function (rs) {
-                    // Kiểm tra kết quả trả về từ server
-                    if (rs.success) {
-                        alert(rs.message); // Hiện thông báo: "Thêm thành công!"
-                        // Cập nhật số lượng trên icon giỏ hàng (nếu có id="CartCount")
-                        $('#CartCount').text(rs.totalItems);
-                    } else {
-                        alert(rs.message);
+            // 1. Kiểm tra trạng thái đăng nhập
+            var isUserLoggedIn = '@isLoggedIn';
+
+            if (isUserLoggedIn === "false") {
+                // 2. Nếu chưa đăng nhập: Bật Modal đăng nhập lên
+                var loginModalElement = document.getElementById('loginModal');
+
+                // Kiểm tra xem Modal có tồn tại không và Bootstrap đã load chưa
+                if (loginModalElement && typeof bootstrap !== 'undefined') {
+                    var myModal = new bootstrap.Modal(loginModalElement);
+                    myModal.show();
+                } else {
+                    // Fallback: Nếu lỗi JS hoặc chưa nhúng modal thì chuyển trang truyền thống
+                    if(confirm('Bạn cần đăng nhập để thêm sản phẩm. Chuyển đến trang đăng nhập?')) {
+                        window.location.href = '@Url.Action("Index", "Login")';
                     }
-                },
-                error: function () {
-                    alert("Lỗi kết nối server");
                 }
-            });
+                return; // Dừng lại ở đây
+            }
+
+            // 3. Nếu đã đăng nhập: Submit form gửi dữ liệu sang CartController
+            var qty = document.getElementById('inputQty').value;
+
+            // Tạo form ẩn dynamic để submit POST
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/Cart/AddToCart";
+
+            // Input ID
+            var inputId = document.createElement("input");
+            inputId.type = "hidden";
+            inputId.name = "productId";
+            inputId.value = id;
+            form.appendChild(inputId);
+
+            // Input Quantity
+            var inputQty = document.createElement("input");
+            inputQty.type = "hidden";
+            inputQty.name = "quantity";
+            inputQty.value = qty;
+            form.appendChild(inputQty);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 }
