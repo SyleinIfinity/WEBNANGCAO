@@ -161,6 +161,7 @@
     <Compile Include="Areas\Admin\Models\AnhSanPhamViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
     <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\PhieuNhapViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
     <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ThongSoViewModel.cs" />
@@ -181,6 +182,7 @@
     <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
     <Content Include="Areas\Admin\scripts\nhanvien-index.js" />
+    <Content Include="Areas\Admin\scripts\phieunhap-form.js" />
     <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
@@ -232,6 +234,9 @@
     <Content Include="Areas\Admin\Views\SanPham\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\Create.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVien\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Details.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>

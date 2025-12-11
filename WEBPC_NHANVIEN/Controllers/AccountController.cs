@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using System.Web.Security;
 using WEBPC_NHANVIEN.Models.Responses;
 using WEBPC_NHANVIEN.Models.ViewModels;
 
@@ -116,11 +117,18 @@ namespace WEBPC_NHANVIEN.Controllers
         }
 
         // Đăng xuất
+        [HttpGet]
         public ActionResult Logout()
         {
+            // Xóa session đăng nhập
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Login");
+
+            // Nếu bạn đang dùng FormsAuthentication
+            FormsAuthentication.SignOut();
+
+            // Về lại trang đăng nhập
+            return RedirectToAction("Login", "Account");
         }
     }
 }

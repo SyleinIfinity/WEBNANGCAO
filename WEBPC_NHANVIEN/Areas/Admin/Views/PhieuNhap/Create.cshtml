@@ -1,0 +1,89 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.PhieuNhapCreateViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var productList = ViewBag.ProductOptions as List<SelectListItem>;
+}
+
+<h2>Tạo phiếu nhập kho</h2>
+
+@using (Html.BeginForm("Create", "PhieuNhap", FormMethod.Post, new { area = "Admin" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Ngày nhập:</label>
+                        <input type="text" class="form-control" value="@DateTime.Now.ToString("dd/MM/yyyy HH:mm") (Tự động)" disabled />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Ghi chú</label>
+                        @Html.TextAreaFor(m => m.GhiChu, 2, 50, new { @class = "form-control", placeholder = "Nhập ghi chú nhập kho..." })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5>Chi tiết sản phẩm</h5>
+    <table class="table table-bordered table-sm" id="pn-lines-table">
+        <thead class="table-light">
+            <tr>
+                <th style="width:40%">Sản phẩm</th>
+                <th style="width:15%">Số lượng</th>
+                <th style="width:20%">Giá nhập (VNĐ)</th>
+                <th style="width:15%">Thành tiền</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        <tbody id="pn-lines-body">
+            @if (Model.ChiTiet != null)
+            {
+                for (int i = 0; i < Model.ChiTiet.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DropDownListFor(m => m.ChiTiet[i].MaSanPham, new SelectList(productList, "Value", "Text", Model.ChiTiet[i].MaSanPham), new { @class = "form-select pn-product" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ChiTiet[i].SoLuongNhap, new { @class = "form-control pn-qty", type = "number", min = "1" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(m => m.ChiTiet[i].GiaNhap, new { @class = "form-control pn-price", type = "number", step = "1000" })
+                        </td>
+                        <td class="pn-line-total text-end align-middle">0</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-outline-danger pn-remove">Xóa</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                <td class="text-end fw-bold text-success"><span id="pn-total">0</span></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="mb-3">
+        <button type="button" id="pn-add-line" class="btn btn-primary"><i class="fa fa-plus"></i> Thêm dòng</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Lưu phiếu</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+    </div>
+
+    <div style="display:none">
+        @Html.DropDownList("ProductTemplate", productList, "-- Chọn sản phẩm --", new { id = "product-template-select" })
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/phieunhap-form.js"></script>
+}

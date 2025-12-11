@@ -1,0 +1,48 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.PhieuNhapDetailsViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Chi tiết phiếu nhập: @Model.MaCodePhieu</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <p><strong>Ngày nhập:</strong> @Model.NgayNhap.ToString("dd/MM/yyyy HH:mm")</p>
+                <p><strong>Người tạo:</strong> @Model.TenNhanVien</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold">@Model.TongTienNhap.ToString("N0") VNĐ</span></p>
+                <p><strong>Ghi chú:</strong> @(string.IsNullOrEmpty(Model.GhiChu) ? "Không có" : Model.GhiChu)</p>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th class="text-center">Số lượng</th>
+                    <th class="text-end">Đơn giá</th>
+                    <th class="text-end">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var it in Model.ChiTiet)
+                {
+                    <tr>
+                        <td>@it.TenSanPham</td>
+                        <td class="text-center">@it.SoLuongNhap</td>
+                        <td class="text-end">@it.GiaNhap.ToString("N0")</td>
+                        <td class="text-end fw-bold">@it.ThanhTien.ToString("N0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-secondary" href="@Url.Action("Index")">Quay lại danh sách</a>
+        <a class="btn btn-warning" href="@Url.Action("Edit", new { id = Model.MaPhieuNhap })">Chỉnh sửa</a>
+    </div>
+</div>
