@@ -64,12 +64,11 @@
                     <span>
                         Xin chào <strong>@userName</strong> (@roleName)
                     </span>
-                    <a href="@Url.Action("Logout", "Account")" class="ms-3">Đăng xuất</a>
+                    @*<a href="@Url.Action("Logout", "Account")" class="ms-3">Đăng xuất</a>*@
                 }
 
-                <a href="@Url.Action("Logout", "Account", new { area = "Admin" })"
-                   style="font-size: 0.8rem; padding: 5px 15px; margin-left: 10px;">
-                    <i class="fas fa-sign-out-alt"></i>
+                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="ms-3">
+                    Đăng xuất
                 </a>
             </div>
         </div>

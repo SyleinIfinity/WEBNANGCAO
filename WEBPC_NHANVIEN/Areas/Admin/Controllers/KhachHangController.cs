@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using WEBPC_NHANVIEN.Areas.Admin.Filters;
 using WEBPC_NHANVIEN.Areas.Admin.Models;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 {
+    [AdminAuthorize]
     public class KhachHangController : Controller
     {
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
