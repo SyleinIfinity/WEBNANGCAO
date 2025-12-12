@@ -20,7 +20,8 @@ namespace WEBPC_KHACHHANG.Controllers
         public async Task<ActionResult> Index()
         {
             var user = Session["User"] as UserLoginResponse;
-            if (user == null) return RedirectToAction("Index", "Login");
+            // [SỬA ĐOẠN NÀY]: Thêm returnUrl = /Cart
+            if (user == null) return RedirectToAction("Index", "Login", new { returnUrl = "/Cart" });
 
             CartViewModel cart = new CartViewModel();
             try
@@ -134,6 +135,63 @@ namespace WEBPC_KHACHHANG.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateQuantity(int productId, int quantity)
+        {
+            // 1. Kiểm tra đăng nhập
+            var user = Session["User"] as WEBPC_KHACHHANG.Models.Responses.UserLoginResponse;
+            if (user == null)
+            {
+                // [SỬA ĐOẠN NÀY]: Trả về flag requireLogin = true
+                return Json(new { success = false, requireLogin = true, message = "Phiên đăng nhập hết hạn!" });
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+                // 2. Tạo payload đúng với API GioHangController (UpdateCartItemRequest)
+                // Dựa vào yêu cầu trước đó, tên trường là 'soLuongMoi'
+                var requestData = new
+                {
+                    maKhachHang = user.MaKhachHang,
+                    maSanPham = productId,
+                    soLuongMoi = quantity // API yêu cầu 'soLuongMoi'
+                };
+
+                var jsonContent = JsonConvert.SerializeObject(requestData);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // 3. Gọi API bằng phương thức PATCH
+                // API Route: api/GioHang/update-item
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), "GioHang/update-item")
+                {
+                    Content = content
+                };
+
+                try
+                {
+                    var response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Trả về success để JS xử lý tiếp
+                        return Json(new { success = true });
+                    }
+                    else
+                    {
+                        var errorMsg = await response.Content.ReadAsStringAsync();
+                        return Json(new { success = false, message = "Lỗi API: " + errorMsg });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
+                }
+            }
         }
     }
 }

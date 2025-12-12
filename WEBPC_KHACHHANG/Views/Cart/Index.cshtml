@@ -26,6 +26,11 @@
             padding-bottom: 1rem;
             margin-bottom: 1.5rem;
         }
+
+    /* Hiệu ứng cho nút cập nhật */
+    .btn-confirm-update {
+        transition: all 0.3s ease;
+    }
 </style>
 
 <section class="py-5">
@@ -49,7 +54,7 @@
                                     </th>
                                     <th scope="col">Sản Phẩm</th>
                                     <th scope="col" class="text-center">Giá</th>
-                                    <th scope="col" class="text-center">Số Lượng</th>
+                                    <th scope="col" class="text-center" style="width: 150px;">Số Lượng</th>
                                     <th scope="col" class="text-center">Tổng</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -78,14 +83,26 @@
                                             <td class="text-center fw-semibold price-display">
                                                 @item.Price.ToString("N0")₫
                                             </td>
-                                            <td>
-                                                <input type="number"
-                                                       class="form-control form-control-sm text-center mx-auto quantity-input"
-                                                       value="@item.Quantity"
-                                                       min="1"
-                                                       style="width: 70px;"
-                                                       onchange="handleQuantityChange(this, @item.ProductId)">
+
+                                            <td class="text-center">
+                                                <div class="input-group input-group-sm justify-content-center">
+                                                    <input type="number"
+                                                           class="form-control text-center quantity-input"
+                                                           value="@item.Quantity"
+                                                           min="1"
+                                                           data-original="@item.Quantity"
+                                                           oninput="checkQuantityChange(this)"
+                                                           style="max-width: 70px;">
+
+                                                    <button class="btn btn-success btn-confirm-update d-none"
+                                                            type="button"
+                                                            title="Xác nhận thay đổi"
+                                                            onclick="confirmUpdateQuantity(@item.ProductId, this)">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </button>
+                                                </div>
                                             </td>
+
                                             <td class="text-center text-primary fw-bold total-line-price">
                                                 @item.Total.ToString("N0")₫
                                             </td>
@@ -145,18 +162,11 @@
     </div>
 </section>
 
-<form id="removeForm" action="/Cart/Remove" method="post" style="display:none;">
-    <input type="hidden" name="id" id="removeId" />
-</form>
-
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- 1. KHAI BÁO BIẾN ---
             const selectAllCheckbox = document.getElementById('selectAll');
-            const summaryCount = document.getElementById('summary-count');
-            const summarySubtotal = document.getElementById('summary-subtotal');
-            const summaryTotal = document.getElementById('summary-total');
             const checkoutBtn = document.getElementById('btn-checkout');
 
             // Hàm định dạng tiền VNĐ
@@ -179,6 +189,9 @@
                     const checkbox = row.querySelector('.item-checkbox');
                     const quantityInput = row.querySelector('.quantity-input');
                     const priceRaw = parseFloat(row.getAttribute('data-price'));
+
+                    // Lấy số lượng từ input (nếu đang sửa thì lấy số mới để tính tạm, hoặc lấy số gốc nếu muốn chặt chẽ)
+                    // Ở đây ta lấy số hiện tại trong ô input để người dùng thấy giá thay đổi realtime
                     const quantity = parseInt(quantityInput.value) || 0;
 
                     // Tính tiền từng dòng
@@ -195,9 +208,9 @@
                 });
 
                 // Cập nhật giao diện Summary
-                summarySubtotal.textContent = formatCurrency(totalAmount);
-                summaryTotal.textContent = formatCurrency(totalAmount);
-                summaryCount.textContent = totalCount + ' sản phẩm';
+                document.getElementById('summary-subtotal').textContent = formatCurrency(totalAmount);
+                document.getElementById('summary-total').textContent = formatCurrency(totalAmount);
+                document.getElementById('summary-count').textContent = totalCount + ' sản phẩm';
 
                 // Checkbox selectAll
                 if (selectAllCheckbox) selectAllCheckbox.checked = allChecked && hasItem;
@@ -233,19 +246,15 @@
                 });
             }
 
+            // Sự kiện nút Thanh toán
             if (checkoutBtn) {
                 checkoutBtn.addEventListener('click', function () {
-
-                    // --- SỬA THÀNH CODE DƯỚI ĐÂY ---
-
-                    // 1. Lấy danh sách ID các sản phẩm được check
                     const selectedIds = [];
                     const rows = document.querySelectorAll('.cart-item');
 
                     rows.forEach(row => {
                         const checkbox = row.querySelector('.item-checkbox');
                         if (checkbox && checkbox.checked) {
-                            // Lấy data-id từ thẻ tr
                             const id = row.getAttribute('data-id');
                             if(id) selectedIds.push(id);
                         }
@@ -256,8 +265,6 @@
                         return;
                     }
 
-                    // 2. Chuyển hướng kèm theo tham số selectedIds trên URL
-                    // Ví dụ: /ThanhToan/Checkout?selectedIds=101,102
                     window.location.href = '@Url.Action("Checkout", "ThanhToan")?selectedIds=' + selectedIds.join(',');
                 });
             }
@@ -266,24 +273,96 @@
             updateCartSummary();
         });
 
-        // --- 4. HÀM XỬ LÝ KHI ĐỔI SỐ LƯỢNG ---
-        function handleQuantityChange(inputElement, productId) {
-            let quantity = parseInt(inputElement.value);
-            if (quantity < 1) {
-                inputElement.value = 1;
-                quantity = 1;
-            }
-            // Cập nhật UI ngay
-            window.updateCartSummary();
+        // --- 4. LOGIC XỬ LÝ SỐ LƯỢNG MỚI ---
 
-            // TODO: Bạn có thể thêm gọi Ajax cập nhật Database ở đây nếu cần
-            // window.location.href = '/Cart/Update?productId=' + productId + '&quantity=' + quantity;
+        // Hàm kiểm tra khi gõ phím: Nếu khác số gốc -> Hiện nút check
+        function checkQuantityChange(input) {
+            let currentVal = parseInt(input.value);
+            let originalVal = parseInt(input.getAttribute('data-original'));
+
+            // Tìm nút button kế bên input
+            let btn = input.nextElementSibling;
+
+            if (!isNaN(currentVal) && currentVal > 0 && currentVal !== originalVal) {
+                // Nếu khác số gốc: Hiện nút
+                btn.classList.remove('d-none');
+            } else {
+                // Nếu giống số gốc hoặc không hợp lệ: Ẩn nút
+                btn.classList.add('d-none');
+            }
+
+            // Cập nhật tạm thời tổng tiền hiển thị (Optional)
+            if(window.updateCartSummary) window.updateCartSummary();
         }
 
-        // --- 5. HÀM XÓA SẢN PHẨM ---
+        // Hàm xác nhận cập nhật (Ajax)
+        function confirmUpdateQuantity(productId, btnElement) {
+            const inputGroup = btnElement.closest('.input-group');
+            const inputElement = inputGroup.querySelector('.quantity-input');
+            const quantity = parseInt(inputElement.value);
+
+            if (quantity < 1 || isNaN(quantity)) {
+                alert("Số lượng không hợp lệ!");
+                inputElement.value = inputElement.getAttribute('data-original');
+                checkQuantityChange(inputElement);
+                return;
+            }
+
+            // Hiệu ứng loading
+            const originalIcon = btnElement.innerHTML;
+            btnElement.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            btnElement.disabled = true;
+
+            // Gửi Ajax
+            var formData = 'productId=' + encodeURIComponent(productId) +
+                           '&quantity=' + encodeURIComponent(quantity);
+
+            fetch('/Cart/UpdateQuantity', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý trường hợp chưa đăng nhập
+                if (data.requireLogin) {
+                    alert(data.message);
+                    // Chuyển hướng về trang Login, kèm ReturnUrl là trang hiện tại
+                    window.location.href = '/Login?returnUrl=/Cart';
+                    return;
+                }
+
+                if (data.success) {
+                    // Cập nhật thành công
+                    // 1. Cập nhật data-original mới
+                    inputElement.setAttribute('data-original', quantity);
+                    // 2. Ẩn nút check đi
+                    btnElement.classList.add('d-none');
+                    // 3. Tính lại tổng tiền
+                    if(window.updateCartSummary) window.updateCartSummary();
+                    // 4. Thông báo nhẹ (hoặc không cần alert để trải nghiệm mượt hơn)
+                    // console.log("Updated");
+                } else {
+                    alert("Lỗi: " + data.message);
+                    // Reset về số cũ
+                    inputElement.value = inputElement.getAttribute('data-original');
+                    checkQuantityChange(inputElement);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert("Lỗi kết nối server.");
+            })
+            .finally(() => {
+                // Trả lại trạng thái nút
+                btnElement.innerHTML = originalIcon;
+                btnElement.disabled = false;
+            });
+        }
+
+        // Hàm xóa
         function removeItem(id) {
             if (confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
-                // Gọi đến Action Remove trong CartController
                 window.location.href = '/Cart/Remove/' + id;
             }
         }

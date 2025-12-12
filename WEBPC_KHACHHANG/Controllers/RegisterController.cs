@@ -5,49 +5,90 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using WEBPC_KHACHHANG.Models.Requests;
+using WEBPC_KHACHHANG.Models.ViewModels;
 
 namespace WEBPC_KHACHHANG.Controllers
 {
     public class RegisterController : Controller
     {
+        // Lấy link API từ Web.config
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
-        [HttpPost]
-        public async Task<JsonResult> Submit(RegisterRequest model)
+        // GET: Register (Hiển thị trang đăng ký)
+        [HttpGet]
+        public ActionResult Index()
         {
-            if (!ModelState.IsValid)
-                return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
+            return View();
+        }
 
+        // POST: Register (Xử lý đăng ký)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(RegisterViewModel model)
+        {
+            // 1. Kiểm tra dữ liệu đầu vào (Validation)
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // 2. Gọi API để tạo tài khoản
             using (var client = new HttpClient())
             {
+                // Xử lý trường hợp quên cấu hình BaseUrl
+                if (string.IsNullOrEmpty(_apiBaseUrl))
+                {
+                    ModelState.AddModelError("", "Chưa cấu hình ApiBaseUrl trong Web.config");
+                    return View(model);
+                }
+
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // Map dữ liệu Client sang API (KhachHangRequest)
-                var payload = new
+                // Tạo object dữ liệu để gửi sang API (khớp với RegisterRequest bên API)
+                var registerData = new
                 {
-                    hoTen = model.hoTen,
-                    soDienThoai = model.soDienThoai,
-                    email = model.email,
-                    tenDangNhap = model.tenDangNhap,
-                    matKhau = model.matKhau
+                    hoTen = model.HoTen,
+                    soDienThoai = model.SoDienThoai,
+                    email = model.Email,
+                    tenDangNhap = model.TenDangNhap,
+                    matKhau = model.MatKhau
                 };
 
-                var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(registerData), Encoding.UTF8, "application/json");
 
-                // Gọi endpoint Create trong KhachHangController
-                var response = await client.PostAsync("KhachHang", content);
-                var responseString = await response.Content.ReadAsStringAsync();
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    return Json(new { success = true, message = "Đăng ký thành công!" });
+                    // Gọi API: POST api/KhachHang
+                    var response = await client.PostAsync("KhachHang", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Đăng ký thành công -> Chuyển hướng sang trang Login
+                        TempData["LoginSuccess"] = "Đăng ký thành công! Bạn có thể đăng nhập ngay.";
+                        return RedirectToAction("Index", "Login");
+                    }
+                    else
+                    {
+                        // Đăng ký thất bại (ví dụ: trùng tên đăng nhập, trùng email)
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        try
+                        {
+                            // Cố gắng đọc message lỗi từ API trả về
+                            dynamic errObj = JsonConvert.DeserializeObject(errorContent);
+                            ModelState.AddModelError("", "Đăng ký thất bại: " + errObj.message);
+                        }
+                        catch
+                        {
+                            ModelState.AddModelError("", "Đăng ký thất bại. Vui lòng thử lại.");
+                        }
+
+                        return View(model);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    // Lấy message lỗi từ API trả về (VD: "Tên đăng nhập đã tồn tại")
-                    dynamic err = JsonConvert.DeserializeObject<dynamic>(responseString);
-                    return Json(new { success = false, message = err?.message ?? "Đăng ký thất bại" });
+                    ModelState.AddModelError("", "Lỗi kết nối Server: " + ex.Message);
+                    return View(model);
                 }
             }
         }

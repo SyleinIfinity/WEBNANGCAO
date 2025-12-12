@@ -48,11 +48,16 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         public string Url { get; set; }
         public bool LaAnhDaiDien { get; set; }
     }
-    
+
     // Class dùng cho Dropdown lọc danh mục (Optional)
+    // Tìm class CategoryViewModel ở cuối file và sửa thành:
     public class CategoryViewModel
     {
         public int MaDanhMuc { get; set; }
         public string TenDanhMuc { get; set; }
+
+        // --- BỔ SUNG ---
+        public int? MaDanhMucCha { get; set; }
+        public int SoLuongDanhMucCon { get; set; }
     }
 }
