@@ -4,10 +4,12 @@ using Newtonsoft.Json;
 
 namespace WEBPC_KHACHHANG.Models.ViewModels
 {
-    // 1. Class item
     public class CartItemViewModel
     {
-        // JSON không có MaChiTietGioHang, ta dùng tạm MaSanPham để định danh
+        // [QUAN TRỌNG]: Map đúng tên maChiTietGioHang từ API
+        [JsonProperty("maChiTietGioHang")]
+        public int CartItemId { get; set; }
+
         [JsonProperty("maSanPham")]
         public int ProductId { get; set; }
 
@@ -26,18 +28,17 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         [JsonProperty("soLuong")]
         public int Quantity { get; set; }
 
-        [JsonProperty("thanhTien")]
-        public decimal Total { get; set; }
-
-        // Logic hiển thị: Nếu có giá khuyến mãi thì lấy, không thì lấy đơn giá
+        // Logic tính giá hiển thị
         public decimal Price => PromotionPrice > 0 ? PromotionPrice : OriginalPrice;
+
+        // Tự tính tổng tiền tại Client để tránh lỗi số 0 từ API
+        public decimal Total => Price * Quantity;
     }
 
-    // 2. Class tổng
     public class CartViewModel
     {
-        // [SỬA LẠI]: Map đúng với key "chiTiet" trong JSON
-        [JsonProperty("chiTiet")]
+        // [CỰC KỲ QUAN TRỌNG]: Phải là "chiTietGioHangs" mới khớp với log JSON bạn gửi
+        [JsonProperty("chiTietGioHangs")]
         public List<CartItemViewModel> Items { get; set; }
 
         public CartViewModel()
@@ -48,7 +49,6 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         [JsonProperty("tongTienHang")]
         public decimal TongTienTuAPI { get; set; }
 
-        // Tính toán lại để hiển thị realtime
         public decimal TotalAmount => Items?.Sum(x => x.Total) ?? 0;
         public int TotalQuantity => Items?.Sum(x => x.Quantity) ?? 0;
     }

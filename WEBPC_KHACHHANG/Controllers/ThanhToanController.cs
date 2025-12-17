@@ -16,10 +16,9 @@ namespace WEBPC_KHACHHANG.Controllers
 {
     public class ThanhToanController : Controller
     {
-        // Lấy URL từ Web.config
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
-        // 1. GET: Hiển thị trang thanh toán (GD1)
+        // 1. GET: Hiển thị trang thanh toán
         [HttpGet]
         public async Task<ActionResult> Checkout(string selectedIds)
         {
@@ -42,46 +41,36 @@ namespace WEBPC_KHACHHANG.Controllers
                     Addresses = new List<SoDiaChiResponse>()
                 };
 
-                // [SỬA LỖI]: Khởi tạo HttpClient mới trong khối using để đảm bảo BaseAddress luôn đúng
                 using (var client = new HttpClient())
                 {
-                    // Thiết lập Base Address từ Config
-                    if (string.IsNullOrEmpty(_apiBaseUrl))
-                        throw new Exception("Chưa cấu hình ApiBaseUrl trong Web.config");
-
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                    // --- LẤY FULL GIỎ HÀNG VÀ LỌC ---
-                    // Vì BaseAddress đã có "https://.../api/", ta chỉ cần truyền phần đuôi
+                    // Lấy giỏ hàng
                     var responseFullCart = await client.GetAsync($"GioHang/{user.MaKhachHang}");
-
                     if (responseFullCart.IsSuccessStatusCode)
                     {
                         var content = await responseFullCart.Content.ReadAsStringAsync();
                         var fullCart = JsonConvert.DeserializeObject<CartViewModel>(content);
 
-                        var selectedProductIds = selectedIds.Split(',').Select(int.Parse).ToList();
+                        var selectedCartItemIds = selectedIds.Split(',').Select(int.Parse).ToList();
 
-                        // Lọc sản phẩm theo ID đã chọn
                         if (fullCart != null && fullCart.Items != null)
                         {
                             model.Cart.Items = fullCart.Items
-                                .Where(x => selectedProductIds.Contains(x.ProductId))
+                                .Where(x => selectedCartItemIds.Contains(x.CartItemId))
                                 .ToList();
                         }
                     }
 
-                    // --- LẤY ĐỊA CHỈ ---
+                    // Lấy địa chỉ
                     var responseAddr = await client.GetAsync($"SoDiaChi/khachhang/{user.MaKhachHang}");
-
                     if (responseAddr.IsSuccessStatusCode)
                     {
                         var dataAddr = await responseAddr.Content.ReadAsStringAsync();
                         model.Addresses = JsonConvert.DeserializeObject<List<SoDiaChiResponse>>(dataAddr);
                     }
                 }
-
                 return View(model);
             }
             catch (Exception ex)
@@ -91,7 +80,7 @@ namespace WEBPC_KHACHHANG.Controllers
             }
         }
 
-        // 2. POST: Xử lý đặt hàng (GD2 & GD3)
+        // 2. POST: Xử lý đặt hàng
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> PlaceOrder(CheckoutViewModel model)
@@ -106,7 +95,6 @@ namespace WEBPC_KHACHHANG.Controllers
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                    // 1. Chuẩn bị dữ liệu gửi API
                     var request = new TaoDonHangRequest
                     {
                         MaKhachHang = user.MaKhachHang,
@@ -117,52 +105,58 @@ namespace WEBPC_KHACHHANG.Controllers
                         SelectedCartItemIds = new List<int>()
                     };
 
-                    // [LOGIC MAPPING]: Lấy CartItemId nếu cần thiết
-                    // Hiện tại Client đang giữ ProductId trong SelectedIdsString
+                    // Lọc CartItemId
                     if (!string.IsNullOrEmpty(model.SelectedIdsString))
                     {
-                        // Logic cũ: API DonHang nhận ProductID thì giữ nguyên dòng này
-                        request.SelectedCartItemIds = model.SelectedIdsString.Split(',').Select(int.Parse).ToList();
+                        var listIds = model.SelectedIdsString.Split(',').Select(int.Parse).ToList();
+                        var cartResponse = await client.GetAsync($"GioHang/{user.MaKhachHang}");
 
-                        // Nếu API DonHang bắt buộc nhận CartItemID (chứ ko phải ProductID), 
-                        // bạn cần gọi lại API GetGioHang ở đây để map ID sang.
+                        if (cartResponse.IsSuccessStatusCode)
+                        {
+                            var cartContent = await cartResponse.Content.ReadAsStringAsync();
+                            var fullCart = JsonConvert.DeserializeObject<CartViewModel>(cartContent);
+
+                            if (fullCart != null && fullCart.Items != null)
+                            {
+                                var selectedItems = fullCart.Items
+                                    .Where(x => listIds.Contains(x.CartItemId))
+                                    .ToList();
+
+                                foreach (var item in selectedItems)
+                                {
+                                    request.SelectedCartItemIds.Add(item.CartItemId);
+                                }
+                            }
+                        }
                     }
 
-                    // 2. Gọi API Tạo Đơn Hàng
+                    // Kiểm tra danh sách trước khi gửi
+                    if (request.SelectedCartItemIds.Count == 0)
+                    {
+                        TempData["Error"] = "Lỗi dữ liệu: Không tìm thấy sản phẩm trong giỏ hàng.";
+                        return RedirectToAction("Index", "Cart");
+                    }
+
+                    // Gọi API
                     var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
                     var response = await client.PostAsync("DonHang/create", content);
 
                     if (response.IsSuccessStatusCode)
                     {
                         var responseString = await response.Content.ReadAsStringAsync();
-                        // Dùng dynamic để lấy nhanh maDonHang trả về
                         dynamic result = JsonConvert.DeserializeObject(responseString);
                         int maDonHang = result.maDonHang;
 
-                        // 3. Phân luồng
                         if (model.PhuongThucThanhToan == "VietQR")
-                        {
                             return RedirectToAction("Payment", new { id = maDonHang });
-                        }
                         else
-                        {
                             return RedirectToAction("Success", new { id = maDonHang });
-                        }
                     }
                     else
                     {
                         var errorContent = await response.Content.ReadAsStringAsync();
-                        // Thử parse lỗi từ API nếu có
-                        try
-                        {
-                            dynamic err = JsonConvert.DeserializeObject(errorContent);
-                            TempData["Error"] = "Đặt hàng thất bại: " + err.message;
-                        }
-                        catch
-                        {
-                            TempData["Error"] = "Đặt hàng thất bại: " + errorContent;
-                        }
-
+                        TempData["Error"] = "Đặt hàng thất bại: " + errorContent;
+                        // Quan trọng: Truyền lại selectedIds để không bị đá về Cart
                         return RedirectToAction("Checkout", new { selectedIds = model.SelectedIdsString });
                     }
                 }
@@ -174,57 +168,44 @@ namespace WEBPC_KHACHHANG.Controllers
             }
         }
 
-        // 3. GET: Trang Thanh Toán QR (GD3)
+        // Action Payment
         [HttpGet]
         public async Task<ActionResult> Payment(int id)
         {
             var user = Session["User"] as UserLoginResponse;
             if (user == null) return RedirectToAction("Index", "Login");
-
             try
             {
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-
-                    // Gọi API lấy thông tin QR
                     var response = await client.GetAsync($"Payment/get-qr/{id}");
-
                     if (response.IsSuccessStatusCode)
                     {
                         var jsonString = await response.Content.ReadAsStringAsync();
                         var apiResult = JsonConvert.DeserializeObject<ApiQrResponse>(jsonString);
-
                         if (apiResult != null && apiResult.data != null)
                         {
                             ViewBag.QrImage = apiResult.data.qrDataURL;
                             ViewBag.OrderId = id;
-                            // Truyền thêm số tiền và mã đơn để hiển thị nếu cần
-                            // ViewBag.Amount = ...
                             return View();
                         }
                     }
                 }
-
-                TempData["Error"] = "Không thể tạo mã QR thanh toán.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Success", new { id = id });
             }
-            catch (Exception ex)
-            {
-                TempData["Error"] = "Lỗi: " + ex.Message;
-                return RedirectToAction("Index", "Home");
-            }
+            catch { return RedirectToAction("Success", new { id = id }); }
         }
 
-        // 4. GET: Trang Thành công (GD2)
+        // Action Success
         public ActionResult Success(int id)
         {
             ViewBag.OrderId = id;
             return View();
         }
 
-        // 5. Check Status (Polling AJAX cho trang Payment)
+        // Action CheckStatus
         [HttpGet]
         public async Task<JsonResult> CheckStatus(int orderId)
         {
@@ -234,7 +215,6 @@ namespace WEBPC_KHACHHANG.Controllers
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     var response = await client.GetAsync($"Payment/check-status/{orderId}");
-
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
@@ -243,10 +223,7 @@ namespace WEBPC_KHACHHANG.Controllers
                 }
                 return Json(new { status = "ERROR" }, JsonRequestBehavior.AllowGet);
             }
-            catch
-            {
-                return Json(new { status = "ERROR" }, JsonRequestBehavior.AllowGet);
-            }
+            catch { return Json(new { status = "ERROR" }, JsonRequestBehavior.AllowGet); }
         }
     }
 }
