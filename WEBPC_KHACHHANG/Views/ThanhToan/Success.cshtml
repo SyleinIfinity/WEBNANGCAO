@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm p-5">
+                <div class="mb-4">
+                    <div style="width: 80px; height: 80px; background: #28a745; color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 40px;">
+                        <i class="fa fa-check"></i>
+                    </div>
+                </div>
+
+                <h2 class="text-success font-weight-bold mb-3">Thanh toán thành công!</h2>
+
+                <p class="lead text-muted mb-4">
+                    Cảm ơn bạn đã mua hàng tại <b>WEBPC</b>.<br />
+                    Đơn hàng của bạn đã được hệ thống ghi nhận và đang chờ đóng gói.
+                </p>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary px-4 py-2 mr-2">
+                        <i class="fa fa-shopping-cart"></i> Tiếp tục mua sắm
+                    </a>
+
+                    <a href="@Url.Action("Index", "InfoUser")" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="fa fa-list-alt"></i> Xem đơn hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

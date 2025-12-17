@@ -13,12 +13,16 @@
         height: 80px;
         object-fit: cover;
         border-radius: 8px;
+        border: 1px solid #eee;
     }
 
     .cart-summary-card {
         background: #f8f9fa;
         border-radius: 15px;
         padding: 1.5rem;
+        position: sticky;
+        top: 20px; /* Giữ khung tổng tiền khi cuộn trang */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
         .cart-summary-card h4 {
@@ -27,88 +31,111 @@
             margin-bottom: 1.5rem;
         }
 
-    /* Hiệu ứng cho nút cập nhật */
-    .btn-confirm-update {
-        transition: all 0.3s ease;
+    /* Ẩn nút tăng giảm mặc định của input number */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .table > :not(caption) > * > * {
+        vertical-align: middle;
     }
 </style>
 
-<section class="py-5">
+<section class="py-5 bg-light">
     <div class="container">
-        <h1 class="section-title mb-5 text-center">Giỏ Hàng Của Bạn</h1>
+        <h2 class="section-title mb-4 text-center fw-bold text-uppercase">Giỏ Hàng Của Bạn</h2>
 
         @if (TempData["Message"] != null)
         {
-            <div class="alert alert-warning text-center">@TempData["Message"]</div>
+            <div class="alert alert-success text-center shadow-sm">@TempData["Message"]</div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center shadow-sm">@TempData["Error"]</div>
         }
 
         <div class="row">
             <div class="col-lg-8 mb-4 mb-lg-0">
-                <div class="card p-4 shadow-sm border-0">
+                <div class="card p-0 shadow-sm border-0 rounded-3 overflow-hidden">
                     <div class="table-responsive">
-                        <table class="table cart-table align-middle">
-                            <thead class="table-light">
+                        <table class="table cart-table mb-0">
+                            <thead class="table-primary text-nowrap">
                                 <tr>
-                                    <th scope="col" style="width: 50px;" class="text-center">
-                                        <input class="form-check-input" type="checkbox" id="selectAll">
+                                    <th scope="col" class="text-center py-3" style="width: 50px;">
+                                        <input class="form-check-input" type="checkbox" id="selectAll" style="cursor:pointer;">
                                     </th>
-                                    <th scope="col">Sản Phẩm</th>
-                                    <th scope="col" class="text-center">Giá</th>
-                                    <th scope="col" class="text-center" style="width: 150px;">Số Lượng</th>
-                                    <th scope="col" class="text-center">Tổng</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" class="py-3">Sản Phẩm</th>
+                                    <th scope="col" class="text-center py-3">Đơn Giá</th>
+                                    <th scope="col" class="text-center py-3" style="width: 140px;">Số Lượng</th>
+                                    <th scope="col" class="text-center py-3">Thành Tiền</th>
+                                    <th scope="col" class="py-3"></th>
                                 </tr>
                             </thead>
-                            <tbody id="cart-body">
-                                @if (Model != null && Model.Items != null && Model.Items.Count > 0)
+                            <tbody id="cart-body" class="bg-white">
+                                @if (Model != null && Model.Items != null && Model.Items.Any())
                                 {
                                     foreach (var item in Model.Items)
                                     {
-                                        <tr class="cart-item" data-price="@item.Price" data-id="@item.ProductId">
+                                        <tr class="cart-item"
+                                            data-price="@item.Price"
+                                            data-product-id="@item.ProductId">
+
                                             <td class="text-center">
-                                                <input class="form-check-input item-checkbox" type="checkbox">
+                                                <input class="form-check-input item-checkbox" type="checkbox" value="@item.ProductId" style="cursor:pointer;">
                                             </td>
+
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <a href="/Product/Detail/@item.ProductId">
-                                                        <img src="@item.ProductImage" class="cart-item-img me-3" alt="@item.ProductName" onerror="this.src='https://via.placeholder.com/80'">
+                                                        <img src="@(string.IsNullOrEmpty(item.ProductImage) ? "https://via.placeholder.com/80" : item.ProductImage)"
+                                                             class="cart-item-img me-3"
+                                                             alt="@item.ProductName"
+                                                             onerror="this.src='https://via.placeholder.com/80'">
                                                     </a>
                                                     <div>
                                                         <a href="/Product/Detail/@item.ProductId" class="text-decoration-none text-dark">
-                                                            <h6 class="mb-0 fw-bold">@item.ProductName</h6>
+                                                            <h6 class="mb-1 fw-bold text-truncate" style="max-width: 200px;" title="@item.ProductName">@item.ProductName</h6>
                                                         </a>
+                                                        <span class="badge bg-light text-secondary border">Mã SP: @item.ProductId</span>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center fw-semibold price-display">
+
+                                            <td class="text-center fw-semibold text-secondary">
                                                 @item.Price.ToString("N0")₫
                                             </td>
 
                                             <td class="text-center">
-                                                <div class="input-group input-group-sm justify-content-center">
+                                                <div class="input-group input-group-sm justify-content-center flex-nowrap">
                                                     <input type="number"
-                                                           class="form-control text-center quantity-input"
+                                                           class="form-control text-center quantity-input fw-bold"
                                                            value="@item.Quantity"
                                                            min="1"
                                                            data-original="@item.Quantity"
                                                            oninput="checkQuantityChange(this)"
-                                                           style="max-width: 70px;">
+                                                           style="max-width: 60px;">
 
                                                     <button class="btn btn-success btn-confirm-update d-none"
                                                             type="button"
-                                                            title="Xác nhận thay đổi"
+                                                            title="Cập nhật"
                                                             onclick="confirmUpdateQuantity(@item.ProductId, this)">
                                                         <i class="bi bi-check-lg"></i>
                                                     </button>
                                                 </div>
                                             </td>
 
-                                            <td class="text-center text-primary fw-bold total-line-price">
+                                            <td class="text-center text-danger fw-bold total-line-price">
                                                 @item.Total.ToString("N0")₫
                                             </td>
-                                            <td>
-                                                <button class="btn btn-outline-danger btn-sm" onclick="removeItem(@item.ProductId)">
-                                                    <i class="bi bi-x-lg"></i>
+
+                                            <td class="text-center">
+                                                <button class="btn btn-outline-danger btn-sm border-0"
+                                                        title="Xóa sản phẩm"
+                                                        onclick="removeItem(@item.ProductId)">
+                                                    <i class="bi bi-trash fs-5"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -118,9 +145,13 @@
                                 {
                                     <tr>
                                         <td colspan="6" class="text-center py-5">
-                                            <i class="bi bi-cart-x display-4 text-muted"></i>
-                                            <p class="mt-3">Giỏ hàng trống</p>
-                                            <a href="/" class="btn btn-primary">Mua sắm ngay</a>
+                                            <div class="py-4">
+                                                <i class="bi bi-cart-x display-1 text-muted opacity-25"></i>
+                                                <p class="mt-3 fs-5 text-muted">Giỏ hàng của bạn đang trống</p>
+                                                <a href="/" class="btn btn-primary px-4 rounded-pill mt-2">
+                                                    <i class="bi bi-arrow-left me-2"></i>Tiếp tục mua sắm
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 }
@@ -132,29 +163,29 @@
 
             <div class="col-lg-4">
                 <div class="cart-summary-card">
-                    <h4 class="fw-bold">Tổng Kết</h4>
+                    <h4 class="fw-bold text-center text-primary">Tóm Tắt Đơn Hàng</h4>
 
                     <div class="d-flex justify-content-between mb-3">
-                        <span>Đã chọn:</span>
-                        <span class="fw-semibold" id="summary-count">0 sản phẩm</span>
+                        <span class="text-muted">Đã chọn:</span>
+                        <span class="fw-bold" id="summary-count">0 sản phẩm</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-3">
-                        <span>Tạm tính:</span>
-                        <span class="fw-semibold" id="summary-subtotal">0₫</span>
+                        <span class="text-muted">Tạm tính:</span>
+                        <span class="fw-bold" id="summary-subtotal">0₫</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-4 pt-3 border-top">
-                        <h5 class="fw-bold">Thành tiền:</h5>
-                        <h5 class="fw-bold text-primary" id="summary-total">0₫</h5>
+                        <h5 class="fw-bold">Tổng tiền:</h5>
+                        <h4 class="fw-bold text-danger" id="summary-total">0₫</h4>
                     </div>
 
-                    <button id="btn-checkout" class="btn btn-primary btn-lg w-100 fw-bold" disabled>
-                        TIẾN HÀNH THANH TOÁN
+                    <button id="btn-checkout" class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow-sm" disabled>
+                        TIẾN HÀNH THANH TOÁN <i class="bi bi-arrow-right ms-2"></i>
                     </button>
 
-                    <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary btn-lg w-100 mt-3 fw-bold">
-                        TIẾP TỤC MUA SẮM
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-outline-secondary w-100 mt-3 border-0">
+                        <i class="bi bi-cart-plus me-1"></i> Mua thêm sản phẩm khác
                     </a>
                 </div>
             </div>
@@ -182,23 +213,27 @@
                 let hasItem = false;
 
                 const rows = document.querySelectorAll('.cart-item');
-                if (rows.length === 0) allChecked = false;
+
+                // Nếu không có sản phẩm nào
+                if (rows.length === 0) {
+                    allChecked = false;
+                    if (selectAllCheckbox) selectAllCheckbox.disabled = true;
+                }
 
                 rows.forEach(row => {
                     hasItem = true;
                     const checkbox = row.querySelector('.item-checkbox');
                     const quantityInput = row.querySelector('.quantity-input');
-                    const priceRaw = parseFloat(row.getAttribute('data-price'));
 
-                    // Lấy số lượng từ input (nếu đang sửa thì lấy số mới để tính tạm, hoặc lấy số gốc nếu muốn chặt chẽ)
-                    // Ở đây ta lấy số hiện tại trong ô input để người dùng thấy giá thay đổi realtime
+                    // Lấy giá và số lượng
+                    const priceRaw = parseFloat(row.getAttribute('data-price')) || 0;
                     const quantity = parseInt(quantityInput.value) || 0;
 
-                    // Tính tiền từng dòng
+                    // Tính tiền từng dòng (Cập nhật hiển thị ngay lập tức)
                     const lineTotal = priceRaw * quantity;
                     row.querySelector('.total-line-price').textContent = formatCurrency(lineTotal);
 
-                    // Chỉ cộng vào tổng nếu được Check
+                    // Chỉ cộng vào tổng nếu checkbox được Tick
                     if (checkbox.checked) {
                         totalAmount += lineTotal;
                         totalCount += quantity;
@@ -212,10 +247,12 @@
                 document.getElementById('summary-total').textContent = formatCurrency(totalAmount);
                 document.getElementById('summary-count').textContent = totalCount + ' sản phẩm';
 
-                // Checkbox selectAll
-                if (selectAllCheckbox) selectAllCheckbox.checked = allChecked && hasItem;
+                // Cập nhật trạng thái checkbox "Chọn tất cả"
+                if (selectAllCheckbox && rows.length > 0) {
+                    selectAllCheckbox.checked = allChecked;
+                }
 
-                // Nút thanh toán
+                // Nút thanh toán: Disable nếu chưa chọn gì
                 if (totalCount > 0) {
                     checkoutBtn.removeAttribute('disabled');
                 } else {
@@ -223,9 +260,9 @@
                 }
             };
 
-            // --- 3. SỰ KIỆN ---
+            // --- 3. GẮN SỰ KIỆN ---
 
-            // Nút chọn tất cả
+            // Sự kiện nút "Chọn tất cả"
             if (selectAllCheckbox) {
                 selectAllCheckbox.addEventListener('change', function () {
                     const isChecked = this.checked;
@@ -236,7 +273,7 @@
                 });
             }
 
-            // Sự kiện check từng món
+            // Sự kiện khi tick vào từng checkbox con
             const cartBody = document.getElementById('cart-body');
             if (cartBody) {
                 cartBody.addEventListener('change', function (e) {
@@ -246,18 +283,15 @@
                 });
             }
 
-            // Sự kiện nút Thanh toán
+            // [QUAN TRỌNG] SỰ KIỆN NÚT THANH TOÁN
             if (checkoutBtn) {
                 checkoutBtn.addEventListener('click', function () {
                     const selectedIds = [];
-                    const rows = document.querySelectorAll('.cart-item');
 
-                    rows.forEach(row => {
-                        const checkbox = row.querySelector('.item-checkbox');
-                        if (checkbox && checkbox.checked) {
-                            const id = row.getAttribute('data-id');
-                            if(id) selectedIds.push(id);
-                        }
+                    document.querySelectorAll('.item-checkbox:checked').forEach(checkbox => {
+                        // Lấy ProductId từ value của checkbox
+                        const id = checkbox.value;
+                        if (id) selectedIds.push(id);
                     });
 
                     if (selectedIds.length === 0) {
@@ -265,44 +299,43 @@
                         return;
                     }
 
-                    window.location.href = '@Url.Action("Checkout", "ThanhToan")?selectedIds=' + selectedIds.join(',');
+                    // Chuyển hướng sang trang Checkout với danh sách ProductId
+                    // Ví dụ: /ThanhToan/Checkout?selectedIds=101,105
+                    const url = '/ThanhToan/Checkout?selectedIds=' + selectedIds.join(',');
+                    window.location.href = url;
                 });
             }
 
-            // Gọi lần đầu
+            // Gọi lần đầu để tính toán lại khi load trang
             updateCartSummary();
         });
 
-        // --- 4. LOGIC XỬ LÝ SỐ LƯỢNG MỚI ---
+        // --- 4. LOGIC XỬ LÝ CẬP NHẬT SỐ LƯỢNG & XÓA ---
 
-        // Hàm kiểm tra khi gõ phím: Nếu khác số gốc -> Hiện nút check
+        // Khi gõ số lượng mới: Hiện nút tick xanh nếu khác số gốc
         function checkQuantityChange(input) {
             let currentVal = parseInt(input.value);
             let originalVal = parseInt(input.getAttribute('data-original'));
-
-            // Tìm nút button kế bên input
-            let btn = input.nextElementSibling;
+            let btn = input.nextElementSibling; // Nút button kế bên
 
             if (!isNaN(currentVal) && currentVal > 0 && currentVal !== originalVal) {
-                // Nếu khác số gốc: Hiện nút
                 btn.classList.remove('d-none');
             } else {
-                // Nếu giống số gốc hoặc không hợp lệ: Ẩn nút
                 btn.classList.add('d-none');
             }
 
-            // Cập nhật tạm thời tổng tiền hiển thị (Optional)
-            if(window.updateCartSummary) window.updateCartSummary();
+            // Cập nhật lại tổng tiền tạm thời (UI only)
+            if (window.updateCartSummary) window.updateCartSummary();
         }
 
-        // Hàm xác nhận cập nhật (Ajax)
+        // Gọi Ajax cập nhật số lượng
         function confirmUpdateQuantity(productId, btnElement) {
             const inputGroup = btnElement.closest('.input-group');
             const inputElement = inputGroup.querySelector('.quantity-input');
             const quantity = parseInt(inputElement.value);
 
             if (quantity < 1 || isNaN(quantity)) {
-                alert("Số lượng không hợp lệ!");
+                alert("Số lượng phải lớn hơn 0");
                 inputElement.value = inputElement.getAttribute('data-original');
                 checkQuantityChange(inputElement);
                 return;
@@ -313,57 +346,50 @@
             btnElement.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
             btnElement.disabled = true;
 
-            // Gửi Ajax
-            var formData = 'productId=' + encodeURIComponent(productId) +
-                           '&quantity=' + encodeURIComponent(quantity);
-
+            // Gửi request về Controller: CartController -> UpdateQuantity
             fetch('/Cart/UpdateQuantity', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                // Lưu ý: Controller nhận vào { productId, quantity }
+                body: JSON.stringify({ productId: productId, quantity: quantity })
             })
-            .then(response => response.json())
-            .then(data => {
-                // Xử lý trường hợp chưa đăng nhập
-                if (data.requireLogin) {
-                    alert(data.message);
-                    // Chuyển hướng về trang Login, kèm ReturnUrl là trang hiện tại
-                    window.location.href = '/Login?returnUrl=/Cart';
-                    return;
-                }
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Thành công: Cập nhật lại số gốc
+                        inputElement.setAttribute('data-original', quantity);
+                        btnElement.classList.add('d-none'); // Ẩn nút update
 
-                if (data.success) {
-                    // Cập nhật thành công
-                    // 1. Cập nhật data-original mới
-                    inputElement.setAttribute('data-original', quantity);
-                    // 2. Ẩn nút check đi
-                    btnElement.classList.add('d-none');
-                    // 3. Tính lại tổng tiền
-                    if(window.updateCartSummary) window.updateCartSummary();
-                    // 4. Thông báo nhẹ (hoặc không cần alert để trải nghiệm mượt hơn)
-                    // console.log("Updated");
-                } else {
-                    alert("Lỗi: " + data.message);
-                    // Reset về số cũ
+                        // Tính lại tổng tiền
+                        if (window.updateCartSummary) window.updateCartSummary();
+                    }
+                    else if (data.requireLogin) {
+                        alert(data.message);
+                        window.location.href = '/Login?returnUrl=/Cart';
+                    }
+                    else {
+                        alert("Lỗi: " + data.message);
+                        // Reset về số cũ
+                        inputElement.value = inputElement.getAttribute('data-original');
+                        checkQuantityChange(inputElement);
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Lỗi kết nối server.");
                     inputElement.value = inputElement.getAttribute('data-original');
-                    checkQuantityChange(inputElement);
-                }
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Lỗi kết nối server.");
-            })
-            .finally(() => {
-                // Trả lại trạng thái nút
-                btnElement.innerHTML = originalIcon;
-                btnElement.disabled = false;
-            });
+                })
+                .finally(() => {
+                    btnElement.innerHTML = originalIcon;
+                    btnElement.disabled = false;
+                });
         }
 
-        // Hàm xóa
-        function removeItem(id) {
+        // Hàm xóa sản phẩm
+        function removeItem(productId) {
             if (confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?')) {
-                window.location.href = '/Cart/Remove/' + id;
+                // Chuyển hướng đến Action Remove trong CartController
+                window.location.href = '/Cart/Remove/' + productId;
             }
         }
     </script>

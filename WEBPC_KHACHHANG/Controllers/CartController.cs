@@ -37,7 +37,22 @@ namespace WEBPC_KHACHHANG.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
+
+                        // [DEBUG]: Đặt breakpoint ở đây để xem biến 'content' chứa gì
+                        // Hoặc ghi log tạm thời
+                        System.Diagnostics.Debug.WriteLine("JSON GIO HANG: " + content);
+
+                        // Thử map dữ liệu
                         cart = JsonConvert.DeserializeObject<CartViewModel>(content);
+
+                        // Kiểm tra xem map được không
+                        if (cart.Items == null || cart.Items.Count == 0)
+                        {
+                            // Nếu API trả về mảng trực tiếp (Array) thay vì Object chứa mảng
+                            // cart.Items = JsonConvert.DeserializeObject<List<CartItemViewModel>>(content);
+
+                            // Hoặc nếu tên trường sai, hãy kiểm tra lại CartViewModel
+                        }
                     }
                 }
             }

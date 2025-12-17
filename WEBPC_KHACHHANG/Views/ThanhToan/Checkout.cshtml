@@ -6,44 +6,234 @@
 
 <style>
     /* --- CORE STYLE --- */
-    .checkout-container { background-color: #f5f5fa; min-height: 100vh; }
-    .checkout-box { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .section-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; color: #333; }
-    .product-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
-    .payment-option { border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; width: 100%; }
-    .payment-option:hover { border-color: #0d6efd; background-color: #f8faff; }
-    .payment-option input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
-    .total-row { font-size: 1.2rem; font-weight: bold; color: #d70018; }
-    .address-select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; background-color: #fff; font-size: 1rem; }
+    .checkout-container {
+        background-color: #f5f5fa;
+        min-height: 100vh;
+    }
+
+    .checkout-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .product-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .payment-option {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+        .payment-option:hover {
+            border-color: #0d6efd;
+            background-color: #f8faff;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+    .total-row {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d70018;
+    }
+
+    .address-select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        font-size: 1rem;
+    }
 
     /* --- MODAL STYLE --- */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
-    .modal-box { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; flex-direction: column; max-height: 90vh; animation: slideDown 0.3s ease-out; }
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+    }
 
-    @@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-box {
+        background: white;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        max-height: 90vh;
+        animation: slideDown 0.3s ease-out;
+    }
 
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-    .modal-title { font-weight: 700; font-size: 1.1rem; color: #333; }
-    .btn-close-modal { background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; }
-    .modal-body { padding: 20px; overflow-y: auto; background-color: #f8f9fa; }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; background: white; border-radius: 0 0 12px 12px; }
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .btn-close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #999;
+        cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        background: white;
+        border-radius: 0 0 12px 12px;
+    }
 
     /* VOUCHER CARD STYLE */
-    .voucher-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
-    .voucher-card:hover { border-color: #0d6efd; box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1); }
-    .voucher-card::before, .voucher-card::after { content: ""; position: absolute; height: 16px; width: 16px; background-color: #f8f9fa; border-radius: 50%; top: 50%; transform: translateY(-50%); }
-    .voucher-card::before { left: -8px; border-right: 1px solid #ddd; }
-    .voucher-card::after { right: -8px; border-left: 1px solid #ddd; }
-    .voucher-img { width: 60px; height: 60px; background-color: #e6f0ff; color: #0d6efd; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 1.5rem; margin-right: 15px; flex-shrink: 0; }
-    .voucher-info { flex-grow: 1; }
-    .voucher-code-tag { font-weight: bold; color: #d70018; font-size: 0.9rem; }
-    .voucher-desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
-    .voucher-radio { width: 20px; height: 20px; accent-color: #0d6efd; }
+    .voucher-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .voucher-card:hover {
+            border-color: #0d6efd;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1);
+        }
+
+        .voucher-card::before, .voucher-card::after {
+            content: "";
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .voucher-card::before {
+            left: -8px;
+            border-right: 1px solid #ddd;
+        }
+
+        .voucher-card::after {
+            right: -8px;
+            border-left: 1px solid #ddd;
+        }
+
+    .voucher-img {
+        width: 60px;
+        height: 60px;
+        background-color: #e6f0ff;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .voucher-info {
+        flex-grow: 1;
+    }
+
+    .voucher-code-tag {
+        font-weight: bold;
+        color: #d70018;
+        font-size: 0.9rem;
+    }
+
+    .voucher-desc {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 2px;
+    }
+
+    .voucher-radio {
+        width: 20px;
+        height: 20px;
+        accent-color: #0d6efd;
+    }
 </style>
 
 <div class="checkout-container py-4">
     <div class="container">
-        <form action="@Url.Action("PlaceOrder", "ThanhToan")" method="post" id="form-checkout">
+        @using (Html.BeginForm("PlaceOrder", "ThanhToan", FormMethod.Post, new { id = "form-checkout" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.SelectedIdsString)
+
             <div class="row">
                 <div class="col-md-7">
                     <div class="checkout-box">
@@ -53,10 +243,10 @@
 
                             @if (Model.Addresses != null && Model.Addresses.Count > 0)
                             {
-                                <select class="address-select form-select" name="MaSoDiaChi">
+                                <select class="address-select form-select" name="DiaChiGiaoHang">
                                     @foreach (var addr in Model.Addresses)
                                     {
-                                        <option value="@addr.MaSoDiaChi" @(addr.MacDinh ? "selected" : "")>
+                                        <option value="@addr.DiaChiDayDu">
                                             @addr.TenNguoiNhan - @(string.IsNullOrEmpty(addr.SoDienThoai) ? "Chưa có SĐT" : addr.SoDienThoai) (@addr.DiaChiDayDu)
                                         </option>
                                     }
@@ -72,21 +262,24 @@
                                 </div>
                             }
                         </div>
+
+                        @Html.HiddenFor(m => m.NguoiNhan, new { Value = Model.User?.HoTen })
+                        @Html.HiddenFor(m => m.SoDienThoai, new { Value = Model.User?.SoDienThoai })
                     </div>
 
                     <div class="checkout-box">
                         <h5 class="section-title">Phương thức thanh toán</h5>
                         <label class="payment-option">
-                            <input type="radio" name="PhuongThucThanhToan" value="BANKING">
-                            <div class="d-flex flex-column">
-                                <span class="fw-bold">Thanh toán VNPAY-QR</span>
+                            @Html.RadioButtonFor(m => m.PhuongThucThanhToan, "VietQR", new { id = "payment_qr" })
+                            <div class="d-flex flex-column ms-2">
+                                <span class="fw-bold">Thanh toán VNPAY-QR / VietQR</span>
                                 <span class="small text-muted">Quét mã QR qua ứng dụng ngân hàng</span>
                             </div>
                             <img src="https://vnpay.vn/assets/images/logo-icon/logo-primary.svg" alt="VNPAY" style="height: 24px; margin-left: auto;">
                         </label>
                         <label class="payment-option">
-                            <input type="radio" name="PhuongThucThanhToan" value="COD" checked>
-                            <div class="d-flex flex-column">
+                            @Html.RadioButtonFor(m => m.PhuongThucThanhToan, "COD", new { id = "payment_cod", @checked = "checked" })
+                            <div class="d-flex flex-column ms-2">
                                 <span class="fw-bold">Thanh toán khi nhận hàng (COD)</span>
                                 <span class="small text-muted">Thanh toán tiền mặt khi giao hàng</span>
                             </div>
@@ -101,20 +294,28 @@
                             <h5 class="section-title mb-0">Đơn hàng của bạn</h5>
                         </div>
                         <hr class="my-2">
+
                         <div class="checkout-product-list mb-4" style="max-height: 300px; overflow-y: auto;">
-                            @foreach (var item in Model.Cart.Items)
+                            @if (Model.Cart != null && Model.Cart.Items != null && Model.Cart.Items.Any())
                             {
-                                <div class="product-item d-flex align-items-center mb-3 pt-2">
-                                    <img src="@(string.IsNullOrEmpty(item.ProductImage) ? "https://via.placeholder.com/60?text=NoImage" : item.ProductImage)"
-                                         class="me-3"
-                                         alt="@item.ProductName"
-                                         onerror="this.src='https://via.placeholder.com/60?text=Error'">
-                                    <div class="flex-grow-1">
-                                        <h6 class="mb-0 text-truncate" style="max-width: 200px;" title="@item.ProductName">@item.ProductName</h6>
-                                        <div class="text-muted small">x @item.Quantity</div>
+                                foreach (var item in Model.Cart.Items)
+                                {
+                                    <div class="product-item d-flex align-items-center mb-3 pt-2">
+                                        <img src="@(string.IsNullOrEmpty(item.ProductImage) ? "https://via.placeholder.com/60?text=NoImage" : item.ProductImage)"
+                                             class="me-3"
+                                             alt="@item.ProductName"
+                                             onerror="this.src='https://via.placeholder.com/60?text=Error'">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-0 text-truncate" style="max-width: 200px;" title="@item.ProductName">@item.ProductName</h6>
+                                            <div class="text-muted small">x @item.Quantity</div>
+                                        </div>
+                                        <div class="fw-bold">@item.Total.ToString("N0")₫</div>
                                     </div>
-                                    <div class="fw-bold">@item.Total.ToString("N0")₫</div>
-                                </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted text-center">Không có sản phẩm nào được chọn.</p>
                             }
                         </div>
 
@@ -136,7 +337,7 @@
 
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Tạm tính</span>
-                            <span id="subTotal">@Model.Cart.TotalAmount.ToString("N0")₫</span>
+                            <span id="subTotal">@((Model.Cart?.TotalAmount ?? 0).ToString("N0"))₫</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-success">Giảm giá</span>
@@ -145,7 +346,7 @@
 
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fs-5 fw-bold">Tổng thanh toán</span>
-                            <span class="total-row" id="finalTotal">@Model.Cart.TotalAmount.ToString("N0")₫</span>
+                            <span class="total-row" id="finalTotal">@((Model.Cart?.TotalAmount ?? 0).ToString("N0"))₫</span>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 py-3 mt-4 text-uppercase fw-bold fs-6"
@@ -155,7 +356,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        }
     </div>
 </div>
 
@@ -200,8 +401,8 @@
 </div>
 
 <script>
-    // Lấy giá trị tổng tiền gốc từ Server (để tính toán JS)
-    var originalTotal = @Model.Cart.TotalAmount;
+    // [SỬA]: Lấy giá trị tổng tiền gốc từ Model.Cart.TotalAmount
+    var originalTotal = @(Model.Cart?.TotalAmount ?? 0);
 
     function openVoucherModal() {
         document.getElementById('voucherModal').style.display = 'flex';
@@ -240,15 +441,13 @@
                 discount = 500000;
                 infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>GIAM500K</b> (-500.000₫)';
             } else if (selectedValue === "FREESHIP") {
-                discount = 30000; // Giả lập phí ship
+                discount = 30000;
                 infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>FREESHIP</b> (Miễn phí vận chuyển)';
             }
 
-            // Tính lại tổng
             if(finalTotal - discount < 0) finalTotal = 0;
             else finalTotal = finalTotal - discount;
 
-            // Cập nhật UI
             document.getElementById('discountAmount').innerText = "-" + formatCurrency(discount);
             document.getElementById('finalTotal').innerText = formatCurrency(finalTotal);
             document.getElementById('appliedVoucherInfo').innerHTML = infoHtml;
