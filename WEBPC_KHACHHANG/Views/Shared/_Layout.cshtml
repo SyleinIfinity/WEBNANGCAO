@@ -53,7 +53,16 @@
                                     <li><span class="dropdown-item-text text-muted small">Xin chào, @Session["UserName"]</span></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="@Url.Action("Index", "InfoUser")"><i class="bi bi-person-badge me-2"></i>Hồ sơ cá nhân</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "InfoAddress")"><i class="bi bi-geo-alt me-2"></i>Sổ địa chỉ</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "InfoAddress")">
+                                            <i class="bi bi-geo-alt me-2"></i>Sổ địa chỉ
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "DonHang")">
+                                            <i class="bi bi-box-seam"></i> Lịch sử đơn hàng
+                                        </a>
+                                    </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item text-danger" href="@Url.Action("Logout", "Login")"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a></li>
                                 </ul>
