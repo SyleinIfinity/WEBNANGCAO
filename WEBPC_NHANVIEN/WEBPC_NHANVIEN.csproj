@@ -168,7 +168,10 @@
     <Compile Include="Areas\Sale\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Sale\Controllers\DonHangController.cs" />
     <Compile Include="Areas\Sale\Controllers\KhuyenMaiController.cs" />
+    <Compile Include="Areas\Sale\Filters\SaleAuthorizeAttribute.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
+    <Compile Include="Areas\Tech\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Tech\Filters\TechAuthorizeAttribute.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -245,6 +248,9 @@
     <Content Include="Areas\Sale\Views\KhuyenMai\Index.cshtml" />
     <Content Include="Areas\Sale\Views\DonHang\Index.cshtml" />
     <Content Include="Areas\Sale\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Tech\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tech\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Tech\Views\Dashboard\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>

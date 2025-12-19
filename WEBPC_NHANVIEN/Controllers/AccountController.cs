@@ -19,10 +19,17 @@ namespace WEBPC_NHANVIEN.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            // Nếu đã đăng nhập, đẩy về trang chủ luôn
-            if (Session["UserToken"] != null)
+            // Nếu đã đăng nhập, kiểm tra session để điều hướng lại cho đúng trang
+            if (Session["UserToken"] != null && Session["RoleId"] != null)
             {
-                return RedirectToAction("Index", "Home");
+                int roleId = Convert.ToInt32(Session["RoleId"]);
+                switch (roleId)
+                {
+                    case 1: return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    case 2: return RedirectToAction("Index", "Dashboard", new { area = "Sale" });
+                    case 3: return RedirectToAction("Index", "Dashboard", new { area = "Tech" });
+                    default: return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }
@@ -36,7 +43,7 @@ namespace WEBPC_NHANVIEN.Controllers
                 return View(model);
             }
 
-            // 2. Cấu hình bảo mật TLS để gọi API https
+            // 2. Cấu hình bảo mật TLS để gọi API https (nếu cần thiết với server cũ)
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12 |
                 System.Net.SecurityProtocolType.Tls11 |
@@ -59,7 +66,7 @@ namespace WEBPC_NHANVIEN.Controllers
 
                 try
                 {
-                    // Gọi API Login (Đảm bảo API path đúng với backend của bạn)
+                    // Gọi API Login
                     HttpResponseMessage response = await client.PostAsync("TaiKhoan/login", content);
                     string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -68,31 +75,34 @@ namespace WEBPC_NHANVIEN.Controllers
                         // 3. Giải mã kết quả thành công
                         var userInfo = JsonConvert.DeserializeObject<UserLoginResponse>(responseBody);
 
-                        // 4. Lưu Session quan trọng để hiển thị "Chào (Vai trò) - (Tên)"
+                        // 4. Lưu Session quan trọng
                         Session["UserToken"] = userInfo.Token;
                         Session["UserID"] = userInfo.MaNhanVien;
-
-                        // Đây là 2 tham số quan trọng cho yêu cầu của bạn:
-                        Session["UserName"] = userInfo.HoTen;        // Tên
-                        Session["RoleName"] = userInfo.TenVaiTro;    // Vai trò
-
-                        // Chuyển hướng về trang chủ để hiện thông báo
-                        // Admin: MaVaiTro == 1
-                        // ✅ LƯU RoleId để AdminAuthorize sử dụng
+                        Session["UserName"] = userInfo.HoTen;
+                        Session["RoleName"] = userInfo.TenVaiTro;
                         Session["RoleId"] = userInfo.MaVaiTro;
 
-                        // ✅ Điều hướng theo vai trò
-                        if (userInfo.MaVaiTro == 1)
+                        // 5. XỬ LÝ ĐIỀU HƯỚNG THEO VAI TRÒ
+                        switch (userInfo.MaVaiTro)
                         {
-                            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                            case 1: // Admin -> Vào Area Admin
+                                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+
+                            case 2: // Sale -> Vào Area Sale
+                                // Đảm bảo Areas/Sale/Controllers/DashboardController.cs tồn tại
+                                return RedirectToAction("Index", "Dashboard", new { area = "Sale" });
+
+                            case 3: // Tech -> Vào Area Tech
+                                // Đảm bảo Areas/Tech/Controllers/DashboardController.cs tồn tại
+                                return RedirectToAction("Index", "Dashboard", new { area = "Tech" });
+
+                            default:
+                                // Không phù hợp cả 3 vai trò -> Báo lỗi và hủy session vừa tạo
+                                Session.Clear();
+                                Session.Abandon();
+                                ModelState.AddModelError("", "Tài khoản của bạn không có quyền truy cập hệ thống quản trị.");
+                                return View(model);
                         }
-
-                        // Nhân viên / người dùng thường
-                        return RedirectToAction("Index", "Home");
-
-                        // Nhân viên / người dùng thường
-                        return RedirectToAction("Index", "Home");
-
                     }
                     else
                     {
@@ -124,7 +134,7 @@ namespace WEBPC_NHANVIEN.Controllers
             Session.Clear();
             Session.Abandon();
 
-            // Nếu bạn đang dùng FormsAuthentication
+            // Nếu dùng FormsAuthentication
             FormsAuthentication.SignOut();
 
             // Về lại trang đăng nhập
