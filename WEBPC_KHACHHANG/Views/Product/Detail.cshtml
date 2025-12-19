@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = Model.TenSanPham;
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    // Biến kiểm tra đăng nhập cho JS
-    var isLoggedIn = Session["User"] != null ? "true" : "false";
 }
+
+@* Link tới file CSS đã tách *@
+<link href="~/Content/css/product-detail.css" rel="stylesheet" />
 
 <div class="container">
     <nav aria-label="breadcrumb" class="mb-4">
@@ -20,18 +20,17 @@
     <div class="row g-5">
         <div class="col-md-5">
             <div class="card border-0 shadow-sm p-3">
-                <img id="mainImage" src="@Model.HinhAnhDaiDien" alt="@Model.TenSanPham" class="img-fluid rounded mb-3" style="max-height: 400px; object-fit: contain; width: 100%;">
+                @* Dùng class detail-main-img *@
+                <img id="mainImage" src="@Model.HinhAnhDaiDien" alt="@Model.TenSanPham" class="img-fluid rounded mb-3 detail-main-img">
 
                 @if (Model.DanhSachAnh != null && Model.DanhSachAnh.Count > 1)
                 {
                     <div class="d-flex gap-2 overflow-auto pb-2">
                         @foreach (var img in Model.DanhSachAnh)
                         {
+                            @* Dùng class detail-thumb-img *@
                             <img src="@img.Url" onclick="changeImage(this.src)"
-                                 class="rounded border"
-                                 style="width: 70px; height: 70px; object-fit: cover; cursor: pointer; transition: transform 0.2s;"
-                                 onmouseover="this.style.transform='scale(1.05)'"
-                                 onmouseout="this.style.transform='scale(1)'">
+                                 class="rounded border detail-thumb-img">
                         }
                     </div>
                 }
@@ -79,8 +78,9 @@
                     <div class="product-action mt-4">
                         <div class="d-flex align-items-center mb-4">
                             <label class="me-3 fw-bold">Số lượng:</label>
-                            <input type="number" id="inputQty" class="form-control text-center"
-                                   value="1" min="1" max="99" style="width: 80px;">
+                            @* Dùng class input-qty-detail *@
+                            <input type="number" id="inputQty" class="form-control input-qty-detail"
+                                   value="1" min="1" max="99">
                         </div>
 
                         <div class="d-flex gap-3">
@@ -106,6 +106,8 @@
                     @Html.Raw(Model.MoTa != null ? Model.MoTa.Replace("\n", "<br>") : "Đang cập nhật mô tả chi tiết cho sản phẩm này...")
                 </div>
             </div>
+
+            @* Phần Tab Thông số & Đánh giá (Giữ nguyên cấu trúc HTML) *@
             <div class="row mt-5">
                 <div class="col-12">
                     <ul class="nav nav-tabs" id="productTab" role="tablist">
@@ -172,111 +174,11 @@
 
 @section Scripts {
     <script>
-        // Hàm thay đổi ảnh sản phẩm
-        function changeImage(src) {
-            document.getElementById('mainImage').src = src;
-        }
-
-        // HÀM XỬ LÝ SỰ KIỆN NÚT "THÊM VÀO GIỎ"
-        function addToCartDetail(id) {
-            // 1. Kiểm tra trạng thái đăng nhập
-            var isUserLoggedIn = '@isLoggedIn';
-
-            if (isUserLoggedIn === "false") {
-                // 2. Nếu chưa đăng nhập: Bật Modal đăng nhập lên
-                var loginModalElement = document.getElementById('loginModal');
-
-                // Kiểm tra xem Modal có tồn tại không và Bootstrap đã load chưa
-                if (loginModalElement && typeof bootstrap !== 'undefined') {
-                    var myModal = new bootstrap.Modal(loginModalElement);
-                    myModal.show();
-                } else {
-                    // Fallback: Nếu lỗi JS hoặc chưa nhúng modal thì chuyển trang truyền thống
-                    if(confirm('Bạn cần đăng nhập để thêm sản phẩm. Chuyển đến trang đăng nhập?')) {
-                        window.location.href = '@Url.Action("Index", "Login")';
-                    }
-                }
-                return; // Dừng lại ở đây
-            }
-
-            // 3. Nếu đã đăng nhập: Submit form gửi dữ liệu sang CartController
-            var qty = document.getElementById('inputQty').value;
-
-            // Tạo form ẩn dynamic để submit POST
-            var form = document.createElement("form");
-            form.method = "POST";
-            form.action = "/Cart/AddToCart";
-
-            // Input ID
-            var inputId = document.createElement("input");
-            inputId.type = "hidden";
-            inputId.name = "productId";
-            inputId.value = id;
-            form.appendChild(inputId);
-
-            // Input Quantity
-            var inputQty = document.createElement("input");
-            inputQty.type = "hidden";
-            inputQty.name = "quantity";
-            inputQty.value = qty;
-            form.appendChild(inputQty);
-
-            document.body.appendChild(form);
-            form.submit();
-        }
-
-        function buyNow(id) {
-            // 1. Kiểm tra đăng nhập (Logic cũ vẫn giữ nguyên)
-            var isUserLoggedIn = '@isLoggedIn'; // Biến Razor lấy từ đầu file
-
-            if (isUserLoggedIn === "false") {
-                var loginModalElement = document.getElementById('loginModal');
-                // Kiểm tra xem Modal có tồn tại và Bootstrap đã load chưa
-                if (loginModalElement && typeof bootstrap !== 'undefined') {
-                    var myModal = new bootstrap.Modal(loginModalElement);
-                    myModal.show();
-                } else {
-                    // Fallback: Chuyển trang đăng nhập truyền thống
-                    if(confirm('Bạn cần đăng nhập để mua hàng. Chuyển đến trang đăng nhập?')) {
-                        window.location.href = '@Url.Action("Index", "Login")';
-                    }
-                }
-                return; // Dừng lại, không submit form
-            }
-
-            // 2. Xử lý "Mua ngay" (Submit form ẩn)
-            var qty = document.getElementById('inputQty').value; // Lấy số lượng đang chọn
-
-            // Tạo form ẩn dynamic
-            var form = document.createElement("form");
-            form.method = "POST";
-            form.action = "/Cart/AddToCart"; // Gọi đến Action AddToCart
-
-            // Input 1: ID Sản phẩm
-            var inputId = document.createElement("input");
-            inputId.type = "hidden";
-            inputId.name = "productId"; // Khớp tham số int productId
-            inputId.value = id;
-            form.appendChild(inputId);
-
-            // Input 2: Số lượng
-            var inputQty = document.createElement("input");
-            inputQty.type = "hidden";
-            inputQty.name = "quantity"; // Khớp tham số int quantity
-            inputQty.value = qty;
-            form.appendChild(inputQty);
-
-            // Input 3: Cờ hiệu Mua ngay [QUAN TRỌNG]
-            // Controller sẽ dựa vào giá trị "buy_now" này để tìm CartItemId và chuyển sang trang Thanh Toán
-            var inputType = document.createElement("input");
-            inputType.type = "hidden";
-            inputType.name = "type"; // Khớp tham số string type
-            inputType.value = "buy_now";
-            form.appendChild(inputType);
-
-            // Gắn form vào body và submit
-            document.body.appendChild(form);
-            form.submit();
-        }
+        // Cấu hình biến cho file JS bên ngoài
+        window.DetailConfig = {
+            isUserLoggedIn: '@(Session["User"] != null ? "true" : "false")',
+            loginUrl: '@Url.Action("Index", "Login")'
+        };
     </script>
+    <script src="~/Scripts/product-detail.js"></script>
 }
