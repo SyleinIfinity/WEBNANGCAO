@@ -1,0 +1,20 @@
+﻿/* 1. Ảnh lớn */
+.detail-main-img {
+    max-height: 400px;
+    object-fit: contain;
+    width: 100%;
+}
+
+/* 2. Ảnh nhỏ (Thumbnail) */
+.detail-thumb-img {
+    width: 70px !important; /* Kích thước cố định */
+    height: 70px !important;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s; /* Hiệu ứng mượt */
+}
+
+    /* Hiệu ứng phóng to khi di chuột */
+    .detail-thumb-img:hover {
+        transform: scale(1.05);
+    }

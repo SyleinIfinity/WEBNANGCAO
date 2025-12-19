@@ -184,6 +184,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\cart.css" />
+    <Content Include="Content\css\product-detail.css" />
+    <Content Include="Content\css\product-index.css" />
     <Content Include="Content\css\infoaddress.css" />
     <Content Include="Content\css\infouser.css" />
     <Content Include="Content\css\order-detail.css" />
@@ -195,6 +198,9 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Requests\style.css" />
+    <Content Include="Scripts\cart.js" />
+    <Content Include="Scripts\product-detail.js" />
+    <Content Include="Scripts\product-index.js" />
     <Content Include="Scripts\infoaddress.js" />
     <Content Include="Scripts\style.css" />
     <Content Include="Web.config" />
