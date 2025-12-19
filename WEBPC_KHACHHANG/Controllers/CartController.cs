@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Configuration;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -90,10 +91,32 @@ namespace WEBPC_KHACHHANG.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    // Code mới (Sửa lỗi: Tìm đúng ID giỏ hàng để chuyển sang thanh toán)
                     if (type == "buy_now")
                     {
-                        // Chuyển hướng sang Checkout và truyền luôn ID sản phẩm vừa mua
-                        return RedirectToAction("Checkout", "ThanhToan", new { selectedIds = productId });
+                        // 1. Gọi lại API lấy danh sách giỏ hàng mới nhất
+                        var cartResponse = await client.GetAsync($"GioHang/{user.MaKhachHang}");
+
+                        if (cartResponse.IsSuccessStatusCode)
+                        {
+                            var cartContent = await cartResponse.Content.ReadAsStringAsync();
+                            var fullCart = JsonConvert.DeserializeObject<CartViewModel>(cartContent);
+
+                            // 2. Tìm dòng (Item) trong giỏ hàng chứa sản phẩm vừa thêm
+                            if (fullCart != null && fullCart.Items != null)
+                            {
+                                // [ĐÃ SỬA]: Dùng x.ProductId thay vì x.MaSanPham để khớp với CartViewModel
+                                var itemVuaThem = fullCart.Items.FirstOrDefault(x => x.ProductId == productId);
+
+                                if (itemVuaThem != null)
+                                {
+                                    // 3. Chuyển sang Checkout với CartItemId (ID dòng giỏ hàng)
+                                    return RedirectToAction("Checkout", "ThanhToan", new { selectedIds = itemVuaThem.CartItemId });
+                                }
+                            }
+                        }
+                        // Fallback: Nếu không tìm thấy thì về trang danh sách giỏ hàng
+                        return RedirectToAction("Index");
                     }
 
                     // Mặc định thì về lại trang giỏ hàng
