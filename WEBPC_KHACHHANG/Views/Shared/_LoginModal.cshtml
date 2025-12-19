@@ -11,6 +11,7 @@
                 <!-- FORM LOGIN -->
                 <form method="post" action="@Url.Action("Index", "Login")">
                     @Html.AntiForgeryToken()
+                    <input type="hidden" name="returnUrl" value="@Request.RawUrl" />
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Email hoặc SĐT</label>
