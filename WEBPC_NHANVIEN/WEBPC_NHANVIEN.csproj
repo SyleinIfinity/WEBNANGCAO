@@ -251,6 +251,8 @@
     <Content Include="Areas\Tech\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Tech\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Tech\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
