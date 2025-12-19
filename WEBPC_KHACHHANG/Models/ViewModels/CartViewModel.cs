@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json; // Cần thư viện này để map dữ liệu
+using Newtonsoft.Json;
 
 namespace WEBPC_KHACHHANG.Models.ViewModels
 {
-    // 1. Class đại diện cho từng món hàng (Map với ChiTietGioHangResponse của API)
     public class CartItemViewModel
     {
-        [JsonProperty("maSanPham")] // API gửi 'maSanPham' -> Web nhận vào 'ProductId'
+        // [QUAN TRỌNG]: Map đúng tên maChiTietGioHang từ API
+        [JsonProperty("maChiTietGioHang")]
+        public int CartItemId { get; set; }
+
+        [JsonProperty("maSanPham")]
         public int ProductId { get; set; }
 
         [JsonProperty("tenSanPham")]
@@ -17,20 +20,25 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         public string ProductImage { get; set; }
 
         [JsonProperty("donGia")]
-        public decimal Price { get; set; }
+        public decimal OriginalPrice { get; set; }
+
+        [JsonProperty("giaKhuyenMai")]
+        public decimal PromotionPrice { get; set; }
 
         [JsonProperty("soLuong")]
         public int Quantity { get; set; }
 
-        // Tính thành tiền hiển thị (Giá x Số lượng)
+        // Logic tính giá hiển thị
+        public decimal Price => PromotionPrice > 0 ? PromotionPrice : OriginalPrice;
+
+        // Tự tính tổng tiền tại Client để tránh lỗi số 0 từ API
         public decimal Total => Price * Quantity;
     }
 
-    // 2. Class đại diện cho giỏ hàng tổng (Map với GioHangResponse của API)
     public class CartViewModel
     {
-        // Quan trọng: Map danh sách 'chiTiet' từ API vào 'Items' của Web
-        [JsonProperty("chiTiet")]
+        // [CỰC KỲ QUAN TRỌNG]: Phải là "chiTietGioHangs" mới khớp với log JSON bạn gửi
+        [JsonProperty("chiTietGioHangs")]
         public List<CartItemViewModel> Items { get; set; }
 
         public CartViewModel()
@@ -38,14 +46,10 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
             Items = new List<CartItemViewModel>();
         }
 
-        // Map tổng tiền tạm tính từ API (nếu cần dùng)
         [JsonProperty("tongTienHang")]
         public decimal TongTienTuAPI { get; set; }
 
-        // Web tự tính lại tổng tiền dựa trên danh sách Items (để hiển thị realtime)
         public decimal TotalAmount => Items?.Sum(x => x.Total) ?? 0;
-
         public int TotalQuantity => Items?.Sum(x => x.Quantity) ?? 0;
     }
-
 }

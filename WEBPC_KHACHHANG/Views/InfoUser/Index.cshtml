@@ -17,10 +17,12 @@
             <div class="col-lg-3">
                 <div class="card p-3 shadow-sm">
                     <div class="d-flex align-items-center border-bottom pb-3 mb-3">
-                        <img src="@(string.IsNullOrEmpty(Model?.AvatarUrl) ? "https://via.placeholder.com/60" : Model.AvatarUrl)" class="rounded-circle me-3 border" alt="Avatar" style="width:60px; height:60px; object-fit:cover;">
+                        <img src="https://via.placeholder.com/60" class="rounded-circle me-3 border" alt="Avatar" style="width:60px; height:60px; object-fit:cover;">
                         <div class="overflow-hidden">
                             <p class="mb-0 fw-bold">Xin chào,</p>
-                            <p class="mb-0 text-primary fw-semibold text-truncate">@Model.HoTen</p>
+                            <p class="mb-0 text-primary fw-semibold text-truncate">
+                                @(Session["UserName"] != null ? Session["UserName"].ToString() : "Khách hàng")
+                            </p>
                         </div>
                     </div>
                     <ul class="nav nav-pills flex-column user-dashboard-nav">
@@ -30,13 +32,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-card-checklist me-2"></i>Lịch sử đơn hàng
+                            <a class="nav-link" href="@Url.Action("Index", "DonHang")">
+                                <i class="bi bi-person-circle me-2"></i> Lịch sử đơn hàng
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "InfoAddress")">
                                 <i class="bi bi-geo-alt me-2"></i>Sổ địa chỉ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-lock me-2"></i>Đổi mật khẩu
                             </a>
                         </li>
                         <li class="nav-item mt-3">

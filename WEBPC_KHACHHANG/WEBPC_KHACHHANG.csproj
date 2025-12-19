@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\DonHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoAddressController.cs" />
     <Compile Include="Controllers\InfoUserController.cs" />
@@ -156,8 +157,16 @@
     </Compile>
     <Compile Include="Models\Requests\AddressCreateRequest.cs" />
     <Compile Include="Models\Requests\AddToCartRequest.cs" />
+    <Compile Include="Models\Requests\GetSelectedCartItemsRequest.cs" />
     <Compile Include="Models\Requests\RegisterRequest.cs" />
+    <Compile Include="Models\Requests\TaoDonHangRequest.cs" />
+    <Compile Include="Models\Responses\ApiOrderResponse.cs" />
+    <Compile Include="Models\Responses\ApiQrData.cs" />
+    <Compile Include="Models\Responses\ApiQrResponse.cs" />
+    <Compile Include="Models\Responses\ApiStatusResponse.cs" />
+    <Compile Include="Models\Responses\GioHangResponse.cs" />
     <Compile Include="Models\Responses\KhachHangResponse.cs" />
+    <Compile Include="Models\Responses\OrderApiResponse.cs" />
     <Compile Include="Models\Responses\KhuyenMaiKhachHangResponse.cs" />
     <Compile Include="Models\Responses\KhuyenMaiResponse.cs" />
     <Compile Include="Models\Responses\SoDiaChiResponse.cs" />
@@ -166,6 +175,7 @@
     <Compile Include="Models\ViewModels\CartViewModel.cs" />
     <Compile Include="Models\ViewModels\CheckoutViewModel.cs" />
     <Compile Include="Models\ViewModels\InfoUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\LichSuDonHangViewModel.cs" />
     <Compile Include="Models\ViewModels\KhuyenMaiDaLuuViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\ProductViewModel.cs" />
@@ -176,6 +186,8 @@
   <ItemGroup>
     <Content Include="Content\css\infoaddress.css" />
     <Content Include="Content\css\infouser.css" />
+    <Content Include="Content\css\order-detail.css" />
+    <Content Include="Content\css\order-history.css" />
     <Content Include="Content\css\promotions.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\styles.css" />
@@ -197,7 +209,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Payment\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Views\Shared\_LoginModal.cshtml" />
@@ -211,6 +225,10 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\ThanhToan\Checkout.cshtml" />
     <Content Include="Views\Register\VerifyOtp.cshtml" />
+    <Content Include="Views\ThanhToan\Payment.cshtml" />
+    <Content Include="Views\ThanhToan\Success.cshtml" />
+    <Content Include="Views\DonHang\Index.cshtml" />
+    <Content Include="Views\DonHang\Detail.cshtml" />
     <Content Include="Views\Promotions\Saved.cshtml" />
   </ItemGroup>
   <PropertyGroup>

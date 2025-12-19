@@ -4,7 +4,6 @@ namespace WEBPC_KHACHHANG.Models.Responses
 {
     public class SoDiaChiResponse
     {
-        // [QUAN TRỌNG] Tên trong JsonProperty phải khớp y chang API trả về
         [JsonProperty("maSoDiaChi")]
         public int MaSoDiaChi { get; set; }
 
@@ -14,10 +13,30 @@ namespace WEBPC_KHACHHANG.Models.Responses
         [JsonProperty("soDienThoai")]
         public string SoDienThoai { get; set; }
 
-        [JsonProperty("diaChiDayDu")] // Kiểm tra kỹ API trả về 'diaChiDayDu' hay 'diaChi'
-        public string DiaChiDayDu { get; set; }
+        // --- MAP CÁC TRƯỜNG LẺ TỪ API (Quan Trọng) ---
+        [JsonProperty("diaChiCuThe")]
+        public string DiaChiCuThe { get; set; }
+
+        [JsonProperty("tenPhuongXa")]
+        public string TenPhuongXa { get; set; }
+
+        [JsonProperty("tenQuanHuyen")]
+        public string TenQuanHuyen { get; set; }
+
+        [JsonProperty("tenTinhThanh")]
+        public string TenTinhThanh { get; set; }
 
         [JsonProperty("macDinh")]
         public bool MacDinh { get; set; }
+
+        // --- TỰ TẠO ĐỊA CHỈ ĐẦY ĐỦ TẠI CLIENT ---
+        // Property này không cần [JsonProperty] vì nó tự tính toán
+        public string DiaChiDayDu
+        {
+            get
+            {
+                return $"{DiaChiCuThe}, {TenPhuongXa}, {TenQuanHuyen}, {TenTinhThanh}";
+            }
+        }
     }
 }

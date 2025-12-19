@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WEBPC_KHACHHANG.Models.ViewModels.LichSuDonHangViewModel>
+
+@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/css/order-history.css" rel="stylesheet" />
+}
+
+<div class="container order-history-container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="page-title">Lịch sử giao dịch</h2>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="empty-state-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3081/3081840.png" alt="Empty" style="width: 100px; opacity: 0.5; margin-bottom: 20px;">
+                    <h4 class="fw-bold text-uppercase">Chưa có linh kiện nào</h4>
+                    <p class="text-muted">Build ngay bộ PC mơ ước của bạn tại cửa hàng.</p>
+                    <a href="@Url.Action("Index", "Product")" class="btn-tech-shop">
+                        <i class="bi bi-cpu me-2"></i>Build PC Ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-9 mx-auto">
+                @foreach (var item in Model.OrderByDescending(x => x.NgayDat))
+                {
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <i class="bi bi-terminal me-2"></i>
+                                <span class="order-id">@item.MaCodeDonHang</span>
+                                <span class="order-date">@item.NgayDat.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+
+                            @{
+                                string statusClass = "wait";
+                                string statusLabel = item.TrangThai;
+                                switch (item.TrangThai)
+                                {
+                                    case "ChoXacNhan": statusClass = "wait"; statusLabel = "CHỜ XÁC NHẬN"; break;
+                                    case "ChoThanhToan": statusClass = "wait"; statusLabel = "CHỜ THANH TOÁN"; break;
+                                    case "DaThanhToan": statusClass = "wait"; statusLabel = "ĐÃ THANH TOÁN"; break;
+                                    case "DangGiao": statusClass = "shipping"; statusLabel = "ĐANG VẬN CHUYỂN"; break;
+                                    case "DaGiao": statusClass = "done"; statusLabel = "HOÀN THÀNH"; break;
+                                    case "Huy": statusClass = "cancel"; statusLabel = "ĐÃ HỦY"; break;
+                                }
+                            }
+                            <span class="status-tag @statusClass">@statusLabel</span>
+                        </div>
+
+                        <div class="order-body">
+                            @if (item.ChiTiet != null && item.ChiTiet.Any())
+                            {
+                                // Hiển thị tối đa 2 sản phẩm
+                                foreach (var prod in item.ChiTiet.Take(2))
+                                {
+                                    <div class="product-preview-row">
+                                        <div class="thumb-box">
+                                            <img src="@prod.HinhAnh" alt="Product" onerror="this.src='/Content/images/no-image.png'" />
+                                        </div>
+                                        <div class="info-box">
+                                            <div class="prod-name">@prod.TenSanPham</div>
+                                            <div class="prod-meta">
+                                                <span class="badge bg-light text-dark border">x @prod.SoLuong</span>
+                                                <span class="fw-bold ms-2">@prod.ThanhTien.ToString("N0") đ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                if (item.ChiTiet.Count > 2)
+                                {
+                                    <div class="text-center mt-2 border-top pt-2">
+                                        <small class="text-muted fst-italic">...và còn @(item.ChiTiet.Count - 2) sản phẩm khác</small>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <div class="order-footer">
+                            <div class="total-section">
+                                <span class="lbl-total">Tổng thành tiền</span>
+                                <span class="price-total">@item.TongTien.ToString("N0")<small>đ</small></span>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Detail", "DonHang", new { id = item.MaDonHang })" class="btn-detail-outline">
+                                    Chi tiết đơn hàng <i class="bi bi-arrow-right-short"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
