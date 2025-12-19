@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<WEBPC_KHACHHANG.Models.ViewModels.ProductViewModel>
+@using WEBPC_KHACHHANG.Models.ViewModels
 
 @{
     ViewBag.Title = "Sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var isLoggedIn = Session["UserToken"] != null ? "true" : "false"; // Sửa lại Session key cho khớp với Layout
 }
 
 <div class="container">
@@ -12,18 +14,56 @@
                 <div class="card-header bg-white fw-bold py-3">
                     <i class="bi bi-list-ul me-2"></i> Danh Mục
                 </div>
+
                 <div class="list-group list-group-flush">
-                    <a href="@Url.Action("Index", "Product")" class="list-group-item list-group-item-action @(ViewBag.CurrentCategory == null ? "active" : "")">
-                        Tất cả sản phẩm
+                    <a href="@Url.Action("Index", "Product")"
+                       class="list-group-item list-group-item-action fw-bold @(ViewBag.CurrentCategory == null ? "active" : "")">
+                        <i class="bi bi-grid-fill me-2"></i>Tất cả sản phẩm
                     </a>
+
                     @if (ViewBag.Categories != null)
                     {
-                        foreach (var cat in ViewBag.Categories)
+                        var allCats = ViewBag.Categories as List<CategoryViewModel>;
+
+                        // 1. Lọc lấy danh sách cha (MaDanhMucCha == null hoặc <= 0)
+                        var parentCats = allCats.Where(c => c.MaDanhMucCha == null || c.MaDanhMucCha <= 0).ToList();
+
+                        foreach (var parent in parentCats)
                         {
-                            <a href="@Url.Action("Index", "Product", new { categoryId = cat.MaDanhMuc })"
-                               class="list-group-item list-group-item-action @(ViewBag.CurrentCategory == cat.MaDanhMuc ? "active" : "")">
-                                @cat.TenDanhMuc
-                            </a>
+                            // 2. Tìm con của danh mục này
+                            var childCats = allCats.Where(c => c.MaDanhMucCha == parent.MaDanhMuc).ToList();
+
+                            // Kiểm tra xem danh mục hiện tại (đang xem) có phải là cha hoặc con của nhóm này không
+                            bool isParentActive = (ViewBag.CurrentCategory == parent.MaDanhMuc);
+                            bool isChildActive = childCats.Any(c => c.MaDanhMuc == ViewBag.CurrentCategory);
+                            bool expandGroup = isParentActive || isChildActive;
+
+                            // Hiển thị ITEM CHA
+                            <div class="list-group-item p-0 border-bottom">
+                                <a href="@Url.Action("Index", "Product", new { categoryId = parent.MaDanhMuc })"
+                                   class="list-group-item-action d-flex justify-content-between align-items-center py-2 px-3 text-decoration-none text-dark fw-bold @(isParentActive ? "bg-light text-primary" : "")">
+                                    <span>@parent.TenDanhMuc</span>
+                                    @if (childCats.Any())
+                                    {
+                                        <i class="bi @(expandGroup ? "bi-chevron-up" : "bi-chevron-down") small text-muted"></i>
+                                    }
+                                </a>
+
+                                @* Hiển thị LIST CON (Nếu có) *@
+                                @if (childCats.Any())
+                                {
+                                    // Logic: Luôn hiển thị con nếu nhóm này đang active, hoặc dùng JS toggle sau này
+                                    <div class="bg-light ps-3" style="@(expandGroup ? "" : "display:none;")">
+                                        @foreach (var child in childCats)
+                                        {
+                                            <a href="@Url.Action("Index", "Product", new { categoryId = child.MaDanhMuc })"
+                                               class="d-block py-2 px-3 text-decoration-none text-secondary small border-start ms-2 @(ViewBag.CurrentCategory == child.MaDanhMuc ? "text-primary fw-bold" : "")">
+                                                <i class="bi bi-dot"></i> @child.TenDanhMuc
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </div>
                         }
                     }
                 </div>
@@ -78,8 +118,9 @@
                                                 <span class="text-primary fw-bold fs-5">@item.GiaBan.ToString("N0") đ</span>
                                             }
                                         </div>
-                                        <div class="d-grid gap-2 d-flex">
+                                        <div class="d-grid gap-2 d-flex mt-auto">
                                             <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="btn btn-outline-primary btn-sm flex-grow-1">Chi tiết</a>
+
                                             <button class="btn btn-primary btn-sm" onclick="addToCart(@item.MaSanPham)">
                                                 <i class="bi bi-cart-plus"></i>
                                             </button>
@@ -103,3 +144,67 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addToCartModalLabel">
+                    <i class="bi bi-check-circle me-2"></i>Thành công!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-cart-check text-success" style="font-size: 3rem;"></i>
+                <p class="mt-3 mb-0">Sản phẩm đã được thêm vào giỏ hàng!</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tiếp tục mua sắm</button>
+                <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">Xem giỏ hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addToCart(id) {
+            // 1. Kiểm tra trạng thái đăng nhập
+            var isUserLoggedIn = '@isLoggedIn';
+
+            if (isUserLoggedIn === "false") {
+                var loginModalElement = document.getElementById('loginModal');
+                if (loginModalElement && typeof bootstrap !== 'undefined') {
+                    var myModal = new bootstrap.Modal(loginModalElement);
+                    myModal.show();
+                } else {
+                    if(confirm('Bạn cần đăng nhập để thêm sản phẩm. Chuyển đến trang đăng nhập?')) {
+                        window.location.href = '@Url.Action("Index", "Login")';
+                    }
+                }
+                return;
+            }
+
+            // 3. Nếu đã đăng nhập: Thực hiện Submit form
+            var qty = 1;
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "/Cart/AddToCart";
+
+            var inputId = document.createElement("input");
+            inputId.type = "hidden";
+            inputId.name = "productId"; // Đảm bảo khớp với Controller Cart
+            inputId.value = id;
+            form.appendChild(inputId);
+
+            var inputQty = document.createElement("input");
+            inputQty.type = "hidden";
+            inputQty.name = "quantity";
+            inputQty.value = qty;
+            form.appendChild(inputQty);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+}

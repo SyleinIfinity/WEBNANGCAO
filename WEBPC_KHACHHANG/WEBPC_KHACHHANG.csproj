@@ -142,19 +142,53 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\DonHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfoAddressController.cs" />
+    <Compile Include="Controllers\InfoUserController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ThanhToanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Responses\TaiKhoanResponse.cs" />
+    <Compile Include="Models\Requests\AddressCreateRequest.cs" />
+    <Compile Include="Models\Requests\AddToCartRequest.cs" />
+    <Compile Include="Models\Requests\GetSelectedCartItemsRequest.cs" />
+    <Compile Include="Models\Requests\RegisterRequest.cs" />
+    <Compile Include="Models\Requests\TaoDonHangRequest.cs" />
+    <Compile Include="Models\Responses\ApiOrderResponse.cs" />
+    <Compile Include="Models\Responses\ApiQrData.cs" />
+    <Compile Include="Models\Responses\ApiQrResponse.cs" />
+    <Compile Include="Models\Responses\ApiStatusResponse.cs" />
+    <Compile Include="Models\Responses\GioHangResponse.cs" />
+    <Compile Include="Models\Responses\KhachHangResponse.cs" />
+    <Compile Include="Models\Responses\OrderApiResponse.cs" />
+    <Compile Include="Models\Responses\KhuyenMaiKhachHangResponse.cs" />
+    <Compile Include="Models\Responses\KhuyenMaiResponse.cs" />
+    <Compile Include="Models\Responses\SoDiaChiResponse.cs" />
+    <Compile Include="Models\Responses\UserLoginResponse.cs" />
+    <Compile Include="Models\ViewModels\AddressViewModel.cs" />
+    <Compile Include="Models\ViewModels\CartViewModel.cs" />
+    <Compile Include="Models\ViewModels\CheckoutViewModel.cs" />
+    <Compile Include="Models\ViewModels\InfoUserViewModel.cs" />
+    <Compile Include="Models\ViewModels\LichSuDonHangViewModel.cs" />
+    <Compile Include="Models\ViewModels\KhuyenMaiDaLuuViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\ProductViewModel.cs" />
+    <Compile Include="Models\ViewModels\PromotionsViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\infoaddress.css" />
+    <Content Include="Content\css\infouser.css" />
+    <Content Include="Content\css\order-detail.css" />
+    <Content Include="Content\css\order-history.css" />
+    <Content Include="Content\css\promotions.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\images\monkey.jpg" />
@@ -176,8 +210,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Cart\" />
-    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -185,6 +218,18 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Promotions\Index.cshtml" />
+    <Content Include="Views\InfoUser\Index.cshtml" />
+    <Content Include="Views\InfoAddress\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\ThanhToan\Checkout.cshtml" />
+    <Content Include="Views\Register\VerifyOtp.cshtml" />
+    <Content Include="Views\ThanhToan\Payment.cshtml" />
+    <Content Include="Views\ThanhToan\Success.cshtml" />
+    <Content Include="Views\DonHang\Index.cshtml" />
+    <Content Include="Views\DonHang\Detail.cshtml" />
+    <Content Include="Views\Promotions\Saved.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
