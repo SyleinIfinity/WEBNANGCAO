@@ -190,6 +190,7 @@
     <Content Include="Areas\Admin\scripts\khachhang-custom.js" />
     <Content Include="Areas\Admin\scripts\nhanvien-index.js" />
     <Content Include="Areas\Admin\scripts\phieunhap-form.js" />
+    <Content Include="Areas\Admin\scripts\sanpham-common.js" />
     <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
