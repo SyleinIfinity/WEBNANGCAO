@@ -187,6 +187,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
+    <Content Include="Areas\Admin\scripts\khachhang-custom.js" />
     <Content Include="Areas\Admin\scripts\nhanvien-index.js" />
     <Content Include="Areas\Admin\scripts\phieunhap-form.js" />
     <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
