@@ -54,52 +54,49 @@ namespace WEBPC_NHANVIEN.Areas.Sale.Controllers
         }
 
         // POST: Cập nhật thời gian (Gửi lệnh lên API)
-        [HttpPost] // Giữ nguyên [HttpPost] ở đây vì AJAX client (jQuery) thường không hỗ trợ HTTP PATCH
-                   // và chúng ta sẽ giả lập PATCH bằng cách dùng SendAsync
-        public async Task<ActionResult> CapNhatThoiGian(int id, DateTime ngayBatDau, DateTime ngayKetThuc)
+        [HttpPost]
+        public async Task<ActionResult> CapNhatThoiGian(int id, DateTime ngayBatDau, DateTime ngayKetThuc,
+    string maCodeKM, string tenChuongTrinh, string loaiGiam, decimal giaTriGiam, int soLuongConLai)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_baseUrl);
 
-                // 1. Tạo đối tượng dữ liệu JSON
+                // Đóng gói dữ liệu gửi lên API thực tế
                 var updateData = new
                 {
                     maKhuyenMai = id,
+                    maCodeKM = maCodeKM,
+                    tenChuongTrinh = tenChuongTrinh,
+                    loaiGiam = loaiGiam,
+                    giaTriGiam = giaTriGiam,
                     ngayBatDau = ngayBatDau,
-                    ngayKetThuc = ngayKetThuc
+                    ngayKetThuc = ngayKetThuc,
+                    soLuongConLai = soLuongConLai,
+                    trangThai = true // Gửi mặc định true nếu API bắt buộc
                 };
-                var jsonContent = JsonConvert.SerializeObject(updateData);
 
-                // 2. Tạo nội dung HTTP với kiểu JSON
+                var jsonContent = JsonConvert.SerializeObject(updateData);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                // 3. Tạo yêu cầu PATCH thủ công
-                // Giả định API của bạn nhận PATCH tại endpoint: api/KhuyenMai/UpdateDate
-                var request = new HttpRequestMessage(new HttpMethod("PATCH"), "KhuyenMai/UpdateDate")
+                // Gửi PATCH đến endpoint: KhuyenMai/{id}
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"KhuyenMai/{id}")
                 {
                     Content = content
                 };
 
                 try
                 {
-                    // 4. Gửi yêu cầu PATCH
                     HttpResponseMessage response = await client.SendAsync(request);
-
                     if (response.IsSuccessStatusCode)
                     {
-                        return Json(new { success = true, msg = "Cập nhật thành công!" });
+                        return Json(new { success = true });
                     }
-                    else
-                    {
-                        // Đọc thông báo lỗi từ API nếu có
-                        var errorMsg = await response.Content.ReadAsStringAsync();
-                        return Json(new { success = false, msg = $"Lỗi API: {response.StatusCode}. Chi tiết: {errorMsg}" });
-                    }
+                    return Json(new { success = false, msg = "Lỗi API: " + response.StatusCode });
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, msg = "Lỗi kết nối: " + ex.Message });
+                    return Json(new { success = false, msg = ex.Message });
                 }
             }
         }
