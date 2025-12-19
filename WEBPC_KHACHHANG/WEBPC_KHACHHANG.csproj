@@ -201,6 +201,7 @@
     <Content Include="Scripts\cart.js" />
     <Content Include="Scripts\product-detail.js" />
     <Content Include="Scripts\product-index.js" />
+    <Content Include="Scripts\infoaddress.js" />
     <Content Include="Scripts\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
