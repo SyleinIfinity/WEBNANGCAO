@@ -195,6 +195,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Requests\style.css" />
+    <Content Include="Scripts\infoaddress.js" />
     <Content Include="Scripts\style.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
