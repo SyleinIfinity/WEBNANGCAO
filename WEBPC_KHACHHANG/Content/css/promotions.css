@@ -432,3 +432,9 @@
         font-size: 1.2rem;
     }
 }
+
+.voucher-btn.disabled {
+    background-color: #d6d6d6;
+    color: #777;
+    border: none;
+}

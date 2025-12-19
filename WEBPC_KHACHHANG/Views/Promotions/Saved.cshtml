@@ -1,0 +1,103 @@
+﻿@model List<WEBPC_KHACHHANG.Models.ViewModels.KhuyenMaiDaLuuViewModel>
+
+@{
+    ViewBag.Title = "Kho khuyến mãi đã lưu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/css/promotions.css" rel="stylesheet" />
+}
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="mb-4">
+            <i class="bi bi-bookmark-heart-fill text-danger"></i>
+            Kho khuyến mãi đã lưu
+        </h2>
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                Bạn chưa lưu mã khuyến mãi nào.
+                <a href="@Url.Action("Index", "Promotions")">Quay lại trang khuyến mãi</a>
+            </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var km in Model)
+                {
+                    <div class="col-lg-6">
+                        <div class="voucher-card">
+                            <div class="voucher-left @(km.LoaiGiam == "DIRECT" ? "special" : "")">
+                                <div class="voucher-icon">
+                                    @if (km.LoaiGiam == "PERCENT")
+                                    {
+                                        <i class="bi bi-percent"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-gift"></i>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="voucher-middle">
+                                <div class="voucher-discount">
+                                    @if (km.LoaiGiam == "PERCENT")
+                                    {
+                                        <span>GIẢM @km.GiaTriGiam%</span>
+                                    }
+                                    else
+                                    {
+                                        <span>GIẢM @String.Format("{0:N0}₫", km.GiaTriGiam)</span>
+                                    }
+                                </div>
+
+                                <div class="voucher-title">@km.TenChuongTrinh</div>
+
+                                <div class="voucher-desc">
+                                    <i class="bi bi-tag"></i>
+                                    Đơn tối thiểu:
+                                    <strong>@String.Format("{0:N0}₫", km.DonHangToiThieu)</strong>
+                                </div>
+
+                                @if (km.GiamToiDa.HasValue)
+                                {
+                                    <div class="voucher-desc">
+                                        <i class="bi bi-arrow-down-circle"></i>
+                                        Giảm tối đa:
+                                        <strong>@String.Format("{0:N0}₫", km.GiamToiDa)</strong>
+                                    </div>
+                                }
+                             
+                            </div>
+
+                            <div class="voucher-right">
+                                <span class="badge bg-success mb-2">Đã lưu</span>
+
+                                <div class="voucher-code">@km.MaCodeKM</div>
+
+                                @using (Html.BeginForm("XoaMaKhuyenMai", "Promotions", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="maKMKH" value="@km.MaKMKH" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm mt-2">
+                                        <i class="bi bi-trash"></i> Xóa mã
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        }
+
+        <div class="mt-4">
+            <a href="@Url.Action("Index", "Promotions")" class="btn btn-secondary">
+                ← Quay lại trang khuyến mãi
+            </a>
+        </div>
+    </div>
+</section>

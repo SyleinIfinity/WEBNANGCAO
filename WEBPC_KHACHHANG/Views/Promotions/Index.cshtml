@@ -1,4 +1,6 @@
-﻿@{
+﻿@model WEBPC_KHACHHANG.Models.ViewModels.PromotionsViewModel
+
+@{
     ViewBag.Title = "Khuyến mãi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -47,303 +49,110 @@
             <button class="filter-tab">Còn Nhiều Mã</button>
         </div>
 
+        <!-- Link Kho Khuyến Mãi Đã Lưu -->
+        <div class="d-flex justify-content-end mb-3">
+            <a href="@Url.Action("Saved", "Promotions")" class="btn btn-outline-primary">
+                <i class="bi bi-bookmark-heart"></i>
+                Kho khuyến mãi đã lưu
+                <span class="badge bg-danger ms-1">
+                    @Model.KhoKhuyenMaiDaLuu.Count
+                </span>
+            </a>
+        </div>
+
         <!-- Voucher Grid -->
         <div class="row g-4">
-            <!-- Voucher 1: PERCENT - maCodeKM: ARDUINO40 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left">
-                        <div class="voucher-icon">
-                            <i class="bi bi-percent"></i>
+            @foreach (var km in Model.TatCaKhuyenMai)
+            {
+                bool daLuu = Model.KhoKhuyenMaiDaLuu.Contains(km.MaKhuyenMai);
+                <div class="col-lg-6">
+                    <div class="voucher-card">
+                        <div class="voucher-left @(km.LoaiGiam == "DIRECT" ? "special" : "")">
+                            <div class="voucher-icon">
+                                @if (km.LoaiGiam == "PERCENT")
+                                {
+                                    <i class="bi bi-percent"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-gift"></i>
+                                }
+                            </div>
                         </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 40%</div>
-                        <div class="voucher-title">Giảm 40% cho Arduino & Vi xử lý</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>500.000₫</strong>
-                        </div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-arrow-down-circle"></i> Giảm tối đa: <strong>200.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 31/12/2024 | Còn: <strong>50</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">ARDUINO40</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Voucher 2: DIRECT - maCodeKM: RASP200 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left special">
-                        <div class="voucher-icon">
-                            <i class="bi bi-gift"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 200.000₫</div>
-                        <div class="voucher-title">Giảm 200K cho Raspberry Pi & Board mạch</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>1.000.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 30/12/2024 | Còn: <strong>30</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">RASP200</div>
-                    </div>
-                </div>
-            </div>
+                        <div class="voucher-middle">
+                            <div class="voucher-discount">
+                                @if (km.LoaiGiam == "PERCENT")
+                                {
+                                    <span>GIẢM @km.GiaTriGiam%</span>
+                                }
+                                else
+                                {
+                                    <span>GIẢM @String.Format("{0:N0}₫", km.GiaTriGiam)</span>
+                                }
+                            </div>
 
-            <!-- Voucher 3: PERCENT - maCodeKM: LINH30 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left">
-                        <div class="voucher-icon">
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 30%</div>
-                        <div class="voucher-title">Giảm 30% cho điện trở & tụ điện</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>300.000₫</strong>
-                        </div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-arrow-down-circle"></i> Giảm tối đa: <strong>150.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 28/12/2024 | Còn: <strong>100</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">LINH30</div>
-                    </div>
-                </div>
-            </div>
+                            <div class="voucher-title">@km.TenChuongTrinh</div>
 
-            <!-- Voucher 4: DIRECT - maCodeKM: NEWTECH150 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left special">
-                        <div class="voucher-icon">
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 150.000₫</div>
-                        <div class="voucher-title">Giảm 150K - Dành riêng khách hàng mới</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>800.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 31/12/2024 | Còn: <strong>20</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">NEWTECH150</div>
-                    </div>
-                </div>
-            </div>
+                            <div class="voucher-desc">
+                                <i class="bi bi-tag"></i>
+                                Đơn tối thiểu:
+                                <strong>@String.Format("{0:N0}₫", km.DonHangToiThieu)</strong>
+                            </div>
 
-            <!-- Voucher 5: PERCENT - maCodeKM: LED50OFF -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left">
-                        <div class="voucher-icon">
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 50%</div>
-                        <div class="voucher-title">Giảm 50% cho đèn LED & cảm biến</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>400.000₫</strong>
-                        </div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-arrow-down-circle"></i> Giảm tối đa: <strong>250.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 29/12/2024 | Còn: <strong>75</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">LED50OFF</div>
-                    </div>
-                </div>
-            </div>
+                            @if (km.GiamToiDa.HasValue)
+                            {
+                                <div class="voucher-desc">
+                                    <i class="bi bi-arrow-down-circle"></i>
+                                    Giảm tối đa:
+                                    <strong>@String.Format("{0:N0}₫", km.GiamToiDa)</strong>
+                                </div>
+                            }
 
-            <!-- Voucher 6: DIRECT - maCodeKM: FLASH100 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left flash">
-                        <div class="voucher-icon">
-                            <i class="bi bi-lightning-fill"></i>
+                            <div class="voucher-expiry">
+                                <i class="bi bi-clock"></i>
+                                HSD: @km.NgayKetThuc.ToString("dd/MM/yyyy")
+                                | Còn: <strong>@km.SoLuongConLai</strong> mã
+                            </div>
                         </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 100.000₫</div>
-                        <div class="voucher-title">Flash Sale - Giờ Vàng 20h hàng ngày</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>600.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 15/12/2024 | Còn: <strong>15</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">FLASH100</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Voucher 7: PERCENT - maCodeKM: MEGA25 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left">
-                        <div class="voucher-icon">
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 25%</div>
-                        <div class="voucher-title">Giảm 25% cho Arduino Mega & Module WiFi</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>350.000₫</strong>
-                        </div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-arrow-down-circle"></i> Giảm tối đa: <strong>180.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 27/12/2024 | Còn: <strong>60</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">MEGA25</div>
-                    </div>
-                </div>
-            </div>
+                        <div class="voucher-right">
+                            @if (daLuu)
+                            {
+                                <button class="voucher-btn disabled" disabled>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>ĐÃ LƯU</span>
+                                </button>
+                            }
+                            else if (km.CoTheLuu)
+                            {
+                                using (Html.BeginForm("LuuMaKhuyenMai", "Promotions", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="maKhuyenMai" value="@km.MaKhuyenMai" />
+                                    <button type="submit" class="voucher-btn">
+                                        <i class="bi bi-clipboard"></i>
+                                        <span>LƯU MÃ</span>
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                <button class="voucher-btn disabled" disabled>
+                                    <i class="bi bi-clock"></i>
+                                    <span>KHÔNG KHẢ DỤNG</span>
+                                </button>
+                            }
 
-            <!-- Voucher 8: DIRECT - maCodeKM: COMBO300 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left special">
-                        <div class="voucher-icon">
-                            <i class="bi bi-box-seam"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 300.000₫</div>
-                        <div class="voucher-title">Mua Combo - Giảm ngay 300K</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>1.500.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 31/12/2024 | Còn: <strong>40</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">COMBO300</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Voucher 9: PERCENT - maCodeKM: SENSOR35 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left">
-                        <div class="voucher-icon">
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 35%</div>
-                        <div class="voucher-title">Giảm 35% cho Bộ cảm biến & Servo Motor</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>450.000₫</strong>
-                        </div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-arrow-down-circle"></i> Giảm tối đa: <strong>220.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 26/12/2024 | Còn: <strong>85</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">SENSOR35</div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Voucher 10: DIRECT - maCodeKM: WEEKEND50 -->
-            <div class="col-lg-6">
-                <div class="voucher-card">
-                    <div class="voucher-left flash">
-                        <div class="voucher-icon">
-                            <i class="bi bi-calendar-event"></i>
+
+                            <div class="voucher-code">@km.MaCodeKM</div>
                         </div>
-                    </div>
-                    <div class="voucher-middle">
-                        <div class="voucher-discount">GIẢM 50.000₫</div>
-                        <div class="voucher-title">Cuối tuần vui vẻ - Giảm 50K</div>
-                        <div class="voucher-desc">
-                            <i class="bi bi-tag"></i> Đơn tối thiểu: <strong>250.000₫</strong>
-                        </div>
-                        <div class="voucher-expiry">
-                            <i class="bi bi-clock"></i> HSD: 22/12/2024 | Còn: <strong>120</strong> mã
-                        </div>
-                    </div>
-                    <div class="voucher-right">
-                        <button class="voucher-btn">
-                            <i class="bi bi-clipboard"></i>
-                            <span>LƯU MÃ</span>
-                        </button>
-                        <div class="voucher-code">WEEKEND50</div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
+
 
         <!-- Pagination -->
         <nav aria-label="Voucher pagination" class="mt-5">
@@ -405,3 +214,22 @@
         </div>
     </div>
 </section>
+
+@if (TempData["RequireLogin"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginModal = new bootstrap.Modal(
+                document.getElementById('loginModal')
+            );
+            loginModal.show();
+        });
+    </script>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["ErrorMessage"]
+    </div>
+}
