@@ -150,6 +150,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Sale\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Sale\Controllers\DonHangController.cs" />
     <Compile Include="Areas\Sale\Controllers\KhuyenMaiController.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
@@ -211,6 +212,7 @@
     <Content Include="Areas\Sale\Views\Shared\_LayoutSale.cshtml" />
     <Content Include="Areas\Sale\Views\KhuyenMai\Index.cshtml" />
     <Content Include="Areas\Sale\Views\DonHang\Index.cshtml" />
+    <Content Include="Areas\Sale\Views\Dashboard\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
