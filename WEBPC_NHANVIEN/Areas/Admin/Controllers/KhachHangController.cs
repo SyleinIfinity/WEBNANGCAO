@@ -91,6 +91,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
         }
 
         // 3. Chỉnh sửa (GET)
+        // 3. Chỉnh sửa (GET) - Đã sửa để hiện lỗi
         public async Task<ActionResult> Edit(long id)
         {
             using (var client = CreateClient())
@@ -101,6 +102,12 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     string data = await response.Content.ReadAsStringAsync();
                     var khachHang = JsonConvert.DeserializeObject<KhachHangViewModel>(data);
                     return View(khachHang);
+                }
+                else
+                {
+                    // Thêm đoạn này để bắt lỗi
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    TempData["Error"] = $"Lỗi khi lấy thông tin khách hàng (Mã {response.StatusCode}): {errorContent}";
                 }
             }
             return RedirectToAction("Index");

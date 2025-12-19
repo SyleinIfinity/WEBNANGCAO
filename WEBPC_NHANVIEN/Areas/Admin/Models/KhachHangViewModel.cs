@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Models
 {
     public class KhachHangViewModel
     {
+        [JsonProperty("maKhachHang")]
         [Display(Name = "Mã khách hàng")]
-        public long MaNguoiDung { get; set; } // Khớp với API Response
+        public long MaNguoiDung { get; set; }
 
         [Required(ErrorMessage = "Họ tên là bắt buộc")]
         [Display(Name = "Họ và tên")]
