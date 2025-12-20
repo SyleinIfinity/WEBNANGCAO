@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Xác thực OTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .otp-box {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .otp-input {
+        font-size: 24px;
+        letter-spacing: 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+
+<div class="otp-box">
+    <h3 class="text-success">Xác thực Email</h3>
+    <p>Mã OTP đã được gửi đến email: <strong>@ViewBag.Email</strong></p>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger text-left">
+            @Html.ValidationSummary(false, "", new { @class = "mb-0" })
+        </div>
+    }
+
+    @using (Html.BeginForm("VerifyOtp", "Register", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label>Nhập mã OTP (6 số):</label>
+            <input type="text" name="otpCode" class="form-control otp-input" maxlength="6" autocomplete="off" required />
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block mt-3" style="width:100%">
+            Xác nhận đăng ký
+        </button>
+    }
+
+    <div class="mt-3">
+        <a href="@Url.Action("Index", "Register")" class="text-danger">Nhập sai email? Quay lại đăng ký</a>
+    </div>
+</div>

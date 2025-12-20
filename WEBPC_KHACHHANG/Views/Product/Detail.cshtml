@@ -1,0 +1,184 @@
+﻿@model WEBPC_KHACHHANG.Models.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = Model.TenSanPham;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* Link tới file CSS đã tách *@
+<link href="~/Content/css/product-detail.css" rel="stylesheet" />
+
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")" class="text-decoration-none">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Product")" class="text-decoration-none">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TenSanPham</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-3">
+                @* Dùng class detail-main-img *@
+                <img id="mainImage" src="@Model.HinhAnhDaiDien" alt="@Model.TenSanPham" class="img-fluid rounded mb-3 detail-main-img">
+
+                @if (Model.DanhSachAnh != null && Model.DanhSachAnh.Count > 1)
+                {
+                    <div class="d-flex gap-2 overflow-auto pb-2">
+                        @foreach (var img in Model.DanhSachAnh)
+                        {
+                            @* Dùng class detail-thumb-img *@
+                            <img src="@img.Url" onclick="changeImage(this.src)"
+                                 class="rounded border detail-thumb-img">
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h2 class="fw-bold text-dark mb-2">@Model.TenSanPham</h2>
+            <div class="mb-3">
+                <span class="badge bg-light text-dark border me-2">Mã SP: #@Model.MaSanPham</span>
+                <span class="badge bg-light text-dark border">Danh mục: @Model.TenDanhMuc</span>
+            </div>
+
+            <div class="price-section bg-light p-3 rounded mb-4">
+                @if (Model.GiaKhuyenMai.HasValue && Model.GiaKhuyenMai > 0)
+                {
+                    <div class="d-flex align-items-end gap-3">
+                        <span class="text-danger fw-bold fs-2">@Model.GiaKhuyenMai.Value.ToString("N0") đ</span>
+                        <span class="text-muted text-decoration-line-through fs-5">@Model.GiaBan.ToString("N0") đ</span>
+                        <span class="badge bg-danger mb-2">-@((int)((1 - Model.GiaKhuyenMai.Value / Model.GiaBan) * 100))%</span>
+                    </div>
+                }
+                else
+                {
+                    <span class="text-primary fw-bold fs-2">@Model.GiaBan.ToString("N0") đ</span>
+                }
+            </div>
+
+            <div class="status mb-4">
+                @if (Model.SoLuongTon > 0)
+                {
+                    <div class="text-success fw-bold"><i class="bi bi-check-circle-fill me-1"></i> Còn hàng (Sẵn sàng giao)</div>
+                }
+                else
+                {
+                    <div class="text-danger fw-bold"><i class="bi bi-x-circle-fill me-1"></i> Tạm hết hàng</div>
+                }
+            </div>
+
+            @if (Model.SoLuongTon > 0)
+            {
+                <form action="@Url.Action("AddToCart", "Cart")" method="post" id="frmAddToCart">
+                    <input type="hidden" name="productId" value="@Model.MaSanPham" />
+
+                    <div class="product-action mt-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <label class="me-3 fw-bold">Số lượng:</label>
+                            @* Dùng class input-qty-detail *@
+                            <input type="number" id="inputQty" class="form-control input-qty-detail"
+                                   value="1" min="1" max="99">
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button type="button" class="btn btn-outline-primary btn-action flex-grow-1" onclick="addToCartDetail(@Model.MaSanPham)">
+                                <i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ
+                            </button>
+
+                            <button type="button" class="btn btn-primary btn-action flex-grow-1" onclick="buyNow(@Model.MaSanPham)">
+                                <i class="fas fa-money-check-alt me-2"></i> Mua ngay
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <button class="btn btn-secondary btn-lg w-100" disabled>Liên hệ khi có hàng</button>
+            }
+
+            <div class="description mt-4">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">Mô tả sản phẩm</h5>
+                <div class="text-secondary">
+                    @Html.Raw(Model.MoTa != null ? Model.MoTa.Replace("\n", "<br>") : "Đang cập nhật mô tả chi tiết cho sản phẩm này...")
+                </div>
+            </div>
+
+            @* Phần Tab Thông số & Đánh giá (Giữ nguyên cấu trúc HTML) *@
+            <div class="row mt-5">
+                <div class="col-12">
+                    <ul class="nav nav-tabs" id="productTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-bold" id="spec-tab" data-bs-toggle="tab" data-bs-target="#spec" type="button" role="tab" aria-controls="spec" aria-selected="true">
+                                <i class="bi bi-cpu me-2"></i>Thông Số Kỹ Thuật
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-bold" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">
+                                <i class="bi bi-star me-2"></i>Đánh Giá (0)
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content border border-top-0 rounded-bottom bg-white" id="productTabContent">
+                        @* Tab Thông số kỹ thuật *@
+                        <div class="tab-pane fade show active p-4" id="spec" role="tabpanel" aria-labelledby="spec-tab">
+                            @if (Model.ThongSoKyThuat != null && Model.ThongSoKyThuat.Any())
+                            {
+                                <table class="table table-striped table-hover mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th scope="col" class="fw-bold text-primary" style="width: 35%;">Thông số</th>
+                                            <th scope="col" class="fw-bold text-primary">Giá trị</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var spec in Model.ThongSoKyThuat)
+                                        {
+                                            <tr>
+                                                <th scope="row" class="text-secondary">
+                                                    <i class="bi bi-check-lg text-success me-2"></i>@spec.TenThongSo
+                                                </th>
+                                                <td class="fw-semibold">@spec.GiaTri</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info mb-0" role="alert">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Thông tin thông số kỹ thuật đang được cập nhật...
+                                </div>
+                            }
+                        </div>
+
+                        @* Tab Đánh giá *@
+                        <div class="tab-pane fade p-4" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="text-center py-5">
+                                <i class="bi bi-chat-left-quote text-muted" style="font-size: 3rem;"></i>
+                                <p class="text-muted mt-3">Chưa có đánh giá nào cho sản phẩm này.</p>
+                                <p class="text-muted">Hãy là người đầu tiên đánh giá sản phẩm!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Cấu hình biến cho file JS bên ngoài
+        window.DetailConfig = {
+            isUserLoggedIn: '@(Session["User"] != null ? "true" : "false")',
+            loginUrl: '@Url.Action("Index", "Login")'
+        };
+    </script>
+    <script src="~/Scripts/product-detail.js"></script>
+}
