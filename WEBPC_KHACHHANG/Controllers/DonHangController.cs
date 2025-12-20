@@ -80,5 +80,42 @@ namespace WEBPC_KHACHHANG.Controllers
 
             return View(order);
         }
+
+        // POST: /DonHang/ConfirmReceived/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ConfirmReceived(int id)
+        {
+            var user = Session["User"] as UserLoginResponse;
+            if (user == null) return RedirectToAction("Index", "Login");
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["ApiBaseUrl"]);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+                    // Gọi API POST (không cần body nên để null)
+                    var response = await client.PostAsync($"DonHang/confirm-received/{id}", null);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["Success"] = "Cảm ơn bạn! Đơn hàng đã hoàn thành.";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Có lỗi xảy ra hoặc trạng thái đơn hàng không hợp lệ.";
+                    }
+                }
+            }
+            catch
+            {
+                TempData["Error"] = "Lỗi kết nối server.";
+            }
+
+            // Quay lại trang chi tiết đơn hàng
+            return RedirectToAction("Detail", new { id = id });
+        }
     }
 }

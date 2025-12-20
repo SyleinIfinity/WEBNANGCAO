@@ -6,41 +6,239 @@
 
 <style>
     /* --- CORE STYLE --- */
-    .checkout-container { background-color: #f5f5fa; min-height: 100vh; }
-    .checkout-box { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .section-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 15px; text-transform: uppercase; color: #333; }
-    .product-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
-    .payment-option { border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; width: 100%; }
-    .payment-option:hover { border-color: #0d6efd; background-color: #f8faff; }
-    .payment-option input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
-    .total-row { font-size: 1.2rem; font-weight: bold; color: #d70018; }
-    .address-select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ced4da; background-color: #fff; font-size: 1rem; }
+    .checkout-container {
+        background-color: #f5f5fa;
+        min-height: 100vh;
+    }
+
+    .checkout-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .product-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .payment-option {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+        .payment-option:hover {
+            border-color: #0d6efd;
+            background-color: #f8faff;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+    .total-row {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #d70018;
+    }
+
+    .address-select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        font-size: 1rem;
+    }
 
     /* Input style */
-    .form-label { font-weight: 500; font-size: 0.9rem; margin-bottom: 5px; }
-    .form-control-custom { border: 1px solid #ced4da; border-radius: 6px; padding: 8px 12px; width: 100%; }
+    .form-label {
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
 
-    /* --- MODAL STYLE (Giữ nguyên) --- */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; display: none; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
-    .modal-box { background: white; width: 90%; max-width: 500px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); display: flex; flex-direction: column; max-height: 90vh; animation: slideDown 0.3s ease-out; }
-    @@keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .modal-header { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-    .modal-title { font-weight: 700; font-size: 1.1rem; color: #333; }
-    .btn-close-modal { background: none; border: none; font-size: 1.5rem; color: #999; cursor: pointer; }
-    .modal-body { padding: 20px; overflow-y: auto; background-color: #f8f9fa; }
-    .modal-footer { padding: 15px 20px; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 10px; background: white; border-radius: 0 0 12px 12px; }
-                                                       
+    .form-control-custom {
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        padding: 8px 12px;
+        width: 100%;
+    }
+
+    /* --- MODAL STYLE --- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+    }
+
+    .modal-box {
+        background: white;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        max-height: 90vh;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .btn-close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #999;
+        cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+    }
+
+    .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        background: white;
+        border-radius: 0 0 12px 12px;
+    }
+
     /* VOUCHER CARD STYLE */
-    .voucher-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden; }
-    .voucher-card:hover { border-color: #0d6efd; box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1); }
-    .voucher-card::before, .voucher-card::after { content: ""; position: absolute; height: 16px; width: 16px; background-color: #f8f9fa; border-radius: 50%; top: 50%; transform: translateY(-50%); }
-    .voucher-card::before { left: -8px; border-right: 1px solid #ddd; }
-    .voucher-card::after { right: -8px; border-left: 1px solid #ddd; }
-    .voucher-img { width: 60px; height: 60px; background-color: #e6f0ff; color: #0d6efd; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 1.5rem; margin-right: 15px; flex-shrink: 0; }
-    .voucher-info { flex-grow: 1; }
-    .voucher-code-tag { font-weight: bold; color: #d70018; font-size: 0.9rem; }
-    .voucher-desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
-    .voucher-radio { width: 20px; height: 20px; accent-color: #0d6efd; }
+    .voucher-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .voucher-card:hover {
+            border-color: #0d6efd;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.1);
+        }
+
+        .voucher-card::before, .voucher-card::after {
+            content: "";
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .voucher-card::before {
+            left: -8px;
+            border-right: 1px solid #ddd;
+        }
+
+        .voucher-card::after {
+            right: -8px;
+            border-left: 1px solid #ddd;
+        }
+
+    .voucher-img {
+        width: 60px;
+        height: 60px;
+        background-color: #e6f0ff;
+        color: #0d6efd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .voucher-info {
+        flex-grow: 1;
+    }
+
+    .voucher-code-tag {
+        font-weight: bold;
+        color: #d70018;
+        font-size: 0.9rem;
+    }
+
+    .voucher-desc {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 2px;
+    }
+
+    .voucher-radio {
+        width: 20px;
+        height: 20px;
+        accent-color: #0d6efd;
+    }
 </style>
 
 <div class="checkout-container py-4">
@@ -54,6 +252,8 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.SelectedIdsString)
+
+            <input type="hidden" name="MaCodeVoucher" id="hdfMaCodeVoucher" value="" />
 
             <div class="row">
                 <div class="col-md-7">
@@ -143,10 +343,6 @@
                                     </div>
                                 }
                             }
-                            else
-                            {
-                                <p class="text-muted text-center">Không có sản phẩm nào được chọn.</p>
-                            }
                         </div>
 
                         <hr>
@@ -154,7 +350,7 @@
                         <div class="mb-4">
                             <label class="form-label fw-bold"><i class="bi bi-ticket-perforated text-warning me-1"></i> WebPC Voucher</label>
                             <div class="d-flex gap-2">
-                                <input type="text" class="form-control" placeholder="Nhập mã" id="displayVoucherInput" readonly>
+                                <input type="text" class="form-control" placeholder="Chưa chọn mã" id="displayVoucherInput" readonly style="background-color: white;">
                                 <button type="button" class="btn btn-outline-primary" onclick="openVoucherModal()">
                                     <i class="bi bi-list-ul"></i> Chọn mã
                                 </button>
@@ -167,7 +363,11 @@
 
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Tạm tính</span>
-                            <span id="subTotal">@((Model.Cart?.TotalAmount ?? 0).ToString("N0"))₫</span>
+                            <span id="subTotal">@Model.TamTinh.ToString("N0")₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Phí vận chuyển</span>
+                            <span id="shippingFee">@Model.PhiVanChuyen.ToString("N0")₫</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-success">Giảm giá</span>
@@ -176,7 +376,7 @@
 
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fs-5 fw-bold">Tổng thanh toán</span>
-                            <span class="total-row" id="finalTotal">@((Model.Cart?.TotalAmount ?? 0).ToString("N0"))₫</span>
+                            <span class="total-row" id="finalTotal">@Model.TongThanhToan.ToString("N0")₫</span>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100 py-3 mt-4 text-uppercase fw-bold fs-6"
@@ -193,87 +393,196 @@
 <div id="voucherModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
-            <div class="modal-title">Chọn WebPC Voucher</div>
+            <div class="modal-title">Ví Voucher của bạn</div>
             <button class="btn-close-modal" onclick="closeVoucherModal()">&times;</button>
         </div>
         <div class="modal-body">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Tìm mã voucher...">
-                <button class="btn btn-primary">Tìm</button>
-            </div>
-            <label class="voucher-card">
-                <div class="voucher-img"><i class="bi bi-gift"></i></div>
-                <div class="voucher-info">
-                    <div class="voucher-code-tag">GIAM500K</div>
-                    <div class="fw-bold">Giảm 500k cho đơn từ 20tr</div>
+            @if (Model.DanhSachKhuyenMai != null && Model.DanhSachKhuyenMai.Any())
+            {
+                foreach (var km in Model.DanhSachKhuyenMai)
+                {
+                    <label class="voucher-card">
+                        <div class="voucher-img">
+                            <i class="bi bi-gift-fill text-primary"></i>
+                        </div>
+                        <div class="voucher-info">
+                            <div class="voucher-code-tag">@km.MaCodeKM</div>
+
+                            <div class="fw-bold">@km.TenChuongTrinh</div>
+
+                            <div class="voucher-desc">
+                                @if (km.LoaiGiam == "DIRECT")
+                                {
+                                    <span>Giảm trực tiếp @km.GiaTriGiam.ToString("N0")đ</span>
+                                }
+                                else
+                                {
+                                    <span>Giảm @km.GiaTriGiam.ToString("N0")% (Tối đa @(km.GiamToiDa?.ToString("N0") ?? "KGH")đ)</span>
+                                }
+                                <br />
+                                <span class="text-muted" style="font-size: 11px;">
+                                    Đơn tối thiểu: @km.DonHangToiThieu.ToString("N0")đ • HSD: @km.NgayKetThuc.ToString("dd/MM/yyyy")
+                                </span>
+                            </div>
+                        </div>
+
+                        <input type="radio" name="modalVoucherSelect" class="voucher-radio"
+                               value="@km.MaCodeKM"
+                               data-code="@km.MaCodeKM"
+                               data-type="@km.LoaiGiam"
+                               data-value="@km.GiaTriGiam"
+                               data-max="@(km.GiamToiDa ?? 0)">
+                    </label>
+                }
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <p class="mt-3 text-muted fw-bold">Chưa có voucher phù hợp.</p>
                 </div>
-                <input type="radio" name="modalVoucherSelect" class="voucher-radio" value="GIAM500K">
-            </label>
-            <label class="voucher-card">
-                <div class="voucher-img"><i class="bi bi-truck"></i></div>
-                <div class="voucher-info">
-                    <div class="voucher-code-tag">FREESHIP</div>
-                    <div class="fw-bold">Miễn phí vận chuyển</div>
-                </div>
-                <input type="radio" name="modalVoucherSelect" class="voucher-radio" value="FREESHIP">
-            </label>
+            }
         </div>
         <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeVoucherModal()">Trở lại</button>
+            <button class="btn btn-secondary" onclick="closeVoucherModal()">Đóng</button>
             <button class="btn btn-primary px-4" onclick="applyVoucher()">Áp dụng</button>
         </div>
     </div>
 </div>
 
 <script>
-    var originalTotal = @(Model.Cart?.TotalAmount ?? 0);
+    // [FIX 1] Sử dụng InvariantCulture để in số chuẩn JS (không dấu phẩy ngăn cách ngàn)
+    // Kết quả sẽ là: var originalSubTotal = 250000.00; (An toàn tuyệt đối)
+    var originalSubTotal = @Model.TamTinh.ToString(System.Globalization.CultureInfo.InvariantCulture);
+    var shippingFee = @Model.PhiVanChuyen.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-    // --- LOGIC MỚI: Tự động điền thông tin khi chọn địa chỉ ---
+    console.log("Checkout Data:", { sub: originalSubTotal, ship: shippingFee });
+
+    // --- LOGIC ĐỊA CHỈ ---
     function onAddressChange(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var name = selectedOption.getAttribute('data-name');
-        var phone = selectedOption.getAttribute('data-phone');
+        try {
+            if (selectElement.selectedIndex === -1) return;
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var name = selectedOption.getAttribute('data-name');
+            var phone = selectedOption.getAttribute('data-phone');
 
-        // Gán giá trị vào ô input
-        if (name) document.getElementById('txtNguoiNhan').value = name;
-        if (phone) document.getElementById('txtSoDienThoai').value = phone;
+            if (name) {
+                var txtName = document.getElementById('txtNguoiNhan');
+                if (txtName) txtName.value = name;
+            }
+            if (phone) {
+                var txtPhone = document.getElementById('txtSoDienThoai');
+                if (txtPhone) txtPhone.value = phone;
+            }
+        } catch (e) {
+            console.error("Lỗi tự điền địa chỉ:", e);
+        }
     }
 
-    // Gọi lần đầu khi trang vừa load để điền thông tin của địa chỉ đầu tiên
     document.addEventListener('DOMContentLoaded', function() {
         var ddlAddress = document.getElementById('ddlAddress');
+        // Chỉ chạy nếu dropdown tồn tại và có dữ liệu
         if (ddlAddress && ddlAddress.options.length > 0) {
             onAddressChange(ddlAddress);
         }
     });
 
-    // --- LOGIC VOUCHER (Giữ nguyên) ---
-    function openVoucherModal() { document.getElementById('voucherModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-    function closeVoucherModal() { document.getElementById('voucherModal').style.display = 'none'; document.body.style.overflow = 'auto'; }
-    function formatCurrency(amount) { return amount.toLocaleString('vi-VN') + '₫'; }
-
-    function applyVoucher() {
-        var radios = document.getElementsByName('modalVoucherSelect');
-        var selectedValue = "";
-        for (var i = 0; i < radios.length; i++) { if (radios[i].checked) { selectedValue = radios[i].value; break; } }
-
-        if (selectedValue) {
-            document.getElementById('displayVoucherInput').value = selectedValue;
-            document.getElementById('appliedVoucherInfo').style.display = 'block';
-            var discount = 0;
-            var finalTotal = originalTotal;
-            var infoHtml = "";
-
-            if(selectedValue === "GIAM500K") { discount = 500000; infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>GIAM500K</b> (-500.000₫)'; }
-            else if (selectedValue === "FREESHIP") { discount = 30000; infoHtml = '<i class="bi bi-check-circle"></i> Đã áp dụng: <b>FREESHIP</b> (Miễn phí vận chuyển)'; }
-
-            if(finalTotal - discount < 0) finalTotal = 0; else finalTotal = finalTotal - discount;
-
-            document.getElementById('discountAmount').innerText = "-" + formatCurrency(discount);
-            document.getElementById('finalTotal').innerText = formatCurrency(finalTotal);
-            document.getElementById('appliedVoucherInfo').innerHTML = infoHtml;
-            closeVoucherModal();
-        } else { alert("Vui lòng chọn một mã giảm giá!"); }
+    // --- LOGIC MODAL (QUAN TRỌNG) ---
+    function openVoucherModal() {
+        console.log("Opening Modal...");
+        var modal = document.getElementById('voucherModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.error("Không tìm thấy modal voucher!");
+        }
     }
-    window.onclick = function(event) { if (event.target == document.getElementById('voucherModal')) closeVoucherModal(); }
+
+    function closeVoucherModal() {
+        var modal = document.getElementById('voucherModal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // Đóng modal khi click ra ngoài (Overlay)
+    window.onclick = function(event) {
+        var modal = document.getElementById('voucherModal');
+        if (event.target == modal) {
+            closeVoucherModal();
+        }
+    }
+
+    // --- TIỆN ÍCH ---
+    function formatCurrency(amount) {
+        return amount.toLocaleString('vi-VN') + '₫';
+    }
+
+    // --- LOGIC TÍNH TOÁN & ÁP DỤNG ---
+    function applyVoucher() {
+        try {
+            var radios = document.getElementsByName('modalVoucherSelect');
+            var selectedRadio = null;
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) { selectedRadio = radios[i]; break; }
+            }
+
+            if (selectedRadio) {
+                // Lấy dữ liệu an toàn
+                var maCode = selectedRadio.getAttribute('data-code');
+                var type = (selectedRadio.getAttribute('data-type') || "").toUpperCase();
+
+                // Xử lý số liệu: Chuyển dấu phẩy thành chấm nếu có (phòng hờ)
+                var valStr = selectedRadio.getAttribute('data-value') || "0";
+                var value = parseFloat(valStr.toString().replace(',', '.')) || 0;
+
+                var maxStr = selectedRadio.getAttribute('data-max') || "0";
+                var maxDiscount = parseFloat(maxStr.toString().replace(',', '.')) || 0;
+
+                console.log("Áp dụng:", { code: maCode, type: type, val: value });
+
+                // Tính toán
+                var discountValue = 0;
+
+                if (type === "DIRECT") {
+                    discountValue = value; // Giảm thẳng (VD: 30000)
+                } else {
+                    // Giảm % (VD: 10)
+                    discountValue = (originalSubTotal * value) / 100;
+                    if (maxDiscount > 0 && discountValue > maxDiscount) {
+                        discountValue = maxDiscount;
+                    }
+                }
+
+                // Không giảm quá tiền hàng
+                if (discountValue > originalSubTotal) discountValue = originalSubTotal;
+
+                // Tính tổng cuối
+                var finalTotal = originalSubTotal + shippingFee - discountValue;
+                if (finalTotal < 0) finalTotal = 0;
+
+                // Cập nhật giao diện
+                document.getElementById('displayVoucherInput').value = maCode;
+                document.getElementById('hdfMaCodeVoucher').value = maCode; // Input ẩn gửi về Server
+
+                document.getElementById('discountAmount').innerText = "-" + formatCurrency(discountValue);
+                document.getElementById('finalTotal').innerText = formatCurrency(finalTotal);
+
+                // Hiển thị thông báo xanh
+                var infoDiv = document.getElementById('appliedVoucherInfo');
+                if (infoDiv) {
+                    infoDiv.innerHTML = `<i class="bi bi-check-circle"></i> Đã áp dụng <b>${maCode}</b>: Giảm -${formatCurrency(discountValue)}`;
+                    infoDiv.style.display = 'block';
+                }
+
+                closeVoucherModal();
+            } else {
+                alert("Vui lòng chọn một mã giảm giá!");
+            }
+        } catch (e) {
+            console.error("Lỗi tính toán voucher:", e);
+            alert("Có lỗi khi áp dụng mã. Vui lòng thử lại.");
+        }
+    }
 </script>

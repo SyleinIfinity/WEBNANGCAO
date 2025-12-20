@@ -4,36 +4,128 @@
     ViewBag.Title = "Chi tiết đơn hàng #" + Model.MaCodeDonHang;
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // 1. Logic Trạng thái đơn hàng (Đồng bộ với Index)
+    // 1. Logic Trạng thái đơn hàng (Mapping từ Enum API)
     string statusClass = "wait";
     string statusLabel = Model.TrangThai;
+
+    // Lưu ý: Chuỗi so sánh phải khớp với Enum trong Database/API
     switch (Model.TrangThai)
     {
         case "ChoXacNhan": statusClass = "wait"; statusLabel = "CHỜ XÁC NHẬN"; break;
         case "ChoThanhToan": statusClass = "wait"; statusLabel = "CHỜ THANH TOÁN"; break;
         case "DaThanhToan": statusClass = "wait"; statusLabel = "ĐÃ THANH TOÁN"; break;
-        case "DangGiao": statusClass = "shipping"; statusLabel = "ĐANG VẬN CHUYỂN"; break;
-        case "DaGiao": statusClass = "done"; statusLabel = "HOÀN THÀNH"; break;
+        case "DangGiao": statusClass = "shipping"; statusLabel = "ĐANG VẬN CHUYỂN"; break; // Khớp với API
+        case "HoanThanh": statusClass = "done"; statusLabel = "HOÀN THÀNH"; break;
+        case "DaGiao": statusClass = "done"; statusLabel = "HOÀN THÀNH"; break; // Fallback
         case "Huy": statusClass = "cancel"; statusLabel = "ĐÃ HỦY"; break;
     }
 
     // 2. Logic Stepper (Thanh tiến trình)
     int stepStatus = 0;
     if (Model.TrangThai == "Huy") { stepStatus = -1; }
-    else if (Model.TrangThai == "DaGiao") { stepStatus = 2; }
-    else if (Model.TrangThai == "DangGiao") { stepStatus = 1; }
-    else { stepStatus = 0; } // Các trạng thái chờ còn lại
+    else if (Model.TrangThai == "HoanThanh" || Model.TrangThai == "DaGiao") { stepStatus = 3; }
+    else if (Model.TrangThai == "DangGiao") { stepStatus = 2; }
+    else if (Model.TrangThai == "ChoXacNhan" || Model.TrangThai == "ChoThanhToan") { stepStatus = 1; }
+    else { stepStatus = 0; }
 }
 
 @section Styles {
     <link href="~/Content/css/order-detail.css" rel="stylesheet" />
+    <style>
+        /* Bổ sung CSS cho nút hành động */
+        .btn-action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .step-wizard-list {
+            display: flex;
+            list-style-type: none;
+            padding: 20px 0;
+            position: relative;
+            z-index: 10;
+            justify-content: space-between;
+        }
+
+        .step-wizard-item {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            min-width: 170px;
+            position: relative;
+        }
+
+            .step-wizard-item + .step-wizard-item:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 19px;
+                background: #e9ecef;
+                width: 100%;
+                height: 2px;
+                transform: translateX(-50%);
+                z-index: -10;
+            }
+
+        .progress-count {
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 600;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            color: transparent;
+            background-color: #e9ecef;
+        }
+
+            .progress-count:after {
+                content: "";
+                height: 40px;
+                width: 40px;
+                background: #e9ecef;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                z-index: -10;
+            }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+            color: #999;
+        }
+
+        .active .progress-count {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+
+        .active .progress-label {
+            color: #0d6efd;
+        }
+
+        .active:after {
+            background-color: #0d6efd !important;
+        }
+    </style>
 }
 
 <div class="order-detail-container">
     <div class="container">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
             <div>
-                <a href="@Url.Action("Index", "DonHang")" class="back-link">
+                <a href="@Url.Action("Index", "DonHang")" class="back-link text-decoration-none fw-bold mb-2 d-inline-block">
                     <i class="bi bi-arrow-left"></i> QUAY LẠI DANH SÁCH
                 </a>
                 <h3 class="fw-bold mb-0 text-uppercase">
@@ -43,24 +135,27 @@
             </div>
 
             <div class="mt-3 mt-md-0">
-                <span class="status-tag @statusClass">@statusLabel</span>
+                <span class="status-tag @statusClass px-3 py-2 rounded-pill fw-bold text-white"
+                      style="background-color: @(statusClass == "done" ? "#198754" : statusClass == "shipping" ? "#0dcaf0" : statusClass == "cancel" ? "#dc3545" : "#ffc107");">
+                    @statusLabel
+                </span>
             </div>
         </div>
 
         @if (stepStatus != -1)
         {
-            <div class="tracking-wrapper">
+            <div class="tracking-wrapper mb-5">
                 <ul class="step-wizard-list">
-                    <li class="step-wizard-item @(stepStatus >= 0 ? "active" : "")">
+                    <li class="step-wizard-item @(stepStatus >= 1 ? "active" : "")">
                         <span class="progress-count">1</span>
                         <span class="progress-label">Đang xử lý</span>
                     </li>
-                    <li class="step-wizard-item @(stepStatus >= 1 ? "active" : "")">
+                    <li class="step-wizard-item @(stepStatus >= 2 ? "active" : "")">
                         <span class="progress-count">2</span>
                         <span class="progress-label">Đang vận chuyển</span>
                     </li>
-                    <li class="step-wizard-item @(stepStatus >= 2 ? "active" : "")">
-                        <span class="progress-count">3</span>
+                    <li class="step-wizard-item @(stepStatus >= 3 ? "active" : "")">
+                        <span class="progress-count"><i class="bi bi-check-lg"></i></span>
                         <span class="progress-label">Giao thành công</span>
                     </li>
                 </ul>
@@ -75,27 +170,30 @@
 
         <div class="row">
             <div class="col-lg-8">
-                <div class="tech-card">
-                    <div class="tech-header">
-                        <h5><i class="bi bi-bag-check-fill"></i> Danh sách linh kiện</h5>
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-bag-check-fill text-primary"></i> Danh sách linh kiện</h5>
                     </div>
-                    <div class="tech-body">
+                    <div class="card-body">
                         @foreach (var item in Model.ChiTiet)
                         {
-                            <div class="prod-item">
-                                <div class="prod-img-box">
-                                    <img src="@item.HinhAnh" alt="@item.TenSanPham" onerror="this.src='/Content/images/no-image.png'" />
+                            <div class="d-flex align-items-center mb-3 pb-3 border-bottom last-no-border">
+                                <div class="flex-shrink-0">
+                                    <img src="@item.HinhAnh" alt="@item.TenSanPham"
+                                         class="img-fluid rounded border"
+                                         style="width: 80px; height: 80px; object-fit: cover;"
+                                         onerror="this.src='/Content/images/no-image.png'" />
                                 </div>
-                                <div class="prod-info-box">
+                                <div class="flex-grow-1 ms-3">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="prod-title">
+                                            <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="text-decoration-none text-dark fw-bold">
                                                 @item.TenSanPham
                                             </a>
-                                            <span class="prod-qty">Số lượng: x @item.SoLuong</span>
+                                            <div class="text-muted small mt-1">Số lượng: x @item.SoLuong</div>
                                         </div>
                                         <div class="col-md-4 text-md-end">
-                                            <span class="prod-final-price">@item.ThanhTien.ToString("N0") đ</span>
+                                            <span class="text-danger fw-bold">@item.ThanhTien.ToString("N0") đ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -106,144 +204,130 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="tech-card">
-                    <div class="tech-header">
-                        <h5><i class="bi bi-geo-alt-fill"></i> Địa chỉ nhận hàng</h5>
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-geo-alt-fill text-danger"></i> Địa chỉ nhận hàng</h5>
                     </div>
-                    <div class="tech-body">
-                        <div class="info-group">
-                            <span class="info-label">Người nhận</span>
-                            <div class="info-value"><i class="bi bi-person-fill"></i> @Model.NguoiNhan</div>
-                        </div>
-                        <div class="info-group">
-                            <span class="info-label">Số điện thoại</span>
-                            <div class="info-value"><i class="bi bi-telephone-fill"></i> @Model.SoDienThoaiGiao</div>
-                        </div>
-                        <div class="info-group">
-                            <span class="info-label">Địa chỉ</span>
-                            <div class="info-value"><i class="bi bi-map-fill"></i> @Model.DiaChiGiaoHang</div>
-                        </div>
+                    <div class="card-body">
+                        <p class="mb-1"><strong>@Model.NguoiNhan</strong></p>
+                        <p class="mb-1 text-muted">@Model.SoDienThoaiGiao</p>
+                        <p class="mb-0 small">@Model.DiaChiGiaoHang</p>
                     </div>
                 </div>
 
-                <div class="tech-card">
-                    <div class="tech-header">
-                        <h5><i class="bi bi-credit-card-2-front-fill"></i> Thanh toán</h5>
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-credit-card-2-front-fill text-success"></i> Thanh toán</h5>
                     </div>
-                    <div class="tech-body pt-3">
-                        <div class="info-group">
-                            <span class="info-label">Phương thức</span>
-                            <div class="info-value mb-3">
-                                @if (Model.PhuongThucThanhToan == "COD")
-                                {
-                                    <span class="badge bg-secondary"><i class="bi bi-cash"></i> Tiền mặt (COD)</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-primary"><i class="bi bi-qr-code"></i> Chuyển khoản (VietQR)</span>
-                                }
-                            </div>
-
-                            @{
-                                string payLabel = "Chưa thanh toán";
-                                string payClass = "danger"; // danger/success/warning
-                                bool isPaid = false;
-
-                                if (Model.PhuongThucThanhToan == "COD")
-                                {
-                                    // COD: Chỉ khi Giao thành công hoặc Đã thanh toán mới tính là Paid
-                                    if (Model.TrangThai == "DaGiao" || Model.TrangThai == "DaThanhToan")
-                                    {
-                                        payLabel = "Đã thanh toán";
-                                        payClass = "success";
-                                        isPaid = true;
-                                    }
-                                    else if (Model.TrangThai == "Huy")
-                                    {
-                                        payLabel = "Thanh toán thất bại";
-                                        payClass = "danger";
-                                    }
-                                    else
-                                    {
-                                        payLabel = "Thanh toán khi nhận";
-                                        payClass = "warning";
-                                    }
-
-                                }
-                                else // VietQR
-                                {
-                                    // Kiểm tra giao dịch có trạng thái 'Success' (khớp với Entity GiaoDichThanhToan)
-                                    var lastTx = Model.GiaoDichs?.OrderByDescending(x => x.NgayGiaoDich).FirstOrDefault();
-                                    if (lastTx != null && lastTx.TrangThai == "Success")
-                                    {
-                                        payLabel = "Đã thanh toán";
-                                        payClass = "success";
-                                        isPaid = true;
-                                    }
-                                    else if (lastTx != null && lastTx.TrangThai == "Failed")
-                                    {
-                                        payLabel = "Thanh toán thì thất bại";
-                                        payClass = "danger";
-                                    }
-                                    else
-                                    {
-                                        payLabel = "Chờ thanh toán";
-                                        payClass = "danger";
-                                    }
-                                }
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Phương thức:</span>
+                            @if (Model.PhuongThucThanhToan == "COD")
+                            {
+                                <span class="badge bg-secondary">Tiền mặt (COD)</span>
                             }
-
-                            <div class="alert alert-@payClass d-flex align-items-center p-2" role="alert">
-                                @if (isPaid)
-                                {
-                                    <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-                                }
-                                else if (payClass == "warning")
-                                {
-                                    <i class="bi bi-hourglass-split me-2 fs-5"></i>
-                                }
-                                else
-                                {
-                                    <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
-                                }
-                                <div>
-                                    <small class="text-uppercase fw-bold" style="font-size: 0.7rem;">Trạng thái thanh toán</small><br />
-                                    <span class="fw-bold">@payLabel</span>
-                                </div>
-                            </div>
+                            else
+                            {
+                                <span class="badge bg-primary">VietQR / Chuyển khoản</span>
+                            }
                         </div>
 
-                        <div class="invoice-box">
-                            <div class="invoice-row">
-                                <span>Tạm tính</span>
-                                <span>@((Model.TongTien - Model.PhiVanChuyen).ToString("N0")) đ</span>
-                            </div>
-                            <div class="invoice-row">
-                                <span>Phí vận chuyển</span>
-                                <span>@Model.PhiVanChuyen.ToString("N0") đ</span>
-                            </div>
-                            <div class="invoice-row total">
-                                <span class="total-title">Tổng cộng</span>
-                                <span class="total-num">@Model.TongTien.ToString("N0")<small>đ</small></span>
-                            </div>
+                        @{
+                            string payLabel = "Chưa thanh toán";
+                            string payColor = "text-danger";
+                            bool isPaid = false;
 
-                            @if (Model.PhuongThucThanhToan == "VietQR" && !isPaid && Model.TrangThai != "Huy" && Model.TrangThai != "DaGiao")
+                            // Logic check thanh toán
+                            if (Model.TrangThai == "HoanThanh" || Model.TrangThai == "DaThanhToan" || Model.TrangThai == "DaGiao")
                             {
-                                <a href="@Url.Action("Payment", "ThanhToan", new { orderId = Model.MaDonHang })" class="btn btn-primary w-100 mt-3 fw-bold">
-                                    THANH TOÁN NGAY
+                                payLabel = "Đã thanh toán";
+                                payColor = "text-success";
+                                isPaid = true;
+                            }
+                            // Check giao dịch online thành công
+                            var lastTx = Model.GiaoDichs?.OrderByDescending(x => x.NgayGiaoDich).FirstOrDefault();
+                            if (lastTx != null && lastTx.TrangThai == "Success")
+                            {
+                                payLabel = "Đã thanh toán (Online)";
+                                payColor = "text-success";
+                                isPaid = true;
+                            }
+                        }
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Trạng thái:</span>
+                            <span class="fw-bold @payColor">@payLabel</span>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Tạm tính:</span>
+                            <span>@((Model.TongTien - Model.PhiVanChuyen).ToString("N0")) đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Phí vận chuyển:</span>
+                            <span>@Model.PhiVanChuyen.ToString("N0") đ</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold fs-5">Tổng cộng:</span>
+                            <span class="fw-bold fs-5 text-danger">@Model.TongTien.ToString("N0") đ</span>
+                        </div>
+
+                        <div class="btn-action-group">
+                            @if (Model.PhuongThucThanhToan == "VietQR" && !isPaid && Model.TrangThai != "Huy" && Model.TrangThai != "HoanThanh")
+                            {
+                                <a href="@Url.Action("Payment", "ThanhToan", new { id = Model.MaDonHang })" class="btn btn-primary w-100 fw-bold">
+                                    <i class="bi bi-qr-code"></i> THANH TOÁN NGAY
                                 </a>
+                            }
+
+                            @if (Model.TrangThai == "DangGiao")
+                            {
+                                using (Html.BeginForm("ConfirmReceived", "DonHang", new { id = Model.MaDonHang }, FormMethod.Post, new { onsubmit = "return confirm('Bạn xác nhận đã nhận được hàng đầy đủ và nguyên vẹn?');" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-success w-100 fw-bold text-white">
+                                        <i class="bi bi-check-circle-fill"></i> ĐÃ NHẬN ĐƯỢC HÀNG
+                                    </button>
+                                }
                             }
 
                             @if (Model.TrangThai == "ChoXacNhan" || Model.TrangThai == "ChoThanhToan")
                             {
-                                <a href="javascript:void(0);" onclick="alert('Tính năng hủy đang phát triển!')" class="btn-cancel">
-                                    <i class="bi bi-x-lg"></i> Hủy Đơn Hàng
-                                </a>
+                                using (Html.BeginForm("CancelOrder", "DonHang", new { id = Model.MaDonHang }, FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger w-100">
+                                        <i class="bi bi-x-lg"></i> Hủy Đơn Hàng
+                                    </button>
+                                }
+                            }
+
+                            @if (Model.TrangThai == "HoanThanh" || Model.TrangThai == "DaGiao")
+                            {
+                                <div class="alert alert-success text-center py-2 mb-0">
+                                    <i class="bi bi-star-fill"></i> Đơn hàng hoàn tất
+                                </div>
                             }
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@if (TempData["Success"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["Success"])');
+    </script>
+}
+@if (TempData["Error"] != null)
+{
+    <script>
+        alert('@Html.Raw(TempData["Error"])');
+    </script>
+}

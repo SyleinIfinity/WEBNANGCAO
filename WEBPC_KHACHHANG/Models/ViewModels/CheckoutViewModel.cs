@@ -21,5 +21,12 @@ namespace WEBPC_KHACHHANG.Models.ViewModels
         public string DiaChiGiaoHang { get; set; } // Địa chỉ text
         public string NguoiNhan { get; set; }
         public string SoDienThoai { get; set; }
+
+        public List<KhuyenMaiKhachHangResponse> DanhSachKhuyenMai { get; set; } = new List<KhuyenMaiKhachHangResponse>();
+
+        // Các biến tính tiền
+        public decimal TamTinh { get; set; }
+        public decimal PhiVanChuyen { get; set; }
+        public decimal TongThanhToan { get; set; }
     }
 }
