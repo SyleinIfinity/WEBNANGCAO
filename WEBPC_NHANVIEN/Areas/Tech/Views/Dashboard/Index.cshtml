@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Tech Dashboard";
+    // Để đơn giản, không dùng Layout phức tạp để tránh lỗi thiếu file
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tech Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-info">
+            <h1>Chào mừng nhân viên Kỹ Thuật (Tech)</h1>
+            <p>Đây là trang Dashboard dành riêng cho bộ phận kỹ thuật.</p>
+            <p>Xin chào: <strong>@Session["UserName"]</strong></p>
+            <br />
+            <a href="@Url.Action("Logout", "Account", new { area = "" })" class="btn btn-danger">Đăng xuất</a>
+        </div>
+    </div>
+</body>
+</html>

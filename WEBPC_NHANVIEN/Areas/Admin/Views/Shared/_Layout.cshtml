@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin PC Store</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Areas/Admin/Data/css/admin_theme.css" rel="stylesheet" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt" style="margin-right: 10px;"></i> PC ADMIN
+        </div>
+        <ul class="menu">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "Dashboard" ? "active" : "")">
+                    <i class="fas fa-chart-pie"></i> Tổng quan
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "PhieuNhap", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "PhieuNhap" ? "active" : "")">
+                    <i class="fas fa-truck-loading"></i> Nhập hàng
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Luong", new { area = "Admin" })"
+                   class="@(ViewContext.RouteData.Values["controller"].ToString() == "Luong" ? "active" : "")">
+                    <i class="fas fa-hand-holding-usd"></i> Lương & KPI
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "NhanVien", new { area = "Admin" })">
+                    <i class="fas fa-user-tie"></i> Nhân viên
+                </a>
+            </li>
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString() == "KhachHang" ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "KhachHang", new { area = "Admin" })">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Quản lý Khách hàng</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="top-header">
+            <h3 style="margin:0;">@ViewBag.Title</h3>
+            <div class="user-info">
+                @{
+                    var userName = Session["UserName"] as string;
+                    var roleName = Session["RoleName"] as string;
+                }
+
+                @if (!string.IsNullOrEmpty(userName))
+                {
+                    <span>
+                        Xin chào <strong>@userName</strong> (@roleName)
+                    </span>
+                    @*<a href="@Url.Action("Logout", "Account")" class="ms-3">Đăng xuất</a>*@
+                }
+
+                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="ms-3">
+                    Đăng xuất
+                </a>
+            </div>
+        </div>
+
+
+        <div class="content-body">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://webapi-1-qldr.onrender.com';
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const nameDisplay = document.getElementById('current-user-name');
+            if (!nameDisplay) return;
+
+            // Lấy ID nhân viên từ data-user-id (gán bằng Session trong Razor)
+            const userId = nameDisplay.dataset.userId;
+            if (!userId) {
+                // Nếu chưa có ID (chưa đăng nhập / quên set Session), fallback
+                nameDisplay.innerText = "Admin";
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/NhanVien/${encodeURIComponent(userId)}`);
+
+                if (!res.ok) {
+                    console.error("Không lấy được thông tin nhân viên. Status:", res.status);
+                    nameDisplay.innerText = "Admin";
+                    return;
+                }
+
+                const data = await res.json();
+
+                // Thử nhiều key để tránh lệch casing:
+                const name =
+                    data.hoTen ||
+                    data.HoTen ||
+                    data.tenNhanVien ||
+                    data.TenNhanVien ||
+                    "";
+
+                nameDisplay.innerText = name || "Admin";
+            } catch (e) {
+                console.error("Lỗi khi gọi API NhanVien:", e);
+                nameDisplay.innerText = "Admin";
+            }
+        });
+    </script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

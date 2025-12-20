@@ -24,6 +24,8 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             border: 1px solid #f0f0f0;
             overflow: hidden;
+            max-height: calc(100vh - 100px);
+            height: calc(100vh - 100px);
         }
 
         .col-list-panel {
@@ -157,43 +159,250 @@
         }
 
         .group-products {
-            flex: 2;
+            flex: 0 0 250px;
             display: flex;
             flex-direction: column;
+            height: 30%;
+            max-height: 250px;
+            min-height: 250px;
+            overflow: hidden;
         }
 
         .group-transaction {
-            flex: 1.5;
+            flex: 0 0 200px;
             display: flex;
             flex-direction: column;
+            min-height: 200px;
+            max-height: 200px;
+            overflow: hidden;
+        }
+
+        .group-products .scroll-content {
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+        }
+
+            .group-products .scroll-content::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .group-products .scroll-content::-webkit-scrollbar-track {
+                background: #e9ecef;
+                border-radius: 10px;
+                margin: 5px 0;
+            }
+
+            .group-products .scroll-content::-webkit-scrollbar-thumb {
+                background: #94a3b8;
+                border-radius: 10px;
+                transition: all 0.3s;
+            }
+
+                .group-products .scroll-content::-webkit-scrollbar-thumb:hover {
+                    background: #64748b;
+                }
+
+        .group-transaction .scroll-content {
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+        }
+
+            .group-transaction .scroll-content::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .group-transaction .scroll-content::-webkit-scrollbar-track {
+                background: #e9ecef;
+                border-radius: 10px;
+                margin: 5px 0;
+            }
+
+            .group-transaction .scroll-content::-webkit-scrollbar-thumb {
+                background: #94a3b8;
+                border-radius: 10px;
+                transition: all 0.3s;
+            }
+
+                .group-transaction .scroll-content::-webkit-scrollbar-thumb:hover {
+                    background: #64748b;
+                }
+
+        .group-products .scroll-content,
+        .group-transaction .scroll-content {
+            scrollbar-width: auto;
+            scrollbar-color: #94a3b8 #e9ecef;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f3f5;
+            gap: 12px;
+            transition: all 0.2s;
+            min-height: 70px;
+        }
+
+            .product-item:hover {
+                background-color: #f8f9fa;
+            }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            flex-shrink: 0;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #32325d;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            color: #8898aa;
+            font-size: 0.85rem;
+        }
+
+        .product-quantity {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .product-total {
+            font-weight: 700;
+            color: #0d47a1;
+            font-size: 1rem;
+            text-align: right;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+
+        .transaction-info {
+            padding: 15px 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.9rem;
+        }
+
+            .info-row:last-child {
+                border-bottom: none;
+            }
+
+        .info-label {
+            color: #8898aa;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #32325d;
+            font-weight: 600;
+            text-align: right;
         }
 
         .group-summary {
             background-color: #fff;
-            padding: 20px 24px;
+            padding: 16px 24px;
             border-top: 1px solid #edf2f7;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
+            flex: 1 1 auto;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
 
-        .detail-table {
-            width: 100%;
-            border-collapse: collapse;
+        .summary-info {
+            margin-bottom: 16px;
         }
 
-            .detail-table td {
-                padding: 10px 15px;
-                border-bottom: 1px dashed #eee;
-                font-size: 0.9rem;
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+            .summary-row:last-child {
+                margin-bottom: 12px;
             }
 
-            .detail-table th {
-                padding: 10px 15px;
-                font-size: 0.8rem;
-                text-transform: uppercase;
-                color: #8898aa;
-                background: #fff;
-                border-bottom: 2px solid #edf2f7;
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-cancel {
+            background: #fff;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+        }
+
+            .btn-cancel:hover {
+                background: #dc3545;
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
             }
+
+        .btn-approve {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+            .btn-approve:hover {
+                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            }
+
+        .btn-action i {
+            font-size: 1.1rem;
+        }
 
         .hidden {
             display: none !important;
@@ -222,7 +431,6 @@
             margin-bottom: 20px;
         }
 
-        /* Debug panel */
         .debug-panel {
             position: fixed;
             bottom: 20px;
@@ -272,10 +480,6 @@
         .status-error {
             background: #f56565;
         }
-
-        .status-testing {
-            background: #ed8936;
-        }
     </style>
 }
 
@@ -295,18 +499,7 @@
                     <i class="fas fa-box text-primary"></i>
                     <span>Danh sách sản phẩm</span>
                 </div>
-                <div class="scroll-content">
-                    <table class="detail-table">
-                        <thead>
-                            <tr>
-                                <th>Tên SP</th>
-                                <th class="text-center">SL</th>
-                                <th class="text-end">Đơn giá</th>
-                                <th class="text-end">Thành tiền</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbl-products"></tbody>
-                    </table>
+                <div class="scroll-content" id="product-list-container">
                 </div>
             </div>
 
@@ -317,40 +510,97 @@
                     <span class="badge bg-light text-dark border ms-auto" id="lbl-payment-method">COD</span>
                 </div>
                 <div class="scroll-content">
-                    <table class="detail-table">
-                        <tbody id="tbl-transaction">
-                            <tr><td class="text-muted">Mã Giao Dịch</td><td id="lbl-trans-code" class="fw-bold text-end">...</td></tr>
-                            <tr><td class="text-muted">Thời gian</td><td id="lbl-trans-date" class="text-end">...</td></tr>
-                            <tr><td class="text-muted">Số tiền</td><td id="lbl-trans-amount" class="text-success fw-bold text-end">...</td></tr>
-                            <tr><td class="text-muted">Trạng thái</td><td id="lbl-trans-status" class="text-end">...</td></tr>
-                        </tbody>
-                    </table>
+                    <div id="cod-payment" class="transaction-info hidden">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-hand-holding-usd me-1"></i> Phương thức</span>
+                            <span class="info-value">Thanh toán khi nhận hàng (COD)</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-user me-1"></i> Người nhận</span>
+                            <span class="info-value" id="lbl-cod-receiver-name">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-phone me-1"></i> SĐT</span>
+                            <span class="info-value" id="lbl-cod-receiver-phone">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-map-marker-alt me-1"></i> Địa chỉ</span>
+                            <span class="info-value" id="lbl-cod-receiver-address" style="max-width: 60%; text-align: right;">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-shipping-fast me-1"></i> Phí vận chuyển</span>
+                            <span class="info-value text-primary" id="lbl-cod-shipping-fee">0 đ</span>
+                        </div>
+                    </div>
+
+                    <div id="vietqr-payment" class="transaction-info hidden">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-hashtag me-1"></i> Mã GD</span>
+                            <span class="info-value" id="lbl-trans-code">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="far fa-clock me-1"></i> Thời gian</span>
+                            <span class="info-value" id="lbl-trans-date">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-money-bill-wave me-1"></i> Số tiền</span>
+                            <span class="info-value text-success" id="lbl-trans-amount">0 đ</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-info-circle me-1"></i> Trạng thái</span>
+                            <span class="info-value" id="lbl-trans-status">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-credit-card me-1"></i> Phương thức</span>
+                            <span class="info-value" id="lbl-trans-method">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-user me-1"></i> Người nhận</span>
+                            <span class="info-value" id="lbl-receiver-name">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-phone me-1"></i> SĐT</span>
+                            <span class="info-value" id="lbl-receiver-phone">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-map-marker-alt me-1"></i> Địa chỉ</span>
+                            <span class="info-value" id="lbl-receiver-address" style="max-width: 60%; text-align: right;">---</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-shipping-fast me-1"></i> Phí vận chuyển</span>
+                            <span class="info-value text-primary" id="lbl-shipping-fee">0 đ</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="group-summary">
-                <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Khách hàng:</span>
-                    <strong id="lbl-customer-name" class="text-dark">...</strong>
-                </div>
-                <div class="d-flex justify-content-between mb-4 align-items-center">
-                    <span style="font-size: 1.1rem; color: #495057;">Tổng thanh toán:</span>
-                    <strong class="text-danger" style="font-size: 1.5rem;" id="lbl-total-money">0 đ</strong>
+                <div class="summary-info">
+                    <div class="summary-row">
+                        <span class="text-muted">Khách hàng:</span>
+                        <strong id="lbl-customer-name" class="text-dark">...</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span style="font-size: 1.1rem; color: #495057;">Tổng thanh toán:</span>
+                        <strong class="text-danger" style="font-size: 1.5rem;" id="lbl-total-money">0 đ</strong>
+                    </div>
                 </div>
 
-                <div id="action-buttons" class="row g-3">
-                    <div class="col-6">
-                        <button class="btn btn-outline-danger w-100 py-2" onclick="processOrder(false)">
-                            <i class="fas fa-times-circle me-1"></i> Hủy Đơn
-                        </button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-primary w-100 py-2 shadow-sm" onclick="processOrder(true)">
-                            <i class="fas fa-check-circle me-1"></i> Duyệt Đơn
-                        </button>
-                    </div>
+                <div id="action-buttons" class="action-buttons hidden">
+                    <button class="btn-action btn-cancel" onclick="processOrder(false)">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Hủy Đơn</span>
+                    </button>
+                    <button class="btn-action btn-approve" onclick="processOrder(true)">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Duyệt Đơn</span>
+                    </button>
                 </div>
-                <div id="action-message" class="text-center fw-bold p-3 rounded-3 hidden" style="font-size: 0.95rem;"></div>
+
+                <div id="status-message" class="text-center p-3 rounded-3 hidden" style="font-size: 0.95rem; background: #f8f9fa; color: #495057;">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span id="status-text"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -358,9 +608,7 @@
     <div class="col-list-panel">
         <div class="panel-header">
             <h5><i class="fas fa-list-ul text-primary"></i> Danh Sách Đơn Hàng</h5>
-            <button class="btn-reload" onclick="testAllUrls()" title="Test URLs">
-                <i class="fas fa-bug"></i> Test API
-            </button>
+           
             <button class="btn-reload" onclick="location.reload()" title="Tải lại dữ liệu">
                 <i class="fas fa-sync-alt"></i> Tải lại
             </button>
@@ -381,8 +629,8 @@
                         foreach (var item in Model)
                         {
                             string badge = "st-new";
-                            if (item.trangThai == "Đã duyệt" || item.trangThai == "Hoàn thành") { badge = "st-ok"; }
-                            else if (item.trangThai != null && item.trangThai.Contains("hủy")) { badge = "st-cancel"; }
+                            if (item.trangThai == "Đã duyệt" || item.trangThai == "Hoàn thành" || item.trangThai == "DangGiao") { badge = "st-ok"; }
+                            else if (item.trangThai != null && (item.trangThai.Contains("hủy") || item.trangThai == "Huy")) { badge = "st-cancel"; }
 
                             <tr class="row-item" onclick="viewDetail(this, @item.maDonHang)">
                                 <td style="padding-left: 30px;">
@@ -411,7 +659,6 @@
     </div>
 </div>
 
-<!-- DEBUG PANEL -->
 <div id="debug-panel" class="debug-panel" style="display: none;">
     <h6>🔍 API URL Test Results</h6>
     <div id="debug-results"></div>
@@ -422,9 +669,6 @@
 
 @section Scripts {
     <script>
-        // ═══════════════════════════════════════════════════════════════
-        // CẤU HÌNH API - THỬ TẤT CẢ CÁC ĐƯỜNG DẪN CÓ THỂ
-        // ═══════════════════════════════════════════════════════════════
         const API_VARIATIONS = {
             list: [
                 '/Sale/DonHang/GetList',
@@ -449,10 +693,8 @@
         const API_ACTION_URL = '/Sale/DonHang';
 
         let selectedOrderId = null;
+        let currentOrderStatus = null;
 
-        // ═══════════════════════════════════════════════════════════════
-        // HÀM TEST TẤT CẢ URL
-        // ═══════════════════════════════════════════════════════════════
         async function testAllUrls() {
             const panel = document.getElementById('debug-panel');
             const results = document.getElementById('debug-results');
@@ -461,7 +703,6 @@
 
             const testResults = [];
 
-            // Test List URLs
             console.log("🧪 Testing LIST URLs...");
             for (const url of API_VARIATIONS.list) {
                 try {
@@ -469,29 +710,17 @@
                     const status = res.status;
                     const isOk = res.ok;
 
-                    testResults.push({
-                        type: 'LIST',
-                        url: url,
-                        status: status,
-                        ok: isOk
-                    });
+                    testResults.push({ type: 'LIST', url: url, status: status, ok: isOk });
 
                     if (isOk) {
                         API_LIST_URL = url;
                         console.log("✅ Found working LIST URL:", url);
                     }
                 } catch (e) {
-                    testResults.push({
-                        type: 'LIST',
-                        url: url,
-                        status: 'ERROR',
-                        ok: false,
-                        error: e.message
-                    });
+                    testResults.push({ type: 'LIST', url: url, status: 'ERROR', ok: false, error: e.message });
                 }
             }
 
-            // Test Detail URLs (với ID mẫu)
             const testId = @(Model != null && Model.Any() ? Model.First().maDonHang : 1);
             console.log("🧪 Testing DETAIL URLs with ID:", testId);
 
@@ -502,29 +731,17 @@
                     const status = res.status;
                     const isOk = res.ok;
 
-                    testResults.push({
-                        type: 'DETAIL',
-                        url: fullUrl,
-                        status: status,
-                        ok: isOk
-                    });
+                    testResults.push({ type: 'DETAIL', url: fullUrl, status: status, ok: isOk });
 
                     if (isOk) {
                         API_DETAIL_URL = url;
                         console.log("✅ Found working DETAIL URL:", url);
                     }
                 } catch (e) {
-                    testResults.push({
-                        type: 'DETAIL',
-                        url: url,
-                        status: 'ERROR',
-                        ok: false,
-                        error: e.message
-                    });
+                    testResults.push({ type: 'DETAIL', url: url, status: 'ERROR', ok: false, error: e.message });
                 }
             }
 
-            // Display results
             let html = '';
             testResults.forEach(r => {
                 const statusClass = r.ok ? 'status-ok' : 'status-error';
@@ -538,7 +755,6 @@
                 `;
             });
 
-            // Add working URLs
             const workingList = testResults.find(r => r.type === 'LIST' && r.ok);
             const workingDetail = testResults.find(r => r.type === 'DETAIL' && r.ok);
 
@@ -558,17 +774,10 @@
             results.innerHTML = html;
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // KHỞI TẠO
-        // ═══════════════════════════════════════════════════════════════
         window.addEventListener('DOMContentLoaded', function() {
             console.log("✅ App khởi động");
-            // Không gọi loadOrders() ngay, để user bấm nút Test API trước
         });
 
-        // ═══════════════════════════════════════════════════════════════
-        // HÀM TẢI DANH SÁCH
-        // ═══════════════════════════════════════════════════════════════
         async function loadOrders() {
             const tbody = document.getElementById('tbl-orders');
             tbody.innerHTML = '<tr><td colspan="3" class="text-center py-3 text-muted"><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</td></tr>';
@@ -614,8 +823,8 @@
                     let badge = 'st-new';
                     const stStr = String(rawStatus).toLowerCase();
 
-                    if (stStr.includes('duyệt') || stStr.includes('hoàn thành') || stStr.includes('thành công') || stStr == '1') badge = 'st-ok';
-                    if (stStr.includes('hủy') || stStr.includes('fail') || stStr == '-1') badge = 'st-cancel';
+                    if (stStr.includes('duyệt') || stStr.includes('hoàn thành') || stStr.includes('thành công') || stStr.includes('danggiao') || stStr == '1') badge = 'st-ok';
+                    if (stStr.includes('hủy') || stStr.includes('fail') || stStr == 'huy' || stStr == '-1') badge = 'st-cancel';
 
                     tbody.insertAdjacentHTML('beforeend', `
                         <tr class="row-item" onclick="viewDetail(this, ${id})">
@@ -632,9 +841,138 @@
             }
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // HÀM XEM CHI TIẾT
-        // ═══════════════════════════════════════════════════════════════
+        function updateActionButtons(status) {
+            const actionButtons = document.getElementById('action-buttons');
+            const statusMessage = document.getElementById('status-message');
+            const statusText = document.getElementById('status-text');
+
+            const normalizedStatus = String(status).toLowerCase().trim();
+
+            if (normalizedStatus.includes('chờ') || normalizedStatus.includes('cho') || normalizedStatus === 'choxacnhan') {
+                actionButtons.classList.remove('hidden');
+                statusMessage.classList.add('hidden');
+            } else {
+                actionButtons.classList.add('hidden');
+                statusMessage.classList.remove('hidden');
+
+                if (normalizedStatus.includes('danggiao') || normalizedStatus === 'đang giao') {
+                    statusText.textContent = 'Đơn hàng đang được giao';
+                } else if (normalizedStatus.includes('hủy') || normalizedStatus === 'huy') {
+                    statusText.textContent = 'Đơn hàng đã bị hủy';
+                    statusMessage.style.background = '#f8d7da';
+                    statusMessage.style.color = '#842029';
+                } else if (normalizedStatus.includes('hoàn thành') || normalizedStatus.includes('thành công')) {
+                    statusText.textContent = 'Đơn hàng đã hoàn thành';
+                    statusMessage.style.background = '#d1e7dd';
+                    statusMessage.style.color = '#0f5132';
+                } else {
+                    statusText.textContent = `Trạng thái: ${status}`;
+                    statusMessage.style.background = '#f8f9fa';
+                    statusMessage.style.color = '#495057';
+                }
+            }
+        }
+
+        function updatePaymentDisplay(paymentMethod, transactionList, orderDetail) {
+            const codPayment = document.getElementById('cod-payment');
+            const vietqrPayment = document.getElementById('vietqr-payment');
+            const paymentMethodLabel = document.getElementById('lbl-payment-method');
+
+            const normalizedMethod = String(paymentMethod).toLowerCase().trim();
+
+            console.log("💳 Payment Method:", paymentMethod);
+            console.log("💰 Transaction List:", transactionList);
+            console.log("📦 Order Detail:", orderDetail);
+
+            if (normalizedMethod.includes('vietqr') || normalizedMethod.includes('chuyển khoản') || normalizedMethod.includes('chuyenkhoan')) {
+                codPayment.classList.add('hidden');
+                vietqrPayment.classList.remove('hidden');
+                paymentMethodLabel.textContent = 'VietQR';
+                paymentMethodLabel.classList.remove('bg-light', 'text-dark');
+                paymentMethodLabel.classList.add('bg-success', 'text-white');
+
+                let transaction = null;
+                if (transactionList && Array.isArray(transactionList) && transactionList.length > 0) {
+                    transaction = transactionList.find(t =>
+                        (t.trangThai || t.TrangThai || '').toLowerCase() === 'success'
+                    ) || transactionList[0];
+                }
+
+                console.log("📝 Selected Transaction:", transaction);
+
+                if (transaction) {
+                    const maGD = transaction.maGiaoDich || transaction.MaGiaoDich || '---';
+                    const ngayGD = transaction.ngayGiaoDich || transaction.NgayGiaoDich || transaction.ngayTao || transaction.NgayTao;
+                    const soTien = transaction.soTien || transaction.SoTien || 0;
+                    const trangThai = transaction.trangThai || transaction.TrangThai || '---';
+                    const phuongThuc = transaction.phuongThuc || transaction.PhuongThuc || 'VietQR';
+
+                    let dateDisplay = '---';
+                    if (ngayGD) {
+                        try {
+                            if (typeof ngayGD === 'string' && ngayGD.includes('/Date(')) {
+                                const timestamp = parseInt(ngayGD.replace(/\/Date\((\d+)\)\//, '$1'));
+                                dateDisplay = new Date(timestamp).toLocaleString('vi-VN');
+                            } else {
+                                dateDisplay = new Date(ngayGD).toLocaleString('vi-VN');
+                            }
+                        } catch (e) {
+                            dateDisplay = ngayGD;
+                        }
+                    }
+
+                    document.getElementById('lbl-trans-code').textContent = maGD;
+                    document.getElementById('lbl-trans-date').textContent = dateDisplay;
+                    document.getElementById('lbl-trans-amount').textContent = fmt(soTien);
+                    document.getElementById('lbl-trans-method').textContent = phuongThuc;
+
+                    let statusDisplay = trangThai;
+                    let statusClass = '';
+                    if (String(trangThai).toLowerCase() === 'success') {
+                        statusDisplay = '✓ Thành công';
+                        statusClass = 'text-success fw-bold';
+                    } else if (String(trangThai).toLowerCase() === 'pending') {
+                        statusDisplay = '⏳ Đang xử lý';
+                        statusClass = 'text-warning fw-bold';
+                    } else if (String(trangThai).toLowerCase() === 'failed') {
+                        statusDisplay = '✗ Thất bại';
+                        statusClass = 'text-danger fw-bold';
+                    }
+
+                    const statusElem = document.getElementById('lbl-trans-status');
+                    statusElem.textContent = statusDisplay;
+                    statusElem.className = 'info-value ' + statusClass;
+                } else {
+                    document.getElementById('lbl-trans-code').textContent = '---';
+                    document.getElementById('lbl-trans-date').textContent = '---';
+                    document.getElementById('lbl-trans-amount').textContent = '0 đ';
+                    document.getElementById('lbl-trans-status').textContent = 'Chưa có giao dịch';
+                    document.getElementById('lbl-trans-method').textContent = '---';
+                }
+
+                if (orderDetail) {
+                    document.getElementById('lbl-receiver-name').textContent = orderDetail.nguoiNhan || orderDetail.NguoiNhan || '---';
+                    document.getElementById('lbl-receiver-phone').textContent = orderDetail.soDienThoaiGiao || orderDetail.SoDienThoaiGiao || '---';
+                    document.getElementById('lbl-receiver-address').textContent = orderDetail.diaChiGiaoHang || orderDetail.DiaChiGiaoHang || '---';
+                    document.getElementById('lbl-shipping-fee').textContent = fmt(orderDetail.phiVanChuyen || orderDetail.PhiVanChuyen || 0);
+                }
+
+            } else {
+                codPayment.classList.remove('hidden');
+                vietqrPayment.classList.add('hidden');
+                paymentMethodLabel.textContent = 'COD';
+                paymentMethodLabel.classList.add('bg-light', 'text-dark');
+                paymentMethodLabel.classList.remove('bg-success', 'text-white');
+
+                if (orderDetail) {
+                    document.getElementById('lbl-cod-receiver-name').textContent = orderDetail.nguoiNhan || orderDetail.NguoiNhan || '---';
+                    document.getElementById('lbl-cod-receiver-phone').textContent = orderDetail.soDienThoaiGiao || orderDetail.SoDienThoaiGiao || '---';
+                    document.getElementById('lbl-cod-receiver-address').textContent = orderDetail.diaChiGiaoHang || orderDetail.DiaChiGiaoHang || '---';
+                    document.getElementById('lbl-cod-shipping-fee').textContent = fmt(orderDetail.phiVanChuyen || orderDetail.PhiVanChuyen || 0);
+                }
+            }
+        }
+
         async function viewDetail(rowElem, id) {
             document.querySelectorAll('.row-item').forEach(r => r.classList.remove('active'));
             rowElem.classList.add('active');
@@ -654,10 +992,11 @@
                 const detail = await res.json();
                 console.log("📦 Chi tiết:", detail);
 
-                // Render sản phẩm
+                currentOrderStatus = detail.trangThai || detail.TrangThai || detail.status || 'Chờ xác nhận';
+
                 const listSP = detail.chiTiet || detail.ChiTiet || detail.chiTietDonHang || [];
-                const tblProd = document.getElementById('tbl-products');
-                tblProd.innerHTML = '';
+                const productContainer = document.getElementById('product-list-container');
+                productContainer.innerHTML = '';
 
                 if (listSP.length > 0) {
                     listSP.forEach(sp => {
@@ -665,23 +1004,35 @@
                         const sl = sp.soLuong || sp.SoLuong || 0;
                         const dg = sp.donGiaLucMua || sp.DonGiaLucMua || 0;
                         const tt = sp.thanhTien || sp.ThanhTien || (sl * dg);
+                        const img = sp.hinhAnh || sp.HinhAnh || 'https://via.placeholder.com/60?text=No+Image';
 
-                        tblProd.insertAdjacentHTML('beforeend', `
-                            <tr>
-                                <td class="fw-bold text-dark">${ten}</td>
-                                <td class="text-center">${sl}</td>
-                                <td class="text-end">${fmt(dg)}</td>
-                                <td class="text-end fw-bold text-primary">${fmt(tt)}</td>
-                            </tr>
+                        productContainer.insertAdjacentHTML('beforeend', `
+                            <div class="product-item">
+                                <img src="${img}" alt="${ten}" class="product-img" onerror="this.src='https://via.placeholder.com/60?text=No+Image'">
+                                <div class="product-info">
+                                    <div class="product-name" title="${ten}">${ten}</div>
+                                    <div class="product-price">SL: ${sl} | Đơn giá: ${fmt(dg)}</div>
+                                </div>
+                                <div class="product-quantity">x${sl}</div>
+                                <div class="product-total">${fmt(tt)}</div>
+                            </div>
                         `);
                     });
                 } else {
-                    tblProd.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">Không có sản phẩm</td></tr>';
+                    productContainer.innerHTML = '<div class="text-center text-muted py-5"><i class="fas fa-box-open fa-2x mb-3" style="opacity:0.3;"></i><div>Không có sản phẩm</div></div>';
                 }
 
-                // Phần còn lại giữ nguyên...
-                document.getElementById('lbl-customer-name').textContent = detail.nguoiNhan || 'Khách lẻ';
-                document.getElementById('lbl-total-money').textContent = fmt(detail.tongTien || 0);
+                document.getElementById('lbl-customer-name').textContent = detail.nguoiNhan || detail.NguoiNhan || detail.tenKhachHang || 'Khách lẻ';
+                document.getElementById('lbl-total-money').textContent = fmt(detail.tongTien || detail.TongTien || 0);
+
+                const paymentMethod = detail.phuongThucThanhToan || detail.PhuongThucThanhToan || 'COD';
+                const transactionList = detail.giaoDichs || detail.GiaoDichs || detail.giaoDich || detail.GiaoDich || [];
+
+                console.log("🔍 Payment Method from API:", paymentMethod);
+                console.log("🔍 Transaction List from API:", transactionList);
+
+                updatePaymentDisplay(paymentMethod, transactionList, detail);
+                updateActionButtons(currentOrderStatus);
 
             } catch (e) {
                 console.error("❌ Lỗi:", e);
@@ -690,21 +1041,44 @@
         }
 
         async function processOrder(isApprove) {
-            if (!selectedOrderId) return alert("Chưa chọn đơn!");
-            const action = isApprove ? 'DuyetDon' : 'HuyDon';
-            if (!confirm(`Xác nhận ${isApprove ? 'DUYỆT' : 'HỦY'}?`)) return;
+            if (!selectedOrderId) return alert("Vui lòng chọn đơn hàng!");
+
+            const actionLocal = isApprove ? 'DuyetDon' : 'HuyDon';
+            const actionName = isApprove ? 'DUYỆT' : 'HỦY';
+
+            if (!confirm(`Bạn muốn ${actionName} đơn hàng #${selectedOrderId}?`)) return;
+
+            const btnArea = document.getElementById('action-buttons');
+            const originalHtml = btnArea.innerHTML;
+            btnArea.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Đang gọi API...</div>';
 
             try {
-                const res = await fetch(`${API_ACTION_URL}/${action}/${selectedOrderId}`, { method: 'POST' });
+                // Gọi về Controller MVC (bằng POST)
+                const url = `${API_ACTION_URL}/${actionLocal}/${selectedOrderId}`;
+                console.log("Calling MVC:", url);
+
+                const res = await fetch(url, { method: 'POST' });
+
+                // Kiểm tra nếu Controller MVC bị lỗi (ví dụ 500)
+                if (!res.ok) {
+                    throw new Error(`Lỗi kết nối MVC: ${res.status} ${res.statusText}`);
+                }
+
                 const rs = await res.json();
+                console.log("Kết quả trả về:", rs);
+
                 if (rs.success) {
-                    alert("Thành công!");
+                    alert("Thành công!\n" + (rs.msg || ""));
                     location.reload();
                 } else {
-                    alert("Lỗi: " + rs.msg);
+                    // Hiển thị lỗi chi tiết
+                    alert("LỖI:\n" + (rs.msg || JSON.stringify(rs)));
+                    btnArea.innerHTML = originalHtml;
                 }
             } catch (e) {
-                alert("Lỗi hệ thống!");
+                console.error(e);
+                alert("Lỗi hệ thống: " + e.message);
+                btnArea.innerHTML = originalHtml;
             }
         }
 

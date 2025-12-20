@@ -1,0 +1,137 @@
+﻿@using WEBPC_KHACHHANG.Models.ViewModels
+@model BuildPCViewModel
+
+@{
+    ViewBag.Title = "Xây dựng cấu hình PC";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Kiểm tra login
+    bool isLoggedIn = Session["UserToken"] != null || Session["User"] != null;
+}
+
+<link href="~/Content/css/build-pc.css" rel="stylesheet" />
+
+<section class="config-header pt-4 pb-3 bg-white border-bottom sticky-top" style="top: 0; z-index: 100;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold m-0 text-primary"><i class="bi bi-pc-display-horizontal me-2"></i>Xây Dựng Cấu Hình</h4>
+            <button class="btn btn-outline-danger btn-sm" onclick="resetConfig()">
+                <i class="bi bi-arrow-counterclockwise"></i> Làm mới
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="py-4 bg-light" style="min-height: 80vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-body p-0">
+                        @* [QUAN TRỌNG] Kiểm tra dữ liệu trước khi lặp *@
+                        @if (Model != null && Model.Categories != null && Model.Categories.Any())
+                        {
+                            int index = 0;
+                            foreach (var cat in Model.Categories)
+                            {
+                                index++;
+                                <div class="config-item-row p-3 border-bottom transition-bg" id="slot-row-@index" data-category="@cat">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center flex-grow-1">
+                                            <div class="cat-icon-box bg-light rounded p-2 me-3 text-center border" style="width: 64px; height: 64px; display:flex; align-items:center; justify-content:center;">
+                                                <i class="bi bi-cpu-fill fs-3 text-secondary opacity-50"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="fw-bold mb-1 text-uppercase text-secondary" style="font-size: 0.9rem;">@cat</h6>
+
+                                                <div class="state-empty text-muted small fst-italic">Vui lòng chọn linh kiện</div>
+
+                                                <div class="state-selected" style="display: none;">
+                                                    <div class="d-flex align-items-center mt-1">
+                                                        <img src="" class="selected-img rounded border me-2 bg-white" style="width: 48px; height: 48px; object-fit: cover;">
+                                                        <div>
+                                                            <div class="selected-name fw-bold text-dark text-truncate" style="max-width: 350px;"></div>
+                                                            <div class="selected-price text-danger fw-bold small"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="action-box ms-3">
+                                            <button class="btn btn-outline-primary btn-sm btn-select px-3 rounded-pill fw-bold" onclick="openProductModal(@index, '@cat')">
+                                                <i class="bi bi-plus-lg"></i> Chọn
+                                            </button>
+                                            <div class="btn-group btn-action-group" style="display: none;">
+                                                <button class="btn btn-sm btn-outline-secondary" onclick="openProductModal(@index, '@cat')"><i class="bi bi-arrow-repeat"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger" onclick="removeProduct(@index)"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="p-5 text-center text-muted">
+                                <p>Đang tải danh mục hoặc không có dữ liệu...</p>
+                                <small>Vui lòng kiểm tra lại BuildPCController.cs</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm sticky-top rounded-3" style="top: 100px; z-index: 30;">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="fw-bold m-0">Tổng kết cấu hình</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="summary-list mb-3" style="max-height: 250px; overflow-y: auto;">
+                            <div id="summary-text-default" class="text-center py-4 text-muted">
+                                <i class="bi bi-pc-display fs-1 opacity-25"></i>
+                                <p class="mt-2 small">Chưa có linh kiện nào.</p>
+                            </div>
+                            <ul id="summary-items" class="list-unstyled mb-0"></ul>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3 pt-3 border-top bg-light p-2 rounded">
+                            <span class="fw-bold">Tạm tính:</span>
+                            <span class="h4 text-danger fw-bold m-0" id="total-price">0₫</span>
+                        </div>
+
+                        <button id="btn-checkout-config" class="btn btn-primary w-100 py-2 fw-bold text-uppercase shadow-sm mb-2" onclick="addToCartAll()" disabled>
+                            Thêm vào giỏ & Thanh toán
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content h-100">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fw-bold" id="modalTitle">Chọn linh kiện</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="row g-3" id="modal-product-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Cấu hình biến cho JS
+        window.BuildConfig = {
+            isUserLoggedIn: '@(isLoggedIn ? "true" : "false")',
+            loginUrl: '@Url.Action("Index", "Login")'
+        };
+    </script>
+    <script src="~/Scripts/build-pc.js"></script>
+}

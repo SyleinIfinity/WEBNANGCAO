@@ -1,0 +1,201 @@
+﻿@model IEnumerable<WEBPC_KHACHHANG.Models.ViewModels.ProductViewModel>
+@using WEBPC_KHACHHANG.Models.ViewModels
+
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@* Link tới file CSS giao diện sản phẩm & danh mục *@
+<link href="~/Content/css/product-index.css" rel="stylesheet" />
+
+<div class="container py-4">
+    <div class="row">
+        @* --- CỘT TRÁI: DANH MỤC SẢN PHẨM (Giao diện mới) --- *@
+        <div class="col-lg-3 mb-4">
+            <div class="category-widget">
+                @* Header danh mục *@
+                <div class="cat-header">
+                    <i class="bi bi-grid-fill me-2"></i> Danh Mục
+                </div>
+
+                <ul class="cat-list">
+                    @* Item: Tất cả sản phẩm *@
+                    <li class="cat-item">
+                        <a href="@Url.Action("Index", "Product")"
+                           class="cat-link @(ViewBag.CurrentCategory == null ? "active" : "")">
+                            <span>Tất cả sản phẩm</span>
+                        </a>
+                    </li>
+
+                    @* Loop danh mục từ Server *@
+                    @if (ViewBag.Categories != null)
+                    {
+                        var allCats = ViewBag.Categories as List<CategoryViewModel>;
+                        // 1. Lọc lấy danh sách cha
+                        var parentCats = allCats.Where(c => c.MaDanhMucCha == null || c.MaDanhMucCha <= 0).ToList();
+
+                        foreach (var parent in parentCats)
+                        {
+                            // 2. Tìm con của danh mục này
+                            var childCats = allCats.Where(c => c.MaDanhMucCha == parent.MaDanhMuc).ToList();
+
+                            // Logic xác định trạng thái Active/Expand
+                            bool isParentActive = (ViewBag.CurrentCategory == parent.MaDanhMuc);
+                            bool isChildActive = childCats.Any(c => c.MaDanhMuc == ViewBag.CurrentCategory);
+                            bool expandGroup = isParentActive || isChildActive;
+
+                            <li class="cat-item">
+                                @* Link Cha *@
+                                <a href="@Url.Action("Index", "Product", new { categoryId = parent.MaDanhMuc })"
+                                   class="cat-link @(isParentActive ? "active" : "")"
+                                   @if (childCats.Any()) { <text> aria-expanded="@(expandGroup ? "true" : "false")" </text> }>
+
+                                    <span>@parent.TenDanhMuc</span>
+
+                                    @if (childCats.Any())
+                                    {
+                                        <i class="bi bi-chevron-down cat-icon"></i>
+                                    }
+                                </a>
+
+                                @* Menu Con *@
+                                @if (childCats.Any())
+                                {
+                                    <div class="cat-submenu @(expandGroup ? "expanded" : "")">
+                                        @foreach (var child in childCats)
+                                        {
+                                            <a href="@Url.Action("Index", "Product", new { categoryId = child.MaDanhMuc })"
+                                               class="sub-link @(ViewBag.CurrentCategory == child.MaDanhMuc ? "active" : "")">
+                                                @child.TenDanhMuc
+                                            </a>
+                                        }
+                                    </div>
+                                }
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+            @* Banner phụ (Tùy chọn hiển thị) *@
+            <div class="mt-4 text-center d-none d-lg-block">
+                <div class="p-4 bg-light rounded-3 border-0 shadow-sm">
+                    <h5 class="fw-bold text-primary">Hỗ trợ 24/7</h5>
+                    <p class="small text-muted mb-3">Liên hệ ngay nếu bạn cần tư vấn build PC</p>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill px-4">Chat Ngay</button>
+                </div>
+            </div>
+        </div>
+
+        @* --- CỘT PHẢI: DANH SÁCH SẢN PHẨM --- *@
+        <div class="col-lg-9">
+            @* Header & Bộ lọc *@
+            <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
+                <h4 class="mb-0 fw-bold text-dark">
+                    @if (ViewBag.CurrentCategory != null)
+                    {<span>Sản phẩm theo danh mục</span> }
+                    else if (!string.IsNullOrEmpty(ViewBag.CurrentSearch))
+                    { <span>Kết quả tìm kiếm: "@ViewBag.CurrentSearch"</span> }
+                else
+                { <span>Tất cả sản phẩm</span>}
+                </h4>
+                <span class="text-muted small">Hiển thị @(Model != null ? Model.Count() : 0) sản phẩm</span>
+            </div>
+
+            @* Grid sản phẩm *@
+            @if (Model != null && Model.Any())
+            {
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 product-card border-0 shadow-sm">
+                                <div class="position-relative overflow-hidden">
+                                    <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })">
+                                        @* Sử dụng class CSS thay vì inline style *@
+                                        <img src="@item.HinhAnhDaiDien" class="card-img-top p-3 product-img-custom" alt="@item.TenSanPham">
+                                    </a>
+                                    @if (item.GiaKhuyenMai.HasValue && item.GiaKhuyenMai > 0)
+                                    {
+                                        <span class="badge bg-danger position-absolute top-0 start-0 m-3">SALE</span>
+                                    }
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title fs-6">
+                                        <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="text-decoration-none text-dark fw-bold text-truncate-2">
+                                            @item.TenSanPham
+                                        </a>
+                                    </h5>
+
+                                    <div class="mt-auto">
+                                        <div class="price-box mb-2">
+                                            @if (item.GiaKhuyenMai.HasValue && item.GiaKhuyenMai > 0)
+                                            {
+                                                <span class="text-danger fw-bold fs-5 me-2">@item.GiaKhuyenMai.Value.ToString("N0") đ</span>
+                                                <span class="text-muted text-decoration-line-through small">@item.GiaBan.ToString("N0") đ</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-primary fw-bold fs-5">@item.GiaBan.ToString("N0") đ</span>
+                                            }
+                                        </div>
+                                        <div class="d-grid gap-2 d-flex mt-auto">
+                                            <a href="@Url.Action("Detail", "Product", new { id = item.MaSanPham })" class="btn btn-outline-primary btn-sm flex-grow-1">Chi tiết</a>
+                                            <button class="btn btn-primary btn-sm" onclick="addToCart(@item.MaSanPham)">
+                                                <i class="bi bi-cart-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center py-5" role="alert">
+                    <i class="bi bi-search fs-1 d-block mb-3"></i>
+                    <h5>Không tìm thấy sản phẩm nào!</h5>
+                    <p>Vui lòng thử lại với từ khóa khác hoặc danh mục khác.</p>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-primary mt-2">Xem tất cả sản phẩm</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@* Modal thông báo thêm giỏ hàng thành công *@
+<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addToCartModalLabel">
+                    <i class="bi bi-check-circle me-2"></i>Thành công!
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="bi bi-cart-check text-success" style="font-size: 3rem;"></i>
+                <p class="mt-3 mb-0">Sản phẩm đã được thêm vào giỏ hàng!</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tiếp tục mua sắm</button>
+                <a href="@Url.Action("Index", "Cart")" class="btn btn-primary">Xem giỏ hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Cấu hình biến cho file JS bên ngoài
+        window.ProductConfig = {
+            // Kiểm tra session user để dùng trong file JS
+            isUserLoggedIn: '@(Session["UserToken"] != null || Session["User"] != null ? "true" : "false")',
+            loginUrl: '@Url.Action("Index", "Login")'
+        };
+    </script>
+    <script src="~/Scripts/product-index.js"></script>
+}

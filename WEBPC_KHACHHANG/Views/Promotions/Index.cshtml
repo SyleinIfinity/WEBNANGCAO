@@ -1,0 +1,235 @@
+﻿@model WEBPC_KHACHHANG.Models.ViewModels.PromotionsViewModel
+
+@{
+    ViewBag.Title = "Khuyến mãi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/Content/css/promotions.css" rel="stylesheet" />
+}
+
+<!-- Hero Banner -->
+<section class="promo-hero-banner">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 text-center">
+                <h1 class="hero-banner-title mb-3">KHOẢNG KHUYẾN MÃI</h1>
+                <p class="hero-banner-subtitle">Săn Voucher - Mua Sắm Thả Ga - Giảm Giá Khủng!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<section class="voucher-section py-5">
+    <div class="container">
+        <!-- Voucher Highlight Banner -->
+        <div class="voucher-highlight-banner mb-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="highlight-content">
+                        <span class="highlight-badge">🔥 HOT DEAL</span>
+                        <h2 class="highlight-title">Giảm đến 60% cho đơn hàng đầu tiên</h2>
+                        <p class="highlight-text">Áp dụng cho tất cả linh kiện điện tử. Nhanh tay lưu mã!</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=400" alt="Discount" class="highlight-image">
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="voucher-filter-tabs mb-4">
+            <button class="filter-tab active">Tất Cả Mã</button>
+            <button class="filter-tab">Giảm Trực Tiếp</button>
+            <button class="filter-tab">Giảm Phần Trăm</button>
+            <button class="filter-tab">Sắp Hết Hạn</button>
+            <button class="filter-tab">Còn Nhiều Mã</button>
+        </div>
+
+        <!-- Link Kho Khuyến Mãi Đã Lưu -->
+        <div class="d-flex justify-content-end mb-3">
+            <a href="@Url.Action("Saved", "Promotions")" class="btn btn-outline-primary">
+                <i class="bi bi-bookmark-heart"></i>
+                Kho khuyến mãi đã lưu
+                <span class="badge bg-danger ms-1">
+                    @Model.KhoKhuyenMaiDaLuu.Count
+                </span>
+            </a>
+        </div>
+
+        <!-- Voucher Grid -->
+        <div class="row g-4">
+            @foreach (var km in Model.TatCaKhuyenMai)
+            {
+                bool daLuu = Model.KhoKhuyenMaiDaLuu.Contains(km.MaKhuyenMai);
+                <div class="col-lg-6">
+                    <div class="voucher-card">
+                        <div class="voucher-left @(km.LoaiGiam == "DIRECT" ? "special" : "")">
+                            <div class="voucher-icon">
+                                @if (km.LoaiGiam == "PERCENT")
+                                {
+                                    <i class="bi bi-percent"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-gift"></i>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="voucher-middle">
+                            <div class="voucher-discount">
+                                @if (km.LoaiGiam == "PERCENT")
+                                {
+                                    <span>GIẢM @km.GiaTriGiam%</span>
+                                }
+                                else
+                                {
+                                    <span>GIẢM @String.Format("{0:N0}₫", km.GiaTriGiam)</span>
+                                }
+                            </div>
+
+                            <div class="voucher-title">@km.TenChuongTrinh</div>
+
+                            <div class="voucher-desc">
+                                <i class="bi bi-tag"></i>
+                                Đơn tối thiểu:
+                                <strong>@String.Format("{0:N0}₫", km.DonHangToiThieu)</strong>
+                            </div>
+
+                            @if (km.GiamToiDa.HasValue)
+                            {
+                                <div class="voucher-desc">
+                                    <i class="bi bi-arrow-down-circle"></i>
+                                    Giảm tối đa:
+                                    <strong>@String.Format("{0:N0}₫", km.GiamToiDa)</strong>
+                                </div>
+                            }
+
+                            <div class="voucher-expiry">
+                                <i class="bi bi-clock"></i>
+                                HSD: @km.NgayKetThuc.ToString("dd/MM/yyyy")
+                                | Còn: <strong>@km.SoLuongConLai</strong> mã
+                            </div>
+                        </div>
+
+                        <div class="voucher-right">
+                            @if (daLuu)
+                            {
+                                <button class="voucher-btn disabled" disabled>
+                                    <i class="bi bi-check-circle"></i>
+                                    <span>ĐÃ LƯU</span>
+                                </button>
+                            }
+                            else if (km.CoTheLuu)
+                            {
+                                using (Html.BeginForm("LuuMaKhuyenMai", "Promotions", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="maKhuyenMai" value="@km.MaKhuyenMai" />
+                                    <button type="submit" class="voucher-btn">
+                                        <i class="bi bi-clipboard"></i>
+                                        <span>LƯU MÃ</span>
+                                    </button>
+                                }
+                            }
+                            else
+                            {
+                                <button class="voucher-btn disabled" disabled>
+                                    <i class="bi bi-clock"></i>
+                                    <span>KHÔNG KHẢ DỤNG</span>
+                                </button>
+                            }
+
+
+
+
+                            <div class="voucher-code">@km.MaCodeKM</div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <!-- Pagination -->
+        <nav aria-label="Voucher pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Trước</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Sau</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<!-- Combo Deals Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title mb-4">
+            <i class="bi bi-box-seam me-2"></i>Combo Ưu Đãi Đặc Biệt
+        </h2>
+        <div class="row g-4">
+            <!-- Combo 1 -->
+            <div class="col-md-6">
+                <div class="combo-card">
+                    <img src="https://images.unsplash.com/photo-1608564697071-ddf911d81370?w=600" alt="Arduino Combo" class="combo-image">
+                    <div class="combo-content">
+                        <span class="combo-badge">TIẾT KIỆM 600K</span>
+                        <h4 class="combo-title">Bộ Arduino Starter Kit</h4>
+                        <p class="combo-desc">Arduino Uno + Breadboard + Bộ cảm biến + Servo</p>
+                        <div class="combo-price-wrap">
+                            <span class="combo-old-price">1.800.000₫</span>
+                            <span class="combo-new-price">1.200.000₫</span>
+                        </div>
+                        <button class="btn-combo">Mua Combo Ngay</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combo 2 -->
+            <div class="col-md-6">
+                <div class="combo-card">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" alt="Raspberry Pi Combo" class="combo-image">
+                    <div class="combo-content">
+                        <span class="combo-badge">TIẾT KIỆM 500K</span>
+                        <h4 class="combo-title">Bộ Raspberry Pi Full</h4>
+                        <p class="combo-desc">Raspberry Pi 4 + Case + Nguồn + Thẻ nhớ 64GB</p>
+                        <div class="combo-price-wrap">
+                            <span class="combo-old-price">2.500.000₫</span>
+                            <span class="combo-new-price">2.000.000₫</span>
+                        </div>
+                        <button class="btn-combo">Mua Combo Ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (TempData["RequireLogin"] != null)
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var loginModal = new bootstrap.Modal(
+                document.getElementById('loginModal')
+            );
+            loginModal.show();
+        });
+    </script>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["ErrorMessage"]
+    </div>
+}
