@@ -1,162 +1,350 @@
 ﻿@{
     // Lấy dữ liệu từ Controller truyền sang
-    int maKhachHang = ViewBag.MaKhachHang;
+    int maKhachHang = ViewBag.MaKhachHang ?? 0;
     string apiUrl = ViewBag.ApiUrl;
-    // Lưu ý: apiUrl lúc này đang là "https://webapi-1-qldr.onrender.com/api"
 }
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
+    /* --- NÚT MỞ CHAT (Floating Button) --- */
     .chat-widget-toggle {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 30px;
+        right: 30px;
         width: 60px;
         height: 60px;
-        background: #0d6efd;
+        background: linear-gradient(135deg, #0d6efd, #0043a8);
         color: white;
         border-radius: 50%;
         border: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
         cursor: pointer;
         z-index: 9999;
-        font-size: 24px;
+        font-size: 28px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform 0.2s;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        animation: pulse-blue 2s infinite;
     }
 
         .chat-widget-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(10deg);
         }
 
-    .chat-widget-box {
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 360px;
-        height: 500px;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        z-index: 9999;
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-        border: 1px solid #ddd;
+    /* Hiệu ứng sóng lan tỏa */
+    @@keyframes pulse-blue {
+        0% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 15px rgba(13, 110, 253, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+        }
     }
 
+    /* --- KHUNG CHAT --- */
+    .chat-widget-box {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 380px;
+        height: 550px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        z-index: 9999;
+        display: none; /* Mặc định ẩn */
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #f0f0f0;
+        animation: slideInUp 0.3s ease-out;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @@keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Header */
     .chat-header {
-        background: #0d6efd;
+        background: linear-gradient(135deg, #0d6efd, #0a58ca);
         color: white;
-        padding: 12px 15px;
-        font-weight: 600;
+        padding: 15px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .chat-title {
+        font-weight: 700;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #00ff88;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 5px #00ff88;
     }
 
     .btn-close-chat {
-        background: none;
+        background: rgba(255,255,255,0.2);
         border: none;
         color: white;
-        font-size: 20px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        font-size: 16px;
         cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
+        .btn-close-chat:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+    /* Body */
     .chat-body {
         flex: 1;
-        padding: 15px;
+        padding: 20px;
         overflow-y: auto;
         background-color: #f8f9fa;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
+        scroll-behavior: smooth;
     }
 
-    .msg {
-        max-width: 80%;
-        padding: 8px 12px;
-        border-radius: 15px;
+    /* Tin nhắn */
+    .msg-container {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        max-width: 85%;
+    }
+
+    .msg-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 14px;
-        word-wrap: break-word;
-        line-height: 1.4;
+        color: #555;
+        flex-shrink: 0;
     }
 
-        .msg.bot {
-            align-self: flex-start;
-            background: #e9ecef;
-            color: #333;
-            border-bottom-left-radius: 2px;
+    .msg-content {
+        padding: 10px 14px;
+        border-radius: 18px;
+        font-size: 14px;
+        line-height: 1.5;
+        position: relative;
+        word-wrap: break-word;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    /* Style cho Bot */
+    .bot-container {
+        align-self: flex-start;
+    }
+
+    .bot-avatar {
+        background-color: #e7f1ff;
+        color: #0d6efd;
+        border: 1px solid #cce5ff;
+    }
+
+    .bot-msg {
+        background: white;
+        color: #333;
+        border: 1px solid #eee;
+        border-bottom-left-radius: 4px;
+    }
+
+        .bot-msg a {
+            color: #0d6efd;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed;
         }
 
-        .msg.user {
-            align-self: flex-end;
-            background: #0d6efd;
-            color: white;
-            border-bottom-right-radius: 2px;
-        }
+            .bot-msg a:hover {
+                border-bottom: 1px solid;
+            }
 
-        .msg.bot a {
-            color: #0056b3;
-            font-weight: bold;
-            text-decoration: underline;
-        }
+    /* Style cho User */
+    .user-container {
+        align-self: flex-end;
+        flex-direction: row-reverse;
+    }
 
+    .user-avatar {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+    .user-msg {
+        background: linear-gradient(135deg, #0d6efd, #0056b3);
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    /* Footer */
     .chat-footer {
-        padding: 10px;
+        padding: 15px;
         border-top: 1px solid #eee;
         display: flex;
         background: white;
-        gap: 5px;
+        gap: 10px;
+        align-items: center;
     }
 
     .chat-input {
         flex: 1;
-        padding: 8px 12px;
-        border: 1px solid #ddd;
-        border-radius: 20px;
+        padding: 10px 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 25px;
         outline: none;
+        background: #f9f9f9;
+        transition: 0.2s;
+        font-size: 14px;
     }
 
+        .chat-input:focus {
+            background: white;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        }
+
     .btn-send {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         background: #0d6efd;
         color: white;
         border: none;
         cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
     }
 
-    .typing {
-        font-size: 11px;
-        color: #888;
-        margin-left: 10px;
-        display: none;
-        margin-bottom: 5px;
+        .btn-send:hover {
+            background: #0b5ed7;
+            transform: scale(1.05);
+        }
+
+        .btn-send:active {
+            transform: scale(0.95);
+        }
+
+    /* --- HIỆU ỨNG TYPING (3 Chấm nhảy) --- */
+    .typing-indicator {
+        display: none; /* Mặc định ẩn */
+        padding: 10px 15px;
+        background: white;
+        border-radius: 18px;
+        border-bottom-left-radius: 4px;
+        border: 1px solid #eee;
+        align-self: flex-start;
+        margin-left: 36px; /* Để thẳng hàng với tin nhắn bot */
+        width: fit-content;
+        margin-bottom: 10px;
+    }
+
+    .typing-dot {
+        height: 6px;
+        width: 6px;
+        background-color: #adb5bd;
+        border-radius: 50%;
+        display: inline-block;
+        animation: bounce 1.4s infinite ease-in-out both;
+        margin: 0 2px;
+    }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+    @@keyframes bounce {
+        0%, 80%, 100% {
+            transform: scale(0);
+        }
+
+        40% {
+            transform: scale(1);
+        }
     }
 </style>
 
 <button class="chat-widget-toggle" id="btnOpenChat" title="Chat với AI">
-    <i class="fa fa-comments"></i>
+    <i class="fa-solid fa-comment-dots"></i>
 </button>
 
 <div class="chat-widget-box" id="boxChat">
     <div class="chat-header">
-        <span><i class="fa fa-robot"></i> Trợ lý WEBPC</span>
-        <button class="btn-close-chat" id="btnCloseChat">&times;</button>
+        <div class="chat-title">
+            <i class="fa-solid fa-robot"></i>
+            <span>Trợ lý WEBPC</span>
+            <span class="status-dot" title="Online"></span>
+        </div>
+        <button class="btn-close-chat" id="btnCloseChat">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
     </div>
 
     <div class="chat-body" id="listMessage">
-        <div class="msg bot">Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?</div>
-    </div>
+        <div class="msg-container bot-container">
+            <div class="msg-avatar bot-avatar"><i class="fa-solid fa-robot"></i></div>
+            <div class="msg-content bot-msg">
+                Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?
+            </div>
+        </div>
 
-    <div class="typing" id="lblTyping">Bot đang suy nghĩ...</div>
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    </div>
 
     <div class="chat-footer">
         <input type="text" class="chat-input" id="txtChatInput" placeholder="Nhập câu hỏi..." autocomplete="off">
-        <button class="btn-send" id="btnSendChat"><i class="fa fa-paper-plane"></i></button>
+        <button class="btn-send" id="btnSendChat">
+            <i class="fa-solid fa-paper-plane"></i>
+        </button>
     </div>
 </div>
 
@@ -164,7 +352,6 @@
     document.addEventListener("DOMContentLoaded", function () {
         // --- CẤU HÌNH ---
         const MA_KHACH = @maKhachHang;
-        // API_URL đã chứa chữ ".../api" do Controller lấy từ Web.config
         const API_URL = '@apiUrl';
 
         // --- DOM ELEMENTS ---
@@ -174,11 +361,10 @@
         const listMsg = document.getElementById('listMessage');
         const txtInput = document.getElementById('txtChatInput');
         const btnSend = document.getElementById('btnSendChat');
-        const lblTyping = document.getElementById('lblTyping');
+        const typingIndicator = document.getElementById('typingIndicator');
 
-        // --- 1. LOGIC TRẠNG THÁI ---
+        // --- 1. QUẢN LÝ TRẠNG THÁI (Mở/Đóng) ---
         const isChatOpen = sessionStorage.getItem('WEBPC_ChatState') === 'open';
-
         if (isChatOpen) {
             openChatBox(false);
         }
@@ -196,8 +382,11 @@
         function openChatBox(isClick) {
             boxChat.style.display = 'flex';
             btnOpen.style.display = 'none';
-            loadChatHistory(); // Gọi tải lịch sử
-            if(isClick) txtInput.focus();
+            // Chỉ load lịch sử nếu nội dung còn trống (tránh load lại nhiều lần)
+            if (listMsg.children.length <= 2) {
+                loadChatHistory();
+            }
+            if(isClick) setTimeout(() => txtInput.focus(), 300);
         }
 
         function closeChatBox() {
@@ -205,40 +394,87 @@
             btnOpen.style.display = 'flex';
         }
 
-        // --- 2. LOGIC GỌI API (QUAN TRỌNG: Đã xóa /api) ---
+        // --- 2. HÀM HIỂN THỊ TIN NHẮN (GIAO DIỆN MỚI) ---
+        function appendMessage(role, html) {
+            const isBot = role === 'bot';
 
+            const container = document.createElement('div');
+            container.className = `msg-container ${isBot ? 'bot-container' : 'user-container'}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = `msg-avatar ${isBot ? 'bot-avatar' : 'user-avatar'}`;
+            avatar.innerHTML = isBot ? '<i class="fa-solid fa-robot"></i>' : '<i class="fa-solid fa-user"></i>';
+
+            const content = document.createElement('div');
+            content.className = `msg-content ${isBot ? 'bot-msg' : 'user-msg'}`;
+            content.innerHTML = html;
+
+            // Thứ tự hiển thị: User (Content - Avatar), Bot (Avatar - Content) do dùng row-reverse ở CSS User
+            container.appendChild(avatar);
+            container.appendChild(content);
+
+            // Chèn trước Typing Indicator để hiệu ứng luôn ở cuối
+            listMsg.insertBefore(container, typingIndicator);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            listMsg.scrollTop = listMsg.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            scrollToBottom();
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function parseMarkdown(text) {
+            if (!text) return "";
+            // Chuyển link Markdown [Tên](Url) thành thẻ a
+            const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+            return text.replace(regex, (match, name, url) => {
+                return `<a href="${url}" target="_blank">${name} <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:10px"></i></a>`;
+            }).replace(/\n/g, '<br>'); // Chuyển xuống dòng
+        }
+
+        // --- 3. LOGIC API ---
         function loadChatHistory() {
             if (MA_KHACH <= 0) return;
 
-            // Link: .../api/ChatBot/history
+            // Xóa nội dung cũ trừ câu chào và typing
+            // (Thực tế nên giữ lại, ở đây giả sử load lại mới)
+            // listMsg.innerHTML = '...';
+
             fetch(`${API_URL}/ChatBot/history?maKhachHang=${MA_KHACH}`)
                 .then(res => res.json())
                 .then(data => {
-                    // Log ra xem dữ liệu Server trả về thực tế là gì (Debug)
-                    console.log("Lịch sử chat:", data);
+                    console.log("History:", data);
+                    // Xóa các tin nhắn cũ (trừ câu chào mặc định)
+                    // Cách đơn giản: Xóa hết rồi thêm lại câu chào + lịch sử
+                    listMsg.innerHTML = '';
 
-                    listMsg.innerHTML = '<div class="msg bot">Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?</div>';
+                    // Thêm câu chào
+                    const welcomeDiv = document.createElement('div');
+                    welcomeDiv.className = 'msg-container bot-container';
+                    welcomeDiv.innerHTML = `<div class="msg-avatar bot-avatar"><i class="fa-solid fa-robot"></i></div><div class="msg-content bot-msg">Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?</div>`;
+                    listMsg.appendChild(welcomeDiv);
+                    listMsg.appendChild(typingIndicator); // Đưa typing xuống cuối
 
                     if (data && data.length > 0) {
                         data.forEach(item => {
-                            // [FIX LỖI QUAN TRỌNG TẠI ĐÂY]
-                            // Kiểm tra cả 'Role' (PascalCase) và 'role' (camelCase)
                             const roleRaw = item.role || item.Role;
                             const contentRaw = item.content || item.Content;
-
                             if (roleRaw && contentRaw) {
-                                // Map role: 'model' -> 'bot', 'user' -> 'user'
                                 const roleClass = roleRaw === 'model' ? 'bot' : 'user';
-
-                                // Parse Markdown link
-                                const htmlContent = parseMarkdown(contentRaw);
-                                appendMessage(roleClass, htmlContent);
+                                appendMessage(roleClass, parseMarkdown(contentRaw));
                             }
                         });
-                        scrollToBottom();
                     }
                 })
-                .catch(err => console.error("Lỗi tải lịch sử:", err));
+                .catch(err => console.error("Lỗi history:", err));
         }
 
         function sendMessage() {
@@ -246,18 +482,20 @@
             if (!text) return;
 
             if (MA_KHACH <= 0) {
-                alert("Bạn cần đăng nhập để chat với nhân viên tư vấn.");
-                // window.location.href = '/Login'; // Bỏ comment nếu muốn redirect
+                // Hiển thị thông báo đẹp hơn thay vì alert
+                appendMessage('bot', 'Bạn vui lòng <a href="/Login">Đăng nhập</a> để chat với mình nhé!');
+                txtInput.value = '';
                 return;
             }
 
+            // 1. Hiện tin nhắn khách
             appendMessage('user', text);
             txtInput.value = '';
-            lblTyping.style.display = 'block';
-            scrollToBottom();
 
-            // [SỬA LẠI]: Bỏ chữ /api ở đây luôn
-            // Link sẽ thành: .../api/ChatBot/ask
+            // 2. Hiện hiệu ứng typing
+            showTyping();
+
+            // 3. Gọi API
             fetch(`${API_URL}/ChatBot/ask`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -268,45 +506,24 @@
             })
             .then(res => res.json())
             .then(data => {
-                lblTyping.style.display = 'none';
+                hideTyping();
                 if (data.bot_reply) {
-                    const botHtml = parseMarkdown(data.bot_reply);
-                    appendMessage('bot', botHtml);
+                    appendMessage('bot', parseMarkdown(data.bot_reply));
                 } else {
                     appendMessage('bot', 'Hệ thống đang bận, vui lòng thử lại.');
                 }
-                scrollToBottom();
             })
             .catch(err => {
-                lblTyping.style.display = 'none';
-                appendMessage('bot', 'Lỗi kết nối server.');
+                hideTyping();
+                appendMessage('bot', 'Đang mất kết nối tới máy chủ AI.');
                 console.error(err);
             });
         }
 
+        // --- 4. SỰ KIỆN ---
         btnSend.addEventListener('click', sendMessage);
         txtInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
-
-        // --- 3. TIỆN ÍCH ---
-        function appendMessage(role, html) {
-            const div = document.createElement('div');
-            div.className = `msg ${role}`;
-            div.innerHTML = html;
-            listMsg.appendChild(div);
-        }
-
-        function scrollToBottom() {
-            listMsg.scrollTop = listMsg.scrollHeight;
-        }
-
-        function parseMarkdown(text) {
-            if (!text) return "";
-            const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-            return text.replace(regex, (match, name, url) => {
-                return `<a href="${url}" target="_blank">${name}</a>`;
-            });
-        }
     });
 </script>
