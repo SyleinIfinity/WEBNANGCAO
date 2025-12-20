@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DonHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoAddressController.cs" />
@@ -157,6 +158,7 @@
     </Compile>
     <Compile Include="Models\Requests\AddressCreateRequest.cs" />
     <Compile Include="Models\Requests\AddToCartRequest.cs" />
+    <Compile Include="Models\Requests\ChatRequest.cs" />
     <Compile Include="Models\Requests\GetSelectedCartItemsRequest.cs" />
     <Compile Include="Models\Requests\RegisterRequest.cs" />
     <Compile Include="Models\Requests\TaoDonHangRequest.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="Models\Responses\ApiQrData.cs" />
     <Compile Include="Models\Responses\ApiQrResponse.cs" />
     <Compile Include="Models\Responses\ApiStatusResponse.cs" />
+    <Compile Include="Models\Responses\ChatMessageResponse.cs" />
     <Compile Include="Models\Responses\GioHangResponse.cs" />
     <Compile Include="Models\Responses\KhachHangResponse.cs" />
     <Compile Include="Models\Responses\OrderApiResponse.cs" />
@@ -217,6 +220,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Chat\" />
     <Folder Include="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +241,7 @@
     <Content Include="Views\DonHang\Index.cshtml" />
     <Content Include="Views\DonHang\Detail.cshtml" />
     <Content Include="Views\Promotions\Saved.cshtml" />
+    <Content Include="Views\Shared\_ChatBox.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
