@@ -16,6 +16,7 @@ namespace WEBPC_NHANVIEN.Models
         public string soDienThoaiGiao { get; set; }
         public string nguoiNhan { get; set; }
         public decimal phiVanChuyen { get; set; }
+        public string TrangThai { get; set; }
 
         // Trường bổ sung để hiển thị (từ JOIN API)
         public string tenKhachHang { get; set; }
