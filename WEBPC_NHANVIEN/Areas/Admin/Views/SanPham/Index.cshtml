@@ -1,0 +1,708 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.SanPhamViewModel>
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        /* Main Theme Colors */
+        :root {
+            --primary-blue: #007bff;
+            --primary-green: #28a745;
+            --dark-blue: #0056b3;
+            --light-blue: #e3f2fd;
+            --tech-gray: #f8f9fa;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
+            color: white;
+        }
+
+        .page-header h4 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Search & Filter Card */
+        .filter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .filter-card .section-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-card .section-title i {
+            margin-right: 8px;
+            color: var(--primary-blue);
+        }
+
+        /* Custom Search Input */
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-input-wrapper .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .search-input-wrapper input {
+            padding-left: 45px;
+            height: 48px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .search-input-wrapper input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        /* Custom Select */
+        .custom-select-wrapper select {
+            height: 48px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            padding: 0 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            background-color: white;
+        }
+
+        .custom-select-wrapper select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        /* Stats Cards */
+        .stats-row {
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .stat-card.total .stat-icon {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1976d2;
+        }
+
+        .stat-card.active .stat-icon {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #388e3c;
+        }
+
+        .stat-card.low-stock .stat-icon {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            color: #f57c00;
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Main Table Card */
+        .table-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e9ecef;
+        }
+
+        .table-card-header {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 20px 25px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .table-card-header h6 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .table-card-header h6 i {
+            margin-right: 10px;
+            color: var(--primary-blue);
+        }
+
+        /* Enhanced Table */
+        .product-table {
+            margin-bottom: 0;
+        }
+
+        .product-table thead th {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            color: #495057;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            padding: 16px 20px;
+            white-space: nowrap;
+        }
+
+        .product-table tbody td {
+            padding: 20px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-table tbody tr {
+            transition: all 0.2s;
+        }
+
+        .product-table tbody tr:hover {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Product Image */
+        .product-image {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.8);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            position: relative;
+        }
+
+        /* Product Info */
+        .product-name {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .product-id {
+            font-size: 0.75rem;
+            color: #6c757d;
+            font-weight: 500;
+            background: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Category Badge */
+        .category-badge {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1976d2;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(25, 118, 210, 0.2);
+        }
+
+        /* Price Display */
+        .price-container {
+            text-align: right;
+        }
+
+        .price-main {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .price-original {
+            font-size: 0.85rem;
+            color: #999;
+            text-decoration: line-through;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .price-discount {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* Stock Badge */
+        .stock-badge {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .stock-badge.high {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .stock-badge.medium {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            color: #e65100;
+            border: 1px solid #ffcc80;
+        }
+
+        .stock-badge.low {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        /* Status Icons */
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
+        .status-icon.active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-icon.inactive {
+            background: #f5f5f5;
+            color: #9e9e9e;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-btn.edit {
+            color: #007bff;
+        }
+
+        .action-btn.edit:hover {
+            background: #e3f2fd;
+            border-color: #007bff;
+        }
+
+        .action-btn.delete {
+            color: #dc3545;
+        }
+
+        .action-btn.delete:hover {
+            background: #ffebee;
+            border-color: #dc3545;
+        }
+
+        /* Primary Button */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 12px 28px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Reset Filter Button */
+        .btn-reset {
+            height: 48px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h5 {
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: #9e9e9e;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .page-header {
+                padding: 20px;
+            }
+
+            .filter-card {
+                padding: 20px;
+            }
+
+            .product-table thead th,
+            .product-table tbody td {
+                padding: 12px 8px;
+                font-size: 0.85rem;
+            }
+
+            .product-image {
+                width: 48px;
+                height: 48px;
+            }
+
+            .stat-card {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+            <h4 class="mb-0">
+                <i class="fas fa-microchip me-2"></i>Quản Lý Sản Phẩm
+            </h4>
+            <p class="mb-0 mt-2">Quản lý kho linh kiện máy tính và thiết bị PC</p>
+        </div>
+        <div class="mt-3 mt-md-0">
+            <a href="@Url.Action("Create")" class="btn btn-light btn-primary-custom">
+                <i class="fas fa-plus-circle me-2"></i>Thêm Sản Phẩm
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div class="stats-row row g-3">
+    <div class="col-md-4">
+        <div class="stat-card total">
+            <div class="stat-icon">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div class="stat-label">Tổng sản phẩm</div>
+            <div class="stat-value">@(Model?.Count() ?? 0)</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card active">
+            <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="stat-label">Đang kinh doanh</div>
+            <div class="stat-value">@(Model?.Count(x => x.TrangThai) ?? 0)</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-card low-stock">
+            <div class="stat-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="stat-label">Sắp hết hàng</div>
+            <div class="stat-value">@(Model?.Count(x => x.SoLuongTon <= 5) ?? 0)</div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Card -->
+<div class="filter-card">
+    <div class="section-title">
+        <i class="fas fa-filter"></i>
+        Bộ lọc tìm kiếm
+    </div>
+
+    <form method="get" action="@Url.Action("Index")">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label small fw-semibold text-muted mb-2">Tên sản phẩm</label>
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text"
+                           name="search"
+                           value="@ViewBag.CurrentSearch"
+                           class="form-control"
+                           placeholder="Tìm kiếm theo tên sản phẩm...">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label small fw-semibold text-muted mb-2">Danh mục</label>
+                <div class="custom-select-wrapper">
+                    <select name="categoryId" class="form-select" onchange="this.form.submit()">
+                        <option value="">Tất cả danh mục</option>
+                        @if (ViewBag.Categories != null)
+                        {
+                            foreach (var cat in ViewBag.Categories)
+                            {
+                                var isSelected = (ViewBag.CurrentCategory != null && (int)ViewBag.CurrentCategory == cat.MaDanhMuc) ? "selected" : "";
+                                <option value="@cat.MaDanhMuc" @isSelected>@cat.TenDanhMuc</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                @if (!string.IsNullOrEmpty(ViewBag.CurrentSearch) || ViewBag.CurrentCategory != null)
+                {
+                    <a href="@Url.Action("Index")" class="btn btn-outline-danger btn-reset w-100">
+                        <i class="fas fa-times-circle me-2"></i>Xóa bộ lọc
+                    </a>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-primary btn-reset w-100">
+                        <i class="fas fa-search me-2"></i>Tìm kiếm
+                    </button>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Main Table Card -->
+<div class="table-card">
+    <div class="table-card-header">
+        <h6>
+            <i class="fas fa-list-alt"></i>
+            Danh sách sản phẩm (@(Model?.Count() ?? 0))
+        </h6>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table product-table">
+            <thead>
+                <tr>
+                    <th width="80">Mã SP</th>
+                    <th width="90">Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th width="150">Danh mục</th>
+                    <th width="140" class="text-end">Giá bán</th>
+                    <th width="120" class="text-center">Tồn kho</th>
+                    <th width="100" class="text-center">Trạng thái</th>
+                    <th width="120" class="text-center">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="product-id">#@item.MaSanPham</span>
+                            </td>
+                            <td>
+                                <img src="@(string.IsNullOrEmpty(item.HinhAnh) ? "https://via.placeholder.com/150?text=PC" : item.HinhAnh)"
+                                     class="product-image"
+                                     alt="@item.TenSanPham">
+                            </td>
+                            <td>
+                                <div class="product-name">@item.TenSanPham</div>
+                            </td>
+                            <td>
+                                <span class="category-badge">
+                                    <i class="fas fa-tag me-1"></i>@item.TenDanhMuc
+                                </span>
+                            </td>
+                            <td>
+                                <div class="price-container">
+                                    @if (item.GiaKhuyenMai.HasValue && item.GiaKhuyenMai.Value > 0)
+                                    {
+                                        <div class="price-discount mb-1">
+                                            @item.GiaKhuyenMai.Value.ToString("N0")₫
+                                        </div>
+                                        <span class="price-original">@item.GiaBan.ToString("N0")₫</span>
+                                    }
+                                    else
+                                    {
+                                        <div class="price-main">@item.GiaBan.ToString("N0")₫</div>
+                                    }
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @if (item.SoLuongTon <= 5)
+                                {
+                                    <span class="stock-badge low">
+                                        <i class="fas fa-exclamation-circle me-1"></i>@item.SoLuongTon
+                                    </span>
+                                }
+                                else if (item.SoLuongTon <= 20)
+                                {
+                                    <span class="stock-badge medium">
+                                        <i class="fas fa-box me-1"></i>@item.SoLuongTon
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="stock-badge high">
+                                        <i class="fas fa-boxes me-1"></i>@item.SoLuongTon
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.TrangThai)
+                                {
+                                    <span class="status-icon active" title="Đang kinh doanh">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="status-icon inactive" title="Ngừng kinh doanh">
+                                        <i class="fas fa-ban"></i>
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a href="@Url.Action("Edit", new { id = item.MaSanPham })"
+                                   class="action-btn edit me-2"
+                                   title="Chỉnh sửa">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button"
+                                        class="action-btn delete"
+                                        title="Xóa"
+                                        onclick="window.showCustomConfirm('Bạn có chắc muốn xóa sản phẩm <strong>@item.TenSanPham</strong>?', () => document.getElementById('frm-del-@item.MaSanPham').submit())">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <form id="frm-del-@item.MaSanPham"
+                                      action="@Url.Action("Delete", new { id = item.MaSanPham })"
+                                      method="post"
+                                      class="d-none">
+                                    @Html.AntiForgeryToken()
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <i class="fas fa-box-open"></i>
+                                <h5>Chưa có sản phẩm nào</h5>
+                                <p class="text-muted">Thêm sản phẩm đầu tiên để bắt đầu quản lý kho hàng</p>
+                                <a href="@Url.Action("Create")" class="btn btn-primary-custom mt-3">
+                                    <i class="fas fa-plus me-2"></i>Thêm sản phẩm mới
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/sanpham-common.js"></script>
+}

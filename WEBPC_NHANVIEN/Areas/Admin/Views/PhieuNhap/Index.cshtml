@@ -1,0 +1,119 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.PhieuNhapResponseViewModel>
+
+@{
+    ViewBag.Title = "Danh Sách Phiếu Nhập";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary fw-bold m-0">
+        <i class="fa fa-warehouse me-2"></i>Quản Lý Phiếu Nhập
+    </h2>
+    <a href="@Url.Action("Create", "PhieuNhap", new { area = "Admin" })" class="btn btn-success shadow-sm">
+        <i class="fa fa-plus-circle me-2"></i>Tạo Phiếu Nhập Mới
+    </a>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fa fa-check-circle me-2"></i>@TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <table class="table table-striped table-hover align-middle mb-0">
+            <thead class="bg-light text-dark">
+                <tr>
+                    <th class="ps-3 py-3">Mã Phiếu</th>
+                    <th>Ngày Nhập</th>
+                    <th>Người Tạo</th>
+                    <th>Ghi Chú</th>
+                    <th class="text-end">Tổng Tiền</th>
+                    <th class="text-center pe-3" style="width: 150px;">Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-3 fw-bold text-primary">
+                                <a href="@Url.Action("Details", new { id = item.MaPhieuNhap })" class="text-decoration-none">
+                                    @item.MaCodePhieu
+                                </a>
+                            </td>
+                            <td>
+                                <i class="fa fa-calendar-alt text-muted me-1"></i>
+                                @item.NgayNhap.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary bg-opacity-10 text-dark border">
+                                    <i class="fa fa-user me-1"></i>@item.TenNhanVien
+                                </span>
+                            </td>
+                            <td class="text-muted text-truncate" style="max-width: 200px;">
+                                @(string.IsNullOrEmpty(item.GhiChu) ? "-" : item.GhiChu)
+                            </td>
+                            <td class="text-end fw-bold text-success">
+                                @item.TongTienNhap.ToString("N0") ₫
+                            </td>
+                            <td class="text-center pe-3">
+                                <div class="btn-group" role="group">
+                                    <a href="@Url.Action("Details", new { id = item.MaPhieuNhap })"
+                                       class="btn btn-sm btn-outline-info" title="Xem chi tiết">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    <a href="@Url.Action("Edit", new { id = item.MaPhieuNhap })"
+                                       class="btn btn-sm btn-outline-warning" title="Sửa ghi chú">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+
+                                    @using (Html.BeginForm("Delete", "PhieuNhap", FormMethod.Post, new { @class = "d-inline" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", item.MaPhieuNhap)
+                                        <button type="submit" class="btn btn-sm btn-outline-danger ms-1"
+                                                title="Xóa phiếu"
+                                                onclick="return confirm('CẢNH BÁO: Bạn có chắc chắn muốn xóa phiếu nhập @item.MaCodePhieu không?\nThao tác này sẽ trừ lại số lượng tồn kho tương ứng!');">
+                                            <i class="fa fa-trash-alt"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="fa fa-box-open fa-3x mb-3 opacity-50"></i>
+                            <p class="m-0">Chưa có dữ liệu phiếu nhập nào.</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Nếu muốn thêm DataTables, uncomment đoạn dưới
+        /*
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json"
+                },
+                "order": [[ 1, "desc" ]] // Mặc định sắp xếp giảm dần theo ngày nhập
+            });
+        });
+        */
+    </script>
+}

@@ -150,10 +150,28 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LuongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhieuNhapController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SanPhamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThongSoController.cs" />
+    <Compile Include="Areas\Admin\Filters\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Areas\Admin\Models\AnhSanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\KhachHangViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\NhanVienViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\PhieuNhapViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ProductViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\SanPhamViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ThongSoViewModel.cs" />
     <Compile Include="Areas\Sale\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Sale\Controllers\DonHangController.cs" />
     <Compile Include="Areas\Sale\Controllers\KhuyenMaiController.cs" />
+    <Compile Include="Areas\Sale\Filters\SaleAuthorizeAttribute.cs" />
     <Compile Include="Areas\Sale\SaleAreaRegistration.cs" />
+    <Compile Include="Areas\Tech\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Tech\Filters\TechAuthorizeAttribute.cs" />
     <Compile Include="Areas\Tech\TechAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -168,8 +186,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Controllers\style.css" />
+    <Content Include="Areas\Admin\Data\css\donhang.css" />
     <Content Include="Areas\Admin\Data\css\style.css" />
+    <Content Include="Areas\Admin\Data\css\admin_theme.css" />
     <Content Include="Areas\Admin\Data\images\monkey.jpg" />
+    <Content Include="Areas\Admin\scripts\khachhang-custom.js" />
+    <Content Include="Areas\Admin\scripts\nhanvien-index.js" />
+    <Content Include="Areas\Admin\scripts\phieunhap-form.js" />
+    <Content Include="Areas\Admin\scripts\sanpham-common.js" />
+    <Content Include="Areas\Admin\scripts\sanpham-edit.js" />
     <Content Include="Areas\Admin\Views\Shared\style.css" />
     <Content Include="Areas\Sale\Controllers\style.css" />
     <Content Include="Areas\Sale\Data\css\style.css" />
@@ -185,7 +210,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Requests\style.css" />
     <Content Include="Scripts\style.css" />
     <Content Include="Services\style.css" />
     <Content Include="Web.config" />
@@ -203,16 +227,37 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Sale\Views\Home\" />
+    <Folder Include="Models\Requests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Sale\Views\web.config" />
     <Content Include="Areas\Tech\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Luong\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\SanPham\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVien\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PhieuNhap\Details.cshtml" />
     <Content Include="Areas\Sale\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Sale\Views\Shared\_LayoutSale.cshtml" />
     <Content Include="Areas\Sale\Views\KhuyenMai\Index.cshtml" />
     <Content Include="Areas\Sale\Views\DonHang\Index.cshtml" />
     <Content Include="Areas\Sale\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Tech\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Tech\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Tech\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Edit.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>

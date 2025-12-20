@@ -1,0 +1,629 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.CreateProductViewModel
+@{
+    ViewBag.Title = "Thêm Sản Phẩm Mới";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <style>
+        /* Main Container */
+        .create-product-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header-create {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
+            color: white;
+        }
+
+        .page-header-create h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .page-header-create .subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Section Card */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px 25px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section-header h6 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header h6 i {
+            margin-right: 10px;
+            color: #007bff;
+            font-size: 1.2rem;
+        }
+
+        .section-header .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .section-body {
+            padding: 30px;
+        }
+
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .form-label .text-danger {
+            font-size: 1.1rem;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-control-lg {
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Input Groups */
+        .input-group {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .input-group .form-control {
+            border-right: none;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-left: none;
+            color: #6c757d;
+            font-weight: 600;
+            padding: 12px 16px;
+        }
+
+        /* Switch Toggle */
+        .form-check-input {
+            width: 48px;
+            height: 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid #dee2e6;
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .form-check-label {
+            margin-left: 10px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        /* Sidebar Sections */
+        .sidebar-section {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            padding: 18px 25px;
+            color: white;
+        }
+
+        .sidebar-header.pricing {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .sidebar-header.images {
+            background: linear-gradient(135deg, #6f42c1 0%, #9d50bb 100%);
+        }
+
+        .sidebar-header h6 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-header h6 i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-body {
+            padding: 25px;
+        }
+
+        /* Image Upload */
+        .image-upload-btn {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .image-upload-btn:hover {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+
+        .image-upload-btn i {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .image-upload-btn .upload-text {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .image-upload-btn .upload-hint {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+
+        /* Image Preview */
+        .preview-section {
+            margin-top: 20px;
+        }
+
+        .preview-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .preview-header i {
+            margin-right: 8px;
+            color: #007bff;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .preview-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            border-color: #007bff;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .preview-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+
+        .preview-badge i {
+            margin-right: 4px;
+        }
+
+        .preview-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            padding: 12px;
+            color: white;
+        }
+
+        .preview-info small {
+            font-size: 0.8rem;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-custom i {
+            margin-right: 8px;
+        }
+
+        .btn-back {
+            background: white;
+            border: 2px solid #e9ecef;
+            color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #007bff;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .info-box i {
+            color: #007bff;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .info-box-text {
+            color: #495057;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Validation */
+        .text-danger {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 16px 20px;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .page-header-create {
+                padding: 20px;
+            }
+
+            .section-body,
+            .sidebar-body {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-custom {
+                width: 100%;
+            }
+        }
+    </style>
+}
+
+<div class="create-product-container">
+    <!-- Page Header -->
+    <div class="page-header-create">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+                <h4><i class="fas fa-plus-square me-2"></i>Thêm Sản Phẩm Mới</h4>
+                <div class="subtitle">Nhập thông tin chi tiết sản phẩm linh kiện PC</div>
+            </div>
+            <div class="action-buttons mt-3 mt-md-0">
+                <a href="@Url.Action("Index")" class="btn btn-back btn-custom">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle me-3" style="font-size: 1.5rem;"></i>
+                <div>
+                    <strong>Có lỗi xảy ra!</strong> Vui lòng kiểm tra lại thông tin nhập vào.
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Basic Information -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h6>
+                            <i class="fas fa-info-circle"></i>
+                            Thông Tin Cơ Bản
+                            <span class="badge bg-primary ms-2">Bắt buộc</span>
+                        </h6>
+                    </div>
+                    <div class="section-body">
+                        <div class="info-box">
+                            <i class="fas fa-lightbulb"></i>
+                            <span class="info-box-text">
+                                <strong>Lưu ý:</strong> Tên sản phẩm nên rõ ràng, bao gồm thương hiệu và thông số kỹ thuật chính (VD: RAM Kingston Fury Beast 16GB DDR4 3200MHz)
+                            </span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Tên sản phẩm <span class="text-danger">*</span>
+                            </label>
+                            @Html.TextBoxFor(m => m.TenSanPham, new
+                            {
+                                @class = "form-control form-control-lg",
+                                placeholder = "VD: CPU Intel Core i5-12400F (6 nhân 12 luồng)",
+                                autocomplete = "off"
+                            })
+                            @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    Danh mục <span class="text-danger">*</span>
+                                </label>
+                                @Html.DropDownListFor(m => m.MaDanhMuc,
+                                    new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                                    "-- Chọn danh mục sản phẩm --",
+                                    new { @class = "form-select" })
+                                @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Trạng thái kinh doanh</label>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(m => m.TrangThai, new
+                                        {
+                                            @class = "form-check-input",
+                                            role = "switch",
+                                            @checked = "checked",
+                                            id = "TrangThai"
+                                        })
+                                        <label class="form-check-label" for="TrangThai">
+                                            <i class="fas fa-check-circle text-success me-1"></i>
+                                            Đang kinh doanh
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label">Mô tả chi tiết sản phẩm</label>
+                            @Html.TextAreaFor(m => m.MoTa, new
+                            {
+                                @class = "form-control",
+                                rows = "6",
+                                placeholder = "Nhập mô tả chi tiết về sản phẩm, tính năng, ưu điểm..."
+                            })
+                            <small class="text-muted mt-2 d-block">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Mô tả chi tiết giúp khách hàng hiểu rõ hơn về sản phẩm
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Pricing Section -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header pricing">
+                        <h6>
+                            <i class="fas fa-tag"></i>
+                            Giá & Kho Hàng
+                        </h6>
+                    </div>
+                    <div class="sidebar-body">
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-dollar-sign text-primary me-1"></i>
+                                Giá bán gốc (VNĐ)
+                            </label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.GiaBan, new
+                                {
+                                    @class = "form-control fw-bold",
+                                    type = "text",
+                                    data_type = "currency",
+                                    placeholder = "0"
+                                })
+                                <span class="input-group-text">₫</span>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-percentage text-danger me-1"></i>
+                                Giá khuyến mãi
+                            </label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.GiaKhuyenMai, new
+                                {
+                                    @class = "form-control text-danger fw-bold",
+                                    type = "text",
+                                    data_type = "currency",
+                                    placeholder = "0"
+                                })
+                                <span class="input-group-text">₫</span>
+                            </div>
+                            <small class="text-muted mt-2 d-block">
+                                Để trống nếu không có giá khuyến mãi
+                            </small>
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label">
+                                <i class="fas fa-boxes text-info me-1"></i>
+                                Số lượng tồn kho
+                            </label>
+                            @Html.TextBoxFor(m => m.SoLuongTon, new
+                            {
+                                @class = "form-control",
+                                type = "number",
+                                min = "0",
+                                value = "0"
+                            })
+                            @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Upload Section -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header images">
+                        <h6>
+                            <i class="fas fa-images"></i>
+                            Hình Ảnh Sản Phẩm
+                        </h6>
+                    </div>
+                    <div class="sidebar-body">
+                        <label class="image-upload-btn w-100 mb-0" for="imageUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div class="upload-text">Tải ảnh lên</div>
+                            <div class="upload-hint">Chọn một hoặc nhiều ảnh</div>
+                            <input type="file"
+                                   name="HinhAnhs"
+                                   multiple
+                                   id="imageUpload"
+                                   hidden
+                                   accept="image/*" />
+                        </label>
+
+                        <div class="preview-section" style="display:none;">
+                            <div class="preview-header">
+                                <i class="fas fa-check-circle"></i>
+                                Ảnh đã chọn
+                            </div>
+                            <div id="previewContainer" class="row g-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-save btn-custom w-100">
+                    <i class="fas fa-save"></i> Lưu Sản Phẩm
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/Areas/Admin/Scripts/sanpham-common.js"></script>
+}

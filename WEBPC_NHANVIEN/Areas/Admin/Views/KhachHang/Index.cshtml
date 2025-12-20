@@ -1,0 +1,439 @@
+﻿@model IEnumerable<WEBPC_NHANVIEN.Areas.Admin.Models.KhachHangViewModel>
+
+@{
+    ViewBag.Title = "Quản lý Khách hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-left h4 {
+        color: white;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.8rem;
+    }
+
+    .header-left p {
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0.5rem 0 0 0;
+        font-size: 0.95rem;
+    }
+
+    .btn-add-new {
+        background: white;
+        color: #667eea;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-add-new:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        color: #667eea;
+    }
+
+    .alert-custom {
+        border: none;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        animation: slideDown 0.5s ease;
+    }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .alert-success-custom {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border-left: 4px solid #28a745;
+        color: #155724;
+    }
+
+    .alert-danger-custom {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        border-left: 4px solid #dc3545;
+        color: #721c24;
+    }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .table-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 1.25rem 1.5rem;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-header h6 {
+        margin: 0;
+        font-weight: 700;
+        color: #2d3748;
+        font-size: 1.1rem;
+    }
+
+    .table-header .stat-badge {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background: #f8f9fa;
+        color: #6c757d;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 1rem 1.5rem;
+        border: none;
+    }
+
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .table tbody tr:hover {
+        background: linear-gradient(135deg, #667eea05 0%, #764ba205 100%);
+        transform: scale(1.01);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .table tbody td {
+        padding: 1.25rem 1.5rem;
+        vertical-align: middle;
+        border: none;
+    }
+
+    .customer-id {
+        font-weight: 700;
+        color: #667eea;
+        font-size: 0.95rem;
+    }
+
+    .customer-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-right: 1rem;
+        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .customer-info {
+        flex: 1;
+    }
+
+    .customer-name {
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+    }
+
+    .customer-email {
+        color: #718096;
+        font-size: 0.85rem;
+    }
+
+    .phone-number {
+        color: #4a5568;
+        font-weight: 500;
+    }
+
+    .phone-number i {
+        color: #667eea;
+        margin-right: 0.5rem;
+    }
+
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        border: 2px solid;
+    }
+
+    .status-active {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #28a745;
+        border-color: #28a74550;
+    }
+
+    .status-locked {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #dc3545;
+        border-color: #dc354550;
+    }
+
+    .status-badge i {
+        margin-right: 0.4rem;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+    }
+
+    .btn-action {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-edit {
+        background: white;
+        color: #667eea;
+        border-color: #667eea50;
+    }
+
+    .btn-edit:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-delete {
+        background: white;
+        color: #dc3545;
+        border-color: #dc354550;
+    }
+
+    .btn-delete:hover {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+    }
+
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+
+    .empty-icon i {
+        font-size: 2.5rem;
+        color: #667eea;
+    }
+
+    .empty-state h5 {
+        color: #2d3748;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        color: #718096;
+        margin-bottom: 0;
+    }
+
+    @@media (max-width: 991px) {
+        .page-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .btn-add-new {
+            margin-top: 1rem;
+        }
+
+        .table-responsive {
+            border-radius: 15px;
+        }
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="header-left">
+            <h4>
+                <i class="fas fa-users me-2"></i>Danh Sách Khách Hàng
+            </h4>
+            <p>Quản lý thông tin và trạng thái tài khoản khách hàng</p>
+        </div>
+        <a href="@Url.Action("Create")" class="btn-add-new">
+            <i class="fas fa-plus me-2"></i>Thêm mới
+        </a>
+    </div>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-custom alert-success-custom">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>Thành công!</strong> @TempData["Success"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert-custom alert-danger-custom">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Lỗi!</strong> @TempData["Error"]
+        </div>
+    }
+
+    <!-- Table Card -->
+    <div class="table-card">
+        <div class="table-header">
+            <h6>
+                <i class="fas fa-list me-2"></i>Tất cả khách hàng
+                @if (Model != null && Model.Any())
+                {
+                    <span class="stat-badge">@Model.Count()</span>
+                }
+            </h6>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Mã KH</th>
+                        <th style="width: 35%;">Thông tin</th>
+                        <th style="width: 20%;">Liên hệ</th>
+                        <th class="text-center" style="width: 15%;">Trạng thái</th>
+                        <th class="text-end" style="width: 20%;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="customer-id">#@item.MaNguoiDung</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="customer-avatar">
+                                            @(item.HoTen.Length > 0 ? item.HoTen.Substring(0, 1).ToUpper() : "?")
+                                        </div>
+                                        <div class="customer-info">
+                                            <div class="customer-name">@item.HoTen</div>
+                                            <div class="customer-email">
+                                                <i class="fas fa-envelope me-1"></i>@item.Email
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="phone-number">
+                                        <i class="fas fa-phone"></i>@item.SoDienThoai
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.TrangThai == 1)
+                                    {
+                                        <span class="status-badge status-active">
+                                            <i class="fas fa-check-circle"></i>Hoạt động
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge status-locked">
+                                            <i class="fas fa-lock"></i>Đã khóa
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="@Url.Action("Edit", new { id = item.MaNguoiDung })"
+                                           class="btn-action btn-edit"
+                                           title="Chỉnh sửa">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a href="@Url.Action("Delete", new { id = item.MaNguoiDung })"
+                                           class="btn-action btn-delete"
+                                           onclick="return confirm('Bạn có chắc muốn xóa khách hàng @item.HoTen?');"
+                                           title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">
+                                <div class="empty-state">
+                                    <div class="empty-icon">
+                                        <i class="fas fa-users-slash"></i>
+                                    </div>
+                                    <h5>Chưa có khách hàng nào</h5>
+                                    <p>Hãy thêm khách hàng đầu tiên để bắt đầu quản lý</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

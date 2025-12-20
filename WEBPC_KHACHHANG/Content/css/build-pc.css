@@ -1,0 +1,95 @@
+﻿/* Custom Styles for Cau Hinh Page */
+.config-header {
+    background-color: #f8f9fa; /* var(--light-bg) fallback */
+    border-bottom: 1px solid #dee2e6;
+}
+
+.config-nav .nav-link {
+    font-weight: 700;
+    color: #6c757d !important; /* var(--secondary-color) fallback */
+    border-bottom: 3px solid transparent;
+    padding: 1rem 1.5rem;
+}
+
+    .config-nav .nav-link.active {
+        color: #0d6efd !important; /* var(--primary-color) fallback */
+        border-bottom-color: #0d6efd;
+        background-color: transparent;
+    }
+
+.config-item {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background-color: white;
+    transition: box-shadow 0.3s ease;
+}
+
+    .config-item:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+.config-category-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    padding: 5px;
+    border: 1px dashed #dee2e6;
+    border-radius: 5px;
+}
+
+.config-summary-box {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 15px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 100px; /* Cố định sidebar */
+}
+
+.empty-box-image {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    margin: 0 auto 1.5rem;
+    display: block;
+    filter: grayscale(100%);
+    opacity: 0.3;
+}
+
+/* Modal Styles */
+.modal-product-card {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    height: 100%;
+    cursor: pointer;
+}
+
+    .modal-product-card:hover {
+        border-color: #0d6efd;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.1);
+    }
+
+    .modal-product-card img {
+        max-height: 100px;
+        object-fit: contain;
+        margin-bottom: 0.5rem;
+    }
+
+.modal-price-old {
+    text-decoration: line-through;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.modal-price-new {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #dc3545;
+}
