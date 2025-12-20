@@ -13,5 +13,9 @@ namespace WEBPC_KHACHHANG.Models.Requests
         // [MỚI] Bổ sung 2 trường này để khớp với API Server
         public string PhuongThucThanhToan { get; set; } // "COD" hoặc "VietQR"
         public List<int> SelectedCartItemIds { get; set; } = new List<int>();
+
+        public string MaCodeVoucher { get; set; }
+
+        public decimal PhiVanChuyen { get; set; }
     }
 }

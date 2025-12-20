@@ -1,0 +1,693 @@
+﻿@{
+    ViewBag.Title = "Dashboard Nhân Viên Kinh Doanh";
+    Layout = "~/Areas/Sale/Views/Shared/_LayoutSale.cshtml";
+}
+
+<style>
+    /* Reset & Base Styles */
+    .sale-dashboard {
+        animation: fadeIn 0.6s ease-in-out;
+        padding: 1.5rem;
+        background: #f8f9fc;
+    }
+
+    /* Header Section */
+    .dashboard-header {
+        margin-bottom: 2rem;
+    }
+
+    .welcome-text h2 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .welcome-text p {
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+
+    .date-badge {
+        background: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        font-weight: 600;
+        color: #495057;
+    }
+
+    /* Statistics Cards - Improved */
+    .stat-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.75rem;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--card-color);
+    }
+
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        background: var(--card-bg);
+        color: var(--card-color);
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.75rem;
+        line-height: 1;
+    }
+
+    .stat-change {
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .stat-change.positive {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .stat-change.neutral {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    /* Card Color Variants */
+    .card-revenue {
+        --card-color: #8b5cf6;
+        --card-bg: #f5f3ff;
+    }
+
+    .card-orders {
+        --card-color: #10b981;
+        --card-bg: #d1fae5;
+    }
+
+    .card-customers {
+        --card-color: #3b82f6;
+        --card-bg: #dbeafe;
+    }
+
+    .card-kpi {
+        --card-color: #f59e0b;
+        --card-bg: #fef3c7;
+    }
+
+    /* KPI Progress Bar */
+    .kpi-progress {
+        width: 100%;
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 0.75rem;
+    }
+
+    .kpi-progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        border-radius: 10px;
+        transition: width 1s ease-out;
+    }
+
+    /* Main Content Section */
+    .content-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    .content-card-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #f1f3f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .content-card-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .content-card-title i {
+        color: #8b5cf6;
+    }
+
+    /* Modern Table */
+    .modern-table {
+        margin: 0;
+    }
+
+    .modern-table thead {
+        background: #f8f9fc;
+    }
+
+    .modern-table thead th {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        padding: 1rem 1.5rem;
+        border: none;
+    }
+
+    .modern-table tbody td {
+        padding: 1rem 1.5rem;
+        vertical-align: middle;
+        border-bottom: 1px solid #f1f3f5;
+        color: #495057;
+    }
+
+    .modern-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .modern-table tbody tr {
+        transition: background 0.2s ease;
+    }
+
+    .modern-table tbody tr:hover {
+        background: #f8f9fc;
+    }
+
+    .order-id {
+        font-weight: 700;
+        color: #2c3e50;
+        font-family: 'Courier New', monospace;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: 0.4rem 0.9rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-completed {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .status-processing {
+        background: #dbeafe;
+        color: #1e40af;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        color: #6c757d;
+    }
+
+    .action-btn:hover {
+        background: #f8f9fc;
+        border-color: #8b5cf6;
+        color: #8b5cf6;
+        transform: scale(1.1);
+    }
+
+    /* Promotion Section */
+    .promo-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 16px;
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+
+    .promo-card .content-card-header {
+        border-bottom-color: rgba(255,255,255,0.2);
+    }
+
+    .promo-item {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        padding: 1.25rem;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .promo-item:hover {
+        background: rgba(255,255,255,0.25);
+        transform: translateX(5px);
+    }
+
+    .promo-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .promo-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+    }
+
+    .promo-title {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .promo-desc {
+        font-size: 0.85rem;
+        opacity: 0.9;
+    }
+
+    /* Attendance Card */
+    .attendance-card {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border: none;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 8px 24px rgba(245, 87, 108, 0.3);
+    }
+
+    .attendance-card p {
+        font-size: 1rem;
+        margin-bottom: 1.25rem;
+        font-weight: 500;
+    }
+
+    .attendance-btn {
+        background: white;
+        color: #f5576c;
+        border: none;
+        padding: 0.85rem 2rem;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .attendance-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        background: #fff;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .quick-action-btn {
+        padding: 1rem;
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        background: white;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: #495057;
+    }
+
+    .quick-action-btn:hover {
+        border-color: #8b5cf6;
+        background: #f5f3ff;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+    }
+
+    .quick-action-btn i {
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #8b5cf6;
+    }
+
+    .quick-action-btn span {
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    /* Animations */
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .sale-dashboard {
+            padding: 1rem;
+        }
+
+        .stat-card {
+            margin-bottom: 1rem;
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="sale-dashboard">
+    <!-- Header Section -->
+    <div class="dashboard-header d-flex justify-content-between align-items-center flex-wrap">
+        <div class="welcome-text">
+            <h2>Chào buổi sáng, <span style="color: #8b5cf6;">@ViewBag.UserName</span>! 👋</h2>
+            <p>Đây là tổng quan hiệu suất kinh doanh của bạn hôm nay</p>
+        </div>
+        <div class="date-badge">
+            <i class="far fa-calendar-alt me-2"></i>
+            @DateTime.Now.ToString("dddd, dd/MM/yyyy", new System.Globalization.CultureInfo("vi-VN"))
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card card-revenue">
+                <div class="stat-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="stat-label">Doanh Số Tháng Này</div>
+                <div class="stat-value">450.2M đ</div>
+                <span class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> +12% vs tháng trước
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card card-orders">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-label">Đơn Hàng Đã Chốt</div>
+                <div class="stat-value">28</div>
+                <span class="stat-change neutral">
+                    8 đơn đang chờ giao hàng
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card card-customers">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-label">Khách Hàng Mới</div>
+                <div class="stat-value">15</div>
+                <span class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i> +5% tăng trưởng
+                </span>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card card-kpi">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-label">Tiến Độ KPI</div>
+                <div class="stat-value">85%</div>
+                <div class="kpi-progress">
+                    <div class="kpi-progress-fill" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row g-4">
+        <!-- Orders Table -->
+        <div class="col-lg-8">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title">
+                        <i class="fas fa-file-invoice"></i>
+                        Đơn Hàng Gần Đây
+                    </h5>
+                    <a href="@Url.Action("Orders", "Sale")" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                        Xem tất cả <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table modern-table">
+                        <thead>
+                            <tr>
+                                <th>MÃ ĐƠN</th>
+                                <th>KHÁCH HÀNG</th>
+                                <th>GIÁ TRỊ</th>
+                                <th>TRẠNG THÁI</th>
+                                <th class="text-center">THAO TÁC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="order-id">#ORD-8821</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <i class="fas fa-user-circle fa-lg text-muted"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold">Trần Văn An</div>
+                                            <small class="text-muted">an.tran@email.com</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fw-bold">15.500.000 đ</td>
+                                <td><span class="status-badge status-completed">Hoàn thành</span></td>
+                                <td class="text-center">
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="order-id">#ORD-8825</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <i class="fas fa-user-circle fa-lg text-muted"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold">Lê Thị Hoa</div>
+                                            <small class="text-muted">hoa.le@email.com</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fw-bold">24.300.000 đ</td>
+                                <td><span class="status-badge status-pending">Chờ thanh toán</span></td>
+                                <td class="text-center">
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="order-id">#ORD-8830</span></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-2">
+                                            <i class="fas fa-user-circle fa-lg text-muted"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold">Nguyễn Minh Tuấn</div>
+                                            <small class="text-muted">tuan.nguyen@email.com</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="fw-bold">32.800.000 đ</td>
+                                <td><span class="status-badge status-processing">Đang xử lý</span></td>
+                                <td class="text-center">
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Promotions -->
+            <div class="content-card promo-card">
+                <div class="content-card-header">
+                    <h5 class="content-card-title text-white">
+                        <i class="fas fa-bolt"></i>
+                        Khuyến Mãi Hot
+                    </h5>
+                </div>
+                <div class="p-3">
+                    <div class="promo-item">
+                        <div class="d-flex align-items-center">
+                            <div class="promo-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <div class="promo-title">Giảm 10% RTX 4090</div>
+                                <div class="promo-desc">Áp dụng cho 5 khách đầu tiên trong ngày</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="promo-item">
+                        <div class="d-flex align-items-center">
+                            <div class="promo-icon">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <div class="promo-title">Tặng Chuột Gaming</div>
+                                <div class="promo-desc">Khi mua Build PC trên 20 triệu</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Card -->
+            <div class="content-card attendance-card">
+                <i class="fas fa-fingerprint fa-3x mb-3" style="opacity: 0.9;"></i>
+                <p>Bạn đã sẵn sàng cho một ngày làm việc hiệu quả?</p>
+                <button class="attendance-btn">
+                    <i class="fas fa-clock me-2"></i>Chấm Công Ngay
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <a href="@Url.Action("CreateOrder", "Sale")" class="quick-action-btn">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Tạo đơn mới</span>
+                </a>
+                <a href="@Url.Action("Customers", "Sale")" class="quick-action-btn">
+                    <i class="fas fa-address-book"></i>
+                    <span>Khách hàng</span>
+                </a>
+                <a href="@Url.Action("Reports", "Sale")" class="quick-action-btn">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Báo cáo</span>
+                </a>
+                <a href="@Url.Action("Support", "Sale")" class="quick-action-btn">
+                    <i class="fas fa-headset"></i>
+                    <span>Hỗ trợ</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>// Animation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate KPI progress bar
+        const progressBar = document.querySelector('.kpi-progress-fill');
+        if (progressBar) {
+            const targetWidth = progressBar.style.width;
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = targetWidth;
+            }, 500);
+        }
+
+        // Add hover effect to table rows
+        const tableRows = document.querySelectorAll('.modern-table tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('click', function() {
+                // Handle row click - could navigate to detail page
+                console.log('Row clicked');
+            });
+        });
+    });</script>

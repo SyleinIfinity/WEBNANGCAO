@@ -22,6 +22,7 @@ namespace WEBPC_KHACHHANG.Controllers
         [HttpGet]
         public async Task<ActionResult> Checkout(string selectedIds)
         {
+            // Kiểm tra đăng nhập
             var user = Session["User"] as UserLoginResponse;
             if (user == null) return RedirectToAction("Index", "Login", new { returnUrl = "/ThanhToan/Checkout" });
 
@@ -35,10 +36,12 @@ namespace WEBPC_KHACHHANG.Controllers
             {
                 var model = new CheckoutViewModel
                 {
-                    User = user,
+                    // Gán thông tin User vào Model (nếu ViewModel có trường này)
+                    // User = user, 
                     SelectedIdsString = selectedIds,
                     Cart = new CartViewModel(),
-                    Addresses = new List<SoDiaChiResponse>()
+                    Addresses = new List<SoDiaChiResponse>(),
+                    DanhSachKhuyenMai = new List<KhuyenMaiKhachHangResponse>() // Khởi tạo list rỗng
                 };
 
                 using (var client = new HttpClient())
@@ -46,13 +49,14 @@ namespace WEBPC_KHACHHANG.Controllers
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                    // Lấy giỏ hàng
+                    // A. LẤY GIỎ HÀNG & LỌC SẢN PHẨM ĐÃ CHỌN
+                    decimal tongTienHang = 0;
                     var responseFullCart = await client.GetAsync($"GioHang/{user.MaKhachHang}");
+
                     if (responseFullCart.IsSuccessStatusCode)
                     {
                         var content = await responseFullCart.Content.ReadAsStringAsync();
                         var fullCart = JsonConvert.DeserializeObject<CartViewModel>(content);
-
                         var selectedCartItemIds = selectedIds.Split(',').Select(int.Parse).ToList();
 
                         if (fullCart != null && fullCart.Items != null)
@@ -60,17 +64,42 @@ namespace WEBPC_KHACHHANG.Controllers
                             model.Cart.Items = fullCart.Items
                                 .Where(x => selectedCartItemIds.Contains(x.CartItemId))
                                 .ToList();
+
+                            // Tính tổng tiền hàng (Tạm tính)
+                            tongTienHang = model.Cart.Items.Sum(x => x.Total);
                         }
                     }
 
-                    // Lấy địa chỉ
+                    // B. LẤY SỔ ĐỊA CHỈ
                     var responseAddr = await client.GetAsync($"SoDiaChi/khachhang/{user.MaKhachHang}");
                     if (responseAddr.IsSuccessStatusCode)
                     {
                         var dataAddr = await responseAddr.Content.ReadAsStringAsync();
                         model.Addresses = JsonConvert.DeserializeObject<List<SoDiaChiResponse>>(dataAddr);
                     }
+
+                    // C. [MỚI] LẤY DANH SÁCH KHUYẾN MÃI CỦA KHÁCH HÀNG
+                    var responseKM = await client.GetAsync($"KhuyenMaiKhachHang/khachhang/{user.MaKhachHang}");
+                    if (responseKM.IsSuccessStatusCode)
+                    {
+                        var jsonKM = await responseKM.Content.ReadAsStringAsync();
+                        var allVouchers = JsonConvert.DeserializeObject<List<KhuyenMaiKhachHangResponse>>(jsonKM);
+
+                        // [LOGIC LỌC]: Sửa lại tên thuộc tính cho khớp với Model mới
+                        model.DanhSachKhuyenMai = allVouchers.Where(km =>
+                            km.DaSuDung == false &&                 // Chưa dùng
+                            km.NgayKetThuc > DateTime.Now &&        // Chưa hết hạn
+                            km.NgayBatDau <= DateTime.Now &&        // Đã bắt đầu
+                            km.DonHangToiThieu <= tongTienHang      // [Sửa DonToiThieu -> DonHangToiThieu]
+                        ).ToList();
+                    }
+
+                    // D. TÍNH TOÁN CÁC CON SỐ HIỂN THỊ BAN ĐẦU
+                    model.TamTinh = tongTienHang;
+                    model.PhiVanChuyen = 30000; // Mặc định hoặc tính theo API
+                    model.TongThanhToan = tongTienHang + model.PhiVanChuyen;
                 }
+
                 return View(model);
             }
             catch (Exception ex)
@@ -83,7 +112,8 @@ namespace WEBPC_KHACHHANG.Controllers
         // 2. POST: Xử lý đặt hàng
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> PlaceOrder(CheckoutViewModel model)
+        // Thêm tham số MaCodeVoucher để nhận từ Input Hidden
+        public async Task<ActionResult> PlaceOrder(CheckoutViewModel model, string MaCodeVoucher)
         {
             var user = Session["User"] as UserLoginResponse;
             if (user == null) return RedirectToAction("Index", "Login");
@@ -95,6 +125,8 @@ namespace WEBPC_KHACHHANG.Controllers
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
+                    // Tạo Request gửi đi
+                    // Tạo Request gửi đi
                     var request = new TaoDonHangRequest
                     {
                         MaKhachHang = user.MaKhachHang,
@@ -102,10 +134,15 @@ namespace WEBPC_KHACHHANG.Controllers
                         SoDienThoai = model.SoDienThoai,
                         DiaChiGiaoHang = model.DiaChiGiaoHang,
                         PhuongThucThanhToan = model.PhuongThucThanhToan,
-                        SelectedCartItemIds = new List<int>()
+                        SelectedCartItemIds = new List<int>(),
+
+                        MaCodeVoucher = MaCodeVoucher,
+
+                        // [MỚI] Gửi phí vận chuyển (Hardcode 30k hoặc lấy từ Model nếu có logic tính)
+                        PhiVanChuyen = 30000
                     };
 
-                    // Lọc CartItemId
+                    // Lọc CartItemId lại để đảm bảo an toàn dữ liệu
                     if (!string.IsNullOrEmpty(model.SelectedIdsString))
                     {
                         var listIds = model.SelectedIdsString.Split(',').Select(int.Parse).ToList();
@@ -137,7 +174,7 @@ namespace WEBPC_KHACHHANG.Controllers
                         return RedirectToAction("Index", "Cart");
                     }
 
-                    // Gọi API
+                    // Gọi API Tạo Đơn Hàng
                     var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
                     var response = await client.PostAsync("DonHang/create", content);
 
@@ -155,7 +192,17 @@ namespace WEBPC_KHACHHANG.Controllers
                     else
                     {
                         var errorContent = await response.Content.ReadAsStringAsync();
-                        TempData["Error"] = "Đặt hàng thất bại: " + errorContent;
+                        // Parse lỗi cho đẹp nếu Server trả về JSON
+                        try
+                        {
+                            dynamic errObj = JsonConvert.DeserializeObject(errorContent);
+                            TempData["Error"] = "Đặt hàng thất bại: " + errObj.message;
+                        }
+                        catch
+                        {
+                            TempData["Error"] = "Đặt hàng thất bại: " + errorContent;
+                        }
+
                         // Quan trọng: Truyền lại selectedIds để không bị đá về Cart
                         return RedirectToAction("Checkout", new { selectedIds = model.SelectedIdsString });
                     }
@@ -168,7 +215,7 @@ namespace WEBPC_KHACHHANG.Controllers
             }
         }
 
-        // Action Payment
+        // Action Payment (GIỮ NGUYÊN)
         [HttpGet]
         public async Task<ActionResult> Payment(int id)
         {
@@ -198,14 +245,14 @@ namespace WEBPC_KHACHHANG.Controllers
             catch { return RedirectToAction("Success", new { id = id }); }
         }
 
-        // Action Success
+        // Action Success (GIỮ NGUYÊN)
         public ActionResult Success(int id)
         {
             ViewBag.OrderId = id;
             return View();
         }
 
-        // Action CheckStatus
+        // Action CheckStatus (GIỮ NGUYÊN)
         [HttpGet]
         public async Task<JsonResult> CheckStatus(int orderId)
         {

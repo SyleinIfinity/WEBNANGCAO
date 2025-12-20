@@ -1,259 +1,793 @@
 ﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.UpdateProductViewModel
-
 @{
     ViewBag.Title = "Cập Nhật Sản Phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-2">Cập Nhật Sản Phẩm</h2>
-<p class="text-muted mb-3">
-    Quản lý thông tin chi tiết sản phẩm <strong>@Model.TenSanPham</strong>
-</p>
+@section Styles {
+    <style>
+        /* Main Container */
+        .edit-product-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-<p>
-    <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-link p-0">
-        &laquo; Quay lại danh sách
-    </a>
-</p>
+        /* Page Header */
+        .page-header-edit {
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 86, 179, 0.2);
+            color: white;
+        }
 
-@using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.MaSanPham)
+        .page-header-edit h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
 
-    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger mb-4 shadow-sm border-0" })
+        .page-header-edit .subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
 
-    <div class="row">
-        <div class="col-md-8">
-            <!-- THÔNG TIN CHUNG -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Thông tin chung</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
-                        @Html.TextBoxFor(m => m.TenSanPham,
-                            new { @class = "form-control form-control-lg", placeholder = "Nhập tên sản phẩm..." })
-                        @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger small" })
-                    </div>
+        /* Section Card */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
 
-                    <div class="mb-3">
-                        <label class="form-label">Danh mục <span class="text-danger">*</span></label>
-                        @Html.DropDownListFor(
-                            m => m.MaDanhMuc,
-                            new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
-                            "-- Chọn Danh Mục --",
-                            new { @class = "form-select" }
-                        )
-                        @Html.ValidationMessageFor(m => m.MaDanhMuc, "", new { @class = "text-danger small" })
-                    </div>
+        .section-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px 25px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-                    <div class="mb-0">
-                        <label class="form-label">Mô tả chi tiết</label>
-                        @Html.TextAreaFor(
-                            m => m.MoTa,
-                            new
-                            {
-                                @class = "form-control",
-                                rows = "8",
-                                placeholder = "Mô tả cấu hình, tính năng nổi bật..."
-                            })
-                        @Html.ValidationMessageFor(m => m.MoTa, "", new { @class = "text-danger small" })
-                    </div>
-                </div>
+        .section-header h6 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header h6 i {
+            margin-right: 10px;
+            color: #007bff;
+            font-size: 1.2rem;
+        }
+
+        .section-body {
+            padding: 30px;
+        }
+
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-control-lg {
+            padding: 14px 18px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Specs Section */
+        .specs-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .specs-header {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 20px 25px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .specs-header h6 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+        }
+
+        .specs-header h6 i {
+            margin-right: 10px;
+            color: #28a745;
+        }
+
+        .btn-add-spec {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+        }
+
+        .btn-add-spec:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Specs Table */
+        .specs-table {
+            margin-bottom: 0;
+        }
+
+        .specs-table tbody td {
+            padding: 18px 25px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .specs-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .spec-name-cell {
+            width: 35%;
+        }
+
+        .spec-value-cell {
+            width: 50%;
+            color: #6c757d;
+        }
+
+        .spec-actions-cell {
+            width: 15%;
+            text-align: right;
+        }
+
+        .spec-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #1976d2;
+            font-size: 1rem;
+            margin-right: 12px;
+        }
+
+        .spec-name {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Loading & Empty States */
+        .loading-state,
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+
+        .loading-state i {
+            font-size: 2rem;
+            color: #007bff;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #dee2e6;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            color: #9e9e9e;
+            font-size: 0.95rem;
+        }
+
+        /* Sidebar Sections */
+        .sidebar-section {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .sidebar-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            padding: 18px 25px;
+            color: white;
+        }
+
+        .sidebar-header.pricing {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .sidebar-header.images {
+            background: linear-gradient(135deg, #6f42c1 0%, #9d50bb 100%);
+        }
+
+        .sidebar-header h6 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-header h6 i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-body {
+            padding: 25px;
+        }
+
+        /* Input Groups */
+        .input-group {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .input-group .form-control {
+            border-right: none;
+        }
+
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-left: none;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        /* Current Images */
+        .current-images-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #dee2e6;
+        }
+
+        .current-images-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .current-images-title i {
+            margin-right: 8px;
+            color: #6f42c1;
+        }
+
+        .image-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .image-item:hover {
+            border-color: #007bff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .image-item .form-check {
+            margin: 0;
+        }
+
+        .image-item .form-check-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #495057;
+            cursor: pointer;
+        }
+
+        .image-item .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        /* Image Upload */
+        .image-upload-btn {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .image-upload-btn:hover {
+            border-color: #6f42c1;
+            background: #f3e5f5;
+        }
+
+        .image-upload-btn i {
+            font-size: 2rem;
+            color: #6f42c1;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .image-upload-btn .upload-text {
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            border-bottom: 2px solid #e9ecef;
+            border-radius: 16px 16px 0 0;
+            padding: 20px 25px;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: #1a1a1a;
+            font-size: 1.15rem;
+        }
+
+        .modal-body {
+            padding: 30px 25px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            padding: 0 25px 25px;
+        }
+
+        .modal .form-control,
+        .modal .form-select {
+            border-radius: 10px;
+        }
+
+        .modal .btn {
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-custom {
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-custom i {
+            margin-right: 8px;
+        }
+
+        .btn-back {
+            background: white;
+            border: 2px solid #e9ecef;
+            color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+        }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.4);
+        }
+
+        /* Switch Toggle */
+        .form-check-input {
+            width: 48px;
+            height: 24px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .page-header-edit {
+                padding: 20px;
+            }
+
+            .section-body,
+            .sidebar-body {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-custom {
+                width: 100%;
+            }
+
+            .specs-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-add-spec {
+                width: 100%;
+            }
+        }
+    </style>
+}
+
+<div class="edit-product-container">
+    <!-- Page Header -->
+    <div class="page-header-edit">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+                <h4><i class="fas fa-edit me-2"></i>Cập Nhật Sản Phẩm</h4>
+                <div class="subtitle">@Model.TenSanPham</div>
             </div>
-
-            <!-- THÔNG SỐ KỸ THUẬT -->
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Thông Số Kỹ Thuật</h5>
-                    <button type="button" class="btn btn-sm btn-primary" id="btnAddSpec">
-                        + Thêm mới
-                    </button>
-                </div>
-                <div class="card-body">
-                    <div id="spec-loading" class="text-muted mb-2">
-                        Đang tải...
-                    </div>
-                    <div id="spec-empty" class="text-muted mb-2" style="display:none;">
-                        Chưa có thông số kỹ thuật nào.
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-sm align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <th style="width: 35%;">Tên thông số</th>
-                                    <th>Giá trị</th>
-                                    <th style="width: 120px;" class="text-end">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody id="specTableBody">
-                                @* JS sẽ đổ nội dung *@
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TRẠNG THÁI + NÚT LƯU -->
-            <div class="mb-4">
-                <label class="form-label d-block">Trạng thái:</label>
-                <div class="form-check form-switch">
-                    @Html.CheckBoxFor(
-                        m => m.TrangThai,
-                        new
-                        {
-                            @class = "form-check-input",
-                            role = "switch",
-                            style = "cursor: pointer; transform: scale(1.2);"
-                        })
-                    <label class="form-check-label ms-2">
-                        Đang bật (Hiển thị bán)
-                    </label>
-                </div>
-            </div>
-
-            <div class="mb-4 d-flex gap-2">
-                <button type="submit" class="btn btn-success">
-                    Lưu Thay Đổi
-                </button>
-                <a href="@Url.Action("Index", "SanPham", new { area = "Admin" })" class="btn btn-outline-secondary">
-                    Hủy bỏ
+            <div class="action-buttons mt-3 mt-md-0">
+                <a href="@Url.Action("Index")" class="btn btn-back btn-custom">
+                    <i class="fas fa-arrow-left"></i> Quay lại
                 </a>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-4">
-            <!-- GIÁ & KHO -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Giá & Kho hàng</h5>
+    @using (Html.BeginForm("Edit", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaSanPham)
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Basic Information -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h6>
+                            <i class="fas fa-info-circle"></i>
+                            Thông Tin Cơ Bản
+                        </h6>
+                    </div>
+                    <div class="section-body">
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="fas fa-tag text-primary me-1"></i>
+                                Tên sản phẩm
+                            </label>
+                            @Html.TextBoxFor(m => m.TenSanPham, new
+                            {
+                                @class = "form-control form-control-lg",
+                                autocomplete = "off"
+                            })
+                            @Html.ValidationMessageFor(m => m.TenSanPham, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-folder text-info me-1"></i>
+                                    Danh mục
+                                </label>
+                                @Html.DropDownListFor(m => m.MaDanhMuc,
+                                    new SelectList(ViewBag.Categories, "MaDanhMuc", "TenDanhMuc"),
+                                    new { @class = "form-select" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-toggle-on text-success me-1"></i>
+                                    Trạng thái kinh doanh
+                                </label>
+                                <div class="mt-2">
+                                    <div class="form-check form-switch">
+                                        @Html.CheckBoxFor(m => m.TrangThai, new
+                                        {
+                                            @class = "form-check-input",
+                                            role = "switch",
+                                            id = "TrangThai"
+                                        })
+                                        <label class="form-check-label fw-semibold" for="TrangThai">
+                                            Đang kinh doanh
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label">
+                                <i class="fas fa-align-left text-secondary me-1"></i>
+                                Mô tả sản phẩm
+                            </label>
+                            @Html.TextAreaFor(m => m.MoTa, new
+                            {
+                                @class = "form-control",
+                                rows = "5",
+                                placeholder = "Nhập mô tả chi tiết về sản phẩm..."
+                            })
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Giá bán gốc (VNĐ)</label>
-                        <div class="input-group">
-                            @Html.TextBoxFor(
-                                m => m.GiaBan,
-                                new { @class = "form-control fw-bold text-dark", type = "number" })
-                            <span class="input-group-text">₫</span>
-                        </div>
-                        @Html.ValidationMessageFor(m => m.GiaBan, "", new { @class = "text-danger small" })
+
+                <!-- Technical Specifications -->
+                <div class="specs-card">
+                    <div class="specs-header">
+                        <h6>
+                            <i class="fas fa-microchip"></i>
+                            Thông Số Kỹ Thuật
+                        </h6>
+                        <button type="button" class="btn btn-add-spec" id="btnAddSpec">
+                            <i class="fas fa-plus me-1"></i> Thêm thông số
+                        </button>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Giá khuyến mãi (VNĐ)</label>
-                        <div class="input-group">
-                            @Html.TextBoxFor(
-                                m => m.GiaKhuyenMai,
-                                new { @class = "form-control text-danger fw-bold", type = "number" })
-                            <span class="input-group-text">₫</span>
-                        </div>
+                    <div id="spec-loading" class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p class="mt-2 mb-0">Đang tải thông số kỹ thuật...</p>
                     </div>
 
-                    <div class="mb-0">
-                        <label class="form-label">Tồn kho</label>
-                        @Html.TextBoxFor(
-                            m => m.SoLuongTon,
-                            new { @class = "form-control", type = "number" })
-                        @Html.ValidationMessageFor(m => m.SoLuongTon, "", new { @class = "text-danger small" })
+                    <div id="spec-empty" class="empty-state" style="display:none;">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p class="mb-0">Chưa có thông số kỹ thuật nào</p>
                     </div>
+
+                    <table class="table specs-table">
+                        <tbody id="specTableBody">
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- HÌNH ẢNH -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Hình ảnh sản phẩm</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Tải thêm ảnh mới</label>
-                        <input type="file"
-                               name="HinhAnhs"
-                               multiple
-                               class="form-control" />
-                        <small class="text-muted d-block">
-                            Ảnh đầu tiên sẽ là ảnh đại diện. Hỗ trợ JPG, PNG.
-                        </small>
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Pricing Section -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header pricing">
+                        <h6>
+                            <i class="fas fa-dollar-sign"></i>
+                            Giá & Tồn Kho
+                        </h6>
                     </div>
+                    <div class="sidebar-body">
+                        <div class="mb-3">
+                            <label class="form-label">Giá bán gốc (VNĐ)</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.GiaBan, new
+                                {
+                                    @class = "form-control fw-bold",
+                                    type = "text",
+                                    data_type = "currency"
+                                })
+                                <span class="input-group-text">₫</span>
+                            </div>
+                        </div>
 
-                    <hr />
+                        <div class="mb-3">
+                            <label class="form-label">Giá khuyến mãi</label>
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.GiaKhuyenMai, new
+                                {
+                                    @class = "form-control text-danger fw-bold",
+                                    type = "text",
+                                    data_type = "currency"
+                                })
+                                <span class="input-group-text">₫</span>
+                            </div>
+                        </div>
 
-                    <div>
-                        <strong>Ảnh hiện tại:</strong>
+                        <div class="mb-0">
+                            <label class="form-label">Số lượng tồn kho</label>
+                            @Html.TextBoxFor(m => m.SoLuongTon, new
+                            {
+                                @class = "form-control",
+                                type = "number",
+                                min = "0"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Images Section -->
+                <div class="sidebar-section">
+                    <div class="sidebar-header images">
+                        <h6>
+                            <i class="fas fa-images"></i>
+                            Hình Ảnh
+                        </h6>
+                    </div>
+                    <div class="sidebar-body">
+                        <label class="image-upload-btn w-100 mb-0" for="imageUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <div class="upload-text">Tải thêm ảnh mới</div>
+                            <input type="file"
+                                   name="HinhAnhs"
+                                   multiple
+                                   id="imageUpload"
+                                   hidden
+                                   accept="image/*" />
+                        </label>
+
+                        <div class="preview-section" style="display:none;">
+                            <div id="previewContainer" class="row g-2 mt-2"></div>
+                        </div>
+
                         @if (Model.AnhHienTai != null && Model.AnhHienTai.Any())
                         {
-                            <div class="row mt-2 g-2">
-                                @for (int i = 0; i < Model.AnhHienTai.Count; i++)
-                                {
-                                    <div class="col-6 position-relative">
-                                        <div class="border rounded p-1 h-100">
-                                            <img src="@Model.AnhHienTai[i].Url"
-                                                 class="img-fluid mb-1"
-                                                 alt="Ảnh sản phẩm" />
-                                            <button type="button"
-                                                    class="btn btn-sm btn-outline-danger w-100 btn-mark-delete-image"
-                                                    data-public-id="@Model.AnhHienTai[i].PublicId">
-                                                Xóa ảnh
-                                            </button>
-
-                                            @Html.HiddenFor(m => m.AnhHienTai[i].Id)
-                                            @Html.HiddenFor(m => m.AnhHienTai[i].Url)
-                                            @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
-                                            @Html.HiddenFor(m => m.AnhHienTai[i].LaAnhDaiDien)
+                            <div class="current-images-section">
+                                <div class="current-images-title">
+                                    <i class="fas fa-photo-video"></i>
+                                    Ảnh hiện tại (@Model.AnhHienTai.Count ảnh)
+                                </div>
+                                <div class="row g-3">
+                                    @for (int i = 0; i < Model.AnhHienTai.Count; i++)
+                                    {
+                                        <div class="col-6">
+                                            <div class="image-item">
+                                                <img src="@Model.AnhHienTai[i].Url"
+                                                     class="img-fluid"
+                                                     alt="Product image" />
+                                                <div class="form-check">
+                                                    @Html.RadioButtonFor(m => m.AnhHienTai[i].LaAnhDaiDien,
+                                                        true,
+                                                        new
+                                                             {
+                                                            @class = "form-check-input",
+                                                            id = $"radio_{i}"
+                                                        })
+                                                    <label class="form-check-label" for="radio_@i">
+                                                        <i class="fas fa-star text-warning me-1"></i>
+                                                        Ảnh đại diện
+                                                    </label>
+                                                </div>
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].Id)
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].PublicId)
+                                                @Html.HiddenFor(m => m.AnhHienTai[i].Url)
+                                            </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </div>
-                        }
-                        else
-                        {
-                            <p class="text-muted mt-2 mb-0">
-                                Chưa có hình ảnh nào.
-                            </p>
                         }
                     </div>
                 </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-update btn-custom w-100">
+                    <i class="fas fa-check-circle"></i> Lưu Thay Đổi
+                </button>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
 
-<!-- "Modal" thêm/sửa thông số (dùng JS thuần, không cần Bootstrap JS) -->
-<div class="modal fade" id="specModal" tabindex="-1" aria-labelledby="specModalLabel" aria-hidden="true" style="display:none; background: rgba(0,0,0,0.35);">
-    <div class="modal-dialog">
+<!-- Spec Modal -->
+<div class="modal fade" id="specModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="specModalLabel">Thêm Thông Số</h5>
-                <button type="button" class="btn-close" data-close-spec-modal="true" aria-label="Đóng"></button>
+                <h5 class="modal-title" id="specModalLabel">
+                    <i class="fas fa-microchip text-primary me-2"></i>
+                    Thông Số Kỹ Thuật
+                </h5>
+                <button type="button" class="btn-close" data-close-spec-modal="true"></button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="specId" />
 
                 <div class="mb-3">
-                    <label class="form-label">Tên thông số <span class="text-danger">*</span></label>
-                    <input type="text" id="specName" class="form-control" placeholder="Ví dụ: CPU, RAM, Màn hình..." />
+                    <label class="form-label">
+                        Tên thông số <span class="text-danger">*</span>
+                    </label>
+                    <input type="text"
+                           id="specName"
+                           class="form-control"
+                           placeholder="VD: CPU, RAM, Ổ cứng..." />
                 </div>
 
                 <div class="mb-0">
-                    <label class="form-label">Giá trị <span class="text-danger">*</span></label>
+                    <label class="form-label">
+                        Giá trị <span class="text-danger">*</span>
+                    </label>
                     <textarea id="specValue"
                               class="form-control"
                               rows="3"
-                              placeholder="Ví dụ: Intel Core i5, 16GB DDR4, 15.6 inch..."></textarea>
+                              placeholder="VD: Intel Core i5-12400F, 6 nhân 12 luồng"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button"
-                        class="btn btn-outline-secondary"
+                        class="btn btn-light"
                         data-close-spec-modal="true">
-                    Đóng
+                    <i class="fas fa-times me-1"></i> Đóng
                 </button>
-                <button type="button" class="btn btn-primary" id="btnSaveSpec">
-                    Lưu thông số
+                <button type="button"
+                        class="btn btn-primary"
+                        id="btnSaveSpec">
+                    <i class="fas fa-save me-1"></i> Lưu lại
                 </button>
             </div>
         </div>
@@ -262,13 +796,14 @@
 
 @section Scripts {
     <script>
-        window.PRODUCT_ID = @Model.MaSanPham;
-        window.SPEC_GET_URL = '@Url.Action("GetByProduct", "ThongSo", new { area = "Admin" })';
-        window.SPEC_CREATE_URL = '@Url.Action("Create", "ThongSo", new { area = "Admin" })';
-        window.SPEC_UPDATE_URL = '@Url.Action("Update", "ThongSo", new { area = "Admin" })';
-        window.SPEC_DELETE_URL = '@Url.Action("Delete", "ThongSo", new { area = "Admin" })';
+        window.SANPHAM_CONFIG = {
+            enableSpec: true,
+            productId: '@Model.MaSanPham',
+            getUrl: '@Url.Action("GetByProduct", "ThongSo", new { area = "Admin" })',
+            createUrl: '@Url.Action("Create", "ThongSo", new { area = "Admin" })',
+            updateUrl: '@Url.Action("Update", "ThongSo", new { area = "Admin" })',
+            deleteUrl: '@Url.Action("Delete", "ThongSo", new { area = "Admin" })'
+        };
     </script>
-
-    <script src="~/Areas/Admin/Scripts/sanpham-edit.js"></script>
+    <script src="~/Areas/Admin/Scripts/sanpham-common.js"></script>
 }
-

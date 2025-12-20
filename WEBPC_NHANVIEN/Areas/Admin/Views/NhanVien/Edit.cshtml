@@ -1,0 +1,94 @@
+﻿@model WEBPC_NHANVIEN.Areas.Admin.Models.NhanVienEditViewModel
+
+@{
+    ViewBag.Title = "Cập nhật nhân viên";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cập nhật nhân viên</h2>
+
+@using (Html.BeginForm("Edit", "NhanVien", FormMethod.Post, new { area = "Admin" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+    @Html.HiddenFor(m => m.MaNhanVien)
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header"><strong>Thông tin cá nhân</strong></div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.HoTen, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại</label>
+                        @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "form-control" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Vai trò <span class="text-danger">*</span></label>
+                        @Html.DropDownListFor(
+                            m => m.MaVaiTro,
+                            ViewBag.Roles as IEnumerable<SelectListItem> ?? Enumerable.Empty<SelectListItem>(),
+                            "-- Chọn vai trò --",
+                            new { @class = "form-select" }
+                        )
+                        @Html.ValidationMessageFor(m => m.MaVaiTro, "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-header"><strong>Tài khoản</strong></div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
+                        @Html.TextBoxFor(m => m.TenDangNhap, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.TenDangNhap, "", new { @class = "text-danger small" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu (bỏ trống nếu không đổi)</label>
+                        @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control" })
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Trạng thái</label>
+                        @Html.DropDownListFor(
+                            m => m.TrangThaiTaiKhoan,
+                            new List<SelectListItem>
+                            {
+                                new SelectListItem { Text = "Hoạt động", Value = "Hoạt động" },
+                                new SelectListItem { Text = "Khoá", Value = "Khoá" }
+                            },
+                            new { @class = "form-select" }
+                        )
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="@Url.Action("Index", "NhanVien", new { area = "Admin" })"
+                   class="btn btn-outline-secondary">
+                    Hủy
+                </a>
+                <button type="submit" class="btn btn-success">
+                    Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+}

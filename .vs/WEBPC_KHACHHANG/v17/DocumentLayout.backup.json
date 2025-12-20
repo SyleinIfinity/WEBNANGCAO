@@ -48,9 +48,61 @@
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Web.config",
               "ToolTip": "E:\\125\\TT\\Cu\u1ED1i k\u00EC\\WEBPC_KHACHHANG\\Web.config",
               "RelativeToolTip": "WEBPC_KHACHHANG\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-12-20T06:16:20.185Z",
+              "WhenOpened": "2025-12-20T08:44:45.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Detail.cshtml",
+              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\DonHang\\Detail.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\DonHang\\Detail.cshtml",
+              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\DonHang\\Detail.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\DonHang\\Detail.cshtml",
+              "ViewState": "AgIAACABAAAAAAAAAAAqwEwBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T08:43:15.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DonHangController.cs",
+              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Controllers\\DonHangController.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Controllers\\DonHangController.cs",
+              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Controllers\\DonHangController.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Controllers\\DonHangController.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAcwHYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T08:42:50.876Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "KhuyenMaiResponse.cs",
+              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiResponse.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiResponse.cs",
+              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiResponse.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T08:06:39.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "KhuyenMaiKhachHangResponse.cs",
+              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiKhachHangResponse.cs",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiKhachHangResponse.cs",
+              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiKhachHangResponse.cs",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\Responses\\KhuyenMaiKhachHangResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T08:04:35.615Z",
               "EditorCaption": ""
             },
             {
@@ -112,7 +164,20 @@
               "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\Requests\\ChatRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T05:40:04.274Z",
+              "WhenOpened": "2025-12-20T07:59:12.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Checkout.cshtml",
+              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\ThanhToan\\Checkout.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\ThanhToan\\Checkout.cshtml",
+              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\ThanhToan\\Checkout.cshtml",
+              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\ThanhToan\\Checkout.cshtml",
+              "ViewState": "AgIAAAECAAAAAAAAAAAuwC0CAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T07:47:15.571Z",
               "EditorCaption": ""
             }
           ]
