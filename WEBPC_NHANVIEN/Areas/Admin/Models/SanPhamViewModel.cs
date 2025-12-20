@@ -12,6 +12,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
         public int SoLuongTon { get; set; }
         public string TenDanhMuc { get; set; }
         public bool TrangThai { get; set; }
+        public string MoTa { get; set; }
 
         // Hứng danh sách ảnh từ API (Tên class con phải khớp cấu trúc JSON)
         public List<ImageDTO> DanhSachAnh { get; set; }

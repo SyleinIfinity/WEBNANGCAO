@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Newtonsoft.Json;
+using System.Web.Security;
 using WEBPC_NHANVIEN.Models.Responses;
 using WEBPC_NHANVIEN.Models.ViewModels;
 
@@ -18,10 +19,17 @@ namespace WEBPC_NHANVIEN.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            // Nếu đã đăng nhập, đẩy về trang chủ luôn
-            if (Session["UserToken"] != null)
+            // Nếu đã đăng nhập, kiểm tra session để điều hướng lại cho đúng trang
+            if (Session["UserToken"] != null && Session["RoleId"] != null)
             {
-                return RedirectToAction("Index", "Home");
+                int roleId = Convert.ToInt32(Session["RoleId"]);
+                switch (roleId)
+                {
+                    case 1: return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    case 2: return RedirectToAction("Index", "Dashboard", new { area = "Sale" });
+                    case 3: return RedirectToAction("Index", "Dashboard", new { area = "Tech" });
+                    default: return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }
@@ -35,7 +43,7 @@ namespace WEBPC_NHANVIEN.Controllers
                 return View(model);
             }
 
-            // 2. Cấu hình bảo mật TLS để gọi API https
+            // 2. Cấu hình bảo mật TLS để gọi API https (nếu cần thiết với server cũ)
             System.Net.ServicePointManager.SecurityProtocol =
                 System.Net.SecurityProtocolType.Tls12 |
                 System.Net.SecurityProtocolType.Tls11 |
@@ -58,7 +66,7 @@ namespace WEBPC_NHANVIEN.Controllers
 
                 try
                 {
-                    // Gọi API Login (Đảm bảo API path đúng với backend của bạn)
+                    // Gọi API Login
                     HttpResponseMessage response = await client.PostAsync("TaiKhoan/login", content);
                     string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -67,16 +75,34 @@ namespace WEBPC_NHANVIEN.Controllers
                         // 3. Giải mã kết quả thành công
                         var userInfo = JsonConvert.DeserializeObject<UserLoginResponse>(responseBody);
 
-                        // 4. Lưu Session quan trọng để hiển thị "Chào (Vai trò) - (Tên)"
+                        // 4. Lưu Session quan trọng
                         Session["UserToken"] = userInfo.Token;
                         Session["UserID"] = userInfo.MaNhanVien;
+                        Session["UserName"] = userInfo.HoTen;
+                        Session["RoleName"] = userInfo.TenVaiTro;
+                        Session["RoleId"] = userInfo.MaVaiTro;
 
-                        // Đây là 2 tham số quan trọng cho yêu cầu của bạn:
-                        Session["UserName"] = userInfo.HoTen;        // Tên
-                        Session["RoleName"] = userInfo.TenVaiTro;    // Vai trò
+                        // 5. XỬ LÝ ĐIỀU HƯỚNG THEO VAI TRÒ
+                        switch (userInfo.MaVaiTro)
+                        {
+                            case 1: // Admin -> Vào Area Admin
+                                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
 
-                        // Chuyển hướng về trang chủ để hiện thông báo
-                        return RedirectToAction("Index", "Home");
+                            case 2: // Sale -> Vào Area Sale
+                                // Đảm bảo Areas/Sale/Controllers/DashboardController.cs tồn tại
+                                return RedirectToAction("Index", "Dashboard", new { area = "Sale" });
+
+                            case 3: // Tech -> Vào Area Tech
+                                // Đảm bảo Areas/Tech/Controllers/DashboardController.cs tồn tại
+                                return RedirectToAction("Index", "Dashboard", new { area = "Tech" });
+
+                            default:
+                                // Không phù hợp cả 3 vai trò -> Báo lỗi và hủy session vừa tạo
+                                Session.Clear();
+                                Session.Abandon();
+                                ModelState.AddModelError("", "Tài khoản của bạn không có quyền truy cập hệ thống quản trị.");
+                                return View(model);
+                        }
                     }
                     else
                     {
@@ -101,11 +127,18 @@ namespace WEBPC_NHANVIEN.Controllers
         }
 
         // Đăng xuất
+        [HttpGet]
         public ActionResult Logout()
         {
+            // Xóa session đăng nhập
             Session.Clear();
             Session.Abandon();
-            return RedirectToAction("Login");
+
+            // Nếu dùng FormsAuthentication
+            FormsAuthentication.SignOut();
+
+            // Về lại trang đăng nhập
+            return RedirectToAction("Login", "Account");
         }
     }
 }
