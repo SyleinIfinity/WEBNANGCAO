@@ -1,26 +1,43 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WEBPC_NHANVIEN.Areas.Admin.Models
 {
     public class KhachHangViewModel
     {
-        public int MaKhachHang { get; set; }
+        [JsonProperty("maKhachHang")]
+        [Display(Name = "Mã khách hàng")]
+        public long MaNguoiDung { get; set; }
+
+        [Required(ErrorMessage = "Họ tên là bắt buộc")]
+        [Display(Name = "Họ và tên")]
         public string HoTen { get; set; }
+
+        [Required(ErrorMessage = "Email là bắt buộc")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
+        [Display(Name = "Số điện thoại")]
         public string SoDienThoai { get; set; }
 
-        // API chưa trả về Ngày Tạo, tạm thời để nullable để không lỗi
-        public DateTime? NgayTao { get; set; }
+        [Display(Name = "Giới tính")]
+        public string GioiTinh { get; set; }
 
-        // API trả về 'CoTaiKhoan' (bool), ta map sang string để hiển thị
-        public bool CoTaiKhoan { get; set; }
+        [Display(Name = "Ngày sinh")]
+        [DataType(DataType.Date)]
+        public DateTime? NgaySinh { get; set; }
 
-        // Property ảo để hiển thị ra View
-        public string TrangThaiHienThi
-        {
-            get { return CoTaiKhoan ? "Đã có tài khoản" : "Khách vãng lai"; }
-        }
+        [Display(Name = "Trạng thái")]
+        public int TrangThai { get; set; } // 1: Hoạt động, 0: Khóa
 
-        public int? TongDonHang { get; set; }
+        // Các trường dùng cho Create (API yêu cầu)
+        [Display(Name = "Tên đăng nhập")]
+        public string TenDangNhap { get; set; }
+
+        [Display(Name = "Mật khẩu")]
+        [DataType(DataType.Password)]
+        public string MatKhau { get; set; }
     }
 }

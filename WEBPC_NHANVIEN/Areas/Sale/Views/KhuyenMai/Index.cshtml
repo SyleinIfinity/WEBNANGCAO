@@ -33,11 +33,11 @@
         position: fixed;
     }
 
-    .modal.show {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
+        .modal.show {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
 
     .modal-dialog {
         margin: 1rem auto !important;
@@ -91,11 +91,11 @@
         min-height: 220px;
     }
 
-    .ticket-card:hover {
-        transform: translateY(-3px);
-        border-color: #6f42c1;
-        box-shadow: 0 5px 15px rgba(111,66,193,0.15);
-    }
+        .ticket-card:hover {
+            transform: translateY(-3px);
+            border-color: #6f42c1;
+            box-shadow: 0 5px 15px rgba(111,66,193,0.15);
+        }
 
     .ticket-header-strip {
         height: 4px;
@@ -160,10 +160,10 @@
         color: #666;
     }
 
-    .btn-icon:hover {
-        transform: scale(1.2);
-        color: #6f42c1;
-    }
+        .btn-icon:hover {
+            transform: scale(1.2);
+            color: #6f42c1;
+        }
 
     /* ================= 3. MODAL CHI TIẾT VOUCHER ================= */
     .premium-box {
@@ -182,6 +182,7 @@
             opacity: 0;
             transform: translateY(-30px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -196,17 +197,17 @@
         position: relative;
     }
 
-    .premium-header h5 {
-        margin: 0;
-        padding-right: 40px;
-    }
+        .premium-header h5 {
+            margin: 0;
+            padding-right: 40px;
+        }
 
-    .premium-header #box-name {
-        font-size: 0.85rem;
-        opacity: 0.95;
-        margin-top: 8px;
-        font-weight: 500;
-    }
+        .premium-header #box-name {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            margin-top: 8px;
+            font-weight: 500;
+        }
 
     /* Nút đóng */
     .btn-close-white-custom {
@@ -227,10 +228,10 @@
         font-size: 1rem;
     }
 
-    .btn-close-white-custom:hover {
-        background: rgba(255,255,255,0.4);
-        transform: rotate(90deg);
-    }
+        .btn-close-white-custom:hover {
+            background: rgba(255,255,255,0.4);
+            transform: rotate(90deg);
+        }
 
     /* Phần hiển thị giá trị voucher */
     .hero-section {
@@ -241,26 +242,26 @@
         position: relative;
     }
 
-    /* Hai lỗ tròn giả lập voucher */
-    .hero-section::before,
-    .hero-section::after {
-        content: "";
-        position: absolute;
-        bottom: -11px;
-        width: 22px;
-        height: 22px;
-        background: rgba(0, 0, 0, 0.65);
-        border-radius: 50%;
-        z-index: 5;
-    }
+        /* Hai lỗ tròn giả lập voucher */
+        .hero-section::before,
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            bottom: -11px;
+            width: 22px;
+            height: 22px;
+            background: rgba(0, 0, 0, 0.65);
+            border-radius: 50%;
+            z-index: 5;
+        }
 
-    .hero-section::before {
-        left: -11px;
-    }
+        .hero-section::before {
+            left: -11px;
+        }
 
-    .hero-section::after {
-        right: -11px;
-    }
+        .hero-section::after {
+            right: -11px;
+        }
 
     .hero-val {
         font-size: 3rem;
@@ -323,9 +324,9 @@
         margin-top: 5px;
     }
 
-    .d-item:last-child .d-val {
-        font-size: 1.4rem;
-    }
+        .d-item:last-child .d-val {
+            font-size: 1.4rem;
+        }
 
     /* ================= 4. MODAL CẬP NHẬT (THIẾT KẾ HIỆN ĐẠI) ================= */
     #updateModal .modal-content {
@@ -344,30 +345,30 @@
         position: relative;
     }
 
-    #updateModal .modal-header .modal-title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: white;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+        #updateModal .modal-header .modal-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    #updateModal .modal-header .modal-title::before {
-        content: "📅";
-        font-size: 1.2rem;
-    }
+            #updateModal .modal-header .modal-title::before {
+                content: "📅";
+                font-size: 1.2rem;
+            }
 
-    #updateModal .modal-header .btn-close {
-        filter: brightness(0) invert(1);
-        opacity: 0.8;
-        transition: all 0.2s;
-    }
+        #updateModal .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: all 0.2s;
+        }
 
-    #updateModal .modal-header .btn-close:hover {
-        opacity: 1;
-        transform: rotate(90deg);
-    }
+            #updateModal .modal-header .btn-close:hover {
+                opacity: 1;
+                transform: rotate(90deg);
+            }
 
     #updateModal .modal-body {
         padding: 25px;
@@ -378,9 +379,9 @@
         margin-bottom: 20px;
     }
 
-    #updateModal .form-group:last-child {
-        margin-bottom: 0;
-    }
+        #updateModal .form-group:last-child {
+            margin-bottom: 0;
+        }
 
     #updateModal label {
         font-size: 0.85rem;
@@ -401,15 +402,15 @@
         font-weight: 500;
     }
 
-    #updateModal .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-        outline: none;
-    }
+        #updateModal .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+            outline: none;
+        }
 
-    #updateModal .form-control:hover {
-        border-color: #b8c5f2;
-    }
+        #updateModal .form-control:hover {
+            border-color: #b8c5f2;
+        }
 
     #updateModal .modal-footer {
         border: none;
@@ -434,22 +435,22 @@
         color: white;
     }
 
-    #updateModal .btn-secondary:hover {
-        background: #5a6268;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-    }
+        #updateModal .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
 
     #updateModal .btn-primary {
         background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
     }
 
-    #updateModal .btn-primary:hover {
-        background: linear-gradient(135deg, #5568d3, #63408a);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-    }
+        #updateModal .btn-primary:hover {
+            background: linear-gradient(135deg, #5568d3, #63408a);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
 
     /* Icon cho input date */
     #updateModal input[type="date"] {
@@ -457,22 +458,22 @@
         cursor: pointer;
     }
 
-    #updateModal input[type="date"]::-webkit-calendar-picker-indicator {
-        cursor: pointer;
-        opacity: 0.6;
-        transition: opacity 0.2s;
-    }
+        #updateModal input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
 
-    #updateModal input[type="date"]::-webkit-calendar-picker-indicator:hover {
-        opacity: 1;
-    }
+            #updateModal input[type="date"]::-webkit-calendar-picker-indicator:hover {
+                opacity: 1;
+            }
 </style>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="fw-bold text-dark m-0">
         <i class="fas fa-ticket-alt text-primary me-2"></i> DANH SÁCH KHUYẾN MÃI
     </h5>
-   
+
 </div>
 
 <div class="voucher-grid">
@@ -509,6 +510,11 @@
                         </button>
                         <button class="btn-icon btn-update" title="Cập nhật"
                                 data-id="@item.maKhuyenMai"
+                                data-code="@item.maCodeKM"
+                                data-name="@item.tenChuongTrinh"
+                                data-type="@item.loaiGiam"
+                                data-val="@item.giaTriGiam"
+                                data-qty="@item.soLuongConLai"
                                 data-start="@item.ngayBatDau.ToString("yyyy-MM-dd")"
                                 data-end="@item.ngayKetThuc.ToString("yyyy-MM-dd")">
                             <i class="fas fa-edit text-warning"></i>
@@ -611,10 +617,9 @@
         $(document).ready(function () {
             const formatVND = (num) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
 
-            // Xem chi tiết voucher
+            // 1. Xem chi tiết voucher (Giữ nguyên)
             $('body').on('click', '.btn-view', function () {
                 var d = $(this).data();
-
                 $('#box-name').text(d.name);
                 $('#box-code').text(d.code);
 
@@ -636,36 +641,51 @@
                 myModal.show();
             });
 
-            // Cập nhật thời gian
+            // 2. Mở Modal Cập nhật thời gian
             $('body').on('click', '.btn-update', function () {
-                $('#modal-update-id').val($(this).data('id'));
-                $('#modal-update-start').val($(this).data('start').split(' ')[0]);
-                $('#modal-update-end').val($(this).data('end').split(' ')[0]);
+                var d = $(this).data();
+                $('#modal-update-id').val(d.id);
+                $('#modal-update-start').val(d.start.split(' ')[0]);
+                $('#modal-update-end').val(d.end.split(' ')[0]);
 
                 var myModal = new bootstrap.Modal(document.getElementById('updateModal'));
                 myModal.show();
             });
 
-            // Lưu thay đổi
+            // 3. Xử lý Lưu thay đổi (Đã sửa lỗi id)
             $('#btn-save-update').click(function () {
-                var id = $('#modal-update-id').val();
-                var start = $('#modal-update-start').val();
-                var end = $('#modal-update-end').val();
+                var currentId = $('#modal-update-id').val();
+                // Lấy nút bấm tương ứng với ID để lấy dữ liệu data-
+                var btn = $('.btn-update[data-id="' + currentId + '"]');
+                var d = btn.data();
+
+                var updateData = {
+                    id: currentId,
+                    ngayBatDau: $('#modal-update-start').val(),
+                    ngayKetThuc: $('#modal-update-end').val(),
+                    maCodeKM: d.code,
+                    tenChuongTrinh: d.name,
+                    loaiGiam: d.type,
+                    giaTriGiam: d.val,
+                    soLuongConLai: d.qty
+                };
 
                 $.ajax({
                     url: '/Sale/KhuyenMai/CapNhatThoiGian',
                     type: 'POST',
-                    data: { id: id, ngayBatDau: start, ngayKetThuc: end },
+                    data: updateData, // Gửi nguyên object updateData
                     success: function (rs) {
                         if (rs.success) {
                             alert("Cập nhật thành công!");
                             location.reload();
                         } else {
-                            alert(rs.msg);
+                            alert("Lỗi: " + rs.msg);
                         }
                     },
-                    error: function () {
-                        alert("Lỗi kết nối!");
+                    error: function (xhr) {
+                        // Hiển thị lỗi chi tiết thay vì chỉ báo lỗi kết nối chung chung
+                        console.log(xhr.responseText);
+                        alert("Lỗi hệ thống! Vui lòng kiểm tra Console (F12)");
                     }
                 });
             });

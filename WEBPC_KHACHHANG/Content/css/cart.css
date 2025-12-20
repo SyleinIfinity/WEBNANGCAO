@@ -1,0 +1,38 @@
+﻿.cart-item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.cart-summary-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 20px; /* Giữ khung tổng tiền khi cuộn trang */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+    .cart-summary-card h4 {
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+/* Ẩn nút tăng giảm mặc định của input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.table > :not(caption) > * > * {
+    vertical-align: middle;
+}
+
+/* Style cho input số lượng trong giỏ */
+.quantity-input {
+    max-width: 60px;
+}

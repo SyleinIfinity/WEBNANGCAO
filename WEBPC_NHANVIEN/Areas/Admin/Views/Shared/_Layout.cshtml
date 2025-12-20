@@ -47,6 +47,12 @@
                     <i class="fas fa-user-tie"></i> Nhân viên
                 </a>
             </li>
+            <li class="nav-item @(ViewContext.RouteData.Values["controller"].ToString() == "KhachHang" ? "active" : "")">
+                <a class="nav-link" href="@Url.Action("Index", "KhachHang", new { area = "Admin" })">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Quản lý Khách hàng</span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -54,15 +60,21 @@
         <div class="top-header">
             <h3 style="margin:0;">@ViewBag.Title</h3>
             <div class="user-info">
-                <span>
-                    Xin chào,
-                    <strong id="current-user-name" data-user-id="@Session["NhanVienId"]">
-                        Đang tải...
-                    </strong>
-                </span>
-                <a href="@Url.Action("Logout", "Account", new { area = "Admin" })"
-                   style="font-size: 0.8rem; padding: 5px 15px; margin-left: 10px;">
-                    <i class="fas fa-sign-out-alt"></i>
+                @{
+                    var userName = Session["UserName"] as string;
+                    var roleName = Session["RoleName"] as string;
+                }
+
+                @if (!string.IsNullOrEmpty(userName))
+                {
+                    <span>
+                        Xin chào <strong>@userName</strong> (@roleName)
+                    </span>
+                    @*<a href="@Url.Action("Logout", "Account")" class="ms-3">Đăng xuất</a>*@
+                }
+
+                <a href="@Url.Action("Logout", "Account", new { area = "" })" class="ms-3">
+                    Đăng xuất
                 </a>
             </div>
         </div>
