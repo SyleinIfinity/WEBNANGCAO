@@ -1,0 +1,312 @@
+﻿@{
+    // Lấy dữ liệu từ Controller truyền sang
+    int maKhachHang = ViewBag.MaKhachHang;
+    string apiUrl = ViewBag.ApiUrl;
+    // Lưu ý: apiUrl lúc này đang là "https://webapi-1-qldr.onrender.com/api"
+}
+
+<style>
+    .chat-widget-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: #0d6efd;
+        color: white;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 9999;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+    }
+
+        .chat-widget-toggle:hover {
+            transform: scale(1.1);
+        }
+
+    .chat-widget-box {
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 360px;
+        height: 500px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #ddd;
+    }
+
+    .chat-header {
+        background: #0d6efd;
+        color: white;
+        padding: 12px 15px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-close-chat {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .chat-body {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .msg {
+        max-width: 80%;
+        padding: 8px 12px;
+        border-radius: 15px;
+        font-size: 14px;
+        word-wrap: break-word;
+        line-height: 1.4;
+    }
+
+        .msg.bot {
+            align-self: flex-start;
+            background: #e9ecef;
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: #0d6efd;
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .msg.bot a {
+            color: #0056b3;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+    .chat-footer {
+        padding: 10px;
+        border-top: 1px solid #eee;
+        display: flex;
+        background: white;
+        gap: 5px;
+    }
+
+    .chat-input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+    }
+
+    .btn-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #0d6efd;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .typing {
+        font-size: 11px;
+        color: #888;
+        margin-left: 10px;
+        display: none;
+        margin-bottom: 5px;
+    }
+</style>
+
+<button class="chat-widget-toggle" id="btnOpenChat" title="Chat với AI">
+    <i class="fa fa-comments"></i>
+</button>
+
+<div class="chat-widget-box" id="boxChat">
+    <div class="chat-header">
+        <span><i class="fa fa-robot"></i> Trợ lý WEBPC</span>
+        <button class="btn-close-chat" id="btnCloseChat">&times;</button>
+    </div>
+
+    <div class="chat-body" id="listMessage">
+        <div class="msg bot">Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?</div>
+    </div>
+
+    <div class="typing" id="lblTyping">Bot đang suy nghĩ...</div>
+
+    <div class="chat-footer">
+        <input type="text" class="chat-input" id="txtChatInput" placeholder="Nhập câu hỏi..." autocomplete="off">
+        <button class="btn-send" id="btnSendChat"><i class="fa fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // --- CẤU HÌNH ---
+        const MA_KHACH = @maKhachHang;
+        // API_URL đã chứa chữ ".../api" do Controller lấy từ Web.config
+        const API_URL = '@apiUrl';
+
+        // --- DOM ELEMENTS ---
+        const btnOpen = document.getElementById('btnOpenChat');
+        const btnClose = document.getElementById('btnCloseChat');
+        const boxChat = document.getElementById('boxChat');
+        const listMsg = document.getElementById('listMessage');
+        const txtInput = document.getElementById('txtChatInput');
+        const btnSend = document.getElementById('btnSendChat');
+        const lblTyping = document.getElementById('lblTyping');
+
+        // --- 1. LOGIC TRẠNG THÁI ---
+        const isChatOpen = sessionStorage.getItem('WEBPC_ChatState') === 'open';
+
+        if (isChatOpen) {
+            openChatBox(false);
+        }
+
+        btnOpen.addEventListener('click', function() {
+            openChatBox(true);
+            sessionStorage.setItem('WEBPC_ChatState', 'open');
+        });
+
+        btnClose.addEventListener('click', function() {
+            closeChatBox();
+            sessionStorage.setItem('WEBPC_ChatState', 'closed');
+        });
+
+        function openChatBox(isClick) {
+            boxChat.style.display = 'flex';
+            btnOpen.style.display = 'none';
+            loadChatHistory(); // Gọi tải lịch sử
+            if(isClick) txtInput.focus();
+        }
+
+        function closeChatBox() {
+            boxChat.style.display = 'none';
+            btnOpen.style.display = 'flex';
+        }
+
+        // --- 2. LOGIC GỌI API (QUAN TRỌNG: Đã xóa /api) ---
+
+        function loadChatHistory() {
+            if (MA_KHACH <= 0) return;
+
+            // Link: .../api/ChatBot/history
+            fetch(`${API_URL}/ChatBot/history?maKhachHang=${MA_KHACH}`)
+                .then(res => res.json())
+                .then(data => {
+                    // Log ra xem dữ liệu Server trả về thực tế là gì (Debug)
+                    console.log("Lịch sử chat:", data);
+
+                    listMsg.innerHTML = '<div class="msg bot">Xin chào! Em là AI hỗ trợ. Anh/Chị cần tìm linh kiện gì ạ?</div>';
+
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                            // [FIX LỖI QUAN TRỌNG TẠI ĐÂY]
+                            // Kiểm tra cả 'Role' (PascalCase) và 'role' (camelCase)
+                            const roleRaw = item.role || item.Role;
+                            const contentRaw = item.content || item.Content;
+
+                            if (roleRaw && contentRaw) {
+                                // Map role: 'model' -> 'bot', 'user' -> 'user'
+                                const roleClass = roleRaw === 'model' ? 'bot' : 'user';
+
+                                // Parse Markdown link
+                                const htmlContent = parseMarkdown(contentRaw);
+                                appendMessage(roleClass, htmlContent);
+                            }
+                        });
+                        scrollToBottom();
+                    }
+                })
+                .catch(err => console.error("Lỗi tải lịch sử:", err));
+        }
+
+        function sendMessage() {
+            const text = txtInput.value.trim();
+            if (!text) return;
+
+            if (MA_KHACH <= 0) {
+                alert("Bạn cần đăng nhập để chat với nhân viên tư vấn.");
+                // window.location.href = '/Login'; // Bỏ comment nếu muốn redirect
+                return;
+            }
+
+            appendMessage('user', text);
+            txtInput.value = '';
+            lblTyping.style.display = 'block';
+            scrollToBottom();
+
+            // [SỬA LẠI]: Bỏ chữ /api ở đây luôn
+            // Link sẽ thành: .../api/ChatBot/ask
+            fetch(`${API_URL}/ChatBot/ask`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    maKhachHang: MA_KHACH,
+                    message: text
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                lblTyping.style.display = 'none';
+                if (data.bot_reply) {
+                    const botHtml = parseMarkdown(data.bot_reply);
+                    appendMessage('bot', botHtml);
+                } else {
+                    appendMessage('bot', 'Hệ thống đang bận, vui lòng thử lại.');
+                }
+                scrollToBottom();
+            })
+            .catch(err => {
+                lblTyping.style.display = 'none';
+                appendMessage('bot', 'Lỗi kết nối server.');
+                console.error(err);
+            });
+        }
+
+        btnSend.addEventListener('click', sendMessage);
+        txtInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // --- 3. TIỆN ÍCH ---
+        function appendMessage(role, html) {
+            const div = document.createElement('div');
+            div.className = `msg ${role}`;
+            div.innerHTML = html;
+            listMsg.appendChild(div);
+        }
+
+        function scrollToBottom() {
+            listMsg.scrollTop = listMsg.scrollHeight;
+        }
+
+        function parseMarkdown(text) {
+            if (!text) return "";
+            const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+            return text.replace(regex, (match, name, url) => {
+                return `<a href="${url}" target="_blank">${name}</a>`;
+            });
+        }
+    });
+</script>
