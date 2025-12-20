@@ -7,473 +7,112 @@
 
 <style>
     /* ================================================================= */
-    /* 1. XỬ LÝ MODAL - ĐỔ BÓNG ĐÈ LÊN TOÀN BỘ MÀN HÌNH (KỂ CẢ SIDEBAR/HEADER) */
+    /* 1. XỬ LÝ MODAL - ĐỔ BÓNG ĐÈ LÊN TOÀN BỘ MÀN HÌNH */
     /* ================================================================= */
-
-    /* Backdrop (lớp nền đen mờ) - Phủ toàn bộ màn hình */
     .modal-backdrop {
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        z-index: 9998 !important;
-        position: fixed;
-        background-color: rgba(0, 0, 0, 0.7) !important;
+        left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important;
+        z-index: 9998 !important; position: fixed; background-color: rgba(0, 0, 0, 0.7) !important;
     }
-
-    /* Modal container - Đè lên backdrop, phủ toàn màn hình */
     .modal {
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        z-index: 9999 !important;
-        overflow-y: auto !important;
-        display: none;
-        position: fixed;
+        left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important;
+        z-index: 9999 !important; overflow-y: auto !important; display: none; position: fixed;
     }
-
-        .modal.show {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-
-    .modal-dialog {
-        margin: 1rem auto !important;
-        position: relative;
-        z-index: 10000;
-    }
+    .modal.show { display: flex !important; align-items: center !important; justify-content: center !important; }
+    .modal-dialog { margin: 1rem auto !important; position: relative; z-index: 10000; }
 
     /* ================= 2. GRID VOUCHER ================= */
-    .voucher-grid {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0 -10px;
-    }
+    .voucher-grid { display: flex; flex-wrap: wrap; margin: 0 -10px; }
+    .grid-col { padding: 0 10px; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
 
-    .grid-col {
-        padding: 0 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    @@media (min-width: 576px) {
-        .grid-col {
-            width: 50%;
-        }
-    }
-
-    @@media (min-width: 992px) {
-        .grid-col {
-            width: 33.33%;
-        }
-    }
-
-    @@media (min-width: 1200px) {
-        .grid-col {
-            width: 25%;
-        }
-    }
+    @@media (min-width: 576px) { .grid-col { width: 50%; } }
+    @@media (min-width: 992px) { .grid-col { width: 33.33%; } }
+    @@media (min-width: 1200px) { .grid-col { width: 25%; } }
 
     /* Thẻ Voucher */
     .ticket-card {
-        background: #fff;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        overflow: hidden;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        transition: 0.2s;
-        min-height: 220px;
+        background: #fff; border: 1px solid #e9ecef; border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; height: 100%;
+        display: flex; flex-direction: column; transition: 0.2s; min-height: 220px;
     }
-
-        .ticket-card:hover {
-            transform: translateY(-3px);
-            border-color: #6f42c1;
-            box-shadow: 0 5px 15px rgba(111,66,193,0.15);
-        }
-
-    .ticket-header-strip {
-        height: 4px;
-        background: #6f42c1;
-        width: 100%;
+    .ticket-card:hover {
+        transform: translateY(-3px); border-color: #6f42c1;
+        box-shadow: 0 5px 15px rgba(111,66,193,0.15);
     }
-
+    .ticket-header-strip { height: 4px; background: #6f42c1; width: 100%; }
     .ticket-body {
-        padding: 12px;
-        text-align: center;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding: 12px; text-align: center; flex: 1;
+        display: flex; flex-direction: column; justify-content: center;
     }
-
-    .ticket-value {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #6f42c1;
-        margin-bottom: 4px;
-    }
-
+    .ticket-value { font-size: 1.4rem; font-weight: 800; color: #6f42c1; margin-bottom: 4px; }
     .ticket-title {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 5px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: 0.85rem; font-weight: 600; color: #333; margin-bottom: 5px;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-
     .ticket-qty {
-        font-size: 0.7rem;
-        background: #f8f9fa;
-        padding: 2px 8px;
-        border-radius: 4px;
-        border: 1px solid #dee2e6;
-        color: #666;
+        font-size: 0.7rem; background: #f8f9fa; padding: 2px 8px;
+        border-radius: 4px; border: 1px solid #dee2e6; color: #666;
     }
-
-    .ticket-divider {
-        border-top: 1px dashed #e9ecef;
-        margin-top: auto;
-    }
-
-    .ticket-footer {
-        padding: 8px;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
-
+    .ticket-divider { border-top: 1px dashed #e9ecef; margin-top: auto; }
+    .ticket-footer { padding: 8px; display: flex; justify-content: center; gap: 15px; }
     .btn-icon {
-        border: none;
-        background: none;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: 0.2s;
-        color: #666;
+        border: none; background: none; font-size: 1.1rem; cursor: pointer; transition: 0.2s; color: #666;
     }
+    .btn-icon:hover { transform: scale(1.2); color: #6f42c1; }
 
-        .btn-icon:hover {
-            transform: scale(1.2);
-            color: #6f42c1;
-        }
-
-    /* ================= 3. MODAL CHI TIẾT VOUCHER ================= */
+    /* ================= 3. MODAL CHI TIẾT ================= */
     .premium-box {
-        border: none;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        overflow: hidden;
-        max-width: 500px;
-        margin: auto;
-        animation: modalSlideIn 0.3s ease-out;
-        background: #fff;
+        border: none; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        overflow: hidden; max-width: 500px; margin: auto; background: #fff;
     }
-
-    @@keyframes modalSlideIn {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
     .premium-header {
-        background: linear-gradient(135deg, #6f42c1, #5a32a3);
-        padding: 20px;
-        text-align: center;
-        color: white;
-        position: relative;
+        background: linear-gradient(135deg, #6f42c1, #5a32a3); padding: 20px;
+        text-align: center; color: white; position: relative;
     }
-
-        .premium-header h5 {
-            margin: 0;
-            padding-right: 40px;
-        }
-
-        .premium-header #box-name {
-            font-size: 0.85rem;
-            opacity: 0.95;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-    /* Nút đóng */
+    .premium-header h5 { margin: 0; padding-right: 40px; }
+    .premium-header #box-name { font-size: 0.85rem; opacity: 0.95; margin-top: 8px; font-weight: 500; }
     .btn-close-white-custom {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: #fff;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        font-size: 1rem;
+        position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2);
+        border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
     }
+    .btn-close-white-custom:hover { background: rgba(255,255,255,0.4); transform: rotate(90deg); }
 
-        .btn-close-white-custom:hover {
-            background: rgba(255,255,255,0.4);
-            transform: rotate(90deg);
-        }
-
-    /* Phần hiển thị giá trị voucher */
     .hero-section {
-        background: #fff;
-        text-align: center;
-        padding: 30px 20px 20px;
-        border-bottom: 2px dashed #e9ecef;
-        position: relative;
+        background: #fff; text-align: center; padding: 30px 20px 20px;
+        border-bottom: 2px dashed #e9ecef; position: relative;
     }
-
-        /* Hai lỗ tròn giả lập voucher */
-        .hero-section::before,
-        .hero-section::after {
-            content: "";
-            position: absolute;
-            bottom: -11px;
-            width: 22px;
-            height: 22px;
-            background: rgba(0, 0, 0, 0.65);
-            border-radius: 50%;
-            z-index: 5;
-        }
-
-        .hero-section::before {
-            left: -11px;
-        }
-
-        .hero-section::after {
-            right: -11px;
-        }
-
-    .hero-val {
-        font-size: 3rem;
-        font-weight: 800;
-        color: #6f42c1;
-        line-height: 1;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.08);
+    .hero-section::before, .hero-section::after {
+        content: ""; position: absolute; bottom: -11px; width: 22px; height: 22px;
+        background: rgba(0, 0, 0, 0.65); border-radius: 50%; z-index: 5;
     }
+    .hero-section::before { left: -11px; }
+    .hero-section::after { right: -11px; }
+    .hero-val { font-size: 3rem; font-weight: 800; color: #6f42c1; line-height: 1; }
+    .hero-lbl { font-size: 0.75rem; text-transform: uppercase; color: #999; letter-spacing: 1.5px; margin-top: 8px; }
+    .hero-section .badge { margin-top: 15px; padding: 8px 20px; font-size: 0.85rem; letter-spacing: 2px; }
 
-    .hero-lbl {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        color: #999;
-        letter-spacing: 1.5px;
-        margin-top: 8px;
-    }
-
-    .hero-section .badge {
-        margin-top: 15px;
-        padding: 8px 20px;
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        font-weight: 600;
-    }
-
-    /* Thông tin chi tiết */
-    .detail-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-        padding: 25px 30px;
-        background: #fff;
-    }
-
-    .d-item {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .d-lbl {
-        font-size: 0.75rem;
-        color: #888;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .d-val {
-        font-size: 1rem;
-        color: #333;
-        font-weight: 700;
-    }
-
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 25px 30px; background: #fff; }
+    .d-item { display: flex; flex-direction: column; gap: 5px; }
+    .d-lbl { font-size: 0.75rem; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .d-val { font-size: 1rem; color: #333; font-weight: 700; }
     .d-item:last-child {
-        grid-column: 1 / -1;
-        text-align: center;
-        border-top: 2px solid #f0f0f0;
-        padding-top: 15px;
-        margin-top: 5px;
+        grid-column: 1 / -1; text-align: center; border-top: 2px solid #f0f0f0; padding-top: 15px;
     }
+    .d-item:last-child .d-val { font-size: 1.4rem; }
 
-        .d-item:last-child .d-val {
-            font-size: 1.4rem;
-        }
-
-    /* ================= 4. MODAL CẬP NHẬT (THIẾT KẾ HIỆN ĐẠI) ================= */
-    #updateModal .modal-content {
-        border: none;
-        border-radius: 16px;
-        overflow: hidden;
-        animation: modalSlideIn 0.3s ease-out;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-
-    #updateModal .modal-header {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border: none;
-        padding: 18px 20px;
-        color: white;
-        position: relative;
-    }
-
-        #updateModal .modal-header .modal-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-            #updateModal .modal-header .modal-title::before {
-                content: "📅";
-                font-size: 1.2rem;
-            }
-
-        #updateModal .modal-header .btn-close {
-            filter: brightness(0) invert(1);
-            opacity: 0.8;
-            transition: all 0.2s;
-        }
-
-            #updateModal .modal-header .btn-close:hover {
-                opacity: 1;
-                transform: rotate(90deg);
-            }
-
-    #updateModal .modal-body {
-        padding: 25px;
-        background: #fff;
-    }
-
-    #updateModal .form-group {
-        margin-bottom: 20px;
-    }
-
-        #updateModal .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-    #updateModal label {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #555;
-        margin-bottom: 8px;
-        display: block;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    #updateModal .form-control {
-        border-radius: 8px;
-        border: 2px solid #e9ecef;
-        padding: 10px 14px;
-        font-size: 0.95rem;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-
-        #updateModal .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
-            outline: none;
-        }
-
-        #updateModal .form-control:hover {
-            border-color: #b8c5f2;
-        }
-
-    #updateModal .modal-footer {
-        border: none;
-        padding: 15px 25px 20px;
-        background: #f8f9fa;
-        gap: 10px;
-    }
-
-    #updateModal .btn {
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        border: none;
-        transition: all 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    #updateModal .btn-secondary {
-        background: #6c757d;
-        color: white;
-    }
-
-        #updateModal .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-        }
-
-    #updateModal .btn-primary {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-    }
-
-        #updateModal .btn-primary:hover {
-            background: linear-gradient(135deg, #5568d3, #63408a);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-    /* Icon cho input date */
-    #updateModal input[type="date"] {
-        position: relative;
-        cursor: pointer;
-    }
-
-        #updateModal input[type="date"]::-webkit-calendar-picker-indicator {
-            cursor: pointer;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-
-            #updateModal input[type="date"]::-webkit-calendar-picker-indicator:hover {
-                opacity: 1;
-            }
+    /* ================= 4. MODAL UPDATE ================= */
+    #updateModal .modal-content { border: none; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    #updateModal .modal-header { background: linear-gradient(135deg, #667eea, #764ba2); padding: 18px 20px; color: white; }
+    #updateModal .modal-body { padding: 25px; background: #fff; }
+    #updateModal label { font-size: 0.85rem; font-weight: 600; color: #555; margin-bottom: 8px; display: block; text-transform: uppercase; }
+    #updateModal .form-control { border-radius: 8px; padding: 10px 14px; }
+    #updateModal .modal-footer { padding: 15px 25px 20px; background: #f8f9fa; }
 </style>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="fw-bold text-dark m-0">
         <i class="fas fa-ticket-alt text-primary me-2"></i> DANH SÁCH KHUYẾN MÃI
     </h5>
-
 </div>
 
 <div class="voucher-grid">
@@ -481,6 +120,10 @@
     {
         foreach (var item in Model)
         {
+            // [FIX DATE] Tạo chuỗi yyyy-MM-dd để gán vào input date
+            string dateStartIso = item.ngayBatDau.ToString("yyyy-MM-dd");
+            string dateEndIso = item.ngayKetThuc.ToString("yyyy-MM-dd");
+
             <div class="grid-col">
                 <div class="ticket-card">
                     <div class="ticket-header-strip"></div>
@@ -508,6 +151,7 @@
                                 data-qty="@item.soLuongConLai">
                             <i class="fas fa-eye text-info"></i>
                         </button>
+
                         <button class="btn-icon btn-update" title="Cập nhật"
                                 data-id="@item.maKhuyenMai"
                                 data-code="@item.maCodeKM"
@@ -515,8 +159,9 @@
                                 data-type="@item.loaiGiam"
                                 data-val="@item.giaTriGiam"
                                 data-qty="@item.soLuongConLai"
-                                data-start="@item.ngayBatDau.ToString("yyyy-MM-dd")"
-                                data-end="@item.ngayKetThuc.ToString("yyyy-MM-dd")">
+                                @* [FIX] Thêm data-iso để JS đọc đúng định dạng cho input date *@
+                                data-start-iso="@dateStartIso"
+                                data-end-iso="@dateEndIso">
                             <i class="fas fa-edit text-warning"></i>
                         </button>
                     </div>
@@ -530,11 +175,9 @@
     }
 </div>
 
-<!-- Modal: Chi tiết Voucher -->
 <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content premium-box">
-
             <div class="premium-header">
                 <button type="button" class="btn-close-white-custom" data-bs-dismiss="modal">
                     <i class="fas fa-times"></i>
@@ -542,43 +185,22 @@
                 <h5 class="fw-bold">CHI TIẾT VOUCHER</h5>
                 <div id="box-name">Tên chương trình</div>
             </div>
-
             <div class="hero-section">
                 <div class="hero-val" id="box-val">0</div>
                 <div class="hero-lbl" id="box-type">LOẠI GIẢM</div>
-                <div>
-                    <span class="badge bg-dark font-monospace" id="box-code">CODE</span>
-                </div>
+                <div><span class="badge bg-dark font-monospace" id="box-code">CODE</span></div>
             </div>
-
             <div class="detail-grid">
-                <div class="d-item">
-                    <span class="d-lbl">Đơn tối thiểu</span>
-                    <span class="d-val" id="box-min">0 đ</span>
-                </div>
-                <div class="d-item">
-                    <span class="d-lbl">Giảm tối đa</span>
-                    <span class="d-val text-danger" id="box-max">0 đ</span>
-                </div>
-                <div class="d-item">
-                    <span class="d-lbl">Bắt đầu</span>
-                    <span class="d-val text-success" id="box-start">--/--</span>
-                </div>
-                <div class="d-item">
-                    <span class="d-lbl">Kết thúc</span>
-                    <span class="d-val text-secondary" id="box-end">--/--</span>
-                </div>
-                <div class="d-item">
-                    <span class="d-lbl">Số lượng còn lại</span>
-                    <span class="d-val text-primary" id="box-qty">0</span>
-                </div>
+                <div class="d-item"><span class="d-lbl">Đơn tối thiểu</span><span class="d-val" id="box-min">0 đ</span></div>
+                <div class="d-item"><span class="d-lbl">Giảm tối đa</span><span class="d-val text-danger" id="box-max">0 đ</span></div>
+                <div class="d-item"><span class="d-lbl">Bắt đầu</span><span class="d-val text-success" id="box-start">--/--</span></div>
+                <div class="d-item"><span class="d-lbl">Kết thúc</span><span class="d-val text-secondary" id="box-end">--/--</span></div>
+                <div class="d-item"><span class="d-lbl">Số lượng còn lại</span><span class="d-val text-primary" id="box-qty">0</span></div>
             </div>
-
         </div>
     </div>
 </div>
 
-<!-- Modal: Cập nhật thời gian -->
 <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
@@ -588,22 +210,24 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="modal-update-id" />
+                <input type="hidden" id="modal-hidden-code" />
+                <input type="hidden" id="modal-hidden-name" />
+                <input type="hidden" id="modal-hidden-type" />
+                <input type="hidden" id="modal-hidden-val" />
+                <input type="hidden" id="modal-hidden-qty" />
+
                 <div class="form-group">
                     <label>Ngày bắt đầu</label>
                     <input type="date" class="form-control" id="modal-update-start">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 15px;">
                     <label>Ngày kết thúc</label>
                     <input type="date" class="form-control" id="modal-update-end">
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="fas fa-times me-1"></i> Hủy
-                </button>
-                <button type="button" class="btn btn-primary" id="btn-save-update">
-                    <i class="fas fa-save me-1"></i> Lưu lại
-                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-1"></i> Hủy</button>
+                <button type="button" class="btn btn-primary" id="btn-save-update"><i class="fas fa-save me-1"></i> Lưu lại</button>
             </div>
         </div>
     </div>
@@ -617,7 +241,10 @@
         $(document).ready(function () {
             const formatVND = (num) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
 
-            // 1. Xem chi tiết voucher (Giữ nguyên)
+            // [QUAN TRỌNG] URL Action chuẩn (Fix lỗi deploy)
+            const URL_UPDATE = '@Url.Action("CapNhatThoiGian", "KhuyenMai", new { area = "Sale" })';
+
+            // 1. Xem chi tiết
             $('body').on('click', '.btn-view', function () {
                 var d = $(this).data();
                 $('#box-name').text(d.name);
@@ -641,51 +268,62 @@
                 myModal.show();
             });
 
-            // 2. Mở Modal Cập nhật thời gian
+            // 2. Mở Modal Cập nhật
             $('body').on('click', '.btn-update', function () {
                 var d = $(this).data();
+
+                // Đổ dữ liệu vào input date (dùng data-start-iso chuẩn yyyy-MM-dd)
                 $('#modal-update-id').val(d.id);
-                $('#modal-update-start').val(d.start.split(' ')[0]);
-                $('#modal-update-end').val(d.end.split(' ')[0]);
+                $('#modal-update-start').val(d.startIso);
+                $('#modal-update-end').val(d.endIso);
+
+                // Lưu các trường khác vào input ẩn để gửi kèm (Model Binder yêu cầu đủ field)
+                $('#modal-hidden-code').val(d.code);
+                $('#modal-hidden-name').val(d.name);
+                $('#modal-hidden-type').val(d.type);
+                $('#modal-hidden-val').val(d.val);
+                $('#modal-hidden-qty').val(d.qty);
 
                 var myModal = new bootstrap.Modal(document.getElementById('updateModal'));
                 myModal.show();
             });
 
-            // 3. Xử lý Lưu thay đổi (Đã sửa lỗi id)
+            // 3. Xử lý Lưu
             $('#btn-save-update').click(function () {
-                var currentId = $('#modal-update-id').val();
-                // Lấy nút bấm tương ứng với ID để lấy dữ liệu data-
-                var btn = $('.btn-update[data-id="' + currentId + '"]');
-                var d = btn.data();
+                var btn = $(this);
+                var oldText = btn.html();
+                btn.html('<i class="fas fa-spinner fa-spin"></i> Đang lưu...').prop('disabled', true);
 
+                // Tạo object dữ liệu (Khớp với Model KhuyenMai C#)
                 var updateData = {
-                    id: currentId,
+                    maKhuyenMai: $('#modal-update-id').val(),
                     ngayBatDau: $('#modal-update-start').val(),
                     ngayKetThuc: $('#modal-update-end').val(),
-                    maCodeKM: d.code,
-                    tenChuongTrinh: d.name,
-                    loaiGiam: d.type,
-                    giaTriGiam: d.val,
-                    soLuongConLai: d.qty
+                    // Các trường ẩn
+                    maCodeKM: $('#modal-hidden-code').val(),
+                    tenChuongTrinh: $('#modal-hidden-name').val(),
+                    loaiGiam: $('#modal-hidden-type').val(),
+                    giaTriGiam: $('#modal-hidden-val').val(),
+                    soLuongConLai: $('#modal-hidden-qty').val()
                 };
 
                 $.ajax({
-                    url: '/Sale/KhuyenMai/CapNhatThoiGian',
+                    url: URL_UPDATE, // Dùng URL Razor sinh ra
                     type: 'POST',
-                    data: updateData, // Gửi nguyên object updateData
+                    data: updateData,
                     success: function (rs) {
                         if (rs.success) {
                             alert("Cập nhật thành công!");
                             location.reload();
                         } else {
                             alert("Lỗi: " + rs.msg);
+                            btn.html(oldText).prop('disabled', false);
                         }
                     },
-                    error: function (xhr) {
-                        // Hiển thị lỗi chi tiết thay vì chỉ báo lỗi kết nối chung chung
-                        console.log(xhr.responseText);
-                        alert("Lỗi hệ thống! Vui lòng kiểm tra Console (F12)");
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("Lỗi kết nối hệ thống! Kiểm tra Console.");
+                        btn.html(oldText).prop('disabled', false);
                     }
                 });
             });

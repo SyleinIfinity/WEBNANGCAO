@@ -1,44 +1,48 @@
-﻿@model IEnumerable<WEBPC_NHANVIEN.Models.DonHang>
-
-@{
+﻿@{
     ViewBag.Title = "Quản lý Đơn hàng";
     Layout = "~/Areas/Sale/Views/Shared/_LayoutSale.cshtml";
 }
 
 @section Styles {
     <style>
+        /* --- LAYOUT 2 CỘT CHUYÊN NGHIỆP --- */
         .sale-order-layout {
             display: flex;
             height: calc(100vh - 100px);
             gap: 20px;
             overflow: hidden;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background-color: #f1f5f9; /* Nền xám nhẹ */
         }
 
+        /* --- CỘT TRÁI (CHI TIẾT) - Flex 5 --- */
         .col-detail-panel {
             flex: 5;
             display: flex;
             flex-direction: column;
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
             overflow: hidden;
-            max-height: calc(100vh - 100px);
-            height: calc(100vh - 100px);
+            height: 100%;
         }
 
+        /* --- CỘT PHẢI (DANH SÁCH) - Flex 7 --- */
         .col-list-panel {
             flex: 7;
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            border: 1px solid #f0f0f0;
+            border: 1px solid #e2e8f0;
             overflow: hidden;
+            height: 100%;
         }
 
+        /* --- HEADER --- */
         .panel-header {
             padding: 20px 24px;
             background: #fff;
@@ -50,7 +54,7 @@
 
             .panel-header h5 {
                 font-weight: 700;
-                color: #32325d;
+                color: #1e293b;
                 font-size: 1.1rem;
                 margin: 0;
                 display: flex;
@@ -58,11 +62,28 @@
                 gap: 10px;
             }
 
+        /* --- SCROLL CONTENT --- */
         .scroll-content {
             overflow-y: auto;
             flex: 1;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
         }
 
+            .scroll-content::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .scroll-content::-webkit-scrollbar-track {
+                background: #f1f5f9;
+            }
+
+            .scroll-content::-webkit-scrollbar-thumb {
+                background-color: #cbd5e1;
+                border-radius: 20px;
+            }
+
+        /* --- TABLE --- */
         .table-custom {
             width: 100%;
             border-collapse: separate;
@@ -70,8 +91,8 @@
         }
 
             .table-custom th {
-                background-color: #44539c;
-                color: #fff;
+                background-color: #f8fafc;
+                color: #64748b;
                 font-size: 0.75rem;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
@@ -80,49 +101,46 @@
                 position: sticky;
                 top: 0;
                 z-index: 10;
-                border-bottom: 1px solid #e9ecef;
+                border-bottom: 1px solid #e2e8f0;
             }
 
             .table-custom td {
-                padding: 16px 24px;
+                padding: 12px 24px; /* Giảm padding một chút cho gọn */
                 vertical-align: middle;
-                border-bottom: 1px solid #f0f3f5;
-                color: #525f7f;
-                font-size: 0.95rem;
-                background: #e8e8e8;
+                border-bottom: 1px solid #f1f5f9;
+                color: #334155;
+                font-size: 0.9rem;
                 transition: all 0.2s;
-                text-align: center;
             }
 
         .row-item {
             cursor: pointer;
+            transition: 0.2s;
         }
 
             .row-item:hover td {
-                background-color: #f6f9fc;
-                color: #32325d;
+                background-color: #f8fafc;
             }
 
             .row-item.active td {
-                background-color: #e8f0fe !important;
-                color: #0d47a1;
-                font-weight: 600;
-                border-bottom-color: #dbeafe;
+                background-color: #eff6ff !important;
+                color: #2563eb;
             }
 
                 .row-item.active td:first-child {
-                    border-left: 4px solid #0d47a1;
+                    border-left: 4px solid #2563eb;
                 }
 
         .code-text {
             font-family: 'Consolas', monospace;
             font-weight: 700;
-            color: #32325d;
+            color: #475569;
         }
 
+        /* --- BADGES --- */
         .badge-status {
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 999px;
             font-size: 0.75rem;
             font-weight: 700;
             display: inline-block;
@@ -131,475 +149,219 @@
         }
 
         .st-new {
-            background: #e3f2fd;
-            color: #004085;
+            background: #e0f2fe;
+            color: #0284c7;
         }
-
+        /* Xanh dương nhạt */
         .st-ok {
-            background: #d1e7dd;
-            color: #0f5132;
+            background: #dcfce7;
+            color: #16a34a;
         }
-
+        /* Xanh lá */
         .st-cancel {
-            background: #f8d7da;
-            color: #842029;
+            background: #fee2e2;
+            color: #dc2626;
         }
+        /* Đỏ */
 
+        /* --- CHI TIẾT ĐƠN HÀNG (CỘT TRÁI) --- */
         .group-header {
-            background-color: #f8f9fa;
+            background-color: #f8fafc;
             padding: 12px 20px;
             font-weight: 600;
-            color: #495057;
-            font-size: 0.9rem;
-            border-bottom: 1px solid #edf2f7;
-            border-top: 1px solid #edf2f7;
+            color: #475569;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            border-bottom: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
         }
 
-        .group-products {
-            flex: 0 0 250px;
-            display: flex;
-            flex-direction: column;
-            height: 30%;
-            max-height: 250px;
-            min-height: 250px;
-            overflow: hidden;
-        }
-
-        .group-transaction {
-            flex: 0 0 200px;
-            display: flex;
-            flex-direction: column;
-            min-height: 200px;
-            max-height: 200px;
-            overflow: hidden;
-        }
-
-        .group-products .scroll-content {
-            overflow-y: auto;
-            flex: 1;
-            min-height: 0;
-        }
-
-            .group-products .scroll-content::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .group-products .scroll-content::-webkit-scrollbar-track {
-                background: #e9ecef;
-                border-radius: 10px;
-                margin: 5px 0;
-            }
-
-            .group-products .scroll-content::-webkit-scrollbar-thumb {
-                background: #94a3b8;
-                border-radius: 10px;
-                transition: all 0.3s;
-            }
-
-                .group-products .scroll-content::-webkit-scrollbar-thumb:hover {
-                    background: #64748b;
-                }
-
-        .group-transaction .scroll-content {
-            overflow-y: auto;
-            flex: 1;
-            min-height: 0;
-        }
-
-            .group-transaction .scroll-content::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .group-transaction .scroll-content::-webkit-scrollbar-track {
-                background: #e9ecef;
-                border-radius: 10px;
-                margin: 5px 0;
-            }
-
-            .group-transaction .scroll-content::-webkit-scrollbar-thumb {
-                background: #94a3b8;
-                border-radius: 10px;
-                transition: all 0.3s;
-            }
-
-                .group-transaction .scroll-content::-webkit-scrollbar-thumb:hover {
-                    background: #64748b;
-                }
-
-        .group-products .scroll-content,
-        .group-transaction .scroll-content {
-            scrollbar-width: auto;
-            scrollbar-color: #94a3b8 #e9ecef;
-        }
-
+        /* Sản phẩm */
         .product-item {
             display: flex;
-            align-items: flex-start;
-            padding: 12px 20px;
-            border-bottom: 1px solid #f0f3f5;
-            gap: 12px;
-            transition: all 0.2s;
-            min-height: 70px;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            gap: 15px;
         }
 
-            .product-item:hover {
-                background-color: #f8f9fa;
-            }
-
         .product-img {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
             border-radius: 8px;
-            border: 1px solid #e9ecef;
-            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
         }
 
         .product-info {
             flex: 1;
-            min-width: 0;
         }
 
         .product-name {
             font-weight: 600;
-            color: #32325d;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.3;
+            color: #1e293b;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .product-meta {
+            color: #64748b;
+            font-size: 0.8rem;
         }
 
         .product-price {
-            color: #8898aa;
-            font-size: 0.85rem;
-        }
-
-        .product-quantity {
-            background: #e3f2fd;
-            color: #1976d2;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .product-total {
             font-weight: 700;
-            color: #0d47a1;
-            font-size: 1rem;
-            text-align: right;
-            white-space: nowrap;
-            min-width: 120px;
+            color: #2563eb;
         }
 
-        .transaction-info {
-            padding: 15px 20px;
-        }
-
+        /* Thông tin thanh toán */
         .info-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed #eee;
+            padding: 10px 20px;
+            border-bottom: 1px dashed #e2e8f0;
             font-size: 0.9rem;
         }
 
-            .info-row:last-child {
-                border-bottom: none;
-            }
-
         .info-label {
-            color: #8898aa;
-            font-weight: 500;
+            color: #64748b;
         }
 
         .info-value {
-            color: #32325d;
+            color: #1e293b;
             font-weight: 600;
             text-align: right;
         }
 
+        /* Tổng kết & Hành động */
         .group-summary {
-            background-color: #fff;
-            padding: 16px 24px;
-            border-top: 1px solid #edf2f7;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.03);
-            flex: 1 1 auto;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .summary-info {
-            margin-bottom: 16px;
-        }
-
-        .summary-row {
+        .total-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
         }
 
-            .summary-row:last-child {
-                margin-bottom: 12px;
-            }
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #dc2626;
+        }
 
         .action-buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-action {
             flex: 1;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
         .btn-cancel {
-            background: #fff;
-            color: #dc3545;
-            border: 2px solid #dc3545;
+            background: #fee2e2;
+            color: #dc2626;
         }
 
             .btn-cancel:hover {
-                background: #dc3545;
-                color: #fff;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+                background: #fecaca;
             }
 
         .btn-approve {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #2563eb;
             color: #fff;
-            border: none;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
             .btn-approve:hover {
-                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+                background: #1d4ed8;
                 transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
             }
-
-        .btn-action i {
-            font-size: 1.1rem;
-        }
 
         .hidden {
             display: none !important;
         }
 
-        .btn-reload {
-            border: 1px solid #e2e8f0;
-            background: #fff;
-            color: #64748b;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-
-            .btn-reload:hover {
-                background: #f1f5f9;
-                color: #0f172a;
-                border-color: #cbd5e1;
-            }
-
-        .empty-state-box {
-            background: #f8f9fa;
+        .loading-spinner {
+            text-align: center;
             padding: 30px;
-            border-radius: 50%;
-            margin-bottom: 20px;
+            color: #64748b;
         }
 
-        .debug-panel {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #2d3748;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            max-width: 400px;
-            font-family: 'Consolas', monospace;
-            font-size: 0.85rem;
-            z-index: 9999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-            .debug-panel h6 {
-                color: #48bb78;
-                margin: 0 0 10px 0;
-                font-size: 0.9rem;
-            }
-
-            .debug-panel .url-test {
-                background: #1a202c;
-                padding: 8px;
-                border-radius: 4px;
-                margin: 5px 0;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-
-                .debug-panel .url-test:hover {
-                    background: #4a5568;
-                }
-
-            .debug-panel .status {
-                display: inline-block;
-                padding: 2px 8px;
-                border-radius: 4px;
-                font-size: 0.75rem;
-                margin-left: 10px;
-            }
-
-        .status-ok {
-            background: #48bb78;
-        }
-
-        .status-error {
-            background: #f56565;
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #94a3b8;
         }
     </style>
 }
 
 <div class="sale-order-layout">
     <div class="col-detail-panel">
-        <div id="empty-state" class="d-flex flex-column align-items-center justify-content-center h-100 text-muted">
-            <div class="empty-state-box">
-                <i class="fas fa-clipboard-check fa-3x" style="color: #cbd5e1;"></i>
-            </div>
-            <h6 style="color: #64748b;">Chưa chọn đơn hàng</h6>
-            <p class="small">Vui lòng chọn một đơn từ danh sách bên phải</p>
+        <div id="detail-loading" class="loading-spinner hidden">
+            <i class="fas fa-circle-notch fa-spin fa-2x mb-3"></i>
+            <p>Đang tải thông tin chi tiết...</p>
         </div>
 
-        <div id="detail-container" class="d-flex flex-column h-100 hidden">
-            <div class="group-products">
+        <div id="empty-state" class="empty-state h-100 d-flex flex-column justify-content-center">
+            <i class="fas fa-file-invoice fa-4x mb-3" style="opacity: 0.3;"></i>
+            <h6>Chưa chọn đơn hàng</h6>
+            <p class="small">Vui lòng chọn một đơn hàng từ danh sách bên phải</p>
+        </div>
+
+        <div id="detail-content" class="d-flex flex-column h-100 hidden">
+            <div style="flex: 1; display: flex; flex-direction: column; min-height: 0;">
                 <div class="group-header">
-                    <i class="fas fa-box text-primary"></i>
-                    <span>Danh sách sản phẩm</span>
+                    <span><i class="fas fa-box text-primary me-2"></i> Sản phẩm</span>
                 </div>
-                <div class="scroll-content" id="product-list-container">
+                <div class="scroll-content" id="product-list">
                 </div>
             </div>
 
-            <div class="group-transaction">
+            <div style="height: 35%; display: flex; flex-direction: column; min-height: 200px; border-top: 1px solid #e2e8f0;">
                 <div class="group-header">
-                    <i class="fas fa-wallet text-success"></i>
-                    <span>Thanh toán & Giao dịch</span>
-                    <span class="badge bg-light text-dark border ms-auto" id="lbl-payment-method">COD</span>
+                    <span><i class="fas fa-wallet text-success me-2"></i> Thanh toán & Giao nhận</span>
+                    <span id="lbl-payment-method" class="badge bg-light text-dark border">COD</span>
                 </div>
-                <div class="scroll-content">
-                    <div id="cod-payment" class="transaction-info hidden">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-hand-holding-usd me-1"></i> Phương thức</span>
-                            <span class="info-value">Thanh toán khi nhận hàng (COD)</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user me-1"></i> Người nhận</span>
-                            <span class="info-value" id="lbl-cod-receiver-name">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-phone me-1"></i> SĐT</span>
-                            <span class="info-value" id="lbl-cod-receiver-phone">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-map-marker-alt me-1"></i> Địa chỉ</span>
-                            <span class="info-value" id="lbl-cod-receiver-address" style="max-width: 60%; text-align: right;">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-shipping-fast me-1"></i> Phí vận chuyển</span>
-                            <span class="info-value text-primary" id="lbl-cod-shipping-fee">0 đ</span>
-                        </div>
-                    </div>
-
-                    <div id="vietqr-payment" class="transaction-info hidden">
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-hashtag me-1"></i> Mã GD</span>
-                            <span class="info-value" id="lbl-trans-code">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="far fa-clock me-1"></i> Thời gian</span>
-                            <span class="info-value" id="lbl-trans-date">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-money-bill-wave me-1"></i> Số tiền</span>
-                            <span class="info-value text-success" id="lbl-trans-amount">0 đ</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-info-circle me-1"></i> Trạng thái</span>
-                            <span class="info-value" id="lbl-trans-status">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-credit-card me-1"></i> Phương thức</span>
-                            <span class="info-value" id="lbl-trans-method">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-user me-1"></i> Người nhận</span>
-                            <span class="info-value" id="lbl-receiver-name">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-phone me-1"></i> SĐT</span>
-                            <span class="info-value" id="lbl-receiver-phone">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-map-marker-alt me-1"></i> Địa chỉ</span>
-                            <span class="info-value" id="lbl-receiver-address" style="max-width: 60%; text-align: right;">---</span>
-                        </div>
-                        <div class="info-row">
-                            <span class="info-label"><i class="fas fa-shipping-fast me-1"></i> Phí vận chuyển</span>
-                            <span class="info-value text-primary" id="lbl-shipping-fee">0 đ</span>
-                        </div>
-                    </div>
+                <div class="scroll-content" id="payment-info">
                 </div>
             </div>
 
             <div class="group-summary">
-                <div class="summary-info">
-                    <div class="summary-row">
-                        <span class="text-muted">Khách hàng:</span>
-                        <strong id="lbl-customer-name" class="text-dark">...</strong>
-                    </div>
-                    <div class="summary-row">
-                        <span style="font-size: 1.1rem; color: #495057;">Tổng thanh toán:</span>
-                        <strong class="text-danger" style="font-size: 1.5rem;" id="lbl-total-money">0 đ</strong>
-                    </div>
+                <div class="total-row">
+                    <span class="text-muted">Tổng thanh toán:</span>
+                    <span class="total-price" id="lbl-total-price">0 đ</span>
                 </div>
 
                 <div id="action-buttons" class="action-buttons hidden">
                     <button class="btn-action btn-cancel" onclick="processOrder(false)">
-                        <i class="fas fa-times-circle"></i>
-                        <span>Hủy Đơn</span>
+                        <i class="fas fa-times-circle"></i> Hủy Đơn
                     </button>
                     <button class="btn-action btn-approve" onclick="processOrder(true)">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Duyệt Đơn</span>
+                        <i class="fas fa-check-circle"></i> Duyệt Đơn
                     </button>
                 </div>
 
-                <div id="status-message" class="text-center p-3 rounded-3 hidden" style="font-size: 0.95rem; background: #f8f9fa; color: #495057;">
-                    <i class="fas fa-info-circle me-2"></i>
-                    <span id="status-text"></span>
+                <div id="status-alert" class="alert alert-light text-center mb-0 border hidden" style="background: #f8fafc; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle me-1"></i> <span id="lbl-status-text">...</span>
                 </div>
             </div>
         </div>
@@ -607,506 +369,279 @@
 
     <div class="col-list-panel">
         <div class="panel-header">
-            <h5><i class="fas fa-list-ul text-primary"></i> Danh Sách Đơn Hàng</h5>
-           
-            <button class="btn-reload" onclick="location.reload()" title="Tải lại dữ liệu">
-                <i class="fas fa-sync-alt"></i> Tải lại
+            <h5><i class="fas fa-list-ul text-primary me-2"></i> Danh Sách Đơn Hàng</h5>
+            <button class="btn btn-sm btn-white border" onclick="loadOrderList()" title="Tải lại">
+                <i class="fas fa-sync-alt text-muted"></i>
             </button>
         </div>
 
-        <div class="scroll-content flex-grow-1">
+        <div class="scroll-content">
             <table class="table-custom">
                 <thead>
                     <tr>
                         <th style="padding-left: 30px;">Mã Đơn</th>
+                        <th>Khách Hàng</th>
                         <th>Ngày Đặt</th>
-                        <th>Trạng Thái</th>
+                        <th class="text-center">Trạng Thái</th>
                     </tr>
                 </thead>
                 <tbody id="tbl-orders">
-                    @if (Model != null && Model.Any())
-                    {
-                        foreach (var item in Model)
-                        {
-                            string badge = "st-new";
-                            if (item.trangThai == "Đã duyệt" || item.trangThai == "Hoàn thành" || item.trangThai == "DangGiao") { badge = "st-ok"; }
-                            else if (item.trangThai != null && (item.trangThai.Contains("hủy") || item.trangThai == "Huy")) { badge = "st-cancel"; }
-
-                            <tr class="row-item" onclick="viewDetail(this, @item.maDonHang)">
-                                <td style="padding-left: 30px;">
-                                    <span class="code-text">@(item.maCodeDonHang ?? "---")</span>
-                                </td>
-                                <td>
-                                    <div class="text-muted small"><i class="far fa-clock me-1"></i> @(item.ngayDat.ToString("HH:mm"))</div>
-                                    <div class="fw-bold" style="color: #32325d;">@(item.ngayDat.ToString("dd/MM/yyyy"))</div>
-                                </td>
-                                <td><span class="badge-status @badge">@item.trangThai</span></td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="3" class="text-center py-5">
-                                <img src="https://cdn-icons-png.flaticon.com/512/4076/4076432.png" width="64" style="opacity:0.5; margin-bottom:10px;" />
-                                <div class="text-muted">Không có đơn hàng nào</div>
-                            </td>
-                        </tr>
-                    }
                 </tbody>
             </table>
+
+            <div id="list-loading" class="loading-spinner">
+                <i class="fas fa-spinner fa-spin fa-2x mb-2"></i>
+                <p>Đang tải dữ liệu...</p>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="debug-panel" class="debug-panel" style="display: none;">
-    <h6>🔍 API URL Test Results</h6>
-    <div id="debug-results"></div>
-    <button onclick="document.getElementById('debug-panel').style.display='none'" style="margin-top:10px; padding:5px 10px; background:#f56565; border:none; border-radius:4px; color:#fff; cursor:pointer;">
-        Close
-    </button>
-</div>
-
 @section Scripts {
     <script>
-        const API_VARIATIONS = {
-            list: [
-                '/Sale/DonHang/GetList',
-                '/Sale/DonHang/GetDanhSach',
-                '/Sale/DonHang/DanhSach',
-                '/Sale/DonHang/Index',
-                '/Sale/DonHang',
-                '@Url.Action("GetList", "DonHang", new { area = "Sale" })',
-                '@Url.Action("Index", "DonHang", new { area = "Sale" })'
-            ],
-            detail: [
-                '/Sale/DonHang/GetDetail',
-                '/Sale/DonHang/ChiTiet',
-                '/Sale/DonHang/Detail',
-                '@Url.Action("GetDetail", "DonHang", new { area = "Sale" })',
-                '@Url.Action("ChiTiet", "DonHang", new { area = "Sale" })'
-            ]
-        };
+        // --- CẤU HÌNH API (Dùng Url.Action để fix lỗi deploy thư mục con) ---
+        const URL_GET_LIST = '@Url.Action("GetList", "DonHang", new { area = "Sale" })';
+        const URL_GET_DETAIL = '@Url.Action("GetDetail", "DonHang", new { area = "Sale" })';
+        const URL_ACTION = '@Url.Action("", "DonHang", new { area = "Sale" })'; // Base cho Duyet/Huy
 
-        let API_LIST_URL = '/Sale/DonHang/GetList';
-        let API_DETAIL_URL = '/Sale/DonHang/GetDetail';
-        const API_ACTION_URL = '/Sale/DonHang';
+        let currentOrderId = 0;
 
-        let selectedOrderId = null;
-        let currentOrderStatus = null;
-
-        async function testAllUrls() {
-            const panel = document.getElementById('debug-panel');
-            const results = document.getElementById('debug-results');
-            panel.style.display = 'block';
-            results.innerHTML = '<div style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Testing...</div>';
-
-            const testResults = [];
-
-            console.log("🧪 Testing LIST URLs...");
-            for (const url of API_VARIATIONS.list) {
-                try {
-                    const res = await fetch(url);
-                    const status = res.status;
-                    const isOk = res.ok;
-
-                    testResults.push({ type: 'LIST', url: url, status: status, ok: isOk });
-
-                    if (isOk) {
-                        API_LIST_URL = url;
-                        console.log("✅ Found working LIST URL:", url);
-                    }
-                } catch (e) {
-                    testResults.push({ type: 'LIST', url: url, status: 'ERROR', ok: false, error: e.message });
-                }
-            }
-
-            const testId = @(Model != null && Model.Any() ? Model.First().maDonHang : 1);
-            console.log("🧪 Testing DETAIL URLs with ID:", testId);
-
-            for (const url of API_VARIATIONS.detail) {
-                try {
-                    const fullUrl = `${url}/${testId}`;
-                    const res = await fetch(fullUrl);
-                    const status = res.status;
-                    const isOk = res.ok;
-
-                    testResults.push({ type: 'DETAIL', url: fullUrl, status: status, ok: isOk });
-
-                    if (isOk) {
-                        API_DETAIL_URL = url;
-                        console.log("✅ Found working DETAIL URL:", url);
-                    }
-                } catch (e) {
-                    testResults.push({ type: 'DETAIL', url: url, status: 'ERROR', ok: false, error: e.message });
-                }
-            }
-
-            let html = '';
-            testResults.forEach(r => {
-                const statusClass = r.ok ? 'status-ok' : 'status-error';
-                const statusText = r.ok ? '✓ ' + r.status : '✗ ' + r.status;
-                html += `
-                    <div class="url-test">
-                        <strong>${r.type}:</strong> ${r.url}
-                        <span class="status ${statusClass}">${statusText}</span>
-                        ${r.error ? `<br><small style="color:#f56565;">Error: ${r.error}</small>` : ''}
-                    </div>
-                `;
-            });
-
-            const workingList = testResults.find(r => r.type === 'LIST' && r.ok);
-            const workingDetail = testResults.find(r => r.type === 'DETAIL' && r.ok);
-
-            if (workingList || workingDetail) {
-                html += '<hr style="border-color:#4a5568; margin:10px 0;">';
-                html += '<div style="color:#48bb78;"><strong>✅ Working URLs Found:</strong></div>';
-                if (workingList) html += `<div>LIST: <code>${workingList.url}</code></div>`;
-                if (workingDetail) html += `<div>DETAIL: <code>${workingDetail.url.replace(/\/\d+$/, '/{id}')}</code></div>`;
-
-                html += '<button onclick="loadOrders()" style="margin-top:10px; padding:5px 10px; background:#48bb78; border:none; border-radius:4px; color:#fff; cursor:pointer;">Reload with correct URLs</button>';
-            } else {
-                html += '<hr style="border-color:#4a5568; margin:10px 0;">';
-                html += '<div style="color:#f56565;"><strong>❌ No working URLs found!</strong></div>';
-                html += '<div style="margin-top:10px; font-size:0.8rem;">Please check your Controller actions exist.</div>';
-            }
-
-            results.innerHTML = html;
-        }
-
-        window.addEventListener('DOMContentLoaded', function() {
-            console.log("✅ App khởi động");
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderList();
         });
 
-        async function loadOrders() {
+        // --- 1. LOAD DANH SÁCH ---
+        async function loadOrderList() {
             const tbody = document.getElementById('tbl-orders');
-            tbody.innerHTML = '<tr><td colspan="3" class="text-center py-3 text-muted"><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</td></tr>';
+            const loader = document.getElementById('list-loading');
 
-            console.log("📡 Đang gọi API:", API_LIST_URL);
+            tbody.innerHTML = '';
+            loader.classList.remove('hidden');
 
             try {
-                const res = await fetch(API_LIST_URL);
-                console.log("📥 Response status:", res.status);
-
-                if (!res.ok) throw new Error("Lỗi HTTP: " + res.status);
+                const res = await fetch(URL_GET_LIST);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
                 const data = await res.json();
-                console.log("📦 Dữ liệu danh sách:", data);
-
-                tbody.innerHTML = '';
+                loader.classList.add('hidden');
 
                 if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="3" class="text-center py-3">Danh sách trống.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-5 text-muted">Không có đơn hàng nào</td></tr>';
                     return;
                 }
 
-                data.forEach((item, index) => {
-                    if (index === 0) console.log("🔍 Dòng đầu tiên:", item);
+                data.forEach(item => {
+                    // Badge logic
+                    let badgeClass = 'st-new';
+                    const st = (item.trangThai || '').toLowerCase();
+                    if (st.includes('duyệt') || st.includes('giao') || st.includes('hoàn')) badgeClass = 'st-ok';
+                    if (st.includes('hủy') || st.includes('fail')) badgeClass = 'st-cancel';
 
-                    const id = item.maDonHang || item.MaDonHang || item.id || item.Id;
-                    const code = item.maCodeDonHang || item.MaCodeDonHang || item.MaCode || item.code || '---';
+                    // --- [SỬA LẠI]: HIỂN THỊ CẢ GIỜ VÀ NGÀY ---
+                    let timeStr = '';
+                    let dayStr = '---';
+                    if (item.ngayDat) {
+                        const dateVal = item.ngayDat.toString().replace(/\/Date\((\d+)\)\//, '$1');
+                        const d = new Date(parseInt(dateVal) || item.ngayDat);
 
-                    const rawDate = item.ngayDat || item.NgayDat || item.createdDate;
-                    let dateDisplay = '---';
-                    if (rawDate) {
-                        if (typeof rawDate === 'string' && rawDate.includes('/Date(')) {
-                            const timestamp = parseInt(rawDate.replace(/\/Date\((\d+)\)\//, '$1'));
-                            dateDisplay = new Date(timestamp).toLocaleString('vi-VN');
-                        } else {
-                            dateDisplay = new Date(rawDate).toLocaleString('vi-VN');
-                        }
+                        // Lấy giờ phút (Ví dụ: 14:30)
+                        timeStr = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false });
+                        // Lấy ngày tháng (Ví dụ: 20/12/2024)
+                        dayStr = d.toLocaleDateString('vi-VN');
                     }
 
-                    let rawStatus = item.trangThai ?? item.TrangThai ?? item.status ?? item.Status ?? item.tinhTrang;
-                    if (rawStatus === undefined || rawStatus === null) rawStatus = '---';
-
-                    let badge = 'st-new';
-                    const stStr = String(rawStatus).toLowerCase();
-
-                    if (stStr.includes('duyệt') || stStr.includes('hoàn thành') || stStr.includes('thành công') || stStr.includes('danggiao') || stStr == '1') badge = 'st-ok';
-                    if (stStr.includes('hủy') || stStr.includes('fail') || stStr == 'huy' || stStr == '-1') badge = 'st-cancel';
-
-                    tbody.insertAdjacentHTML('beforeend', `
-                        <tr class="row-item" onclick="viewDetail(this, ${id})">
-                            <td style="padding-left: 30px;"><span class="code-text">${code}</span></td>
-                            <td>${dateDisplay}</td>
-                            <td><span class="badge-status ${badge}">${rawStatus}</span></td>
+                    const html = `
+                        <tr class="row-item" onclick="loadOrderDetail(this, ${item.maDonHang})">
+                            <td style="padding-left: 30px;"><span class="code-text">${item.maCodeDonHang || '---'}</span></td>
+                            <td class="fw-bold text-dark">${item.nguoiNhan || 'Khách lẻ'}</td>
+                            <td>
+                                <div class="small text-muted" style="font-size: 0.75rem;"><i class="far fa-clock"></i> ${timeStr}</div>
+                                <div class="fw-bold text-dark">${dayStr}</div>
+                            </td>
+                            <td class="text-center"><span class="badge-status ${badgeClass}">${item.trangThai}</span></td>
                         </tr>
-                    `);
+                    `;
+                    tbody.insertAdjacentHTML('beforeend', html);
                 });
 
-            } catch (e) {
-                console.error("❌ Lỗi LoadOrders:", e);
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Lỗi: ${e.message}<br><br><button onclick="testAllUrls()" class="btn btn-sm btn-warning">🔍 Test API URLs</button></td></tr>`;
+            } catch (err) {
+                loader.innerHTML = `<span class="text-danger">Lỗi tải dữ liệu: ${err.message}</span>`;
             }
         }
 
-        function updateActionButtons(status) {
-            const actionButtons = document.getElementById('action-buttons');
-            const statusMessage = document.getElementById('status-message');
-            const statusText = document.getElementById('status-text');
-
-            // Lấy 2 nút bấm cụ thể để ẩn/hiện từng cái
-            const btnApprove = actionButtons.querySelector('.btn-approve');
-            const btnCancel = actionButtons.querySelector('.btn-cancel');
-
-            // Chuẩn hóa trạng thái về chữ thường để so sánh
-            const normalizedStatus = String(status).toLowerCase().trim();
-
-            // --- RESET TRẠNG THÁI HIỂN THỊ BAN ĐẦU ---
-            actionButtons.classList.add('hidden');
-            statusMessage.classList.add('hidden');
-            // Mặc định hiển thị lại cả 2 nút bên trong container (đề phòng lần trước bị ẩn)
-            if (btnApprove) btnApprove.classList.remove('hidden');
-            if (btnCancel) btnCancel.classList.remove('hidden');
-
-            // --- LOGIC 1: CHỜ XÁC NHẬN (Hiện cả 2 nút) ---
-            if (normalizedStatus.includes('chờ') || normalizedStatus.includes('cho') || normalizedStatus === 'choxacnhan') {
-                actionButtons.classList.remove('hidden');
-            }
-
-            // --- LOGIC 2: ĐÃ THANH TOÁN (Chỉ hiện nút Duyệt, ẩn nút Hủy) ---
-            else if (normalizedStatus === 'dathanhtoan' || normalizedStatus.includes('đã thanh toán') || normalizedStatus.includes('success')) {
-                actionButtons.classList.remove('hidden');
-                if (btnCancel) btnCancel.classList.add('hidden'); // Ẩn nút hủy đi
-            }
-
-            // --- LOGIC 3: CÁC TRẠNG THÁI KHÁC (Ẩn nút, hiện thông báo) ---
-            else {
-                statusMessage.classList.remove('hidden');
-
-                if (normalizedStatus.includes('danggiao') || normalizedStatus === 'đang giao') {
-                    statusText.textContent = 'Đơn hàng đang được giao';
-                    statusMessage.style.background = '#e3f2fd';
-                    statusMessage.style.color = '#0d47a1';
-                } else if (normalizedStatus.includes('hủy') || normalizedStatus === 'huy') {
-                    statusText.textContent = 'Đơn hàng đã bị hủy';
-                    statusMessage.style.background = '#f8d7da';
-                    statusMessage.style.color = '#842029';
-                } else if (normalizedStatus.includes('hoàn thành') || normalizedStatus.includes('thành công')) {
-                    statusText.textContent = 'Đơn hàng đã hoàn thành';
-                    statusMessage.style.background = '#d1e7dd';
-                    statusMessage.style.color = '#0f5132';
-                } else {
-                    statusText.textContent = `Trạng thái: ${status}`;
-                    statusMessage.style.background = '#f8f9fa';
-                    statusMessage.style.color = '#495057';
-                }
-            }
-        }
-
-        function updatePaymentDisplay(paymentMethod, transactionList, orderDetail) {
-            const codPayment = document.getElementById('cod-payment');
-            const vietqrPayment = document.getElementById('vietqr-payment');
-            const paymentMethodLabel = document.getElementById('lbl-payment-method');
-
-            const normalizedMethod = String(paymentMethod).toLowerCase().trim();
-
-            console.log("💳 Payment Method:", paymentMethod);
-            console.log("💰 Transaction List:", transactionList);
-            console.log("📦 Order Detail:", orderDetail);
-
-            if (normalizedMethod.includes('vietqr') || normalizedMethod.includes('chuyển khoản') || normalizedMethod.includes('chuyenkhoan')) {
-                codPayment.classList.add('hidden');
-                vietqrPayment.classList.remove('hidden');
-                paymentMethodLabel.textContent = 'VietQR';
-                paymentMethodLabel.classList.remove('bg-light', 'text-dark');
-                paymentMethodLabel.classList.add('bg-success', 'text-white');
-
-                let transaction = null;
-                if (transactionList && Array.isArray(transactionList) && transactionList.length > 0) {
-                    transaction = transactionList.find(t =>
-                        (t.trangThai || t.TrangThai || '').toLowerCase() === 'success'
-                    ) || transactionList[0];
-                }
-
-                console.log("📝 Selected Transaction:", transaction);
-
-                if (transaction) {
-                    const maGD = transaction.maGiaoDich || transaction.MaGiaoDich || '---';
-                    const ngayGD = transaction.ngayGiaoDich || transaction.NgayGiaoDich || transaction.ngayTao || transaction.NgayTao;
-                    const soTien = transaction.soTien || transaction.SoTien || 0;
-                    const trangThai = transaction.trangThai || transaction.TrangThai || '---';
-                    const phuongThuc = transaction.phuongThuc || transaction.PhuongThuc || 'VietQR';
-
-                    let dateDisplay = '---';
-                    if (ngayGD) {
-                        try {
-                            if (typeof ngayGD === 'string' && ngayGD.includes('/Date(')) {
-                                const timestamp = parseInt(ngayGD.replace(/\/Date\((\d+)\)\//, '$1'));
-                                dateDisplay = new Date(timestamp).toLocaleString('vi-VN');
-                            } else {
-                                dateDisplay = new Date(ngayGD).toLocaleString('vi-VN');
-                            }
-                        } catch (e) {
-                            dateDisplay = ngayGD;
-                        }
-                    }
-
-                    document.getElementById('lbl-trans-code').textContent = maGD;
-                    document.getElementById('lbl-trans-date').textContent = dateDisplay;
-                    document.getElementById('lbl-trans-amount').textContent = fmt(soTien);
-                    document.getElementById('lbl-trans-method').textContent = phuongThuc;
-
-                    let statusDisplay = trangThai;
-                    let statusClass = '';
-                    if (String(trangThai).toLowerCase() === 'success') {
-                        statusDisplay = '✓ Thành công';
-                        statusClass = 'text-success fw-bold';
-                    } else if (String(trangThai).toLowerCase() === 'pending') {
-                        statusDisplay = '⏳ Đang xử lý';
-                        statusClass = 'text-warning fw-bold';
-                    } else if (String(trangThai).toLowerCase() === 'failed') {
-                        statusDisplay = '✗ Thất bại';
-                        statusClass = 'text-danger fw-bold';
-                    }
-
-                    const statusElem = document.getElementById('lbl-trans-status');
-                    statusElem.textContent = statusDisplay;
-                    statusElem.className = 'info-value ' + statusClass;
-                } else {
-                    document.getElementById('lbl-trans-code').textContent = '---';
-                    document.getElementById('lbl-trans-date').textContent = '---';
-                    document.getElementById('lbl-trans-amount').textContent = '0 đ';
-                    document.getElementById('lbl-trans-status').textContent = 'Chưa có giao dịch';
-                    document.getElementById('lbl-trans-method').textContent = '---';
-                }
-
-                if (orderDetail) {
-                    document.getElementById('lbl-receiver-name').textContent = orderDetail.nguoiNhan || orderDetail.NguoiNhan || '---';
-                    document.getElementById('lbl-receiver-phone').textContent = orderDetail.soDienThoaiGiao || orderDetail.SoDienThoaiGiao || '---';
-                    document.getElementById('lbl-receiver-address').textContent = orderDetail.diaChiGiaoHang || orderDetail.DiaChiGiaoHang || '---';
-                    document.getElementById('lbl-shipping-fee').textContent = fmt(orderDetail.phiVanChuyen || orderDetail.PhiVanChuyen || 0);
-                }
-
-            } else {
-                codPayment.classList.remove('hidden');
-                vietqrPayment.classList.add('hidden');
-                paymentMethodLabel.textContent = 'COD';
-                paymentMethodLabel.classList.add('bg-light', 'text-dark');
-                paymentMethodLabel.classList.remove('bg-success', 'text-white');
-
-                if (orderDetail) {
-                    document.getElementById('lbl-cod-receiver-name').textContent = orderDetail.nguoiNhan || orderDetail.NguoiNhan || '---';
-                    document.getElementById('lbl-cod-receiver-phone').textContent = orderDetail.soDienThoaiGiao || orderDetail.SoDienThoaiGiao || '---';
-                    document.getElementById('lbl-cod-receiver-address').textContent = orderDetail.diaChiGiaoHang || orderDetail.DiaChiGiaoHang || '---';
-                    document.getElementById('lbl-cod-shipping-fee').textContent = fmt(orderDetail.phiVanChuyen || orderDetail.PhiVanChuyen || 0);
-                }
-            }
-        }
-
-        async function viewDetail(rowElem, id) {
+        // --- 2. LOAD CHI TIẾT ---
+        async function loadOrderDetail(row, id) {
+            // Active row effect
             document.querySelectorAll('.row-item').forEach(r => r.classList.remove('active'));
-            rowElem.classList.add('active');
+            row.classList.add('active');
 
+            // Toggle UI
             document.getElementById('empty-state').classList.add('hidden');
-            document.getElementById('detail-container').classList.remove('hidden');
+            document.getElementById('detail-content').classList.add('hidden');
+            document.getElementById('detail-loading').classList.remove('hidden');
 
-            selectedOrderId = id;
+            currentOrderId = id;
 
             try {
-                const apiUrl = `${API_DETAIL_URL}/${id}`;
-                console.log("📡 API URL:", apiUrl);
+                const res = await fetch(`${URL_GET_DETAIL}/${id}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-                const res = await fetch(apiUrl);
-                if (!res.ok) throw new Error("Lỗi API: " + res.status);
+                const data = await res.json();
 
-                const detail = await res.json();
-                console.log("📦 Chi tiết:", detail);
+                renderDetail(data);
 
-                currentOrderStatus = detail.trangThai || detail.TrangThai || detail.status || 'Chờ xác nhận';
+                document.getElementById('detail-loading').classList.add('hidden');
+                document.getElementById('detail-content').classList.remove('hidden');
 
-                const listSP = detail.chiTiet || detail.ChiTiet || detail.chiTietDonHang || [];
-                const productContainer = document.getElementById('product-list-container');
-                productContainer.innerHTML = '';
-
-                if (listSP.length > 0) {
-                    listSP.forEach(sp => {
-                        const ten = sp.tenSanPham || sp.TenSanPham || '---';
-                        const sl = sp.soLuong || sp.SoLuong || 0;
-                        const dg = sp.donGiaLucMua || sp.DonGiaLucMua || 0;
-                        const tt = sp.thanhTien || sp.ThanhTien || (sl * dg);
-                        const img = sp.hinhAnh || sp.HinhAnh || 'https://via.placeholder.com/60?text=No+Image';
-
-                        productContainer.insertAdjacentHTML('beforeend', `
-                            <div class="product-item">
-                                <img src="${img}" alt="${ten}" class="product-img" onerror="this.src='https://via.placeholder.com/60?text=No+Image'">
-                                <div class="product-info">
-                                    <div class="product-name" title="${ten}">${ten}</div>
-                                    <div class="product-price">SL: ${sl} | Đơn giá: ${fmt(dg)}</div>
-                                </div>
-                                <div class="product-quantity">x${sl}</div>
-                                <div class="product-total">${fmt(tt)}</div>
-                            </div>
-                        `);
-                    });
-                } else {
-                    productContainer.innerHTML = '<div class="text-center text-muted py-5"><i class="fas fa-box-open fa-2x mb-3" style="opacity:0.3;"></i><div>Không có sản phẩm</div></div>';
-                }
-
-                document.getElementById('lbl-customer-name').textContent = detail.nguoiNhan || detail.NguoiNhan || detail.tenKhachHang || 'Khách lẻ';
-                document.getElementById('lbl-total-money').textContent = fmt(detail.tongTien || detail.TongTien || 0);
-
-                const paymentMethod = detail.phuongThucThanhToan || detail.PhuongThucThanhToan || 'COD';
-                const transactionList = detail.giaoDichs || detail.GiaoDichs || detail.giaoDich || detail.GiaoDich || [];
-
-                console.log("🔍 Payment Method from API:", paymentMethod);
-                console.log("🔍 Transaction List from API:", transactionList);
-
-                updatePaymentDisplay(paymentMethod, transactionList, detail);
-                updateActionButtons(currentOrderStatus);
-
-            } catch (e) {
-                console.error("❌ Lỗi:", e);
-                alert("Lỗi: " + e.message);
+            } catch (err) {
+                document.getElementById('detail-loading').innerHTML = `<div class="text-danger p-4">Không thể tải chi tiết: ${err.message}</div>`;
             }
         }
 
+        // --- 3. RENDER UI ---
+        function renderDetail(data) {
+            // A. Sản phẩm
+            const listContainer = document.getElementById('product-list');
+            listContainer.innerHTML = '';
+            const products = data.chiTiet || data.ChiTiet || [];
+
+            if (products.length > 0) {
+                products.forEach(p => {
+                    const img = p.hinhAnh || p.HinhAnh || 'https://via.placeholder.com/60';
+                    const html = `
+                        <div class="product-item">
+                            <img src="${img}" class="product-img">
+                            <div class="product-info">
+                                <div class="product-name">${p.tenSanPham || p.TenSanPham}</div>
+                                <div class="product-meta">Số lượng: <span class="text-dark fw-bold">${p.soLuong}</span></div>
+                            </div>
+                            <div class="product-price">${fmt(p.thanhTien)}</div>
+                        </div>
+                    `;
+                    listContainer.insertAdjacentHTML('beforeend', html);
+                });
+            } else {
+                listContainer.innerHTML = '<div class="text-center py-4 text-muted">Không có sản phẩm</div>';
+            }
+
+            // B. Thanh toán Info
+            const paymentContainer = document.getElementById('payment-info');
+            const method = data.phuongThucThanhToan || 'COD';
+
+            // Badge Payment Method
+            const lblMethod = document.getElementById('lbl-payment-method');
+            lblMethod.textContent = method;
+            lblMethod.className = method === 'VietQR' ? 'badge bg-success text-white' : 'badge bg-light text-dark border';
+
+            let infoHtml = `
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-user me-2"></i>Người nhận</span>
+                    <span class="info-value">${data.nguoiNhan || '---'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-phone me-2"></i>SĐT</span>
+                    <span class="info-value">${data.soDienThoaiGiao || '---'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-map-marker-alt me-2"></i>Địa chỉ</span>
+                    <span class="info-value text-break" style="max-width: 60%;">${data.diaChiGiaoHang || '---'}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-shipping-fast me-2"></i>Phí vận chuyển</span>
+                    <span class="info-value text-primary">${fmt(data.phiVanChuyen)}</span>
+                </div>
+            `;
+
+            // Nếu VietQR -> Thêm thông tin GD
+            if (method === 'VietQR') {
+                const trans = (data.giaoDichs || [])[0];
+                if (trans) {
+                    const sttColor = trans.trangThai === 'Success' ? 'text-success' : 'text-danger';
+                    infoHtml += `
+                        <div class="bg-light p-2 mx-3 mt-2 rounded border" style="font-size: 0.85rem;">
+                            <div class="fw-bold text-muted mb-1">GIAO DỊCH VIETQR</div>
+                            <div class="d-flex justify-content-between"><span>Mã GD:</span> <span class="fw-bold">${trans.maGiaoDich}</span></div>
+                            <div class="d-flex justify-content-between"><span>Số tiền:</span> <span class="fw-bold">${fmt(trans.soTien)}</span></div>
+                            <div class="d-flex justify-content-between"><span>Trạng thái:</span> <span class="${sttColor} fw-bold">${trans.trangThai}</span></div>
+                        </div>
+                    `;
+                }
+            }
+            paymentContainer.innerHTML = infoHtml;
+
+            // C. Footer Action
+            document.getElementById('lbl-total-price').textContent = fmt(data.tongTien);
+
+            const status = (data.trangThai || '').toLowerCase();
+            const btnBox = document.getElementById('action-buttons');
+            const alertBox = document.getElementById('status-alert');
+            const lblAlert = document.getElementById('lbl-status-text');
+
+            // Logic ẩn hiện nút: Chỉ hiện khi Chờ xác nhận/Chờ thanh toán
+            if (status.includes('chờ') || status.includes('cho') || status === 'choxacnhan') {
+                btnBox.classList.remove('hidden');
+                alertBox.classList.add('hidden');
+            }
+            // Hoặc đã thanh toán online (chỉ duyệt, không hủy - tùy logic em)
+            else if (status.includes('thanhtoan')) {
+                btnBox.classList.remove('hidden');
+                alertBox.classList.add('hidden');
+            }
+            else {
+                btnBox.classList.add('hidden');
+                alertBox.classList.remove('hidden');
+
+                if (status.includes('hủy')) {
+                    alertBox.style.color = '#dc2626';
+                    lblAlert.textContent = 'Đơn hàng đã bị hủy';
+                } else if (status.includes('giao') || status.includes('hoàn')) {
+                    alertBox.style.color = '#16a34a';
+                    lblAlert.textContent = 'Đơn hàng đã được duyệt/hoàn thành';
+                } else {
+                    alertBox.style.color = '#475569';
+                    lblAlert.textContent = `Trạng thái: ${data.trangThai}`;
+                }
+            }
+        }
+
+        // --- 4. XỬ LÝ DUYỆT/HỦY ---
         async function processOrder(isApprove) {
-            if (!selectedOrderId) return alert("Vui lòng chọn đơn hàng!");
+            if (!currentOrderId) return;
 
-            const actionLocal = isApprove ? 'DuyetDon' : 'HuyDon';
-            const actionName = isApprove ? 'DUYỆT' : 'HỦY';
+            const actionName = isApprove ? 'Duyệt' : 'Hủy';
+            const actionUrl = isApprove ? 'DuyetDon' : 'HuyDon';
 
-            if (!confirm(`Bạn muốn ${actionName} đơn hàng #${selectedOrderId}?`)) return;
+            if (!confirm(`Bạn chắc chắn muốn ${actionName} đơn hàng này?`)) return;
 
+            // Loading UI nút bấm
             const btnArea = document.getElementById('action-buttons');
-            const originalHtml = btnArea.innerHTML;
-            btnArea.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Đang gọi API...</div>';
+            const oldHtml = btnArea.innerHTML;
+            btnArea.innerHTML = '<div class="text-center text-primary py-2"><i class="fas fa-spinner fa-spin"></i> Đang xử lý...</div>';
 
             try {
-                // Gọi về Controller MVC (bằng POST)
-                const url = `${API_ACTION_URL}/${actionLocal}/${selectedOrderId}`;
-                console.log("Calling MVC:", url);
-
+                const url = `${URL_ACTION}/${actionUrl}/${currentOrderId}`;
                 const res = await fetch(url, { method: 'POST' });
+                const json = await res.json();
 
-                // Kiểm tra nếu Controller MVC bị lỗi (ví dụ 500)
-                if (!res.ok) {
-                    throw new Error(`Lỗi kết nối MVC: ${res.status} ${res.statusText}`);
-                }
-
-                const rs = await res.json();
-                console.log("Kết quả trả về:", rs);
-
-                if (rs.success) {
-                    alert("Thành công!\n" + (rs.msg || ""));
-                    location.reload();
+                if (json.success) {
+                    alert(`${actionName} thành công!`);
+                    loadOrderList(); // Reload list
+                    // Reset detail panel
+                    document.getElementById('detail-content').classList.add('hidden');
+                    document.getElementById('empty-state').classList.remove('hidden');
                 } else {
-                    // Hiển thị lỗi chi tiết
-                    alert("LỖI:\n" + (rs.msg || JSON.stringify(rs)));
-                    btnArea.innerHTML = originalHtml;
+                    alert(`Lỗi: ${json.msg}`);
+                    btnArea.innerHTML = oldHtml;
                 }
-            } catch (e) {
-                console.error(e);
-                alert("Lỗi hệ thống: " + e.message);
-                btnArea.innerHTML = originalHtml;
+            } catch (err) {
+                alert(`Lỗi hệ thống: ${err.message}`);
+                btnArea.innerHTML = oldHtml;
             }
         }
 
         function fmt(n) {
-            if (!n) return '0 đ';
-            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n);
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n || 0);
         }
     </script>
 }
