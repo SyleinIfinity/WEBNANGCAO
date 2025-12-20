@@ -846,17 +846,39 @@
             const statusMessage = document.getElementById('status-message');
             const statusText = document.getElementById('status-text');
 
+            // Lấy 2 nút bấm cụ thể để ẩn/hiện từng cái
+            const btnApprove = actionButtons.querySelector('.btn-approve');
+            const btnCancel = actionButtons.querySelector('.btn-cancel');
+
+            // Chuẩn hóa trạng thái về chữ thường để so sánh
             const normalizedStatus = String(status).toLowerCase().trim();
 
+            // --- RESET TRẠNG THÁI HIỂN THỊ BAN ĐẦU ---
+            actionButtons.classList.add('hidden');
+            statusMessage.classList.add('hidden');
+            // Mặc định hiển thị lại cả 2 nút bên trong container (đề phòng lần trước bị ẩn)
+            if (btnApprove) btnApprove.classList.remove('hidden');
+            if (btnCancel) btnCancel.classList.remove('hidden');
+
+            // --- LOGIC 1: CHỜ XÁC NHẬN (Hiện cả 2 nút) ---
             if (normalizedStatus.includes('chờ') || normalizedStatus.includes('cho') || normalizedStatus === 'choxacnhan') {
                 actionButtons.classList.remove('hidden');
-                statusMessage.classList.add('hidden');
-            } else {
-                actionButtons.classList.add('hidden');
+            }
+
+            // --- LOGIC 2: ĐÃ THANH TOÁN (Chỉ hiện nút Duyệt, ẩn nút Hủy) ---
+            else if (normalizedStatus === 'dathanhtoan' || normalizedStatus.includes('đã thanh toán') || normalizedStatus.includes('success')) {
+                actionButtons.classList.remove('hidden');
+                if (btnCancel) btnCancel.classList.add('hidden'); // Ẩn nút hủy đi
+            }
+
+            // --- LOGIC 3: CÁC TRẠNG THÁI KHÁC (Ẩn nút, hiện thông báo) ---
+            else {
                 statusMessage.classList.remove('hidden');
 
                 if (normalizedStatus.includes('danggiao') || normalizedStatus === 'đang giao') {
                     statusText.textContent = 'Đơn hàng đang được giao';
+                    statusMessage.style.background = '#e3f2fd';
+                    statusMessage.style.color = '#0d47a1';
                 } else if (normalizedStatus.includes('hủy') || normalizedStatus === 'huy') {
                     statusText.textContent = 'Đơn hàng đã bị hủy';
                     statusMessage.style.background = '#f8d7da';

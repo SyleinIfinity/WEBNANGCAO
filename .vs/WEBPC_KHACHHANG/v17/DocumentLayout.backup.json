@@ -3,19 +3,47 @@
   "WorkspaceRootPath": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\views\\shared\\_layoutsale.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\shared\\_layoutsale.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\sale\\views\\khuyenmai\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\khuyenmai\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_nhanvien\\areas\\admin\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|d:\\cntt-spkt\\cntt-spkt\\wnc_cki\\webpc_khachhang\\models\\viewmodels\\lichsudonhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\webpc_khachhang\\models\\viewmodels\\lichsudonhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\models\\viewmodels\\lichsudonhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -30,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +90,124 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DonHangController.cs",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T18:33:54.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAiwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T18:21:21.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T18:20:32.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAIECAAAAAAAAAAAiwKUCAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T18:03:58.392Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "_LayoutSale.cshtml",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
+              "ViewState": "AgIAAJsAAAAAAAAAAAAiwOQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T17:59:40.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
+              "ViewState": "AgIAABAEAAAAAAAAAAAwwEIEAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T14:34:11.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T18:09:40.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T18:04:17.239Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
+              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T18:08:25.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Web.config",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Web.config",
@@ -75,33 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DonHangController.cs",
-              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs*",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs*",
-              "ViewState": "AgIAAFAAAAAAAAAAAADwv3oAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T14:44:14.749Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "ToolTip": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "ViewState": "AgIAABoEAAAAAAAAAAAnwDAEAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T14:34:11.477Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 10,
               "Title": "LichSuDonHangViewModel.cs",
               "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
@@ -109,12 +228,11 @@
               "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAAAEcAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:57:43.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T09:57:43.132Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "CheckoutViewModel.cs",
               "DocumentMoniker": "D:\\CNTT-SPKT\\CNTT-SPKT\\wnc_cki\\WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
               "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
@@ -122,8 +240,7 @@
               "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:56:55.427Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T09:56:55.427Z"
             }
           ]
         },
