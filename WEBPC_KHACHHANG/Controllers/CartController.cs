@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Net.Http;
@@ -21,7 +22,6 @@ namespace WEBPC_KHACHHANG.Controllers
         public async Task<ActionResult> Index()
         {
             var user = Session["User"] as UserLoginResponse;
-            // [SỬA ĐOẠN NÀY]: Thêm returnUrl = /Cart
             if (user == null) return RedirectToAction("Index", "Login", new { returnUrl = "/Cart" });
 
             CartViewModel cart = new CartViewModel();
@@ -32,28 +32,12 @@ namespace WEBPC_KHACHHANG.Controllers
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                    // SỬA LẠI ĐÚNG API: GET api/GioHang/{maKhachHang}
                     var response = await client.GetAsync($"GioHang/{user.MaKhachHang}");
 
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
-
-                        // [DEBUG]: Đặt breakpoint ở đây để xem biến 'content' chứa gì
-                        // Hoặc ghi log tạm thời
-                        System.Diagnostics.Debug.WriteLine("JSON GIO HANG: " + content);
-
-                        // Thử map dữ liệu
                         cart = JsonConvert.DeserializeObject<CartViewModel>(content);
-
-                        // Kiểm tra xem map được không
-                        if (cart.Items == null || cart.Items.Count == 0)
-                        {
-                            // Nếu API trả về mảng trực tiếp (Array) thay vì Object chứa mảng
-                            // cart.Items = JsonConvert.DeserializeObject<List<CartItemViewModel>>(content);
-
-                            // Hoặc nếu tên trường sai, hãy kiểm tra lại CartViewModel
-                        }
                     }
                 }
             }
@@ -67,7 +51,6 @@ namespace WEBPC_KHACHHANG.Controllers
 
         // POST: Cart/AddToCart
         [HttpPost]
-        // Thêm tham số string type = "" vào hàm
         public async Task<ActionResult> AddToCart(int productId, int quantity, string type = "")
         {
             var user = Session["User"] as UserLoginResponse;
@@ -91,35 +74,27 @@ namespace WEBPC_KHACHHANG.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Code mới (Sửa lỗi: Tìm đúng ID giỏ hàng để chuyển sang thanh toán)
+                    // Xử lý Mua ngay (Mua lẻ 1 sản phẩm)
                     if (type == "buy_now")
                     {
-                        // 1. Gọi lại API lấy danh sách giỏ hàng mới nhất
                         var cartResponse = await client.GetAsync($"GioHang/{user.MaKhachHang}");
-
                         if (cartResponse.IsSuccessStatusCode)
                         {
                             var cartContent = await cartResponse.Content.ReadAsStringAsync();
                             var fullCart = JsonConvert.DeserializeObject<CartViewModel>(cartContent);
 
-                            // 2. Tìm dòng (Item) trong giỏ hàng chứa sản phẩm vừa thêm
                             if (fullCart != null && fullCart.Items != null)
                             {
-                                // [ĐÃ SỬA]: Dùng x.ProductId thay vì x.MaSanPham để khớp với CartViewModel
                                 var itemVuaThem = fullCart.Items.FirstOrDefault(x => x.ProductId == productId);
-
                                 if (itemVuaThem != null)
                                 {
-                                    // 3. Chuyển sang Checkout với CartItemId (ID dòng giỏ hàng)
                                     return RedirectToAction("Checkout", "ThanhToan", new { selectedIds = itemVuaThem.CartItemId });
                                 }
                             }
                         }
-                        // Fallback: Nếu không tìm thấy thì về trang danh sách giỏ hàng
                         return RedirectToAction("Index");
                     }
 
-                    // Mặc định thì về lại trang giỏ hàng
                     return RedirectToAction("Index");
                 }
                 else
@@ -130,60 +105,70 @@ namespace WEBPC_KHACHHANG.Controllers
                 }
             }
         }
+
         // Action: Xóa sản phẩm khỏi giỏ hàng
         public async Task<ActionResult> Remove(int id)
         {
-            // 1. Kiểm tra đăng nhập
             var user = Session["User"] as UserLoginResponse;
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            if (user == null) return RedirectToAction("Index", "Login");
 
-            // 2. Gọi API xóa sản phẩm
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                // API Endpoint: DELETE api/GioHang/remove-item?maKhachHang=...&maSanPham=...
-                // Lưu ý: Phải truyền đúng tên tham số là 'maKhachHang' và 'maSanPham' như bên API quy định
                 string endpoint = $"GioHang/remove-item?maKhachHang={user.MaKhachHang}&maSanPham={id}";
 
                 try
                 {
                     var response = await client.DeleteAsync(endpoint);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        // Xóa thành công -> Load lại trang giỏ hàng
-                        TempData["Message"] = "Đã xóa sản phẩm khỏi giỏ hàng.";
-                    }
-                    else
-                    {
-                        // Xóa thất bại -> Hiện lỗi
-                        var errorContent = await response.Content.ReadAsStringAsync();
-                        TempData["Message"] = "Xóa thất bại: " + errorContent;
-                    }
+                    if (response.IsSuccessStatusCode) TempData["Message"] = "Đã xóa sản phẩm khỏi giỏ hàng.";
+                    else TempData["Message"] = "Xóa thất bại.";
                 }
                 catch (Exception ex)
                 {
                     TempData["Message"] = "Lỗi kết nối: " + ex.Message;
                 }
             }
-
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<JsonResult> UpdateQuantity(int productId, int quantity)
         {
-            // 1. Kiểm tra đăng nhập
-            var user = Session["User"] as WEBPC_KHACHHANG.Models.Responses.UserLoginResponse;
-            if (user == null)
+            var user = Session["User"] as UserLoginResponse;
+            if (user == null) return Json(new { success = false, requireLogin = true, message = "Phiên đăng nhập hết hạn!" });
+
+            using (var client = new HttpClient())
             {
-                // [SỬA ĐOẠN NÀY]: Trả về flag requireLogin = true
-                return Json(new { success = false, requireLogin = true, message = "Phiên đăng nhập hết hạn!" });
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+                var requestData = new { maKhachHang = user.MaKhachHang, maSanPham = productId, soLuongMoi = quantity };
+                var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), "GioHang/update-item") { Content = content };
+
+                try
+                {
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode) return Json(new { success = true });
+                    else return Json(new { success = false, message = "Lỗi API" });
+                }
+                catch (Exception ex) { return Json(new { success = false, message = ex.Message }); }
+            }
+        }
+
+        // [MỚI] Action xử lý Build PC -> Thêm tất cả và trả về Link Checkout
+        [HttpPost]
+        public async Task<ActionResult> AddBuildPCToCart(List<int> productIds)
+        {
+            var user = Session["User"] as UserLoginResponse;
+            // Nếu chưa đăng nhập, trả về URL login (JS sẽ xử lý modal, đây là fallback)
+            if (user == null) return Json(new { success = false, url = Url.Action("Index", "Login") });
+
+            if (productIds == null || !productIds.Any())
+            {
+                return Json(new { success = false, message = "Danh sách sản phẩm trống" });
             }
 
             using (var client = new HttpClient())
@@ -191,44 +176,50 @@ namespace WEBPC_KHACHHANG.Controllers
                 client.BaseAddress = new Uri(_apiBaseUrl);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
 
-                // 2. Tạo payload đúng với API GioHangController (UpdateCartItemRequest)
-                // Dựa vào yêu cầu trước đó, tên trường là 'soLuongMoi'
-                var requestData = new
+                // 1. Lặp qua danh sách và gọi API thêm từng món
+                foreach (var id in productIds)
                 {
-                    maKhachHang = user.MaKhachHang,
-                    maSanPham = productId,
-                    soLuongMoi = quantity // API yêu cầu 'soLuongMoi'
-                };
-
-                var jsonContent = JsonConvert.SerializeObject(requestData);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                // 3. Gọi API bằng phương thức PATCH
-                // API Route: api/GioHang/update-item
-                var request = new HttpRequestMessage(new HttpMethod("PATCH"), "GioHang/update-item")
-                {
-                    Content = content
-                };
-
-                try
-                {
-                    var response = await client.SendAsync(request);
-
-                    if (response.IsSuccessStatusCode)
+                    var requestData = new AddToCartRequest
                     {
-                        // Trả về success để JS xử lý tiếp
-                        return Json(new { success = true });
-                    }
-                    else
+                        MaKhachHang = user.MaKhachHang,
+                        MaSanPham = id,
+                        SoLuong = 1
+                    };
+                    var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+
+                    // Gọi API thêm (await từng cái để đảm bảo thứ tự)
+                    await client.PostAsync("GioHang/add", content);
+                }
+
+                // 2. Lấy lại giỏ hàng để tìm CartItemId của các món vừa thêm
+                var cartResponse = await client.GetAsync($"GioHang/{user.MaKhachHang}");
+                if (cartResponse.IsSuccessStatusCode)
+                {
+                    var cartContent = await cartResponse.Content.ReadAsStringAsync();
+                    var fullCart = JsonConvert.DeserializeObject<CartViewModel>(cartContent);
+
+                    if (fullCart != null && fullCart.Items != null)
                     {
-                        var errorMsg = await response.Content.ReadAsStringAsync();
-                        return Json(new { success = false, message = "Lỗi API: " + errorMsg });
+                        // Lọc các món có ProductId nằm trong danh sách build
+                        var selectedItems = fullCart.Items.Where(x => productIds.Contains(x.ProductId)).ToList();
+
+                        if (selectedItems.Any())
+                        {
+                            // Tạo chuỗi ID: 10,11,12
+                            var selectedIdsStr = string.Join(",", selectedItems.Select(x => x.CartItemId));
+
+                            // Trả về URL Checkout
+                            return Json(new
+                            {
+                                success = true,
+                                url = Url.Action("Checkout", "ThanhToan", new { selectedIds = selectedIdsStr })
+                            });
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false, message = "Lỗi hệ thống: " + ex.Message });
-                }
+
+                // Fallback: Về giỏ hàng thường nếu lỗi
+                return Json(new { success = true, url = Url.Action("Index", "Cart") });
             }
         }
     }
