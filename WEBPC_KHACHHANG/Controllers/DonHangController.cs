@@ -117,5 +117,65 @@ namespace WEBPC_KHACHHANG.Controllers
             // Quay lại trang chi tiết đơn hàng
             return RedirectToAction("Detail", new { id = id });
         }
+
+        // 3. HỦY ĐƠN HÀNG (Thêm hàm này vào để Client xử lý)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CancelOrder(int id)
+        {
+            // Kiểm tra đăng nhập (xử lý cả trường hợp Session key viết hoa/thường)
+            var user = Session["user"] as UserLoginResponse ?? Session["User"] as UserLoginResponse;
+            if (user == null) return RedirectToAction("Index", "Login");
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(_apiBaseUrl);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+
+                    // Tạo dữ liệu gửi đi (Khớp với CancelOrderRequest bên API)
+                    var payload = new
+                    {
+                        MaKhachHang = user.MaKhachHang,
+                        LyDoHuy = "Khách hàng hủy trực tiếp trên Website"
+                    };
+
+                    var jsonContent = JsonConvert.SerializeObject(payload);
+                    var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
+
+                    // [QUAN TRỌNG]: API của em dùng [HttpPut], nên ở đây phải gọi PutAsync
+                    var response = await client.PutAsync($"DonHang/cancel/{id}", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        TempData["Success"] = "Đã hủy đơn hàng thành công.";
+                    }
+                    else
+                    {
+                        // Đọc lỗi từ API trả về để hiện thông báo rõ ràng
+                        var errorString = await response.Content.ReadAsStringAsync();
+                        try
+                        {
+                            // Nếu API trả về JSON { "message": "..." }
+                            dynamic errObj = JsonConvert.DeserializeObject(errorString);
+                            TempData["Error"] = "Lỗi: " + errObj.message;
+                        }
+                        catch
+                        {
+                            // Nếu API trả về text thường
+                            TempData["Error"] = "Không thể hủy đơn: " + errorString;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Lỗi kết nối: " + ex.Message;
+            }
+
+            // Load lại trang chi tiết để thấy trạng thái mới
+            return RedirectToAction("Detail", new { id = id });
+        }
     }
 }
