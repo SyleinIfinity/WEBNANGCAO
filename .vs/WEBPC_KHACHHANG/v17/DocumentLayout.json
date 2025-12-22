@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\models\\productviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\models\\productviewmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\models\\sanphamviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\models\\sanphamviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -30,37 +38,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "SanPhamViewModel.cs",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\SanPhamViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:56:32.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductViewModels.cs",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\ProductViewModels.cs",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\ProductViewModels.cs",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Models\\ProductViewModels.cs",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Models\\ProductViewModels.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAQwCcAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T12:49:32.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "SanPhamController.cs",
               "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8BAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAMkAAAAAAAAAAAAAAOEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-22T12:33:18.937Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
               "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
               "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
-              "ViewState": "AgIAAPYBAAAAAAAAAAAAwAwCAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAMACAAAAAAAAAAAswAUDAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-19T11:37:41.205Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
@@ -72,7 +106,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
@@ -85,7 +119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "sanpham-common.js",
               "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
               "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
