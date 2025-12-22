@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization; // Cần thêm thư viện này
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,7 +16,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
     [AdminAuthorize]
     public class SanPhamController : Controller
     {
-        // Đọc URL từ Web.config (Đã cấu hình: https://webapi-1-qldr.onrender.com/api/)
         private readonly string _apiBaseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
 
         // --- 1. TRANG DANH SÁCH (INDEX) ---
@@ -28,17 +28,12 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // A. Gọi song song 2 tác vụ: Lấy sản phẩm & Lấy danh mục
-                // Nếu có lọc danh mục -> Gọi endpoint lọc
                 string endpoint = categoryId.HasValue ? $"SanPham/danhmuc/{categoryId}" : "SanPham";
-
                 var taskProducts = client.GetAsync(endpoint);
                 var taskCategories = client.GetAsync("DanhMuc");
 
-                // Chờ cả 2 xong mới chạy tiếp (Tối ưu tốc độ load)
                 await Task.WhenAll(taskProducts, taskCategories);
 
-                // B. Xử lý dữ liệu Sản Phẩm
                 var resProd = taskProducts.Result;
                 if (resProd.IsSuccessStatusCode)
                 {
@@ -46,7 +41,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     danhSach = JsonConvert.DeserializeObject<List<SanPhamViewModel>>(data);
                 }
 
-                // C. Xử lý dữ liệu Danh Mục (để đổ vào Dropdown)
                 var resCat = taskCategories.Result;
                 if (resCat.IsSuccessStatusCode)
                 {
@@ -55,13 +49,11 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                 }
             }
 
-            // D. Lọc tìm kiếm theo tên (Client-side filtering vì API chưa hỗ trợ search param)
             if (!string.IsNullOrEmpty(search))
             {
                 danhSach = danhSach.Where(p => p.TenSanPham.ToLower().Contains(search.ToLower())).ToList();
             }
 
-            // E. Truyền dữ liệu qua View
             ViewBag.Categories = categories;
             ViewBag.CurrentSearch = search;
             ViewBag.CurrentCategory = categoryId;
@@ -76,7 +68,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return View();
         }
 
-        // --- 3. TẠO MỚI (POST) ---
+        // --- 3. TẠO MỚI (POST) - ĐÃ SỬA LỖI ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateProductViewModel model)
@@ -87,22 +79,30 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                 {
                     client.BaseAddress = new Uri(_apiBaseUrl);
 
-                    // Tạo Multipart Form Data để gửi file và dữ liệu
                     using (var content = new MultipartFormDataContent())
                     {
+                        // 1. Gửi chuỗi text bình thường
                         content.Add(new StringContent(model.TenSanPham), "TenSanPham");
-                        content.Add(new StringContent(model.GiaBan.ToString()), "GiaBan");
-                        content.Add(new StringContent(model.SoLuongTon.ToString()), "SoLuongTon");
                         content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
-                        content.Add(new StringContent(model.TrangThai.ToString()), "TrangThai");
+
+                        // [QUAN TRỌNG] Chuyển bool về chữ thường "true"/"false"
+                        content.Add(new StringContent(model.TrangThai.ToString().ToLower()), "TrangThai");
+
+                        // [QUAN TRỌNG] Ép kiểu số về định dạng chuẩn Quốc Tế (Invariant) để tránh dấu phẩy
+                        content.Add(new StringContent(model.GiaBan.ToString(CultureInfo.InvariantCulture)), "GiaBan");
+                        content.Add(new StringContent(model.SoLuongTon.ToString(CultureInfo.InvariantCulture)), "SoLuongTon");
 
                         if (!string.IsNullOrEmpty(model.MoTa))
+                        {
                             content.Add(new StringContent(model.MoTa), "MoTa");
+                        }
 
                         if (model.GiaKhuyenMai.HasValue)
-                            content.Add(new StringContent(model.GiaKhuyenMai.ToString()), "GiaKhuyenMai");
+                        {
+                            content.Add(new StringContent(model.GiaKhuyenMai.Value.ToString(CultureInfo.InvariantCulture)), "GiaKhuyenMai");
+                        }
 
-                        // Xử lý file ảnh upload
+                        // 2. Xử lý file ảnh
                         if (model.HinhAnhs != null)
                         {
                             foreach (var file in model.HinhAnhs)
@@ -111,6 +111,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                                 {
                                     var fileContent = new StreamContent(file.InputStream);
                                     fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
+                                    // Tên tham số "HinhAnhs" phải khớp với API (List<IFormFile> HinhAnhs)
                                     content.Add(fileContent, "HinhAnhs", file.FileName);
                                 }
                             }
@@ -123,7 +124,9 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Lỗi API: " + response.ReasonPhrase);
+                            // Đọc nội dung lỗi từ API trả về để debug dễ hơn
+                            var errorContent = await response.Content.ReadAsStringAsync();
+                            ModelState.AddModelError("", $"Lỗi API ({response.StatusCode}): {errorContent}");
                         }
                     }
                 }
@@ -139,7 +142,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             {
                 client.BaseAddress = new Uri(_apiBaseUrl);
 
-                // Gọi song song lấy SP và Danh mục
                 var productTask = client.GetAsync($"SanPham/{id}");
                 var categoryTask = client.GetAsync("DanhMuc");
 
@@ -150,16 +152,14 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
 
                 if (response.IsSuccessStatusCode && catResponse.IsSuccessStatusCode)
                 {
-                    // 1. Xử lý sản phẩm
                     var data = await response.Content.ReadAsStringAsync();
                     var productAPI = JsonConvert.DeserializeObject<SanPhamViewModel>(data);
 
-                    // 2. Xử lý danh mục
                     var catData = await catResponse.Content.ReadAsStringAsync();
                     var listDanhMuc = JsonConvert.DeserializeObject<List<CategoryViewModel>>(catData);
                     ViewBag.Categories = listDanhMuc;
 
-                    // 3. Logic tìm ID danh mục từ tên (Do API ProductResponse thiếu MaDanhMuc)
+                    // Logic tìm ID danh mục
                     int foundCategoryId = 0;
                     if (!string.IsNullOrEmpty(productAPI.TenDanhMuc))
                     {
@@ -167,7 +167,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         if (matchCat != null) foundCategoryId = matchCat.MaDanhMuc;
                     }
 
-                    // 4. Map sang ViewModel cho trang Edit
                     var editModel = new UpdateProductViewModel
                     {
                         MaSanPham = productAPI.MaSanPham,
@@ -175,8 +174,8 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         GiaBan = productAPI.GiaBan,
                         GiaKhuyenMai = productAPI.GiaKhuyenMai,
                         SoLuongTon = productAPI.SoLuongTon,
-                        MaDanhMuc = foundCategoryId, // Gán ID tìm được
-                        MoTa = productAPI.MoTa, // API hiện tại chưa trả về Mô tả, tạm để trống
+                        MaDanhMuc = foundCategoryId,
+                        MoTa = productAPI.MoTa,
                         TrangThai = productAPI.TrangThai,
                         AnhHienTai = productAPI.DanhSachAnh ?? new List<ImageDTO>()
                     };
@@ -187,7 +186,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- 5. CẬP NHẬT (POST) ---
+        // --- 5. CẬP NHẬT (POST) - ĐÃ SỬA LỖI ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(UpdateProductViewModel model)
@@ -199,20 +198,24 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     client.BaseAddress = new Uri(_apiBaseUrl);
                     using (var content = new MultipartFormDataContent())
                     {
-                        // Add dữ liệu cơ bản
                         content.Add(new StringContent(model.TenSanPham), "TenSanPham");
-                        content.Add(new StringContent(model.GiaBan.ToString()), "GiaBan");
-                        content.Add(new StringContent(model.SoLuongTon.ToString()), "SoLuongTon");
                         content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
-                        content.Add(new StringContent(model.TrangThai.ToString()), "TrangThai");
+
+                        // [FIX] Convert chuẩn định dạng
+                        content.Add(new StringContent(model.TrangThai.ToString().ToLower()), "TrangThai");
+                        content.Add(new StringContent(model.GiaBan.ToString(CultureInfo.InvariantCulture)), "GiaBan");
+                        content.Add(new StringContent(model.SoLuongTon.ToString(CultureInfo.InvariantCulture)), "SoLuongTon");
 
                         if (model.GiaKhuyenMai.HasValue)
-                            content.Add(new StringContent(model.GiaKhuyenMai.ToString()), "GiaKhuyenMai");
+                        {
+                            content.Add(new StringContent(model.GiaKhuyenMai.Value.ToString(CultureInfo.InvariantCulture)), "GiaKhuyenMai");
+                        }
 
                         if (!string.IsNullOrEmpty(model.MoTa))
+                        {
                             content.Add(new StringContent(model.MoTa), "MoTa");
+                        }
 
-                        // Xử lý ảnh mới
                         if (model.HinhAnhs != null)
                         {
                             foreach (var file in model.HinhAnhs)
@@ -226,7 +229,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                             }
                         }
 
-                        // Xử lý ảnh cần xóa
                         if (model.PublicIdsToDelete != null)
                         {
                             foreach (var pubId in model.PublicIdsToDelete)
@@ -235,15 +237,21 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                             }
                         }
 
-                        // Gửi PATCH request
                         var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"SanPham/{model.MaSanPham}")
                         {
                             Content = content
                         };
 
                         var response = await client.SendAsync(request);
-                        if (response.IsSuccessStatusCode) return RedirectToAction("Index");
-                        else ModelState.AddModelError("", "Lỗi cập nhật: " + response.ReasonPhrase);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            var errorContent = await response.Content.ReadAsStringAsync();
+                            ModelState.AddModelError("", $"Lỗi cập nhật API ({response.StatusCode}): {errorContent}");
+                        }
                     }
                 }
             }
@@ -263,7 +271,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- HELPER: Load Danh Mục ---
         private async Task LoadCategoriesToViewBag()
         {
             using (var client = new HttpClient())

@@ -1,0 +1,159 @@
+﻿/* --- PRODUCT INDEX STYLES --- */
+
+/* 1. Ảnh sản phẩm */
+.product-img-custom {
+    height: 250px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img-custom {
+    transform: scale(1.05); /* Phóng to nhẹ ảnh khi hover vào card */
+}
+
+/* 2. STYLE DANH MỤC HIỆN ĐẠI (Category Widget) */
+.category-widget {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Đổ bóng nhẹ thay vì viền */
+    overflow: hidden;
+    position: sticky;
+    top: 20px; /* Giữ danh mục khi cuộn trang */
+    z-index: 10;
+}
+
+/* Header của danh mục */
+.cat-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); /* Màu gradient hiện đại */
+    color: #fff;
+    padding: 18px 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+
+/* Danh sách items */
+.cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Item cha */
+.cat-item {
+    border-bottom: 1px dashed #eee; /* Viền đứt nét tinh tế */
+}
+
+    .cat-item:last-child {
+        border-bottom: none;
+    }
+
+/* Link của danh mục cha */
+.cat-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    color: #495057;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    /* Hiệu ứng Hover xịn: Đổi màu + Trượt nhẹ sang phải */
+    .cat-link:hover {
+        background-color: #f8f9fa;
+        color: #0d6efd;
+        padding-left: 28px; /* Trượt sang phải */
+    }
+
+    /* Trạng thái Active (Đang chọn) */
+    .cat-link.active {
+        background-color: #e7f1ff;
+        color: #0d6efd;
+        border-left: 4px solid #0d6efd; /* Điểm nhấn bên trái */
+    }
+
+/* Icon mũi tên */
+.cat-icon {
+    font-size: 0.85rem;
+    transition: transform 0.3s;
+    opacity: 0.6;
+}
+
+.cat-link[aria-expanded="true"] .cat-icon {
+    transform: rotate(180deg);
+}
+
+/* 3. SUB-MENU (Danh mục con) */
+.cat-submenu {
+    background-color: #fcfcfc;
+    display: none; /* Mặc định ẩn */
+    padding: 5px 0;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.02); /* Bóng đổ vào trong */
+}
+
+    .cat-submenu.expanded {
+        display: block;
+        animation: fadeInSlide 0.3s ease forwards;
+    }
+
+/* Link con */
+.sub-link {
+    display: block;
+    padding: 10px 20px 10px 35px; /* Thụt lề sâu hơn */
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+}
+
+    /* Dấu chấm tròn trang trí cho menu con */
+    .sub-link::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background-color: #dee2e6;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+    }
+
+    .sub-link:hover {
+        color: #0d6efd;
+        background-color: #fff;
+    }
+
+        .sub-link:hover::before {
+            background-color: #0d6efd;
+        }
+
+    .sub-link.active {
+        color: #0d6efd;
+        font-weight: 700;
+        background-color: #fff;
+    }
+
+        .sub-link.active::before {
+            background-color: #0d6efd;
+        }
+
+/* Animation nhẹ nhàng */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

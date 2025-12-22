@@ -34,6 +34,24 @@ namespace WEBPC_NHANVIEN.Controllers
             return View();
         }
 
+        // Hàm xử lý Đăng Xuất
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            // 1. Xóa Session (Dữ liệu phiên làm việc hiện tại)
+            Session.Clear();
+            Session.Abandon();
+
+            // 2. Xóa Cookie xác thực (Nếu dùng FormsAuthentication)
+            FormsAuthentication.SignOut();
+
+            // 3. Chuyển hướng về trang Đăng nhập
+            // Lưu ý: area = "" để nó tìm về thư mục gốc, không tìm trong Area Sale
+            return RedirectToAction("Login", "Account", new { area = "" });
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel model)
         {

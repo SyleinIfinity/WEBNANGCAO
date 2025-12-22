@@ -423,7 +423,7 @@
         </div>
     </div>
 
-    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data", id = "productForm" }))
     {
         @Html.AntiForgeryToken()
 
@@ -434,6 +434,9 @@
                 <div>
                     <strong>Có lỗi xảy ra!</strong> Vui lòng kiểm tra lại thông tin nhập vào.
                 </div>
+            </div>
+            <div style="padding-left: 48px;">
+                @Html.ValidationSummary(false, "", new { @class = "text-danger fw-bold" })
             </div>
         }
 

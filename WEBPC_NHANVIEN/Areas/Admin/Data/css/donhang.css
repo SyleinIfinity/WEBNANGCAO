@@ -1,0 +1,74 @@
+﻿/* Layout chính chia 3 cột */
+.order-master-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr 400px; /* Xanh lá | Xanh biển 1 | Xanh biển 2 + Hồng */
+    gap: 15px;
+    height: calc(100vh - 160px);
+    margin: 10px;
+    overflow: hidden;
+}
+
+/* Các vùng có thanh cuộn riêng biệt */
+.scroll-pane {
+    overflow-y: auto;
+    border-radius: 10px;
+    padding: 15px;
+    height: 100%;
+}
+
+/* CỘT 1: DANH SÁCH ĐƠN HÀNG (MÀU XANH LÁ) */
+.col-green-list {
+    background-color: #f0fff4; /* Light Green */
+    border: 1px solid #c6f6d5;
+}
+
+.order-item-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    border-left: 5px solid #38a169;
+    transition: 0.2s ease;
+}
+
+    .order-item-card.active {
+        background: #e6fffa;
+        border-left-width: 8px;
+    }
+
+/* CỘT 2: CHI TIẾT SẢN PHẨM (MÀU XANH BIỂN 1) */
+.col-blue-detail {
+    background-color: #ebf8ff; /* Light Blue 1 */
+    border: 1px solid #bee3f8;
+}
+
+/* CỘT 3: GIAO DỊCH & TỔNG HỢP */
+.col-right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+
+/* Ô Xanh biển 2: Giao dịch */
+.col-blue-transaction {
+    background-color: #e6fffa; /* Light Blue 2 (Teal) */
+    border: 1px solid #b2f5ea;
+    flex: 1;
+}
+
+/* Ô Màu hồng: Người nhận, Tổng tiền, Nút */
+.col-pink-action {
+    background-color: #fff5f7; /* Light Pink */
+    border: 1px solid #fed7e2;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.status-badge {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+}
