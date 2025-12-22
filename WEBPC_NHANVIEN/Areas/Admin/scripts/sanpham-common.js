@@ -2,6 +2,7 @@
  * File: ~/Areas/Admin/Scripts/sanpham-common.js
  * Chức năng: Xử lý toàn bộ logic cho module Sản Phẩm (Index, Create, Edit)
  * Theme: PC Hardware Store - Professional Blue & Tech Green
+ * Updated: Fix lỗi định dạng tiền tệ khi submit form
  */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -523,5 +524,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         return container;
+    }
+
+    // ================= 5. FIX FORM SUBMIT (NEW ADDITION) ================= //
+    // Tự động loại bỏ dấu chấm (.) trong giá tiền trước khi gửi form đi
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            // Tìm các ô nhập tiền tệ (có data-type="currency")
+            const currencyInputs = document.querySelectorAll('input[data-type="currency"]');
+
+            currencyInputs.forEach(input => {
+                if (input.value) {
+                    // Xóa hết dấu chấm, chỉ để lại số nguyên
+                    // VD: "1.000.000" -> "1000000"
+                    // Server C# sẽ hiểu đây là số hợp lệ
+                    input.value = input.value.replace(/\./g, '');
+                }
+            });
+            // Form tiếp tục submit bình thường...
+        });
     }
 });

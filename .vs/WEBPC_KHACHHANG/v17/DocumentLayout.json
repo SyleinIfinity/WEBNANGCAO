@@ -1,106 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\",
+  "WorkspaceRootPath": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\sale\\controllers\\khuyenmaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\khuyenmaicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\sale\\views\\khuyenmai\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\khuyenmai\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\sale\\views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\donhang\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\scripts\\sanpham-common.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\webpc_nhanvien\\areas\\admin\\scripts\\sanpham-common.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\scripts\\sanpham-common.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|d:\\code\\c#\\qlbh_api\\ckv2\\webnangcao\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\sanpham\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\donhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\scripts\\phieunhap-form.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\scripts\\phieunhap-form.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\scripts\\nhanvien-index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\scripts\\nhanvien-index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\scripts\\khachhang-custom.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\scripts\\khachhang-custom.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\thongsocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\thongsocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\phieunhapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\phieunhapcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\sanphamcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\nhanviencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\luongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\luongcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\khachhangcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\admin\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|f:\\23115053122114_k23_phanvankhanh\\college_year03\\125\\practise_tlwnc\\webnc\\project\\webpc_khachhang2\\webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\sale\\views\\shared\\_layoutsale.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\shared\\_layoutsale.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\sale\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\areas\\sale\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\areas\\sale\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_khachhang\\views\\shared\\_chatbox.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\views\\shared\\_chatbox.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{572A7D81-5BF1-4524-80B7-076D33A7A590}|WEBPC_NHANVIEN\\WEBPC_NHANVIEN.csproj|solutionrelative:webpc_nhanvien\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_khachhang\\models\\viewmodels\\lichsudonhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\models\\viewmodels\\lichsudonhangviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\webpc_khachhang\\models\\viewmodels\\checkoutviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B560A5A-2423-4C8E-BB46-640DA20082FE}|WEBPC_KHACHHANG\\WEBPC_KHACHHANG.csproj|solutionrelative:webpc_khachhang\\models\\viewmodels\\checkoutviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -110,326 +26,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "KhuyenMaiController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\KhuyenMaiController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\KhuyenMaiController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\KhuyenMaiController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\KhuyenMaiController.cs",
-              "ViewState": "AgIAAGwAAAAAAAAAAADwv4wAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:56:59.35Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
-              "ViewState": "AgIAAL8CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T20:52:24.798Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\KhuyenMai\\Index.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB4AAAAVAAAAAAAAAA==",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Edit.cshtml",
+              "ViewState": "AgIAALoBAAAAAAAAAAAAAN0BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T20:49:35.783Z",
+              "WhenOpened": "2025-12-19T11:37:41.205Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "sanpham-common.js",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
-              "ViewState": "AgIAANsAAAAAAAAAAAAiwOkAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-12-20T20:43:01.128Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "phieunhap-form.js",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\phieunhap-form.js",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\phieunhap-form.js",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\phieunhap-form.js",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\phieunhap-form.js",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-12-20T20:42:53.062Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "nhanvien-index.js",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\nhanvien-index.js",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\nhanvien-index.js",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\nhanvien-index.js",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\nhanvien-index.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-12-20T20:42:47.686Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "khachhang-custom.js",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\khachhang-custom.js",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\khachhang-custom.js",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\khachhang-custom.js",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\khachhang-custom.js",
-              "ViewState": "AgIAAPQAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-12-20T20:42:27.729Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DonHangController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DonHangController.cs",
-              "ViewState": "AgIAALYAAAAAAAAAAADwv9wAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:15:31.501Z",
-              "EditorCaption": ""
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALEBAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-19T11:28:39.052Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\DonHang\\Index.cshtml",
-              "ViewState": "AgIAAF4CAAAAAAAAAAAiwIYCAAABAAAAAAAAAA==",
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\SanPham\\Create.cshtml",
+              "ViewState": "AgIAAHABAAAAAAAAAAAAAIEBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T14:34:11.477Z",
+              "WhenOpened": "2025-12-19T11:28:37.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "sanpham-common.js",
+              "DocumentMoniker": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
+              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
+              "ToolTip": "D:\\Code\\C#\\QLBH_API\\CKv2\\WEBNANGCAO\\WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
+              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\scripts\\sanpham-common.js",
+              "ViewState": "AgIAAAICAAAAAAAAAAAYwCMCAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-19T11:27:19.036Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ThongSoController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\ThongSoController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\ThongSoController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\ThongSoController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\ThongSoController.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:42:11.877Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PhieuNhapController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\PhieuNhapController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\PhieuNhapController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\PhieuNhapController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\PhieuNhapController.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:42:05.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "SanPhamController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\SanPhamController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:42:03.861Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "NhanVienController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\NhanVienController.cs",
-              "ViewState": "AgIAAPEAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:41:55.334Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "LuongController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\LuongController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\LuongController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\LuongController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\LuongController.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:41:51.893Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "KhachHangController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\KhachHangController.cs",
-              "ViewState": "AgIAAHMAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T20:41:41.517Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAcwCcAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T18:21:21.672Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T18:20:32.4Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "DashboardController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Controllers\\DashboardController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T18:09:40.414Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "DashboardController.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Admin\\Controllers\\DashboardController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T18:08:25.243Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "_ChatBox.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\Shared\\_ChatBox.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Views\\Shared\\_ChatBox.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Views\\Shared\\_ChatBox.cshtml",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Views\\Shared\\_ChatBox.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T18:04:17.239Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Dashboard\\Index.cshtml",
-              "ViewState": "AgIAAIECAAAAAAAAAAAiwKUCAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T18:03:58.392Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "_LayoutSale.cshtml",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Areas\\Sale\\Views\\Shared\\_LayoutSale.cshtml",
-              "ViewState": "AgIAALUAAAAAAAAAAAAiwOAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T17:59:40.498Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Web.config",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Web.config",
-              "RelativeDocumentMoniker": "WEBPC_NHANVIEN\\Web.config",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_NHANVIEN\\Web.config",
-              "RelativeToolTip": "WEBPC_NHANVIEN\\Web.config",
-              "ViewState": "AgIAABEAAAAAAAAAAAAYwDwAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-12-20T17:06:00.975Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "LichSuDonHangViewModel.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\LichSuDonHangViewModel.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAEcAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:57:43.132Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "CheckoutViewModel.cs",
-              "DocumentMoniker": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
-              "RelativeDocumentMoniker": "WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
-              "ToolTip": "F:\\23115053122114_K23_PhanVanKhanh\\College_Year03\\125\\practise_TLWNC\\WEBNC\\PROJECT\\WEBPC_KHACHHANG2\\WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
-              "RelativeToolTip": "WEBPC_KHACHHANG\\Models\\ViewModels\\CheckoutViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:56:55.427Z"
             }
           ]
         }
