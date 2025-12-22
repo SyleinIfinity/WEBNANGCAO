@@ -208,6 +208,11 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         {
                             content.Add(new StringContent(model.GiaKhuyenMai.Value.ToString(CultureInfo.InvariantCulture)), "GiaKhuyenMai");
                         }
+                        else
+                        {
+                            // [FIX] Gửi chuỗi rỗng để API biết cần reset về null
+                            content.Add(new StringContent(""), "GiaKhuyenMai");
+                        }
 
                         if (!string.IsNullOrEmpty(model.MoTa))
                         {
