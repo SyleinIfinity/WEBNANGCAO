@@ -200,8 +200,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                     {
                         content.Add(new StringContent(model.TenSanPham), "TenSanPham");
                         content.Add(new StringContent(model.MaDanhMuc.ToString()), "MaDanhMuc");
-
-                        // [FIX] Convert chuẩn định dạng
                         content.Add(new StringContent(model.TrangThai.ToString().ToLower()), "TrangThai");
                         content.Add(new StringContent(model.GiaBan.ToString(CultureInfo.InvariantCulture)), "GiaBan");
                         content.Add(new StringContent(model.SoLuongTon.ToString(CultureInfo.InvariantCulture)), "SoLuongTon");
@@ -216,6 +214,13 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                             content.Add(new StringContent(model.MoTa), "MoTa");
                         }
 
+                        // THÊM: Gửi PublicId của ảnh đại diện
+                        if (!string.IsNullOrEmpty(model.CoverImagePublicId))
+                        {
+                            content.Add(new StringContent(model.CoverImagePublicId), "CoverImagePublicId");
+                        }
+
+                        // Upload ảnh mới
                         if (model.HinhAnhs != null)
                         {
                             foreach (var file in model.HinhAnhs)
@@ -229,7 +234,8 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                             }
                         }
 
-                        if (model.PublicIdsToDelete != null)
+                        // Danh sách ảnh cần xóa
+                        if (model.PublicIdsToDelete != null && model.PublicIdsToDelete.Any())
                         {
                             foreach (var pubId in model.PublicIdsToDelete)
                             {

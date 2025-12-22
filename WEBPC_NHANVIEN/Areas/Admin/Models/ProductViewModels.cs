@@ -37,6 +37,7 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
     // Dùng cho Form Chỉnh sửa
     public class UpdateProductViewModel
     {
+        public string CoverImagePublicId { get; set; }
         // Các field cơ bản (Lặp lại hoặc kế thừa từ Create)
         public int MaSanPham { get; set; }
 
@@ -58,5 +59,6 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Models
 
         // Danh sách ID ảnh muốn xóa
         public List<string> PublicIdsToDelete { get; set; }
+
     }
 }
