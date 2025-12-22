@@ -258,17 +258,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ===== THÊM LOADING ANIMATION KHI SUBMIT FORM =====
-    const submitButtons = document.querySelectorAll('button[type="submit"]');
-    submitButtons.forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            const form = this.closest('form');
-            if (form && form.checkValidity()) {
-                this.disabled = true;
-                this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
-            }
-        });
-    });
+    //// ===== THÊM LOADING ANIMATION KHI SUBMIT FORM =====
+    //const submitButtons = document.querySelectorAll('button[type="submit"]');
+    //submitButtons.forEach(btn => {
+    //    btn.addEventListener('click', function (e) {
+    //        const form = this.closest('form');
+    //        if (form && form.checkValidity()) {
+    //            this.disabled = true;
+    //            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Đang xử lý...';
+    //        }
+    //    });
+    //});
 
     console.log('✅ Khách hàng custom scripts loaded successfully!');
 });

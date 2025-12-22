@@ -112,4 +112,31 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    // Thêm vào cuối file
+    window.showCustomConfirm = function (message, callback) {
+        // Kiểm tra xem có thư viện SweetAlert2 không (thường là Swal)
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: 'Xác nhận xóa?',
+                html: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Đồng ý xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    callback();
+                }
+            });
+        } else {
+            // Fallback dùng confirm mặc định nếu không có thư viện
+            // Loại bỏ thẻ html trong message vì confirm mặc định không hiểu html
+            const plainText = message.replace(/<[^>]*>?/gm, '');
+            if (confirm(plainText)) {
+                callback();
+            }
+        }
+    };
 });
