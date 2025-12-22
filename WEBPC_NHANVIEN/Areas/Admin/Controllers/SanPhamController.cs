@@ -186,7 +186,9 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // --- 5. CẬP NHẬT (POST) - ĐÃ SỬA LỖI ---
+        // Chỉ hiển thị phần Edit method cần sửa
+        // File: WEBPC_NHANVIEN/Areas/Admin/Controllers/SanPhamController.cs
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(UpdateProductViewModel model)
@@ -204,15 +206,14 @@ namespace WEBPC_NHANVIEN.Areas.Admin.Controllers
                         content.Add(new StringContent(model.GiaBan.ToString(CultureInfo.InvariantCulture)), "GiaBan");
                         content.Add(new StringContent(model.SoLuongTon.ToString(CultureInfo.InvariantCulture)), "SoLuongTon");
 
-                        if (model.GiaKhuyenMai.HasValue)
+                        // ============ FIX QUAN TRỌNG: XỬ LÝ GIÁ KHUYẾN MÃI ============
+                        // KHÔNG GỬI FIELD NẾU NULL/TRỐNG - Để API tự hiểu là null
+                        if (model.GiaKhuyenMai.HasValue && model.GiaKhuyenMai.Value > 0)
                         {
                             content.Add(new StringContent(model.GiaKhuyenMai.Value.ToString(CultureInfo.InvariantCulture)), "GiaKhuyenMai");
                         }
-                        else
-                        {
-                            // [FIX] Gửi chuỗi rỗng để API biết cần reset về null
-                            content.Add(new StringContent(""), "GiaKhuyenMai");
-                        }
+                        // Nếu không có giá trị hoặc = 0, KHÔNG GỬI field này đi
+                        // API sẽ nhận null và xử lý việc xóa khuyến mãi
 
                         if (!string.IsNullOrEmpty(model.MoTa))
                         {

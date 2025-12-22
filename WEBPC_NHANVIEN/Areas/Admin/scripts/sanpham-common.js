@@ -1,6 +1,6 @@
 ﻿/**
  * File: ~/Areas/Admin/Scripts/sanpham-common.js
- * Updated: Fix lỗi submit form (v2) - Clean currency format before submit
+ * Updated: Fix cho phép giá khuyến mãi trống (hủy khuyến mãi)
  */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,19 +51,27 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Đang xử lý form trước khi gửi..."); // Debug log
 
             currencyInputs.forEach(input => {
-                if (input.value) {
+                // [FIX] CHỈ XỬ LÝ NẾU CÓ GIÁ TRỊ
+                // Nếu input trống hoặc chỉ có khoảng trắng, giữ nguyên (trống)
+                const trimmedValue = input.value.trim();
+
+                if (trimmedValue) {
                     // CỰC KỲ QUAN TRỌNG:
                     // Xóa TẤT CẢ ký tự không phải là số (dấu chấm, phẩy, chữ...)
                     // VD: "10.000" -> "10000"
                     // VD: "1.000.000 đ" -> "1000000"
-                    const rawValue = input.value.replace(/\D/g, '');
+                    const rawValue = trimmedValue.replace(/\D/g, '');
                     input.value = rawValue;
 
                     console.log(`Đã clean input ${input.name}: ${rawValue}`); // Debug log
+                } else {
+                    // [FIX] NẾU TRỐNG -> GIỮ NGUYÊN TRỐNG (để backend biết là null/hủy khuyến mãi)
+                    input.value = '';
+                    console.log(`Input ${input.name} để trống (hủy khuyến mãi)`); // Debug log
                 }
             });
 
-            // Form sẽ tiếp tục được gửi đi với giá trị số nguyên sạch
+            // Form sẽ tiếp tục được gửi đi với giá trị số nguyên sạch hoặc trống
         });
     }
 
